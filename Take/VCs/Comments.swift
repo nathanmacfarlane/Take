@@ -43,7 +43,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return theRoute.comments!.count
+        return theRoute.comments?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CommentCell

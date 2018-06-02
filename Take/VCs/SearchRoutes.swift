@@ -152,13 +152,24 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         self.routeResults = []
+        // search for route by name
         searchFBRoute(byProperty: "name", withValue: searchBar.text!) { (routes) in
             self.addToRoutes(newRoutes: routes)
+            // search for route by area
             searchFBRoute(byProperty: "area", withValue: searchBar.text!) { (otherRoutes) in
                 self.addToRoutes(newRoutes: otherRoutes)
+                // reverse engeineer location
                 forwardGeocoding(address: searchBar.text!) { (coordinate) in
+                    // search MP API for routes by coordinate
                     routesByArea(coord: coordinate, completion: { (routes) -> () in
-                        self.addToRoutes(newRoutes: routes)
+                        for route in routes {
+                            // search for route in Firebase by id
+                            searchFBRoute(byProperty: "id", withValue: route.id, completion: { (moreRoutes) in
+                                // add firebase data first because it's more updated that mountain project
+                                self.addToRoutes(newRoutes: moreRoutes)
+                                self.addToRoutes(newRoutes: routes)
+                            })
+                        }
                     })
                 }
             }

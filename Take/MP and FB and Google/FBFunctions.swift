@@ -9,13 +9,14 @@
 import Foundation
 import FirebaseDatabase
 
-func searchFBRoute(byProperty property: String, withValue value: String, completion: @escaping (_ routes: [Route])->()) {
+func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route])->()) {
     var routeResults: [Route] = []
     let routesRoot = Database.database().reference(withPath: "routes")
     let namequery = routesRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
     namequery.observeSingleEvent(of: .value, with: { (snapshot) in
         for item in snapshot.children {
-            routeResults.append(Route(snapshot: item as! DataSnapshot))
+            let newRoute = Route(snapshot: item as! DataSnapshot)
+            routeResults.append(newRoute)
         }
         completion(routeResults)
     })
