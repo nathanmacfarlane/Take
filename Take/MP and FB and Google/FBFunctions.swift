@@ -21,3 +21,16 @@ func searchFBRoute(byProperty property: String, withValue value: Any, completion
         completion(routeResults)
     })
 }
+
+func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]) -> ()) {
+    var routeResults : [Int] = []
+    let routesRoot = Database.database().reference(withPath: "areas\(path)")
+    routesRoot.observeSingleEvent(of: .value, with: { (snapshot) in
+        for item in snapshot.children {
+            if let myRoute = Int((item as! DataSnapshot).key) {
+                routeResults.append(myRoute)
+            }
+        }
+        completion(routeResults)
+    })
+}

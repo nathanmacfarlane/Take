@@ -22,7 +22,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var directionsButton:        UIButton!
     @IBOutlet weak var augmentedButton:         UIButton!
     @IBOutlet weak var routeNameLabel:          UILabel!
-    @IBOutlet weak var routeLocationLabel:      UILabel!
+    @IBOutlet weak var routeLocationButton:     UIButton!
     @IBOutlet weak var routeDescriptionTV:      UITextView!
     @IBOutlet weak var commentsButton:          UIButton!
     @IBOutlet weak var starsLabel:              UILabel!
@@ -38,9 +38,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - load/unloads
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
-        //initDeepTouch()
  
         
         self.myARVC.isHidden = true
@@ -66,7 +63,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myARVC.reloadData()
         
         self.routeNameLabel.text = theRoute.name
-        self.routeLocationLabel.text = theRoute.localDesc?.last ?? "N/A"
+        self.routeLocationButton.setTitle(theRoute.localDesc?.last ?? "N/A", for: .normal)
         self.commentsButton.setTitle("\(theRoute.comments?.count ?? 0) 💬", for: .normal)
         self.starsLabel.text = "\(String(repeating: "★", count: theRoute.averageStar()))\(String(repeating: "☆", count: 5 - theRoute.averageStar()))"
         self.actualRatingLabel.text = theRoute.difficulty?.description ?? "N/A"
@@ -84,28 +81,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         
     }
     
-    /*
-    // MARK: Gesture Recognizer
-    @objc func deepPressButton(_ sender : DeepPressGestureRecognizer, theButton: TypeButton) {
-        if sender.state == .began{
-            print("started deep press")
-        } else if sender.state == .ended {
-            print("ended deep press")
-        }
-    }
-    
-    // MARK: initial functions
-    func initDeepTouch() {
-        let myForce = DeepPressGestureRecognizer(target: self, action: #selector(deepPressButton(_:theButton:)))
-        self.topRopeButton.addGestureRecognizer(myForce)
-        let myForce2 = DeepPressGestureRecognizer(target: self, action: #selector(deepPressButton(_:theButton:)))
-        self.sportButton.addGestureRecognizer(myForce2)
-        let myForce3 = DeepPressGestureRecognizer(target: self, action: #selector(deepPressButton(_:theButton:)))
-        self.tradButton.addGestureRecognizer(myForce3)
-        let myForce4 = DeepPressGestureRecognizer(target: self, action: #selector(deepPressButton(_:theButton:)))
-        self.boulderButton.addGestureRecognizer(myForce4)
-    }
-    */
+    // MARK: - initial functions
     func setupButtons() {
         self.topRopeButton.setType(isType: theRoute.isTR())
         self.sportButton.setType(isType: theRoute.isSport())
@@ -146,6 +122,22 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         blurEffectView.frame = self.view.frame
         self.bgimageView.insertSubview(blurEffectView, at: 0)
     }
+    
+    // MARK: - IBActions
+    @IBAction func TappedAreaButton(_ sender: UIButton) {
+        let alertController = UIAlertController(title: nil, message: "Areas", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        for area in self.theRoute.localDesc ?? [] {
+            let areaAction = UIAlertAction(title: "\(area)", style: .default) { action in
+                self.performSegue(withIdentifier: "goToArea", sender: area)
+            }
+            alertController.addAction(areaAction)
+        }
+        
+        alertController.addAction(cancel)
+        self.present(alertController, animated: true)
+    }
+    
     
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -223,6 +215,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             let dc: DiagramSlideshow = segue.destination as! DiagramSlideshow
             dc.ardiagrams = self.theRoute.ardiagrams!
             dc.selectedImage = sender as! Int
+        } else if segue.identifier == "goToArea" {
+            let dc: AreaView = segue.destination as! AreaView
+            dc.areaName = sender as! String
+            dc.areaArr = self.theRoute.localDesc
         }
         
     }
