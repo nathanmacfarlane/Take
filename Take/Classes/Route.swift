@@ -110,8 +110,24 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
             }.resume()
         }
     }
+    private func assignArea() {
+        if self.localDesc!.count >= 3 {
+            self.area = self.localDesc!.dropLast(2).last
+        } else if self.localDesc!.count >= 1 {
+            self.area = self.localDesc!.last
+        }
+    }
     private func saveToFirebase() {
         if self.ref == nil {
+            if self.localDesc != nil {
+                assignArea()
+                let areaRef = Database.database().reference()
+                var strToAppend = "areas"
+                for area in self.localDesc! {
+                    strToAppend.append("/\(area)")
+                    areaRef.child(strToAppend).updateChildValues(["\(self.id)": "\(self.id)"])
+                }
+            }
             let ref = Database.database().reference().child("routes/\(self.id)")
             ref.setValue(self.toAnyObject())
             self.ref = ref
