@@ -152,18 +152,16 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         
         self.routeResults = []
-        forwardGeocoding(address: searchBar.text!) { (coordinate) in
-            routesByArea(coord: coordinate, completion: { (routes) -> () in
-                self.addToRoutes(newRoutes: routes)
-            })
-
-        }
-        
         searchFBRoute(byProperty: "name", withValue: searchBar.text!) { (routes) in
             self.addToRoutes(newRoutes: routes)
-        }
-        searchFBRoute(byProperty: "area", withValue: searchBar.text!) { (otherRoutes) in
-            self.addToRoutes(newRoutes: otherRoutes)
+            searchFBRoute(byProperty: "area", withValue: searchBar.text!) { (otherRoutes) in
+                self.addToRoutes(newRoutes: otherRoutes)
+                forwardGeocoding(address: searchBar.text!) { (coordinate) in
+                    routesByArea(coord: coordinate, completion: { (routes) -> () in
+                        self.addToRoutes(newRoutes: routes)
+                    })
+                }
+            }
         }
         self.mySearchBar.resignFirstResponder()
     }
