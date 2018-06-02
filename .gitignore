@@ -215,3 +215,6 @@ xcuserdata/
 ####
 # UNKNOWN: recommended by others, but I can't discover what these files are
 #
+
+Take.xcodeproj/xcuserdata/*
+Take.xcodeproj/project.xcworkspace/xcuserdata/*
