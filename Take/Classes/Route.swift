@@ -18,7 +18,6 @@ class RouteService: Codable {
 }
 
 class Route : NSObject, Comparable, Codable, MKAnnotation {
-    
     // MARK: - properties
     var name        : String
 //    var location    : CLLocation?
