@@ -32,18 +32,14 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var sCV : UICollectionView!
     var username: String!
     var shouldEditPhoto : Bool!
-    var newImages: [UIImage] = []
+//    var newImages: [UIImage] = []
+//    var imageKeys: [String] = []
+    var imgKeys : [String] = []
+    var newImagesWithKeys : [String : UIImage] = [:]
     
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        for image in theRoute.images ?? [] {
-//            images.append(image)
-//        }
-//        for image in theRoute.arimages ?? [] {
-//            arimages.append(image)
-//        }
         
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
@@ -137,10 +133,15 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
         let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             if collectionView == self.photoCV {
-                self.theRoute.images!.remove(at: indexPath.row)
-                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
-                    print("finished deleting")
-                }
+                let itemKey = self.imgKeys[indexPath.row]
+                self.newImagesWithKeys.removeValue(forKey: itemKey)
+                self.imgKeys.remove(at: indexPath.row)
+//                let itemKey = self.imageKeys[indexPath.row]
+//                self.theRoute.images!.removeValue(forKey: itemKey)
+//                self.theRoute.images!.remove(at: indexPath.row)
+//                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
+//                    print("finished deleting")
+//                }
                 self.photoCV.reloadData()
             } else {
                 self.theRoute.ardiagrams!.remove(at: indexPath.row)
@@ -156,34 +157,40 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        //print("photos: \(self.theRoute.images)")
-        
-        
         if collectionView == photoCV {
-//            if self.images.count > 0 {
-            if self.theRoute.images?.count ?? 0 > 0 {
-                self.photosLabel.isHidden = true
-            } else {
-                self.photosLabel.isHidden = false
-            }
-            return self.theRoute.images?.count ?? 0
-//            return self.images.count
+            return self.imgKeys.count
         } else {
-//            if self.arimages.count > 0 {
-            if self.theRoute.ardiagrams?.count ?? 0 > 0 {
-                self.ARDiagramsLabel.isHidden = true
-            } else {
-                self.ARDiagramsLabel.isHidden = false
-            }
-            return self.theRoute.ardiagrams?.count ?? 0
-//            return self.arimages.count
+            return 0
         }
+        
+        
+//        if collectionView == photoCV {
+////            if self.images.count > 0 {
+//            if self.theRoute.images?.count ?? 0 > 0 {
+//                self.photosLabel.isHidden = true
+//            } else {
+//                self.photosLabel.isHidden = false
+//            }
+//            return self.theRoute.images?.count ?? 0
+////            return self.images.count
+//        } else {
+////            if self.arimages.count > 0 {
+//            if self.theRoute.ardiagrams?.count ?? 0 > 0 {
+//                self.ARDiagramsLabel.isHidden = true
+//            } else {
+//                self.ARDiagramsLabel.isHidden = false
+//            }
+//            return self.theRoute.ardiagrams?.count ?? 0
+////            return self.arimages.count
+//        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == photoCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! AddImageCell
-//            cell.bgImageView.image = self.images[indexPath.row]
-            cell.bgImageView.image = self.theRoute.images![indexPath.row]
+            let itemKey = self.imgKeys[indexPath.row]
+            cell.bgImageView.image = newImagesWithKeys[itemKey]
+//            cell.bgImageView.image = self.theRoute.images![itemKey]
+//            cell.bgImageView.image = self.theRoute.images![indexPath.row]
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath) as! AddARImageCell
@@ -216,12 +223,16 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         if sCV == photoCV {
 //            self.images.insert(pickedImage!, at: 0)
-            self.newImages.append(pickedImage!)
-            if self.theRoute.images == nil {
-                self.theRoute.images = [pickedImage!]
-            } else {
-                self.theRoute.images?.insert(pickedImage!, at: 0)
-            }
+            let instanceString = Date().instanceString()
+//            self.newImages.append(pickedImage!)
+//            self.imageKeys.append(instanceString)
+            self.imgKeys.append(instanceString)
+            self.newImagesWithKeys[instanceString] = pickedImage!
+//            if self.theRoute.images == nil {
+//                self.theRoute.images = [instanceString : pickedImage!]
+//            } else {
+//                self.theRoute.images![instanceString] = pickedImage!
+//            }
         } else {
             
             if self.shouldEditPhoto == false {
@@ -257,7 +268,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         theRoute.feelsLike?.append(Rating(desc: self.feelsLikeField.text!))
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
-        theRoute.saveToFirebase(newImages: newImages)
+//        theRoute.saveToFirebase(newImages: newImages, newKeys: imageKeys)
+        theRoute.saveToFirebase(newImagesWithKeys: newImagesWithKeys)
+        theRoute.saveToGeoFire()
         self.dismiss(animated: true, completion: nil)
     }
     func populateTypes() -> String {

@@ -33,30 +33,30 @@ class ProfileView: UIViewController, UITableViewDelegate, UITableViewDataSource/
         self.profilePhoto.image         = currentUser.profileImage ?? UIImage(named: "bg.jpg")
         self.nameLabel.text             = currentUser.name
         self.cityLabel.text             = currentUser.location
-        self.memberSinceLabel.text      = "Member since \(currentUser.membershipDate.getMonth()), \(currentUser.membershipDate.getYear())"
+        self.memberSinceLabel.text      = "Member since \(currentUser.membershipDate.getMonth()), \(currentUser.membershipDate.getYearInt())"
         
         
         // **************************** for testing only!!!!!!!!!!!! ****************************
-        let stars = [Star(star: 1, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j2"), Star(star: 4, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j5"), Star(star: 4, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j9")]
-        let ratings = [Rating(desc: "5.9+"), Rating(desc: "5.9-"), Rating(desc: "5.8+")]
-        let comments = [Comment(id: "johny_dang", text: "this is a super cool comment i love it so much yes i do, i just wanted to keep talking because i like this comment so much don't you? yah i think you do", date: Date()), Comment(id: "Nathan Macfarlane", text: "Another radical comment that is so bomb", date: Date())]
+//        let stars = [Star(star: 1, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j2"), Star(star: 4, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j5"), Star(star: 4, id: "IDdbKJxtW9gGxaxHncMaJzTIb9j9")]
+//        let ratings = [Rating(desc: "5.9+"), Rating(desc: "5.9-"), Rating(desc: "5.8+")]
+//        let comments = [Comment(id: "johny_dang", text: "this is a super cool comment i love it so much yes i do, i just wanted to keep talking because i like this comment so much don't you? yah i think you do", date: Date()), Comment(id: "Nathan Macfarlane", text: "Another radical comment that is so bomb", date: Date())]
+//        
+//        let camel = Route(Name: "Camel", Location: CLLocation(latitude: 35.2828, longitude: -120.6596), PhotoURL: nil, Id: "1234567890", Types: "TR, Sport", Difficulty: "5.10b", Stars: stars, Pitches: 1, LocalDescrip: ["California", "Central Coast", "San Luis Obispo", "Bishops Peak", "Cracked Wall"], Info: "Start with slab but good edges, throw for the big rail, dance your way up onto said rail and reeeeeach for your next holds. Traverse out right and then sail upward into the chimney-like feature.", FeelsRating: ratings, Comments: comments, Images: nil, ARDiagrams: nil)
+//       let yeti = Route(Name: "Yeti", Location: CLLocation(latitude: 35.3, longitude: -120.6596), PhotoURL: nil, Id: "1234567890", Types: "Boulder", Difficulty: "V5", Stars: stars, Pitches: 1, LocalDescrip: ["California", "Central Coast", "San Luis Obispo", "Bishops Peak", "Cracked Wall"], Info: "laskdfjalskjdflak jsdlkfja sl;kdjfl;a ksjdflakjsdflkaj sldfkjaslkdjfal;skdjfa lskjdf lasjdflaksj dfla;ksjdfl;aksjdfl;kajsldkfja lskdjfal;skjdfl;js", FeelsRating: nil, Comments: comments, Images: nil, ARDiagrams: nil)
         
-        let camel = Route(Name: "Camel", Location: CLLocation(latitude: 35.2828, longitude: -120.6596), PhotoURL: nil, Id: "1234567890", Types: "TR, Sport", Difficulty: "5.10b", Stars: stars, Pitches: 1, LocalDescrip: ["California", "Central Coast", "San Luis Obispo", "Bishops Peak", "Cracked Wall"], Info: "Start with slab but good edges, throw for the big rail, dance your way up onto said rail and reeeeeach for your next holds. Traverse out right and then sail upward into the chimney-like feature.", FeelsRating: ratings, Comments: comments, Images: nil, ARDiagrams: nil)
-       let yeti = Route(Name: "Yeti", Location: CLLocation(latitude: 35.3, longitude: -120.6596), PhotoURL: nil, Id: "1234567890", Types: "Boulder", Difficulty: "V5", Stars: stars, Pitches: 1, LocalDescrip: ["California", "Central Coast", "San Luis Obispo", "Bishops Peak", "Cracked Wall"], Info: "laskdfjalskjdflak jsdlkfja sl;kdjfl;a ksjdflakjsdflkaj sldfkjaslkdjfal;skdjfa lskjdf lasjdflaksj dfla;ksjdfl;aksjdfl;kajsldkfja lskdjfal;skjdfl;js", FeelsRating: nil, Comments: comments, Images: nil, ARDiagrams: nil)
         
+//        var timeInterval = DateComponents()
+//        timeInterval.month = 2
+//        timeInterval.day = 3
+//        timeInterval.hour = 4
+//        timeInterval.minute = 5
+//        timeInterval.second = 6
+//        let futureDate = Calendar.current.date(byAdding: timeInterval, to: Date())!
         
-        var timeInterval = DateComponents()
-        timeInterval.month = 2
-        timeInterval.day = 3
-        timeInterval.hour = 4
-        timeInterval.minute = 5
-        timeInterval.second = 6
-        let futureDate = Calendar.current.date(byAdding: timeInterval, to: Date())!
-        
-        self.currentUser.favorites.append(camel)
-        self.currentUser.todos.append(camel)
-        self.currentUser.ticks.append(Tick(route: camel, date: futureDate, comment: "Good Stuff"))
-        self.currentUser.ticks.append(Tick(route: yeti, date: futureDate, comment: nil))
+//        self.currentUser.favorites.append(camel)
+//        self.currentUser.todos.append(camel)
+//        self.currentUser.ticks.append(Tick(route: camel, date: futureDate, comment: "Good Stuff"))
+//        self.currentUser.ticks.append(Tick(route: yeti, date: futureDate, comment: nil))
         
         
         

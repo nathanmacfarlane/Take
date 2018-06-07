@@ -34,11 +34,13 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - Variables
     var theRoute : Route!
     var mainImg  : UIImage?
+    var imageKeys : [String] = []
     
     // MARK: - load/unloads
     override func viewDidLoad() {
         super.viewDidLoad()
- 
+        
+//        print("images dict: \(self.theRoute.allImages)")
         
         self.myARVC.isHidden = true
         self.myCV.backgroundColor = UIColor.clear
@@ -47,20 +49,23 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.bgimageView.image = mainImg!
         }
         
-        theRoute.getImagesFromFirebase {
-            DispatchQueue.main.async {
-                self.updateLabel()
-                self.myCV.reloadData()
-            }
-        }
-        
         addBlur()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
-        self.myCV.reloadData()
         self.myARVC.reloadData()
+        self.myCV.reloadData()
+        
+        theRoute.getImagesFromFirebase {
+            DispatchQueue.main.async {
+                if self.theRoute.images != nil {
+                    self.imageKeys = Array(self.theRoute.images!.keys)
+                }
+                self.updateLabel()
+                self.myCV.reloadData()
+            }
+        }
         
         self.routeNameLabel.text = theRoute.name
         self.routeLocationButton.setTitle(theRoute.localDesc?.last ?? "N/A", for: .normal)
@@ -142,7 +147,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.myCV {
-            return theRoute.images?.count ?? 0
+            return self.imageKeys.count
         } else {
             return theRoute.ardiagrams?.count ?? 0
         }
@@ -150,7 +155,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.myCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DetailImagesCell
-            cell.theImage.image = theRoute.images?[indexPath.row]
+            cell.theImage.image = theRoute.images![self.imageKeys[indexPath.row]]
             cell.layer.borderColor = UIColor.white.cgColor
             cell.layer.borderWidth = 2
             return cell
@@ -209,7 +214,11 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             dc.theRoute = self.theRoute
         } else if segue.identifier == "presentAllImages" {
             let dc: ImageSlideshow = segue.destination as! ImageSlideshow
-            dc.images = self.theRoute.images!
+            if self.theRoute.images != nil {
+                dc.images = Array(self.theRoute.images!.values)
+            } else {
+                dc.images = []
+            }
             dc.selectedImage = sender as! Int  
         } else if segue.identifier == "presentAllIDiagrams" {
             let dc: DiagramSlideshow = segue.destination as! DiagramSlideshow

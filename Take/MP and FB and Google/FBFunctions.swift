@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseDatabase
+import CoreLocation
 
 func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route])->()) {
     var routeResults: [Route] = []

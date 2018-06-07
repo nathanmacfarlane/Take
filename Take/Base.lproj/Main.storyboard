@@ -1491,7 +1491,45 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tuU-ie-p1K">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="9Ml-tZ-ykT" id="IMA-bf-Z1J"/>
+                                </connections>
                             </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="H5D-gA-G1A">
+                                <rect key="frame" x="16" y="25" width="343" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satelite"/>
+                                </segments>
+                                <color key="tintColor" red="0.1843137255" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="segChanged:" destination="9Ml-tZ-ykT" eventType="valueChanged" id="lhE-UX-V7S"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="75b-G0-iAG">
+                                <rect key="frame" x="16" y="574" width="111" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Reload Area">
+                                    <color key="titleColor" red="0.1843137255" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="goReloadArea:" destination="9Ml-tZ-ykT" eventType="touchUpInside" id="3dS-Md-yYY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="27Y-jD-Sbt">
+                                <rect key="frame" x="214" y="574" width="145" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Make New Area">
+                                    <color key="titleColor" red="0.1843137255" green="0.23921568630000001" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <segue destination="bhu-a5-FyR" kind="presentation" id="9DE-Ps-K9P"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="8Cy-JW-Zc3"/>
@@ -1499,11 +1537,64 @@
                     <tabBarItem key="tabBarItem" title="Map" id="uBT-FI-oOD"/>
                     <connections>
                         <outlet property="myMapView" destination="tuU-ie-p1K" id="BUZ-GO-81l"/>
+                        <outlet property="mySegControl" destination="H5D-gA-G1A" id="86a-NQ-HTn"/>
+                        <outlet property="reloadAreaButton" destination="75b-G0-iAG" id="kug-B7-A20"/>
+                        <segue destination="iTR-jd-3Uu" kind="presentation" identifier="goToDetail" id="t2e-g5-7ne"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TC9-eT-46x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="749.60000000000002" y="1079.9100449775112"/>
+        </scene>
+        <!--Make New Area-->
+        <scene sceneID="TAX-Ac-dt6">
+            <objects>
+                <viewController id="bhu-a5-FyR" customClass="MakeNewArea" customModule="Take" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kPP-0i-aKK">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sOI-ff-6iF">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outlet property="delegate" destination="bhu-a5-FyR" id="7pF-3n-Cwe"/>
+                                    <outletCollection property="gestureRecognizers" destination="Jji-ua-hrD" appends="YES" id="sH4-7Y-TDV"/>
+                                </connections>
+                            </mapView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="NewAreaTarget.png" translatesAutoresizingMaskIntoConstraints="NO" id="cGJ-BD-8OY">
+                                <rect key="frame" x="87" y="233" width="201" height="201"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dHi-6k-O9t">
+                                <rect key="frame" x="164" y="608" width="47" height="47"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="close-white.png">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="goBack:" destination="bhu-a5-FyR" eventType="touchUpInside" id="CZL-dT-EWM"/>
+                                    <action selector="goBack:" destination="iTR-jd-3Uu" eventType="touchUpInside" id="FfR-pN-PYc"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="CF9-Gs-n7E"/>
+                    </view>
+                    <connections>
+                        <outlet property="longPressMapView" destination="Jji-ua-hrD" id="Al5-hd-vTi"/>
+                        <outlet property="myMapView" destination="sOI-ff-6iF" id="aWL-O7-HnR"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rgd-lA-7Eq" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="Jji-ua-hrD">
+                    <connections>
+                        <action selector="longPressRecognized:" destination="bhu-a5-FyR" id="kjW-ym-V0F"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1592.8" y="1487.4062968515743"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
@@ -1722,6 +1813,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="NewAreaTarget.png" width="1000" height="1000"/>
         <image name="SLO.jpg" width="778" height="518"/>
         <image name="bg.jpg" width="1200" height="900"/>
         <image name="checked.png" width="25" height="25"/>
@@ -1734,6 +1826,6 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Fwn-ga-FRF"/>
-        <segue reference="Jij-Sr-DMQ"/>
+        <segue reference="t2e-g5-7ne"/>
     </inferredMetricsTieBreakers>
 </document>
