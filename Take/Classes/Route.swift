@@ -11,16 +11,17 @@ import UIKit
 import MapKit
 import FirebaseDatabase
 import FirebaseStorage
+import GeoFire
 
 class RouteService: Codable {
     var routes : [Route]!
 }
 
-class Route : /*NSObject, NSCoding, */Comparable, Codable {
+class Route : NSObject, Comparable, Codable, MKAnnotation {
     
     // MARK: - properties
     var name        : String
-    var location    : CLLocation?
+//    var location    : CLLocation?
     var photoURL    : String?
     var id          : Int
     var types       : String? // TR (Top Rope), Sport, and Trad, Boulder
@@ -31,17 +32,41 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
     var comments    : [Comment]?
     var info        : String?
     var feelsLike   : [Rating]?
-    var images      : [UIImage]?
+    var images      : [String : UIImage]?
     var ardiagrams  : [ARDiagram]?
     var area        : String?
-    var allImages   : [String]?
     var ref         : DatabaseReference?
+    var latitude    : Double?
+    var longitude   : Double?
+    
+    //MKAnnotation
+    var coordinate: CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: self.latitude!, longitude: self.longitude!)
+    }
+    var title: String? {
+        return self.name
+    }
+    var subtitle: String? {
+        return self.difficulty?.description
+    }
+    
+    var location    : CLLocation? {
+        if latitude == nil || longitude == nil {
+            return nil
+        }
+        return CLLocation(latitude: latitude!, longitude: longitude!)
+    }
+    
+    //private stuff
+    private var allImages   : [String : String]?
     
     enum CodingKeys: String, CodingKey {
         case name
         case id
         case types = "type"
         case localDesc = "location"
+        case latitude
+        case longitude
     }
     
     func description() -> String {
@@ -55,60 +80,45 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
         return desc
     }
     
-    
-//    // MARK: - NSObject
-//    func encode(with aCoder: NSCoder) {
-//        aCoder.encode(self.name,        forKey: "name")
-//        aCoder.encode(self.location,    forKey: "location")
-//        aCoder.encode(self.photoURL,    forKey: "photoURL")
-//        aCoder.encode(self.id,          forKey: "id")
-//        aCoder.encode(self.types,       forKey: "types")
-//        aCoder.encode(self.difficulty,  forKey: "rating")
-//        aCoder.encode(self.stars,       forKey: "stars")
-//        aCoder.encode(self.pitches,     forKey: "pitches")
-//        aCoder.encode(self.localDesc,   forKey: "localDesc")
-////        aCoder.encode(self.ref,         forKey: "ref")
-//    }
-
-    
-    
-//    required init?(coder aDecoder: NSCoder) {
-//        self.name =                     aDecoder.decodeObject(forKey: "name")       as! String
-//        self.location =                 aDecoder.decodeObject(forKey: "location")   as? CLLocation
-//        self.photoURL =                 aDecoder.decodeObject(forKey: "photoURL")   as? String
-//        self.id =                       aDecoder.decodeObject(forKey: "id")         as! String
-//        self.types =                    aDecoder.decodeObject(forKey: "types")      as? String
-//        self.difficulty =               aDecoder.decodeObject(forKey: "rating")     as? Rating
-//        self.stars =                    aDecoder.decodeObject(forKey: "stars")      as? [Star]
-//        self.pitches =                  aDecoder.decodeObject(forKey: "pitches")    as? Int
-//        self.localDesc =                aDecoder.decodeObject(forKey: "localDesc")  as? [String]
-//        self.comments =                 aDecoder.decodeObject(forKey: "comments")   as? [Comment]
-//        self.info =                     aDecoder.decodeObject(forKey: "info")       as? String
-//        self.feelsLike =                aDecoder.decodeObject(forKey: "feelsLike")  as? [Rating]
-//        self.images =                   aDecoder.decodeObject(forKey: "images")     as? [UIImage]
-//        self.ardiagrams =               aDecoder.decodeObject(forKey: "ardiagrams") as? [ARDiagram]
-//        self.area =                     aDecoder.decodeObject(forKey: "area")       as? String
-//        self.allImages =                aDecoder.decodeObject(forKey: "allImages")  as? [String]
-//        self.ref =                      aDecoder.decodeObject(forKey: "ref")        as? DatabaseReference
-//    }
-    
+    // MARK: - GeoFire
+    func saveToGeoFire() {
+        if self.latitude == nil || self.longitude == nil {
+            return
+        }
+        let DBRef = Database.database().reference().child("GeoFireRouteKeys")
+        let geoFire = GeoFire(firebaseRef: DBRef)
+        geoFire.setLocation(CLLocation(latitude: self.latitude!, longitude: self.longitude!), forKey: "\(self.id)") { (error) in
+            if (error != nil) {
+                print("An error occured: \(String(describing: error))")
+            } else {
+                print("Saved location successfully!")
+            }
+        }
+    }
     
     // MARK: - Firebase
     func getImagesFromFirebase(completion: @escaping () -> Void) {
-        self.images = []
-        for _ in self.allImages ?? [] {
-            self.images?.append(UIImage())
-        }
+        self.images = [:]
         var count = 0
-        for imgURL in self.allImages ?? [] {
-            URLSession.shared.dataTask(with: URL(string: imgURL)!) { data, response, error in
-                self.images?.append(UIImage(data: data!)!)
+        for imgURL in self.allImages ?? [:] {
+            URLSession.shared.dataTask(with: URL(string: imgURL.value)!) { data, response, error in
+                self.images?[imgURL.key] = UIImage(data: data!)!
                 count += 1
                 if count == self.allImages?.count {
                     completion()
                 }
             }.resume()
         }
+    }
+    func getFirstImageFromFirebase(completion: @escaping (_ image: UIImage?) -> Void) {
+        if self.allImages?.values.first == nil {
+            completion(UIImage(named: "noImages.png"))
+            return
+        }
+        let firstImageKey = self.allImages!.values.first!
+        URLSession.shared.dataTask(with: URL(string: firstImageKey)!) { data, response, error in
+            completion(UIImage(data: data!))
+        }.resume()
     }
     private func assignArea() {
         if self.localDesc!.count >= 3 {
@@ -136,37 +146,33 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
         }
     }
     func deleteImageFromFB(indexOfDeletion: Int, imageURL: String, completion: @escaping () -> Void) {
-        let storage = Storage.storage()
-        let storageRef = storage.reference(forURL: imageURL)
-        storageRef.delete { error in
-            if let error = error {
-                print(error)
-            } else {
-                completion()
-            }
-        }
-        self.allImages?.remove(at: indexOfDeletion)
-        self.saveToFirebase()
+//        let storage = Storage.storage()
+//        let storageRef = storage.reference(forURL: imageURL)
+//        storageRef.delete { error in
+//            if let error = error {
+//                print(error)
+//            } else {
+//                completion()
+//            }
+//        }
+//        self.allImages?.remove(at: indexOfDeletion)
+//        self.saveToFirebase()
     }
-    func saveToFirebase(newImages: [UIImage]) {
+    func saveToFirebase(newImagesWithKeys: [String: UIImage]) {
         saveToFirebase()
-        self.saveImagesToFirebase(newImages: newImages)
+        self.saveImagesToFirebase(newImagesWithKeys: newImagesWithKeys)
     }
     func addImageURLToFirebase(imageURL: String) {
-        if self.allImages == nil {
-            self.allImages = [imageURL]
-        } else {
-            self.allImages?.append(imageURL)
-        }
-        self.ref?.child("allImages").setValue(self.allImages)
+        let rightNow = Date().instanceString()
+        self.ref?.child("allImages").updateChildValues([rightNow: imageURL])
     }
-    func saveImagesToFirebase(newImages: [UIImage]) {
+    func saveImagesToFirebase(newImagesWithKeys: [String: UIImage]) {
         let storeRef = Storage.storage().reference()
         let imageRef = storeRef.child("routes/\(self.id)")
-        for img in newImages {
-            let data = UIImagePNGRepresentation(img.resizedToKB(numKB: 2048)!) as NSData?
+        let keys = Array(newImagesWithKeys.keys)
+        for imageKey in keys {
+            let data = UIImagePNGRepresentation(newImagesWithKeys[imageKey]!.resizedToKB(numKB: 1024)!) as NSData?
             let imageID = UUID().uuidString
-            
             //save to firebase
             _ = imageRef.child("\(imageID).png").putData(data! as Data, metadata: nil, completion: { (metadata, error) in
                 
@@ -180,6 +186,10 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
                         return
                     }
                     self.addImageURLToFirebase(imageURL: "\(downloadURL)")
+                    if self.allImages == nil {
+                        self.allImages = [:]
+                    }
+                    self.allImages![imageKey] = "\(downloadURL)"
                 }
                 
             })
@@ -240,8 +250,11 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
     func toAnyObject() -> Any {
         var a : [String : Any] = [:]
         a["name"] = name
-        if location != nil {
-            a["location"] = [self.location!.coordinate.latitude, self.location!.coordinate.longitude]
+//        if location != nil {
+//            a["location"] = [self.location!.coordinate.latitude, self.location!.coordinate.longitude]
+//        }
+        if latitude != nil {
+            a["location"] = [latitude, longitude]
         }
         if photoURL != nil {
             a["photoURL"] = photoURL
@@ -293,34 +306,20 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
         return a
     }
     
-    // MARK: - constructor
-    init (Name: String, Location: CLLocation?, PhotoURL: String?, Id: String, Types: String?, Difficulty: String?, Stars: [Star]?, Pitches: Int?, LocalDescrip: [String]?, Info: String?, FeelsRating: [Rating]?, Comments: [Comment]?, Images: [UIImage]?, ARDiagrams: [ARDiagram]?) {
-        name        = Name
-        location    = Location
-        photoURL    = PhotoURL
-        id          = Int(Id)!
-        types       = Types
-        difficulty  = Rating(desc: Difficulty!)
-        stars       = Stars
-        pitches     = Pitches
-        localDesc   = LocalDescrip
-        comments    = Comments
-        info        = Info
-        feelsLike   = FeelsRating
-        images      = Images
-        ardiagrams  = ARDiagrams
-        area        = self.localDesc?.dropLast(2).last
-        ref         = nil
+    // MARK: - Inits
+    init(name: String, id: Int, lat: Double, long: Double) {
+        self.name       = name
+        self.id         = id
+        self.latitude   = lat
+        self.longitude  = long
     }
-    
-     init(snapshot: DataSnapshot) {
+    init(snapshot: DataSnapshot) {
         id          = Int(snapshot.key)!
         let snapval = snapshot.value            as! [String : AnyObject]
         name        = snapval["name"]           as! String
         if let tempLoc = snapval["location"]       as? [Double] {
-            location = CLLocation(latitude: tempLoc[0], longitude: tempLoc[1])
-        } else {
-            location = nil
+            latitude = tempLoc[0]
+            longitude = tempLoc[1]
         }
         photoURL    = snapval["photoURL"]       as? String
         types       = snapval["types"]          as? String
@@ -346,7 +345,7 @@ class Route : /*NSObject, NSCoding, */Comparable, Codable {
             }
         }
         area        = snapval["area"]           as? String
-        allImages   = snapval["allImages"]      as? [String]
+        allImages   = snapval["allImages"]      as? [String : String]
         self.ref    = snapshot.ref
      }
     

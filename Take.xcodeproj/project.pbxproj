@@ -70,6 +70,14 @@
 		04C83B4820BB6D6B008D842D /* close-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C83B4720BB6D6B008D842D /* close-white.png */; };
 		04C83B4A20BBEB8A008D842D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */; };
 		2204AAE320C23DFC0035E3B7 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 2204AAE220C23DFC0035E3B7 /* plus.png */; };
+		2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70B20C8D50D00F525EC /* GeoFire.swift */; };
+		2220E70E20C8D78600F525EC /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* Errors.swift */; };
+		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
+		225FE8B120C63DF000C98E1A /* noImages.png in Resources */ = {isa = PBXBuildFile; fileRef = 225FE8B020C63DF000C98E1A /* noImages.png */; };
+		225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 225FE8B420C63FAB00C98E1A /* imageLoading.png */; };
+		22ABBADE20C914B00062B796 /* MakeNewArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ABBADD20C914B00062B796 /* MakeNewArea.swift */; };
+		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
+		22ECE97320C91FD600DCF44E /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE97220C91FD600DCF44E /* Area.swift */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -141,6 +149,14 @@
 		04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04FFDFE6487317316789CBF4 /* Pods-Take.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.release.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.release.xcconfig"; sourceTree = "<group>"; };
 		2204AAE220C23DFC0035E3B7 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		2220E70B20C8D50D00F525EC /* GeoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFire.swift; sourceTree = "<group>"; };
+		2220E70D20C8D78600F525EC /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
+		225FE8B020C63DF000C98E1A /* noImages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImages.png; sourceTree = "<group>"; };
+		225FE8B420C63FAB00C98E1A /* imageLoading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLoading.png; sourceTree = "<group>"; };
+		22ABBADD20C914B00062B796 /* MakeNewArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MakeNewArea.swift; sourceTree = "<group>"; };
+		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
+		22ECE97220C91FD600DCF44E /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -178,6 +194,8 @@
 				04C83B1220B556EF008D842D /* Date.swift */,
 				04C83B3F20B95343008D842D /* UIScrollView.swift */,
 				04C83B4120BB6025008D842D /* UILabel.swift */,
+				2220E70D20C8D78600F525EC /* Errors.swift */,
+				2220E70F20C8E32400F525EC /* MKMapView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -231,6 +249,7 @@
 				044061F9209D7DCD005C06C3 /* CustomSegues.swift */,
 				04C83B0820B52D06008D842D /* DeepPressGesture.swift */,
 				04C83B0E20B54DDF008D842D /* User.swift */,
+				22ECE97220C91FD600DCF44E /* Area.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -251,6 +270,7 @@
 				04C83B4320BB6520008D842D /* AreaView.swift */,
 				046E3E5D20BBF6E2009E63D8 /* Login.swift */,
 				046ED55320BE6A080055B35A /* MapView.swift */,
+				22ABBADD20C914B00062B796 /* MakeNewArea.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -273,6 +293,9 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				22ECE97020C91AC300DCF44E /* NewAreaTarget.png */,
+				225FE8B420C63FAB00C98E1A /* imageLoading.png */,
+				225FE8B020C63DF000C98E1A /* noImages.png */,
 				2204AAE220C23DFC0035E3B7 /* plus.png */,
 				04C83B4720BB6D6B008D842D /* close-white.png */,
 				04C83B4520BB68A1008D842D /* SLO.jpg */,
@@ -293,6 +316,7 @@
 				046E3E6020BD38F9009E63D8 /* MPFunctions.swift */,
 				046ED55820C12A110055B35A /* FBFunctions.swift */,
 				046ED55A20C133E50055B35A /* GoogleFunctions.swift */,
+				2220E70B20C8D50D00F525EC /* GeoFire.swift */,
 			);
 			path = "MP and FB and Google";
 			sourceTree = "<group>";
@@ -404,12 +428,15 @@
 			files = (
 				04C83B4620BB68A1008D842D /* SLO.jpg in Resources */,
 				0452556D2091B6DE00A4A384 /* LaunchScreen.storyboard in Resources */,
+				225FE8B120C63DF000C98E1A /* noImages.png in Resources */,
 				0451454220941E1E00FE72BB /* filter.png in Resources */,
+				225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */,
 				0451454B209449E100FE72BB /* minus.png in Resources */,
 				04514549209432FE00FE72BB /* unchecked.png in Resources */,
 				046ED55620BE6F940055B35A /* Readme.md in Resources */,
 				0451454020941BB900FE72BB /* wbg.png in Resources */,
 				0452556A2091B6DE00A4A384 /* Assets.xcassets in Resources */,
+				22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */,
 				04514547209432E100FE72BB /* checked.png in Resources */,
 				04C83B4820BB6D6B008D842D /* close-white.png in Resources */,
 				04C83B0B20B548EF008D842D /* profile.jpg in Resources */,
@@ -468,6 +495,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Take/Pods-Take-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GeoFire/GeoFire.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
@@ -476,6 +504,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GeoFire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
@@ -492,6 +521,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */,
 				043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */,
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
 				04C83B1120B54ED6008D842D /* Ticks.swift in Sources */,
@@ -507,13 +537,16 @@
 				043F788D20AEACF00043C08A /* EditARPhoto.swift in Sources */,
 				04C83B0D20B54C49008D842D /* ProfileTableViewCell.swift in Sources */,
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
+				2220E70E20C8D78600F525EC /* Errors.swift in Sources */,
 				0440620420A3646B005C06C3 /* RouteEdit.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
 				04BA11FF20AD345C00D24C4F /* Stars.swift in Sources */,
 				04C83B4220BB6025008D842D /* UILabel.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
 				04C83B0320B3F788008D842D /* DiagramSlideshow.swift in Sources */,
+				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
 				04C83B3E20B93E0F008D842D /* UIChartView.swift in Sources */,
+				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
 				045145452094273200FE72BB /* SearchContainerView.swift in Sources */,
 				04BA11FD20AD344400D24C4F /* Comment.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
@@ -534,6 +567,7 @@
 				044061FC209D83F2005C06C3 /* DetailImagesCell.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				04C83B0520B3F996008D842D /* SlideshowDiagramCell.swift in Sources */,
+				22ABBADE20C914B00062B796 /* MakeNewArea.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				04C83B0F20B54DDF008D842D /* User.swift in Sources */,
 				04C83B0920B52D06008D842D /* DeepPressGesture.swift in Sources */,
@@ -683,7 +717,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TYQZX6CC3;
 				INFOPLIST_FILE = Take/Info.plist;
@@ -691,8 +727,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = n8.Take;
+				PRODUCT_BUNDLE_IDENTIFIER = n8.Take3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -702,7 +739,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 04FFDFE6487317316789CBF4 /* Pods-Take.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 3TYQZX6CC3;
 				INFOPLIST_FILE = Take/Info.plist;
@@ -710,8 +749,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = n8.Take;
+				PRODUCT_BUNDLE_IDENTIFIER = n8.Take3;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

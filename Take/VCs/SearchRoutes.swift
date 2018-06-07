@@ -28,6 +28,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     var selectedRoute : Route!
     var selectedImage : UIImage!
     var routesRoot : DatabaseReference?
+    var firstImages : [String: UIImage] = [:]
     
     // View load/unload
     override func viewDidLoad() {
@@ -161,7 +162,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
                 // reverse engeineer location
                 forwardGeocoding(address: searchBar.text!) { (coordinate) in
                     // search MP API for routes by coordinate
-                    routesByArea(coord: coordinate, completion: { (routes) -> () in
+                    routesByArea(coord: coordinate, maxDistance: 50, maxResults: 500, completion: { (routes) in
                         for route in routes {
                             // search for route in Firebase by id
                             searchFBRoute(byProperty: "id", withValue: route.id, completion: { (moreRoutes) in
@@ -178,11 +179,20 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     func addToRoutes(newRoutes: [Route]) {
         let prevCount = self.routeResults.count
+        //if it doesn't already exist, add to array
         for route in newRoutes {
             if !self.routeResults.contains(route) {
                 self.routeResults.append(route)
+                //download first image
+                route.getFirstImageFromFirebase { (firstImage) in
+                    self.firstImages["\(route.id)"] = firstImage
+                    DispatchQueue.main.async {
+                        self.myTableView.reloadData()
+                    }
+                }
             }
         }
+        //if images were added, sort and reload table view
         if self.routeResults.count != prevCount {
             self.routeResults.sort(by: { $0.name < $1.name })
             DispatchQueue.main.async {
@@ -220,7 +230,13 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             cell.typesLabel.textColor = UIColor.white
             
             // images
-            cell.theImageView.image = UIImage(named: "bg.jpg")
+            if let firstImage = firstImages["\(routeResults[indexPath.row].id)"] {
+                //there is an image loaded - could be an actual image or the noImages.png
+                cell.theImageView.image = firstImage
+            } else {
+                //there is an image loading
+                cell.theImageView.image = UIImage(named: "imageLoading.png")
+            }
             cell.theImageView.roundImage(portion: 2)
             cell.theImageView.addBorder(color: .white, width: 1)
             if let area = routeResults[indexPath.row].area {
