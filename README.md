@@ -29,3 +29,4 @@
 - [ ] Add an animated scroll to top after changing pages on list view
 - [ ] Add confirmation screen/alert to edit route
 - [ ] Add tick/todo icon on list view
+- [ ] Add support for Alpine and Aid routes
