@@ -28,3 +28,4 @@
 - [ ] Add edit history to routes so users can approve and deny edits and revert to old edits
 - [ ] Add an animated scroll to top after changing pages on list view
 - [ ] Add confirmation screen/alert to edit route
+- [ ] Add tick/todo icon on list view
