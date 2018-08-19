@@ -33,7 +33,7 @@ class ShapeView: UIView {
 
     func randomPath() -> UIBezierPath {
 
-        let insetRect = CGRectInset(self.bounds, lineWidth, lineWidth)
+        let insetRect = self.bounds.insetBy(dx: lineWidth, dy: lineWidth)
 
         let shapeType = arc4random() % 3
 
@@ -111,6 +111,7 @@ class ShapeView: UIView {
         rotationGR.rotation = 0.0
     }
 
+    @available(*, unavailable)
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }

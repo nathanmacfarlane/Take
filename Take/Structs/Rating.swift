@@ -13,7 +13,7 @@ import Foundation
 //    var classification      : Int!
 //    var subClassification   : Int?
 //    var buffer              : BUFFER?
-//    var protection          : PROTECTION!
+//    var protection          : Protection!
 //
 //    var description : String! {
 //        switch type {

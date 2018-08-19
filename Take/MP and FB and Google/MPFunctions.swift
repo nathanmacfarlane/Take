@@ -23,7 +23,6 @@ func routesByArea(coord: CLLocationCoordinate2D, maxDistance: Double, maxResults
                     let decoder = JSONDecoder()
                     let theRouteStuff = try decoder.decode(RouteService.self, from: newData)
                     completion(theRouteStuff.routes)
-
                 } catch {
                     print("Exception on Decode: \(error)")
                 }
@@ -31,5 +30,5 @@ func routesByArea(coord: CLLocationCoordinate2D, maxDistance: Double, maxResults
         } else {
             completion([])
         }
-        }.resume()
+    }.resume()
 }

@@ -12,10 +12,10 @@ import Foundation
 import GeoFire
 
 class Area {
-    var id: String
-    var name: String
-    var location: CLLocation
-    var radius: Double
+    var id: String!
+    var name: String!
+    var location: CLLocation!
+    var radius: Double!
 
     // MARK: - Inits
     init(name: String, location: CLLocation, radius: Double) {
@@ -24,11 +24,9 @@ class Area {
         self.location = location
         self.radius = radius
     }
-    init?(snapshot: DataSnapshot) {
+    init(snapshot: DataSnapshot) {
         id = snapshot.key
-        guard let snapval = snapshot.value as? [String: AnyObject] else {
-            return nil
-        }
+        let snapval = snapshot.value as! [String: AnyObject]
         name = snapval["name"]           as! String
         location = CLLocation(latitude: (snapval["location"] as! [Double])[0], longitude: (snapval["location"] as! [Double])[1])
         radius = snapval["radius"]         as! Double

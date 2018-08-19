@@ -8,10 +8,10 @@
 
 import Foundation
 
-enum PROTECTION {
-    case G
-    case PG
-    case PG13
-    case R
-    case X
+enum Protection {
+    case g
+    case pg
+    case pg13
+    case r
+    case x
 }
