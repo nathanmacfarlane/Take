@@ -1,5 +1,5 @@
 //
-//  Rating.swift
+//  OldRating.swift
 //  Take
 //
 //  Created by Family on 5/16/18.
@@ -8,16 +8,32 @@
 
 import Foundation
 
+//struct Rating {
+//    var type                : TYPE!
+//    var classification      : Int!
+//    var subClassification   : Int?
+//    var buffer              : BUFFER?
+//    var protection          : PROTECTION!
+//
+//    var description : String! {
+//        switch type {
+//        case .boulder:
+//            return "V\(classification)\(buffer != nil && buffer == .plus ? "+" : "-")"
+//        case .climb:
+//            return "\(classification).\(subClassification!)\(buffer != nil && buffer == .plus ? "+" : "-")"
+//        default:
+//            return "INVALID TYPE"
+//        }
+//    }
+//
+//}
+
 struct Rating {
     var desc        : String!
     var intDiff     : Int!
     var type        : TYPE!
     var buffer      : String?
     var danger      : String?
-    
-    func encode(to encoder: Encoder) throws {
-        
-    }
     
     var description : String! {
         switch type {
@@ -113,11 +129,19 @@ struct Rating {
         }
         for n in start..<chars.count {
             if chars[n] > "9" || chars[n] < "0" {
-                return Int(diff)!
+                if let toReturn = Int(diff) {
+                    return toReturn
+                } else {
+                    return 0
+                }
             }
             diff = "\(diff)\(chars[n])"
         }
-        return Int(diff)!
+        if let toReturn = Int(diff) {
+            return toReturn
+        } else {
+            return 0
+        }
     }
     
 }

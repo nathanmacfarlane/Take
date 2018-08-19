@@ -11,5 +11,7 @@ target 'Take' do
   pod 'Firebase/Storage'
   pod 'GoogleSignIn'
   pod 'GeoFire'
+  pod 'Charts'
+  pod 'ChartsRealm'
 
 end

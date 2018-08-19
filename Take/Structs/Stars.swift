@@ -8,6 +8,11 @@
 
 import Foundation
 
+struct Stars {
+    var average     : Double
+    var starVotes   : Int
+}
+
 struct Star: Codable {
     var star    : Double!
     var id      : String!

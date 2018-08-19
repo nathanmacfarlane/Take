@@ -32,31 +32,6 @@ extension UIImage {
         return newImage
     }
     
-    func imageByCombiningImage(firstImage: UIImage, withImage secondImage: UIImage) -> UIImage {
-        
-        let newImageWidth  = max(firstImage.size.width,  secondImage.size.width )
-        let newImageHeight = max(firstImage.size.height, secondImage.size.height)
-        let newImageSize = CGSize(width : newImageWidth, height: newImageHeight)
-        
-        UIGraphicsBeginImageContextWithOptions(newImageSize, false, UIScreen.main.scale)
-        
-        let firstImageDrawX  = round((newImageSize.width  - firstImage.size.width  ) / 2)
-        let firstImageDrawY  = round((newImageSize.height - firstImage.size.height ) / 2)
-        
-        let secondImageDrawX = round((newImageSize.width  - secondImage.size.width ) / 2)
-        let secondImageDrawY = round((newImageSize.height - secondImage.size.height) / 2)
-        
-        firstImage .draw(at: CGPoint(x: firstImageDrawX,  y: firstImageDrawY))
-        secondImage.draw(at: CGPoint(x: secondImageDrawX, y: secondImageDrawY))
-        
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        
-        UIGraphicsEndImageContext()
-        
-        
-        return image!
-    }
-    
     func resized(withPercentage percentage: CGFloat) -> UIImage? {
         let canvasSize = CGSize(width: size.width * percentage, height: size.height * percentage)
         UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
@@ -82,5 +57,61 @@ extension UIImage {
         
         return resizingImage
     }
+    
+    func addTextToImage(drawText: String, atPoint: CGPoint) -> UIImage {
+        
+        // Setup the font specific variables
+        let textColor = UIColor.white
+        let textFont = UIFont(name: "Helvetica Bold", size: 200)!
+        
+        // Setup the image context using the passed image
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
+        
+        // Setup the font attributes that will be later used to dictate how the text should be drawn
+        let textFontAttributes = [
+            kCTFontAttributeName: textFont,
+            kCTForegroundColorAttributeName: textColor,
+            ]
+        
+        // Put the image into a rectangle as large as the original image
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        
+        // Create a point within the space that is as bit as the image
+        let rect = CGRect(x: atPoint.x, y: atPoint.y, width: self.size.width, height: self.size.height)
+        
+        // Draw the text into an image
+        drawText.draw(in: rect, withAttributes: textFontAttributes as [NSAttributedStringKey : Any])
+        
+        // Create a new image out of the images we have created
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        
+        // End the context now that we have the image we need
+        UIGraphicsEndImageContext()
+        return newImage!
+    }
+    
+    func textToImage(drawText text: String, atPoint point: CGPoint) -> UIImage {
+        let textColor = UIColor.white
+        let textFont = UIFont(name: "Helvetica Bold", size: 50)!
+        
+        let scale = UIScreen.main.scale
+        UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
+        
+        let textFontAttributes = [
+            NSAttributedStringKey.font: textFont,
+            NSAttributedStringKey.foregroundColor: textColor,
+            ] as [NSAttributedStringKey : Any]
+        self.draw(in: CGRect(origin: CGPoint.zero, size: self.size))
+        
+        let rect = CGRect(origin: point, size: self.size)
+        text.draw(in: rect, withAttributes: textFontAttributes)
+        
+        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return newImage!
+    }
+
     
 }

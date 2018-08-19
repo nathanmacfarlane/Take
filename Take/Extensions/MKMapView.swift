@@ -17,6 +17,9 @@ extension MKMapView {
             }
         }
     }
+    func removeAllOverlays() {
+        self.removeOverlays(self.overlays)
+    }
     
     func addPin(from route: Route) {
         let annotation = MKPointAnnotation()
@@ -39,5 +42,11 @@ extension MKMapView {
     func centerMapOn(_ location: CLLocation, withRadius radius: Double) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, radius, radius)
         self.setRegion(coordinateRegion, animated: true)
+    }
+    func addCircle(name: String, coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) -> AreaOverlay {
+        let circle = AreaOverlay(center: coordinate, radius: radius)
+        circle.area = Area(name: name, location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), radius: radius)
+        self.add(circle)
+        return circle
     }
 }

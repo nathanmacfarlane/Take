@@ -13,7 +13,7 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     // MARK: - IBOutlets
     @IBOutlet weak var myImageCV: UICollectionView!
     @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var pageController: UIPageControl!
+    @IBOutlet weak var imageNumberLabel: UILabel!
     
     // MARK: - Variables
     var images : [UIImage] = []
@@ -23,13 +23,12 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     // View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.pageController.numberOfPages = images.count
+//        self.pageController.numberOfPages = images.count
+        self.imageNumberLabel.text = "Image \(selectedImage! + 1) of \(images.count)"
         self.closeButton.roundButton(portion: 4)
         collectionViewFlowLayout = myImageCV.collectionViewLayout as! UICollectionViewFlowLayout
         self.myImageCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .centeredHorizontally, animated: true)
-        self.pageController.currentPage = selectedImage
-        
+//        self.pageController.currentPage = selectedImage
     }
     
     // MARK: - UICollectionView
@@ -39,7 +38,7 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SlideshowImageCell
         cell.theImage.image = images[indexPath.row]
-        cell.bgImageView.image = images[indexPath.row]
+//        cell.bgImageView.image = images[indexPath.row]
         return cell
     }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
@@ -57,7 +56,8 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
             if collectionView.contentOffset.x <= CGFloat(i) * itemWithSpaceWidth + itemWidth / 2 {
                 let indexPath = IndexPath(item: i, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                self.pageController.currentPage = indexPath.row
+                self.imageNumberLabel.text = "Image \(indexPath.row + 1) of \(images.count)"
+//                self.pageController.currentPage = indexPath.row
                 break
             }
         }
