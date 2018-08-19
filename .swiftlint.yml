@@ -18,7 +18,7 @@ identifier_name:
   - ok
 indentation: 4
 large_tuple: 3
-line_length: 120
+line_length: 150
 nesting:
   type_level: 2
 private_outlet:
@@ -30,6 +30,7 @@ disabled_rules:
 - explicit_acl
 - explicit_enum_raw_value
 - explicit_top_level_acl
+- file_header
 - no_extension_access_modifier
 - number_separator
 - prefixed_toplevel_constant
@@ -68,7 +69,6 @@ opt_in_rules:
 - extension_access_modifier
 - fallthrough
 - fatal_error_message
-- file_header
 - file_length
 - file_name
 - first_where

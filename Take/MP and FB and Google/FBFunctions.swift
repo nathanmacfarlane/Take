@@ -65,14 +65,13 @@ func searchFBRoute(byProperty property: String, withValue value: Any, completion
 func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]) -> Void) {
     var routeResults: [Int] = []
     let routesRoot = Database.database().reference(withPath: "areas\(path)")
-    routesRoot.observeSingleEvent(of: .value, with: { snapshot in
+    routesRoot.observeSingleEvent(of: .value) { snapshot in
         for item in snapshot.children {
-            if let myRoute = Int((item as! DataSnapshot).key) {
-                routeResults.append(myRoute)
-            }
+            guard let snap = item as? DataSnapshot, let myRoute = Int(snap.key) else { continue }
+            routeResults.append(myRoute)
         }
         completion(routeResults)
-    })
+    }
 }
 
 func searchFBArea(with key: String, completion: @escaping (_ area: Area) -> Void) {

@@ -220,7 +220,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
     func getFirstImageFromFirebase(completion: @escaping (_ image: UIImage?) -> Void) {
         if self.allImages?.values.first == nil {
-            completion(UIImage(named: "noImages.png"))
+            completion(#imageLiteral(resourceName: "noImages.png"))
             return
         }
         let firstImageKey = self.allImages!.values.first!
@@ -347,7 +347,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
 
     // MARK: - equatable
-    open override func isEqual(_ object: Any?) -> Bool {
+    override func isEqual(_ object: Any?) -> Bool {
         guard let r = object as? Route else {
             return false
         }

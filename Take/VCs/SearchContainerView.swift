@@ -27,16 +27,16 @@ class SearchContainerView: UIViewController {
     @IBOutlet weak var pitchesSeg: UISegmentedControl!
 
     // MARK: - Variables
-    var topRope = true
-    var sport = true
-    var trad = true
-    var boulder = true
+    var topRope: Bool = true
+    var sport: Bool = true
+    var trad: Bool = true
+    var boulder: Bool = true
     var stars: Double = 0
     var distance: Int = 25
     var minDiff: Int = 0
     var maxDiff: Int = 15
     var pitches: Int = Int(UInt32.max)
-    var ratings = ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8", "5.9", "5.10", "5.11", "5.12", "5.13", "5.14", "5.15"]
+    var ratings: [String] = ["5.0", "5.1", "5.2", "5.3", "5.4", "5.5", "5.6", "5.7", "5.8", "5.9", "5.10", "5.11", "5.12", "5.13", "5.14", "5.15"]
 
     // MARK: - view load/unload
     override func viewDidLoad() {

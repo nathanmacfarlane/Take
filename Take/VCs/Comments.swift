@@ -109,22 +109,19 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
         let wordsArr = allWords.components(separatedBy: " ")
         var counts: [String: Int] = [:]
 
-        for item in wordsArr {
-            if item.count >= 5 {
-                counts[item] = (counts[item] ?? 0) + 1
-            }
+        for item in wordsArr where item.count >= 5 {
+            counts[item] = (counts[item] ?? 0) + 1
         }
 
         for _ in 1...3 {
             var maxKey = ""
             var maxCount = 0
-            for (key, value) in counts {
-                if value > maxCount {
-                    maxKey = key
-                    maxCount = value
-                }
+            for (key, value) in counts where value > maxCount {
+                maxKey = key
+                maxCount = value
             }
-            if maxKey != "" {
+
+            if !maxKey.isEmpty {
                 topWords.append(maxKey)
                 counts.removeValue(forKey: maxKey)
             }

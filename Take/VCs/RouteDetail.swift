@@ -66,7 +66,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         theRoute.observeImageFromFirebase {  imageSnapshot, imageRef  in
             self.imageRef = imageRef
             let imageURL = imageSnapshot.value! as! String
-            loadImageFrom(url: imageURL, completion: {  image  in
+            loadImageFrom(url: imageURL) { image in
                 if self.theRoute.images == nil {
                     self.theRoute.images = [:]
                 }
@@ -77,7 +77,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     self.updateLabel()
                     self.myCV.reloadData()
                 }
-            })
+            }
         }
 
         addBlur()

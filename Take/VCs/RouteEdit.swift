@@ -215,7 +215,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     // MARK: - TextView
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        if (text == "\n") {
+        if text == "\n" {
             textView.resignFirstResponder()
         }
         return true
@@ -268,7 +268,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             if self.theRoute.images == nil { self.theRoute.images = [:] }
             self.theRoute.images![image.key] = image.value
         }
-        if self.feelsLikeField.text != "" {
+        if self.feelsLikeField.text?.isEmpty == false {
             if theRoute.feelsLike == nil { theRoute.feelsLike = [] }
             theRoute.feelsLike?.append(Rating(desc: self.feelsLikeField.text!))
         }

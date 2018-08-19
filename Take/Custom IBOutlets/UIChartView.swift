@@ -21,6 +21,7 @@ class UIChartView: UIView {
     private var barWidth: Int = 50
 
     override func awakeFromNib() {
+        super.awakeFromNib()
         myScrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height))
         myScrollView.backgroundColor = .white
         myScrollView.bounces = false
