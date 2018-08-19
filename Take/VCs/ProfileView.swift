@@ -9,11 +9,10 @@
 import UIKit
 
 class ProfileView: UIViewController {
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
     }
 
 }
-

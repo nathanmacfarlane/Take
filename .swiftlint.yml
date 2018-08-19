@@ -16,7 +16,7 @@ explicit_type_interface:
 identifier_name:
   excluded:
   - ok
-indentation: 2
+indentation: 4
 large_tuple: 3
 line_length: 120
 nesting:

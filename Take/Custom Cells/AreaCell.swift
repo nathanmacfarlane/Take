@@ -9,10 +9,9 @@
 import UIKit
 
 class AreaCell: UITableViewCell {
-    
+
     @IBOutlet weak var areaLabel: UILabel!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var bgView: UIView!
-    
 
 }

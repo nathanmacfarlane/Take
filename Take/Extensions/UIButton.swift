@@ -11,10 +11,10 @@ import UIKit
 
 extension UIButton {
     func roundButton(portion: CGFloat) {
-        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height/portion : self.frame.width/portion
+        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height / portion : self.frame.width / portion
         self.clipsToBounds = true
     }
-    func addAbrevText(text : String) {
+    func addAbrevText(text: String) {
         var newText = text
         if newText.count > 3 {
             let arr = newText.split(separator: " ")
@@ -26,4 +26,3 @@ extension UIButton {
         self.setTitle(newText, for: .normal)
     }
 }
-

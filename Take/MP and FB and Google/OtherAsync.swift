@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 func loadImageFrom(url: String, completion: @escaping (_ image: UIImage) -> Void) {
-    URLSession.shared.dataTask(with: URL(string: url)!) { data, response, error in
+    URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
         completion(UIImage(data: data!)!)
-    }.resume()
+        }.resume()
 }

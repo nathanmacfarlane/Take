@@ -12,5 +12,3 @@ import MapKit
 class AreaOverlay: MKCircle {
     var area: Area?
 }
-
-

@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 extension UILabel {
-    func addAbrevText(text : String) {
+    func addAbrevText(text: String) {
         var newText = text
         if newText.count > 3 {
             let arr = newText.split(separator: " ")

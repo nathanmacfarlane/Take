@@ -6,8 +6,8 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import UIKit
 import Charts
+import UIKit
 
 class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
@@ -15,12 +15,12 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var routeNameLabel: UILabel!
     @IBOutlet weak var myTableView: UITableView!
     var donutChartCV: DonutChart!
-    
+
     // MARK: - Variables
     var routeArea: RouteArea!
     var rows: [TitleRow] = [TitleRow(name: "Description", color: UIColor(hexString: "#5DDE9E"), expanded: false), TitleRow(name: "Routes", color: UIColor(hexString: "#88DBFA"), expanded: false), TitleRow(name: "Images", color: UIColor(hexString: "#A3A0FB"), expanded: false), TitleRow(name: "Directions", color: UIColor(hexString: "#DE9898"), expanded: false), TitleRow(name: "Type", color: UIColor(hexString: "#D391C4"), expanded: false), TitleRow(name: "Difficulty", color: UIColor(hexString: "#E2C977"), expanded: false), TitleRow(name: "Popularity", color: UIColor(hexString: "#5DDE9E"), expanded: false)]
     var rowHeight: CGFloat = 61
-    
+
     // MARK: - Structs
     struct TitleRow {
         var name: String
@@ -30,8 +30,8 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        searchFBRoute(byProperty: "area", withValue: routeArea.name) { (routes) in
+
+        searchFBRoute(byProperty: "area", withValue: routeArea.name) { routes in
             var trad = 0
             var topRope = 0
             var sport = 0
@@ -54,10 +54,10 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
             self.donutChartCV.updateChartData(trad: trad, boulder: boulder, topRope: topRope, sport: sport, count: routes.count)
         }
-        
+
         self.routeNameLabel.text = routeArea.name
     }
-    
+
     // MARK: - UITableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return rows.count
@@ -79,19 +79,19 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.textColor = rows[indexPath.row].color
         cell.bgView.roundView(portion: 2)
         cell.selectionStyle = .none
-//        cell.backgroundColor = UIColor(hexString: "#2F2F2F")
+        //        cell.backgroundColor = UIColor(hexString: "#2F2F2F")
         return cell
     }
-    
+
     // MARK: - Navigation
     @IBAction func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "DonutChart" {
             self.donutChartCV = segue.destination as! DonutChart
         }
     }
-    
+
 }

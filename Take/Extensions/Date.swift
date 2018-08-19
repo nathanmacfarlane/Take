@@ -9,7 +9,7 @@
 import Foundation
 
 extension Date {
-    
+
     // formatters
     func monthDayYear(style: String) -> String {
         return "\(self.getMonthInt())\(style)\(self.getYearInt())\(style)\(self.getYearInt())"
@@ -20,13 +20,13 @@ extension Date {
     func instanceString() -> String {
         return "\(self.getYearInt())\(self.getMonthInt())\(self.getDayInt())\(self.getHourInt())\(self.getMinuteInt())\(self.getSecondInt())\(self.getNanoSecondInt())"
     }
-    
+
     // getters
     //strings
     func getMonth() -> String {
         let calendar = Calendar.current
-        let months = ["January","Febuary","March","April","May","June","July","August","September","October","November","December"]
-        return months[calendar.component(.month, from: self)-1]
+        let months = ["January", "Febuary", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        return months[calendar.component(.month, from: self) - 1]
     }
     //ints
     func getYearInt() -> Int {
@@ -35,7 +35,7 @@ extension Date {
     }
     func getMonthInt() -> Int {
         let calendar = Calendar.current
-        return calendar.component(.month, from: self)-1
+        return calendar.component(.month, from: self) - 1
     }
     func getDayInt() -> Int {
         let calendar = Calendar.current
@@ -57,7 +57,7 @@ extension Date {
         let calendar = Calendar.current
         return calendar.component(.nanosecond, from: self)
     }
-    
+
     //inits
     init(fromString: String, style: String) {
         let formatter = DateFormatter()

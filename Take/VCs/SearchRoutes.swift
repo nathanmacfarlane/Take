@@ -6,10 +6,10 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import UIKit
 import CoreLocation
-import FirebaseDatabase
 import FirebaseAuth
+import FirebaseDatabase
+import UIKit
 
 class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate {
 
@@ -19,74 +19,74 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         var areas: [String]!
         var cities: [String]!
         var routes: [Route]!
-        
+
         mutating func clear() {
             self.walls.removeAll()
             self.areas.removeAll()
             self.routes.removeAll()
         }
     }
-    
+
     // MARK: - IBOutlets
     @IBOutlet weak var myTableView: UITableView!
     @IBOutlet weak var mySearchBar: UISearchBar!
     @IBOutlet weak var mySearchCV: UIView!
     @IBOutlet weak var routesRangeLabel: UILabel!
     @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
-    
+
     // MARK: - Variables
     private var myCV: SearchContainerView!
     let locationManager = CLLocationManager()
-    var userCurrentLocation : CLLocation?
-//    var selectedRoute : Route!
-    var selectedImage : UIImage!
-    var routesRoot : DatabaseReference?
-    var firstImages : [String: UIImage] = [:]
+    var userCurrentLocation: CLLocation?
+    //    var selectedRoute : Route!
+    var selectedImage: UIImage!
+    var routesRoot: DatabaseReference?
+    var firstImages: [String: UIImage] = [:]
     var startIndex = 0
     let NUM_CELLS = 10
     let MAX_RESULTS = 20
-    
-    var results : SearchResults!
+
+    var results: SearchResults!
     var resultsMashed: [Any] = []
-    
+
     // View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         UIApplication.shared.isStatusBarHidden = true
         self.myTableView.backgroundColor = UIColor.clear
         self.myTableView.separatorStyle = .none
         UITabBar.appearance().barTintColor = self.view.backgroundColor
-        
+
         self.myActivityIndicator.isHidden = true
         self.routesRangeLabel.text = ""
-        
+
         results = SearchResults(walls: [], areas: [], cities: [], routes: [])
-        
+
         if Auth.auth().currentUser == nil {
-            DispatchQueue.main.async() {
+            DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "goToLogin", sender: nil)
                 print("not logged in")
             }
         } else {
-//            print("welcome: \(String(describing: Auth.auth().currentUser?.uid))")
+            //            print("welcome: \(String(describing: Auth.auth().currentUser?.uid))")
         }
-        
+
         routesRoot = Database.database().reference(withPath: "routes")
         routesRoot?.keepSynced(true)
-        
+
         setupLocations()
-        
+
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
+
         self.myTableView.reloadData()
-        
+
     }
-    
+
     // MARK: - Actions
-    
+
     // MARK: - Functions
     func setupLocations() {
         self.locationManager.requestAlwaysAuthorization()
@@ -97,62 +97,62 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             locationManager.startUpdatingLocation()
         }
     }
-    
+
     // MARK: - LocationManager
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
         userCurrentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
     }
-    
+
     // MARK: - SearchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        
+
         self.myActivityIndicator.isHidden = false
         self.myActivityIndicator.startAnimating()
-        
+
         self.results.clear()
         self.resultsMashed.removeAll()
         self.myTableView.reloadData()
-        
+
         var count = 0
-        searchFBRoute(byProperty: "name", withValue: searchBar.text!) { (routes) in
+        searchFBRoute(byProperty: "name", withValue: searchBar.text!) { routes in
             self.results.routes.append(contentsOf: routes)
             self.resultsMashed.append(contentsOf: routes)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRoute(byProperty: "keyword", withValue: searchBar.text!) { (routes) in
+        searchFBRoute(byProperty: "keyword", withValue: searchBar.text!) { routes in
             self.results.routes.append(contentsOf: routes)
             self.resultsMashed.append(contentsOf: routes)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteAreas(byProperty: "name", withValue: searchBar.text!) { (areas) in
+        searchFBRouteAreas(byProperty: "name", withValue: searchBar.text!) { areas in
             self.resultsMashed.append(contentsOf: areas)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteAreas(byProperty: "keyword", withValue: searchBar.text!) { (areas) in
+        searchFBRouteAreas(byProperty: "keyword", withValue: searchBar.text!) { areas in
             self.resultsMashed.append(contentsOf: areas)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteWalls(byProperty: "name", withValue: searchBar.text!) { (walls) in
+        searchFBRouteWalls(byProperty: "name", withValue: searchBar.text!) { walls in
             self.resultsMashed.append(contentsOf: walls)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteWalls(byProperty: "keyword", withValue: searchBar.text!) { (walls) in
+        searchFBRouteWalls(byProperty: "keyword", withValue: searchBar.text!) { walls in
             self.resultsMashed.append(contentsOf: walls)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteCities(byProperty: "name", withValue: searchBar.text!) { (cities) in
+        searchFBRouteCities(byProperty: "name", withValue: searchBar.text!) { cities in
             self.resultsMashed.append(contentsOf: cities)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
         }
-        searchFBRouteCities(byProperty: "keyword", withValue: searchBar.text!) { (cities) in
+        searchFBRouteCities(byProperty: "keyword", withValue: searchBar.text!) { cities in
             self.resultsMashed.append(contentsOf: cities)
             self.myTableView.reloadData()
             count = self.manageSpinner(count: count)
@@ -167,7 +167,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         return count + 1
     }
-    
+
     // MARK: - TableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -184,20 +184,20 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         default:
             print("not accounted for")
         }
-//        if tableView.cellForRow(at: indexPath) is RouteCell {
-//            selectedRoute = self.filteredRoutes[indexPath.row]
-//            selectedImage = (tableView.cellForRow(at: indexPath) as! RouteCell).theImageView.image
-//            self.performSegue(withIdentifier: "goToDetail", sender: nil)
-//        }
+        //        if tableView.cellForRow(at: indexPath) is RouteCell {
+        //            selectedRoute = self.filteredRoutes[indexPath.row]
+        //            selectedImage = (tableView.cellForRow(at: indexPath) as! RouteCell).theImageView.image
+        //            self.performSegue(withIdentifier: "goToDetail", sender: nil)
+        //        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultsMashed.count
-//        if self.filteredRoutes.count == 0 { return 0 }
-//        if startIndex > self.filteredRoutes.count-NUM_CELLS {
-//            return (self.filteredRoutes.count-startIndex) + 1
-//        } else {
-//            return self.filteredRoutes.count <= NUM_CELLS ? self.filteredRoutes.count + 1 : NUM_CELLS+1
-//        }
+        //        if self.filteredRoutes.count == 0 { return 0 }
+        //        if startIndex > self.filteredRoutes.count-NUM_CELLS {
+        //            return (self.filteredRoutes.count-startIndex) + 1
+        //        } else {
+        //            return self.filteredRoutes.count <= NUM_CELLS ? self.filteredRoutes.count + 1 : NUM_CELLS+1
+        //        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
@@ -225,8 +225,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.bgView.clipsToBounds = true
         cell.backgroundColor = .clear
         cell.cityLabel.text = city.name
-        city.getCoverPhoto { (coverImage) in
-            DispatchQueue.main.async() {
+        city.getCoverPhoto { coverImage in
+            DispatchQueue.main.async {
                 cell.bgImage.image = coverImage
             }
         }
@@ -239,8 +239,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.bgView.clipsToBounds = true
         cell.backgroundColor = .clear
         cell.areaLabel.text = area.name
-        area.getCoverPhoto { (coverImage) in
-            DispatchQueue.main.async() {
+        area.getCoverPhoto { coverImage in
+            DispatchQueue.main.async {
                 cell.bgImage.image = coverImage
             }
         }
@@ -253,8 +253,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.bgView.layer.cornerRadius = 10
         cell.bgView.clipsToBounds = true
         cell.backgroundColor = .clear
-        wall.getCoverPhoto { (coverImage) in
-            DispatchQueue.main.async() {
+        wall.getCoverPhoto { coverImage in
+            DispatchQueue.main.async {
                 cell.bgImage.image = coverImage
             }
         }
@@ -263,7 +263,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     func getRouteCell(route: Route) -> RouteCell {
         let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as! RouteCell
-        
+
         // labels
         cell.nameLabel.text = route.name
         cell.nameLabel.textColor = UIColor.white
@@ -271,7 +271,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.difficultyLabel.textColor = UIColor.white
         cell.typesLabel.text = route.types
         cell.typesLabel.textColor = UIColor.white
-        
+
         // images
         if let firstImage = firstImages["\(route.id)"] {
             //there is an image loaded - could be an actual image or the noImages.png
@@ -290,7 +290,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         } else {
             cell.areaButton.setTitle("", for: .normal)
         }
-        
+
         // background
         cell.backgroundColor = UIColor.clear
         cell.bgView.backgroundColor = UIColor.black
@@ -309,25 +309,23 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.performSegue(withIdentifier: "goToArea", sender: sender.titleLabel?.text)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
+
         if let vc = segue.destination as? SearchContainerView, segue.identifier == "theCV" {
             self.myCV = vc
         }
         if segue.identifier == "goToDetail" {
-            let dc:RouteDetail = segue.destination as! RouteDetail
+            let dc: RouteDetail = segue.destination as! RouteDetail
             dc.theRoute = sender as! Route
-//            dc.mainImg  = selectedImage
+            //            dc.mainImg  = selectedImage
         }
         if segue.identifier == "goToArea" {
-            let dc:AreaView = segue.destination as! AreaView
+            let dc: AreaView = segue.destination as! AreaView
             dc.routeArea = sender as! RouteArea
         }
-        
+
     }
 
 }
-
-
 
 //    func filterRoutes() {
 //        self.filteredRoutes = []
@@ -465,7 +463,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
  }
  }
  }
- 
+
  */
 
 //func toggleCV() {
@@ -479,5 +477,3 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
 //        self.mySearchCV.frame = pos
 //    }, completion: nil)
 //}
-
-

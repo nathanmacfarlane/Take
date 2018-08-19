@@ -11,13 +11,13 @@ import UIKit
 
 extension UIImageView {
     func roundImage(portion: CGFloat) {
-        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height/portion : self.frame.width/portion
+        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height / portion : self.frame.width / portion
         self.clipsToBounds = true
     }
-//    func addBorder(color: UIColor, width: CGFloat) {
-//        self.layer.borderColor = color.cgColor
-//        self.layer.borderWidth = width
-//    }
+    //    func addBorder(color: UIColor, width: CGFloat) {
+    //        self.layer.borderColor = color.cgColor
+    //        self.layer.borderWidth = width
+    //    }
     func addTextOver(color: UIColor, text: String) {
         var newText = text
         if newText.count > 3 {

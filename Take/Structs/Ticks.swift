@@ -9,7 +9,7 @@
 import Foundation
 
 struct Tick {
-    var route   : Route
-    var date    :  Date
-    var comment : String?
+    var route: Route
+    var date: Date
+    var comment: String?
 }

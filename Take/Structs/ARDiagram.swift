@@ -10,14 +10,14 @@ import Foundation
 import UIKit
 
 struct ARDiagram {
-    var bgImage:    UIImage
-    var diagram:    UIImage?
-    
+    var bgImage: UIImage
+    var diagram: UIImage?
+
     init(bgImage: UIImage) {
-        self.bgImage    = bgImage
-        self.diagram    = nil
+        self.bgImage = bgImage
+        self.diagram = nil
     }
-    
+
     init(bgImage: UIImage, diagram: UIImage) {
         self.bgImage = bgImage
         self.diagram = diagram

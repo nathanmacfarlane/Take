@@ -12,21 +12,21 @@ class AddARImageCell: UICollectionViewCell {
     @IBOutlet weak var bgImageView: UIImageView!
     @IBOutlet weak var diagramImageView: UIImageView!
     var hasImage: Bool = false
-    
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
-//
-//        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(heldCell(sender:)))
-//        self.addGestureRecognizer(longPress)
-//
-//    }
-//
-//    @objc func heldCell(sender: UITapGestureRecognizer) {
-//        if sender.state == .began && self.hasImage {
-//            self.removeImage()
-//        }
-//    }
-    
+
+    //    override func awakeFromNib() {
+    //        super.awakeFromNib()
+    //
+    //        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(heldCell(sender:)))
+    //        self.addGestureRecognizer(longPress)
+    //
+    //    }
+    //
+    //    @objc func heldCell(sender: UITapGestureRecognizer) {
+    //        if sender.state == .began && self.hasImage {
+    //            self.removeImage()
+    //        }
+    //    }
+
     func setImage(ardiagram: ARDiagram) {
         self.bgImageView.image = ardiagram.bgImage
         self.diagramImageView.image = ardiagram.diagram

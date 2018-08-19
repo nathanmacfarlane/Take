@@ -9,6 +9,6 @@
 import Foundation
 
 struct ChartData {
-    var month : String
-    var value : Int
+    var month: String
+    var value: Int
 }
