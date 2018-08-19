@@ -11,8 +11,7 @@ import UIKit
 
 extension UITextView {
     func roundField(portion: CGFloat) {
-        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height/portion : self.frame.width/portion
+        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height / portion : self.frame.width / portion
         self.clipsToBounds = true
     }
 }
-

@@ -6,15 +6,15 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import Foundation
-import FirebaseDatabase
 import CoreLocation
+import FirebaseDatabase
+import Foundation
 
-func searchFBRouteCities(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [City])->()) {
+func searchFBRouteCities(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [City]) -> Void) {
     var routeCities: [City] = []
     let routeCitiesRoot = Database.database().reference(withPath: "cities")
     let namequery = routeCitiesRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
-    namequery.observeSingleEvent(of: .value, with: { (snapshot) in
+    namequery.observeSingleEvent(of: .value, with: { snapshot in
         for item in snapshot.children {
             let newCity = City(snapshot: item as! DataSnapshot)
             routeCities.append(newCity)
@@ -23,11 +23,11 @@ func searchFBRouteCities(byProperty property: String, withValue value: Any, comp
     })
 }
 
-func searchFBRouteWalls(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [Wall])->()) {
+func searchFBRouteWalls(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [Wall]) -> Void) {
     var routeWalls: [Wall] = []
     let routeWallsRoute = Database.database().reference(withPath: "walls")
     let namequery = routeWallsRoute.queryOrdered(byChild: property).queryEqual(toValue: value)
-    namequery.observeSingleEvent(of: .value, with: { (snapshot) in
+    namequery.observeSingleEvent(of: .value, with: { snapshot in
         for item in snapshot.children {
             let newWall = Wall(snapshot: item as! DataSnapshot)
             routeWalls.append(newWall)
@@ -36,11 +36,11 @@ func searchFBRouteWalls(byProperty property: String, withValue value: Any, compl
     })
 }
 
-func searchFBRouteAreas(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [RouteArea])->()) {
+func searchFBRouteAreas(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [RouteArea]) -> Void) {
     var routeAreas: [RouteArea] = []
     let routeAreasRoot = Database.database().reference(withPath: "areas")
     let namequery = routeAreasRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
-    namequery.observeSingleEvent(of: .value, with: { (snapshot) in
+    namequery.observeSingleEvent(of: .value, with: { snapshot in
         for item in snapshot.children {
             let newArea = RouteArea(snapshot: item as! DataSnapshot)
             routeAreas.append(newArea)
@@ -49,11 +49,11 @@ func searchFBRouteAreas(byProperty property: String, withValue value: Any, compl
     })
 }
 
-func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route])->()) {
+func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route]) -> Void) {
     var routeResults: [Route] = []
     let routesRoot = Database.database().reference(withPath: "routes")
     let namequery = routesRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
-    namequery.observeSingleEvent(of: .value, with: { (snapshot) in
+    namequery.observeSingleEvent(of: .value, with: { snapshot in
         for item in snapshot.children {
             let newRoute = Route(snapshot: item as! DataSnapshot)
             routeResults.append(newRoute)
@@ -62,10 +62,10 @@ func searchFBRoute(byProperty property: String, withValue value: Any, completion
     })
 }
 
-func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]) -> ()) {
-    var routeResults : [Int] = []
+func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]) -> Void) {
+    var routeResults: [Int] = []
     let routesRoot = Database.database().reference(withPath: "areas\(path)")
-    routesRoot.observeSingleEvent(of: .value, with: { (snapshot) in
+    routesRoot.observeSingleEvent(of: .value, with: { snapshot in
         for item in snapshot.children {
             if let myRoute = Int((item as! DataSnapshot).key) {
                 routeResults.append(myRoute)
@@ -75,13 +75,13 @@ func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]
     })
 }
 
-func searchFBArea(with key: String, completion: @escaping (_ area: Area) -> ()) {
+func searchFBArea(with key: String, completion: @escaping (_ area: Area) -> Void) {
     let routesRoot = Database.database().reference(withPath: "areas/\(key)")
-    routesRoot.observeSingleEvent(of: .value, with: { (snapshot) in
+    routesRoot.observeSingleEvent(of: .value, with: { snapshot in
         let newArea = Area(snapshot: snapshot)
-//        for item in snapshot.children {
-//            print("item: \(item)")
-//        }
+        //        for item in snapshot.children {
+        //            print("item: \(item)")
+        //        }
         completion(newArea)
     })
 }

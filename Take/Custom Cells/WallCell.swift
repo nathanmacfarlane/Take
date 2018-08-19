@@ -9,8 +9,7 @@
 import UIKit
 
 class WallCell: UITableViewCell {
-    
-    
+
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var wallLabel: UILabel!

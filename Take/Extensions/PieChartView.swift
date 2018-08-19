@@ -6,8 +6,8 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import Foundation
 import Charts
+import Foundation
 
 extension PieChartView {
     func disableHighlight() {

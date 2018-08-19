@@ -20,16 +20,16 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet weak var userCommentDatelabel: UILabel!
     @IBOutlet weak var userCommentPostButton: UIButton!
     @IBOutlet weak var userCommentField: UITextView!
-    
+
     // MARK: - Variables
     var theRoute: Route!
     let dateFormatterPrint = DateFormatter()
     var id = "IDdbKJxtW9gGxaxHncMaJzTIb9j2"
-    
+
     // MARK: - View load/unlaod
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         dateFormatterPrint.dateFormat = "M.dd.yy"
         let topWords = self.mostFreqWords()
         self.searchBG.roundView(portion: 10)
@@ -40,14 +40,14 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.userCommentView.roundView(portion: 10)
         self.userCommentField.roundField(portion: 10)
     }
-    
+
     // MARK: - TableView
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return theRoute.comments?.count ?? 0
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! CommentCell
-        
+
         let topWords = mostFreqWords()
         let comment = self.theRoute.comments![indexPath.row]
         for topW in topWords {
@@ -55,7 +55,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 //print("cell at index: \(indexPath.row) contains: \(topW)")
             }
         }
-        
+
         cell.backgroundColor = UIColor.clear
         cell.nameLabel.text = theRoute.comments![indexPath.row].id
         cell.commentLabel.text = theRoute.comments![indexPath.row].text
@@ -75,8 +75,8 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.theRoute.comments?.remove(at: indexPath.row)
         self.myTableView.deleteRows(at: [indexPath], with: .fade)
     }
-    
-    //MARK: - IBActions
+
+    // MARK: - IBActions
     @IBAction func goPostComment(_ sender: Any) {
         let newComment = Comment(id: self.id, text: self.userCommentField.text!, date: Date())
         self.userCommentField.resignFirstResponder()
@@ -84,11 +84,10 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
         self.theRoute.comments?.insert(newComment, at: 0)
         self.myTableView.reloadData()
     }
-    
-    
+
     // MARK: - Navigation
     @IBAction func hitBackButton(_ sender: Any) {
-        
+
         let transition: CATransition = CATransition()
         transition.duration = 0.5
         transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
@@ -96,26 +95,26 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
         transition.subtype = kCATransitionFromLeft
         self.view.window!.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)
-        
+
     }
-    
+
     // MARK: - other functions
     func mostFreqWords() -> [String] {
-        var topWords : [String] = []
-        var allWords : String = ""
+        var topWords: [String] = []
+        var allWords: String = ""
         for comment in self.theRoute.comments ?? [] {
             allWords.append(" \(comment.text!)")
         }
-        
+
         let wordsArr = allWords.components(separatedBy: " ")
         var counts: [String: Int] = [:]
-        
+
         for item in wordsArr {
             if item.count >= 5 {
                 counts[item] = (counts[item] ?? 0) + 1
             }
         }
-        
+
         for _ in 1...3 {
             var maxKey = ""
             var maxCount = 0
@@ -130,8 +129,8 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 counts.removeValue(forKey: maxKey)
             }
         }
-        
+
         return topWords
     }
-    
+
 }

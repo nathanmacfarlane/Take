@@ -6,18 +6,18 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import Foundation
 import FirebaseDatabase
+import Foundation
 import GeoFire
 import MapKit
 
-func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, completion: @escaping (_ IDs: [String : CLLocation])->()) {
+func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, completion: @escaping (_ IDs: [String: CLLocation]) -> Void) {
     let DBRef = Database.database().reference()
     let geofire = GeoFire(firebaseRef: DBRef.child(key))
-    var routeIDs : [String : CLLocation] = [:]
-    
+    var routeIDs: [String: CLLocation] = [:]
+
     let regionQuery = geofire.query(with: region)
-    regionQuery.observe(.keyEntered) { (key, location) in
+    regionQuery.observe(.keyEntered) { key, location in
         routeIDs[key] = location
     }
     regionQuery.observeReady {
@@ -28,7 +28,7 @@ func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, complet
 //func getAreaFromGeoFire(for key: String, from center: CLLocation, with radius: Double, completion: @escaping (_ IDs: [String : CLLocation])->()) {
 //    let DBRef = Database.database().reference()
 //    let geoFire = GeoFire(firebaseRef: DBRef.child(key))
-//    
+//
 //    let circleQuery = geoFire.query(at: center, withRadius: radius)
 //    circleQuery.observe(.keyEntered, with: { (key, location) in
 //        print("snapshot: \(key), \(location)")
@@ -41,14 +41,6 @@ func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, complet
 //    })
 //
 //}
-
-
-
-
-
-
-
-
 
 //
 //import FirebaseStorage
@@ -81,39 +73,3 @@ func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, complet
 //
 //    })
 //}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

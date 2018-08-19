@@ -12,16 +12,16 @@ class AreaExpandableCell: UITableViewCell {
 
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
-    
-//    override var frame: CGRect {
-//        get {
-//            return super.frame
-//        }
-//        set (newFrame) {
-//            var frame =  newFrame
-//            frame.origin.y += 4
-//            frame.size.height -= 2 * 5
-//            super.frame = frame
-//        }
-//    }
+
+    //    override var frame: CGRect {
+    //        get {
+    //            return super.frame
+    //        }
+    //        set (newFrame) {
+    //            var frame =  newFrame
+    //            frame.origin.y += 4
+    //            frame.size.height -= 2 * 5
+    //            super.frame = frame
+    //        }
+    //    }
 }

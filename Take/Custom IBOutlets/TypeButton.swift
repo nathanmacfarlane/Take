@@ -11,11 +11,11 @@ import UIKit
 
 class TypeButton: UIButton {
     var isType = false
-    var selectedColor: UIColor      = UIColor(red: 41/255, green: 60/255, blue: 72/255, alpha: 1.0)
-    var deselectedColor: UIColor    = UIColor(red: 175/255, green: 175/255, blue: 175/255, alpha: 1.0)
-    
+    var selectedColor: UIColor = UIColor(red: 41 / 255, green: 60 / 255, blue: 72 / 255, alpha: 1.0)
+    var deselectedColor: UIColor = UIColor(red: 175 / 255, green: 175 / 255, blue: 175 / 255, alpha: 1.0)
+
     func roundButton() {
-        self.layer.cornerRadius = self.frame.width/2
+        self.layer.cornerRadius = self.frame.width / 2
         self.clipsToBounds = true
     }
     func setType(isType: Bool) {
@@ -26,5 +26,5 @@ class TypeButton: UIButton {
         self.layer.borderColor = UIColor.white.cgColor
         self.layer.borderWidth = width
     }
-    
+
 }

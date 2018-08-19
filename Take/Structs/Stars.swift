@@ -9,28 +9,28 @@
 import Foundation
 
 struct Stars {
-    var average     : Double
-    var starVotes   : Int
+    var average: Double
+    var starVotes: Int
 }
 
 struct Star: Codable {
-    var star    : Double!
-    var id      : String!
-    
+    var star: Double!
+    var id: String!
+
     func toAnyObject() -> Any {
         return [
-            "star"  : star,
-            "id"    : id
+            "star": star,
+            "id": id
         ]
     }
-    
-    init(anyObject : [String: Any]) {
-        self.star   = anyObject["star"] as! Double
-        self.id     = anyObject["id"] as! String
+
+    init(anyObject: [String: Any]) {
+        self.star = anyObject["star"] as! Double
+        self.id = anyObject["id"] as! String
     }
-    
+
     init(star: Double, id: String) {
-        self.star   = star
-        self.id     = id
+        self.star = star
+        self.id = id
     }
 }

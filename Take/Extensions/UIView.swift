@@ -11,7 +11,7 @@ import UIKit
 
 extension UIView {
     func roundView(portion: CGFloat) {
-        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height/portion : self.frame.width/portion
+        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height / portion : self.frame.width / portion
         self.clipsToBounds = true
     }
     func addBorder(color: UIColor, width: CGFloat) {

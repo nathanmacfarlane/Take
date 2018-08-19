@@ -6,9 +6,9 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import UIKit
-import GoogleSignIn
 import FirebaseAuth
+import GoogleSignIn
+import UIKit
 
 class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
 
@@ -19,18 +19,17 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     @IBOutlet weak var emailField: UITextField!
     @IBOutlet weak var loginUsernameButton: UIButton!
     @IBOutlet weak var accountTypeLabel: UILabel!
-    
+
     // MARK: - Variables
-    
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         self.loginWithGoogleButton.roundView(portion: 4)
         self.loginUsernameButton.roundView(portion: 4)
-        
+
     }
-    
+
     // MARK: - TextField Functions
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == emailField {
@@ -41,7 +40,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
         }
         return true
     }
-    
+
     // MARK: - Other Functions
     @IBAction func changeType(_ sender: UIButton) {
         if sender.titleLabel?.text == "Sign Up" {
@@ -58,19 +57,19 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     }
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
+
         let okAction = UIAlertAction(title: "OK", style: .default) {
-            (result : UIAlertAction) -> Void in
+            (_: UIAlertAction) -> Void in
             print("OK")
         }
-        
+
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
 
     // MARK: - Navigation
     @IBAction func goLoginSignUp(_ sender: UIButton) {
-        
+
         if let email = emailField.text, let password = passwordField.text {
             if sender.titleLabel?.text == "Login" {
                 goLogin(email: email, password: password)
@@ -82,7 +81,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
         }
     }
     func goSignUp(email: String, password: String) {
-        Auth.auth().createUser(withEmail: email, password: password) { (authResult, error) in
+        Auth.auth().createUser(withEmail: email, password: password) { _, error in
             if error != nil {
                 self.showAlert(title: "Oops", message: "We were unable to create a new account for you... Error: '\(String(describing: error))'")
                 self.passwordField.text = ""
@@ -94,7 +93,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
         }
     }
     func goLogin(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
+        Auth.auth().signIn(withEmail: email, password: password) { _, error in
             if error != nil {
                 self.showAlert(title: "Oops", message: "We were unable to log you in... Please try again.")
                 self.passwordField.text = ""

@@ -28,9 +28,9 @@
 //    var desc        : String?
 //    var protection  : String?
 //    var rating      : Rating
-//    
-//    
-//    
+//
+//
+//
 //    var photoURL    : String?
 //    var types       : String? // TR (Top Rope), Sport, and Trad, Boulder
 //    var stars       : [Star]?
@@ -47,21 +47,21 @@
 //    var ref         : DatabaseReference?
 //    var latitude    : Double?
 //    var longitude   : Double?
-//    
+//
 //    var newARDiagrams : [ARDiagram]?
-//    
+//
 //    //private stuff
 //    private var allImages   : [String : String]?
 //    private var allDiagrams : [String: [String]]?
 //    private var rating      : String?
-//    
+//
 //    var difficulty : Rating? {
 //        if self.rating == nil {
 //            return nil
 //        }
 //        return Rating(desc: self.rating!)
 //    }
-//    
+//
 //    // MARK: - Inits
 //    init(name: String, id: Int, lat: Double, long: Double) {
 //        self.name       = name
@@ -103,7 +103,7 @@
 //        allDiagrams     = snapval["allARDiagrams"]  as? [String: [String]]
 //        self.ref        = snapshot.ref
 //    }
-//    
+//
 //    // MARK: - MKAnnotation
 //    var coordinate: CLLocationCoordinate2D {
 //        return CLLocationCoordinate2D(latitude: self.latitude!, longitude: self.longitude!)
@@ -114,14 +114,14 @@
 //    var subtitle: String? {
 //        return self.difficulty?.description
 //    }
-//    
+//
 //    var location : CLLocation? {
 //        if latitude == nil || longitude == nil {
 //            return nil
 //        }
 //        return CLLocation(latitude: latitude!, longitude: longitude!)
 //    }
-//    
+//
 //    enum CodingKeys: String, CodingKey {
 //        case name
 //        case id
@@ -133,7 +133,7 @@
 //        case star       = "stars"
 //        case starVotes
 //    }
-//    
+//
 //    func description() -> String {
 //        var desc = "\(name), \(id)"
 //        if types != nil {
@@ -144,7 +144,7 @@
 //        }
 //        return desc
 //    }
-//    
+//
 //    // MARK: - GeoFire
 //    func saveToGeoFire() {
 //        if self.latitude == nil || self.longitude == nil {
@@ -160,14 +160,14 @@
 //            }
 //        }
 //    }
-//    
+//
 //    // MARK: - Firebase
 //    func getARImagesFromFirebase(completion: @escaping () -> Void) {
 //        self.ardiagrams = []
 //        var count = 0
 //        for arDiagram in self.allDiagrams ?? [:] {
 //            URLSession.shared.dataTask(with: URL(string: arDiagram.value[0])!) { bgImageData, response, error in
-//                
+//
 //                URLSession.shared.dataTask(with: URL(string: arDiagram.value[1])!) { diagramData, response, error in
 //                    let newDiagram = ARDiagram(bgImage: UIImage(data: bgImageData!)!, diagram: UIImage(data: diagramData!)!)
 //                    self.ardiagrams?.append(newDiagram)
@@ -176,7 +176,7 @@
 //                        completion()
 //                    }
 //                    }.resume()
-//                
+//
 //                }.resume()
 //        }
 //    }
@@ -264,7 +264,7 @@
 //                    }
 //                    self.allImages![imageKey] = "\(downloadURL)"
 //                }
-//                
+//
 //            })
 //        }
 //    }
@@ -293,7 +293,7 @@
 //            let diagramData = UIImagePNGRepresentation(arDiagram.diagram!.resizedToKB(numKB: 1024)!) as NSData?
 //            let bgImageID = UUID().uuidString
 //            let diagramID = UUID().uuidString
-//            
+//
 //            //save bg image to firebase
 //            _ = arRef.child("\(bgImageID).png").putData(bgData! as Data, metadata: nil, completion: { (metadata, error) in
 //                guard metadata != nil else {
@@ -305,7 +305,7 @@
 //                        print("error occured in bg image: \(String(describing: error))")
 //                        return
 //                    }
-//                    
+//
 //                    //save diagram to firebase
 //                    _ = arRef.child("\(diagramID).png").putData(diagramData! as Data, metadata: nil, completion: { (metadata, error) in
 //                        guard metadata != nil else {
@@ -319,14 +319,14 @@
 //                            }
 //                            self.addARURLToFirebase(bgImageURL: "\(bgImageIDDownloadURL)", diagramURL: "\(diagramDownloadURL)")
 //                        }
-//                        
+//
 //                    })
 //                }
-//                
+//
 //            })
 //        }
 //    }
-//    
+//
 //    // MARK: - equatable
 //    open override func isEqual(_ object: Any?) -> Bool {
 //        guard let r = object as? Route else {
@@ -340,13 +340,13 @@
 //    static func != (lhs: Route, rhs: Route) -> Bool {
 //        return lhs.id != rhs.id
 //    }
-//    
+//
 //    // MARK: - comparable
 //    static func < (lhs: Route, rhs: Route) -> Bool {
 //        /* TODO */
 //        return true
 //    }
-//    
+//
 //    // MARK: - functions
 //    func averageRating() -> String? {
 //        var sum : Int = 0
@@ -446,8 +446,8 @@
 //        if allImages != nil {
 //            a["allImages"] = allImages
 //        }
-//        
+//
 //        return a
 //    }
-//    
+//
 //}

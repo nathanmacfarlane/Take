@@ -6,30 +6,29 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import UIKit
 import ARKit
+import UIKit
 
 class ARView: UIViewController, ARSCNViewDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet weak var closeButton: UIButton!
     @IBOutlet weak var sceneView: ARSCNView!
-    
-    
+
     // MARK: - Variables
     var theRoute: Route?
-//    var planes: [SCNNode] = []
-    
+    //    var planes: [SCNNode] = []
+
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         closeButton.roundButton(portion: 4)
-        
-        var refImageArr : [ARReferenceImage] = []
-        
+
+        var refImageArr: [ARReferenceImage] = []
+
         print("adding \(theRoute?.ardiagrams?.count ?? 0) to ref images")
-        
+
         var count = 0
         for image in theRoute?.ardiagrams ?? [] {
             let cgImage = image.bgImage.cgImage!
@@ -42,14 +41,13 @@ class ARView: UIViewController, ARSCNViewDelegate {
         let configuration = ARWorldTrackingConfiguration()
         configuration.detectionImages = referenceImages
         sceneView.session.run(configuration)
-        
-        
+
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
-    
+
     // MARK: - ARView
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
@@ -59,29 +57,29 @@ class ARView: UIViewController, ARSCNViewDelegate {
                                  height: referenceImage.physicalSize.height)
             let index = Int(referenceImage.name!)!
             var theImage = self.imageByCombiningImage(firstImage: self.theRoute!.ardiagrams![index].diagram!, withImage: self.theRoute!.ardiagrams![index].bgImage)
-//            plane.materials[0].diffuse.contents = theImage
-//            var theImage = self.theRoute!.ardiagrams![index].diagram!
-//            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
+            //            plane.materials[0].diffuse.contents = theImage
+            //            var theImage = self.theRoute!.ardiagrams![index].diagram!
+            //            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
             theImage = theImage.textToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
             plane.materials[0].diffuse.contents = theImage
             self.rotatePlane(planeMaterial: plane.materials[0])
-            
+
             let planeNode = SCNNode(geometry: plane)
             planeNode.opacity = 1.0
             planeNode.eulerAngles.x = -.pi / 2
             node.addChildNode(planeNode)
-//            self.planes.removeAll()
-//            self.planes.append(planeNode)
+            //            self.planes.removeAll()
+            //            self.planes.append(planeNode)
         }
     }
-    
+
     func rotatePlane(planeMaterial: SCNMaterial) {
         let translation = SCNMatrix4MakeTranslation(0, -1, 0)
         let rotation = SCNMatrix4MakeRotation(Float.pi / 2, 0, 0, 1)
         let transform = SCNMatrix4Mult(translation, rotation)
         planeMaterial.diffuse.contentsTransform = transform
     }
-    
+
     func imageByCombiningImage(firstImage: UIImage, withImage secondImage: UIImage) -> UIImage {
         let size = CGSize(width: 300, height: 300)
         UIGraphicsBeginImageContext(size)
@@ -92,7 +90,7 @@ class ARView: UIViewController, ARSCNViewDelegate {
         UIGraphicsEndImageContext()
         return newImage
     }
-    
+
     // MARK: - Navigation
     @IBAction func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

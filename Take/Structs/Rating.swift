@@ -29,13 +29,13 @@ import Foundation
 //}
 
 struct Rating {
-    var desc        : String!
-    var intDiff     : Int!
-    var type        : TYPE!
-    var buffer      : String?
-    var danger      : String?
-    
-    var description : String! {
+    var desc: String!
+    var intDiff: Int!
+    var type: TYPE!
+    var buffer: String?
+    var danger: String?
+
+    var description: String! {
         switch type {
         case .boulder:
             return "V\(intDiff!)\(buffer ?? "")"
@@ -45,9 +45,9 @@ struct Rating {
             fatalError("Unsupported")
         }
     }
-    
+
     func toAnyObject() -> Any {
-        var a : [String: Any] = [:]
+        var a: [String: Any] = [:]
         a["desc"] = desc
         a["intDiff"] = intDiff
         a["type"] = type.hashValue
@@ -59,7 +59,7 @@ struct Rating {
         }
         return a
     }
-    
+
     init(desc: String) {
         self.desc = desc
         self.type = getType(desc)
@@ -67,16 +67,16 @@ struct Rating {
         self.buffer = getBuffer(desc)
         self.danger = getDanger(desc)
     }
-    
+
     init(anyObject: [String: Any]) {
         let typeInt = anyObject["type"] as! Int
-        self.desc       = anyObject["desc"] as! String
-        self.intDiff    = anyObject["intDiff"] as! Int
-        self.type       = typeInt == 1 ? .climb : .boulder
-        self.buffer     = anyObject["buffer"] as? String
-        self.danger     = anyObject["danger"] as? String
+        self.desc = anyObject["desc"] as! String
+        self.intDiff = anyObject["intDiff"] as! Int
+        self.type = typeInt == 1 ? .climb : .boulder
+        self.buffer = anyObject["buffer"] as? String
+        self.danger = anyObject["danger"] as? String
     }
-    
+
     private func getDanger(_ desc: String) -> String? {
         let chars = Array(desc)
         let i = chars.index(of: " ")
@@ -92,7 +92,7 @@ struct Rating {
         }
         return danger
     }
-    
+
     private func getBuffer(_ desc: String) -> String? {
         let chars = Array(desc)
         var buff = ""
@@ -110,7 +110,7 @@ struct Rating {
         }
         return buff
     }
-    
+
     private func getType(_ desc: String) -> TYPE {
         let chars = Array(desc)
         if chars[0] == "V" {
@@ -119,7 +119,7 @@ struct Rating {
             return .climb
         }
     }
-    
+
     private func getDiff(_ desc: String) -> Int {
         let chars = Array(desc)
         var diff = ""
@@ -143,5 +143,5 @@ struct Rating {
             return 0
         }
     }
-    
+
 }

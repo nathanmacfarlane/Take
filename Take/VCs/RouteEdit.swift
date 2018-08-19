@@ -26,35 +26,35 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var photosLabel: UILabel!
     @IBOutlet weak var feelsLikeABG: UILabel!
     @IBOutlet weak var starsButton: UIButton!
-    
+
     // MARK: - variables
-    var theRoute : Route!
+    var theRoute: Route!
     let imagePicker = UIImagePickerController()
     var selectedIndex: IndexPath!
-    var sCV : UICollectionView!
+    var sCV: UICollectionView!
     var username: String!
-    var shouldEditPhoto : Bool!
+    var shouldEditPhoto: Bool!
     var starRating = 0
-//    var newImages: [UIImage] = []
-//    var imageKeys: [String] = []
-    var imgKeys : [String] = []
-    var newImagesWithKeys : [String : UIImage] = [:]
-    
+    //    var newImages: [UIImage] = []
+    //    var imageKeys: [String] = []
+    var imgKeys: [String] = []
+    var newImagesWithKeys: [String: UIImage] = [:]
+
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
-        
+
         self.setupButtons()
         self.descriptionTextView.text = theRoute.info ?? ""
         self.feelsLikeField.placeholder = "ex: \(theRoute.difficulty?.description ?? "")"
-        
+
         photoCV.backgroundColor = .clear
         ARCV.backgroundColor = .clear
-        
+
         addBlur()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -63,7 +63,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.photoCV.reloadData()
         self.ARCV.reloadData()
     }
-    
+
     // MARK: - initial functions
     func setupButtons() {
         self.addPhotoButton.roundButton(portion: 2)
@@ -88,26 +88,26 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         blurEffectView.frame = self.view.frame
         self.bgimageView.insertSubview(blurEffectView, at: 0)
     }
-    
+
     // MARK: - TypeButton functions
     @IBAction func toggleButton(_ sender: TypeButton) {
         sender.setType(isType: !sender.isType)
     }
-    
+
     // MARK: - IBActions
     @IBAction func tappedStars(_ sender: UIButton) {
         self.starRating = self.starRating < 4 ? self.starRating + 1 : 0
         if self.starRating == 0 {
             self.starsButton.setTitle("", for: .normal)
         } else {
-            self.starsButton.setTitle("\(String(repeating: "⭑", count: self.starRating))\(String(repeating: "⭒", count: 4-self.starRating))", for: .normal)
+            self.starsButton.setTitle("\(String(repeating: "⭑", count: self.starRating))\(String(repeating: "⭒", count: 4 - self.starRating))", for: .normal)
         }
     }
     @IBAction func addNewPhoto(_ sender: UIButton) {
         sCV = photoCV
         self.shouldEditPhoto = false
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            imagePicker.sourceType = .savedPhotosAlbum;
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+            imagePicker.sourceType = .savedPhotosAlbum
             imagePicker.allowsEditing = false
             self.present(imagePicker, animated: true, completion: nil)
         }
@@ -116,18 +116,18 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         sCV = ARCV
         let alertController = UIAlertController(title: nil, message: "Edit a photo or upload a previously created diagram.", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        let editPhoto = UIAlertAction(title: "Edit Photo", style: .default) { action in
+        let editPhoto = UIAlertAction(title: "Edit Photo", style: .default) { _ in
             self.shouldEditPhoto = true
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-                self.imagePicker.sourceType = .savedPhotosAlbum;
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+                self.imagePicker.sourceType = .savedPhotosAlbum
                 self.imagePicker.allowsEditing = false
                 self.present(self.imagePicker, animated: true, completion: nil)
             }
         }
-        let uploadDiagram = UIAlertAction(title: "Upload Diagram", style: .default) { action in
+        let uploadDiagram = UIAlertAction(title: "Upload Diagram", style: .default) { _ in
             self.shouldEditPhoto = false
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-                self.imagePicker.sourceType = .savedPhotosAlbum;
+            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+                self.imagePicker.sourceType = .savedPhotosAlbum
                 self.imagePicker.allowsEditing = false
                 self.present(self.imagePicker, animated: true, completion: nil)
             }
@@ -137,23 +137,23 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         alertController.addAction(uploadDiagram)
         self.present(alertController, animated: true)
     }
-    
+
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+
         let alertController = UIAlertController(title: nil, message: "Delete image?", preferredStyle: .actionSheet)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
             if collectionView == self.photoCV {
                 let itemKey = self.imgKeys[indexPath.row]
                 self.newImagesWithKeys.removeValue(forKey: itemKey)
                 self.imgKeys.remove(at: indexPath.row)
-//                let itemKey = self.imageKeys[indexPath.row]
-//                self.theRoute.images!.removeValue(forKey: itemKey)
-//                self.theRoute.images!.remove(at: indexPath.row)
-//                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
-//                    print("finished deleting")
-//                }
+                //                let itemKey = self.imageKeys[indexPath.row]
+                //                self.theRoute.images!.removeValue(forKey: itemKey)
+                //                self.theRoute.images!.remove(at: indexPath.row)
+                //                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
+                //                    print("finished deleting")
+                //                }
                 self.photoCV.reloadData()
             } else {
                 self.theRoute.ardiagrams!.remove(at: indexPath.row)
@@ -165,56 +165,54 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         alertController.addAction(cancelAction)
         alertController.addAction(deleteAction)
         self.present(alertController, animated: true)
-        
+
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        
+
         if collectionView == photoCV {
             return self.imgKeys.count
         } else {
             return 0
         }
-        
-        
-//        if collectionView == photoCV {
-////            if self.images.count > 0 {
-//            if self.theRoute.images?.count ?? 0 > 0 {
-//                self.photosLabel.isHidden = true
-//            } else {
-//                self.photosLabel.isHidden = false
-//            }
-//            return self.theRoute.images?.count ?? 0
-////            return self.images.count
-//        } else {
-////            if self.arimages.count > 0 {
-//            if self.theRoute.ardiagrams?.count ?? 0 > 0 {
-//                self.ARDiagramsLabel.isHidden = true
-//            } else {
-//                self.ARDiagramsLabel.isHidden = false
-//            }
-//            return self.theRoute.ardiagrams?.count ?? 0
-////            return self.arimages.count
-//        }
+
+        //        if collectionView == photoCV {
+        ////            if self.images.count > 0 {
+        //            if self.theRoute.images?.count ?? 0 > 0 {
+        //                self.photosLabel.isHidden = true
+        //            } else {
+        //                self.photosLabel.isHidden = false
+        //            }
+        //            return self.theRoute.images?.count ?? 0
+        ////            return self.images.count
+        //        } else {
+        ////            if self.arimages.count > 0 {
+        //            if self.theRoute.ardiagrams?.count ?? 0 > 0 {
+        //                self.ARDiagramsLabel.isHidden = true
+        //            } else {
+        //                self.ARDiagramsLabel.isHidden = false
+        //            }
+        //            return self.theRoute.ardiagrams?.count ?? 0
+        ////            return self.arimages.count
+        //        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == photoCV {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! AddImageCell
             let itemKey = self.imgKeys[indexPath.row]
             cell.bgImageView.image = newImagesWithKeys[itemKey]
-//            cell.bgImageView.image = self.theRoute.images![itemKey]
-//            cell.bgImageView.image = self.theRoute.images![indexPath.row]
+            //            cell.bgImageView.image = self.theRoute.images![itemKey]
+            //            cell.bgImageView.image = self.theRoute.images![indexPath.row]
             return cell
         }
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath) as! AddARImageCell
-//        cell.bgImageView.image = self.theRoute.ardiagrams?[indexPath.row].bgImage
+        //        cell.bgImageView.image = self.theRoute.ardiagrams?[indexPath.row].bgImage
         cell.setImage(ardiagram: self.theRoute.ardiagrams![indexPath.row])
         return cell
-        
+
     }
-    
+
     // MARK: - Action Sheet
-    
-    
+
     // MARK: - TextView
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
         if (text == "\n") {
@@ -222,23 +220,23 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         return true
     }
-    
+
     // MARK: - TextField
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
-    
+
     // MARK: - Image Picker
-    @objc internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
+    @objc internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         if sCV == photoCV {
             let instanceString = Date().instanceString()
             self.imgKeys.append(instanceString)
             self.newImagesWithKeys[instanceString] = pickedImage!
         } else {
-            
+
             if self.shouldEditPhoto == false {
                 if self.theRoute.ardiagrams == nil {
                     self.theRoute.ardiagrams = [ARDiagram(bgImage: pickedImage!)]
@@ -246,7 +244,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                     self.theRoute.ardiagrams?.insert(ARDiagram(bgImage: pickedImage!), at: 0)
                 }
             }
-            
+
         }
         self.photoCV.reloadData()
         self.ARCV.reloadData()
@@ -255,13 +253,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 self.performSegue(withIdentifier: "presentEditARPhoto", sender: pickedImage!)
             }
         })
-        
-        
+
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
-    
+
     // MARK: - Navigation
     @IBAction func hitCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -296,11 +293,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         print("total: \(total)")
         total += Double(new)
         print("new total: \(total)")
-        print("new calculated average: \(total/Double(count+1))")
-        return (total/Double(count+1), count+1)
+        print("new calculated average: \(total / Double(count + 1))")
+        return (total / Double(count + 1), count + 1)
     }
     func populateTypes() -> String {
-        var types : [String] = []
+        var types: [String] = []
         if topRopeButton.isType {
             types.append("TR")
         }
