@@ -8,8 +8,10 @@
 
 import UIKit
 import MapKit
+import FirebaseDatabase
+import CoreLocation
 
-class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate {
     
     // MARK: - IBOutlets
     @IBOutlet weak var bgimageView:             UIImageView!
@@ -26,6 +28,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet weak var routeDescriptionTV:      UITextView!
     @IBOutlet weak var commentsButton:          UIButton!
     @IBOutlet weak var starsLabel:              UILabel!
+    @IBOutlet weak var starVotersLabel:         UILabel!
     @IBOutlet weak var actualRatingLabel:       UILabel!
     @IBOutlet weak var feelsLikeRatingLabel:    UILabel!
     @IBOutlet weak var beTheFirstLabel:         UILabel!
@@ -35,18 +38,46 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var theRoute : Route!
     var mainImg  : UIImage?
     var imageKeys : [String] = []
+    var arDiagramKeys : [String] = []
+    var imageRef: DatabaseReference!
+    let locationManager = CLLocationManager()
     
     // MARK: - load/unloads
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print("images dict: \(self.theRoute.allImages)")
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        print("going to load ar images")
+        self.theRoute.getARImagesFromFirebase {
+            print("got em: \(String(describing: self.theRoute.ardiagrams))")
+        }
         
         self.myARVC.isHidden = true
         self.myCV.backgroundColor = UIColor.clear
         self.myARVC.backgroundColor = UIColor.clear
         if mainImg != nil {
             self.bgimageView.image = mainImg!
+        }
+        
+        theRoute.observeImageFromFirebase { ( imageSnapshot, imageRef ) in
+            self.imageRef = imageRef
+            let imageURL = imageSnapshot.value! as! String
+            loadImageFrom(url: imageURL, completion: { ( image ) in
+                if self.theRoute.images == nil {
+                    self.theRoute.images = [:]
+                }
+                self.theRoute.images![imageSnapshot.key] = image
+                self.imageKeys.append(imageSnapshot.key)
+                DispatchQueue.main.async {
+                    self.bgimageView.image = image
+                    self.updateLabel()
+                    self.myCV.reloadData()
+                }
+            })
         }
         
         addBlur()
@@ -57,26 +88,17 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myARVC.reloadData()
         self.myCV.reloadData()
         
-        theRoute.getImagesFromFirebase {
-            DispatchQueue.main.async {
-                if self.theRoute.images != nil {
-                    self.imageKeys = Array(self.theRoute.images!.keys)
-                }
-                self.updateLabel()
-                self.myCV.reloadData()
-            }
-        }
-        
         self.routeNameLabel.text = theRoute.name
         self.routeLocationButton.setTitle(theRoute.localDesc?.last ?? "N/A", for: .normal)
         self.commentsButton.setTitle("\(theRoute.comments?.count ?? 0) 💬", for: .normal)
-        self.starsLabel.text = "\(String(repeating: "★", count: theRoute.averageStar()))\(String(repeating: "☆", count: 5 - theRoute.averageStar()))"
+//        self.starsLabel.text = "\(String(repeating: "★", count: theRoute.averageStar() ?? 0))\(String(repeating: "☆", count: 5 - (theRoute.averageStar() ?? 0)))"
+        self.starsLabel.text = "\(String(repeating: "★", count: Int(theRoute.star?.roundToInt() ?? 0)))\(String(repeating: "☆", count: Int(4 - (theRoute.star?.roundToInt() ?? 0))))"
+        self.starVotersLabel.text = "\(theRoute.starVotes ?? 0)"
         self.actualRatingLabel.text = theRoute.difficulty?.description ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         self.feelsLikeRatingLabel.text = theRoute.averageRating() ?? "N/A"
         
         self.updateLabel()
-        
         setupButtons()
         
         if theRoute.images == nil && theRoute.ardiagrams != nil {
@@ -84,6 +106,12 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             checkStatus()
         }
         
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        if imageRef != nil {
+            imageRef.removeAllObservers()
+        }
     }
     
     // MARK: - initial functions
@@ -194,12 +222,31 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     
     // MARK: - Navigation
     @IBAction func goToARView(_ sender: UIButton) {
-        self.performSegue(withIdentifier: "presentARView", sender: nil)
+        if (locationManager.location?.distance(from: theRoute.location!))! < 100.0 {
+            self.performSegue(withIdentifier: "presentARView", sender: nil)
+        } else {
+            let alertController = UIAlertController(title: "Oh no...", message: "You're too far from the route to view it in AR. Would you like to get directions to the crag?", preferredStyle: .actionSheet)
+            let cancel = UIAlertAction(title: "No", style: .cancel)
+            let getDirections = UIAlertAction(title: "Yes", style: .default) { action in
+                self.goToDirections()
+            }
+            let overwriteForTesting = UIAlertAction(title: "I AM TESTING", style: .default) { action in
+                self.performSegue(withIdentifier: "presentARView", sender: nil)
+            }
+            alertController.addAction(cancel)
+            alertController.addAction(getDirections)
+            alertController.addAction(overwriteForTesting)
+            self.present(alertController, animated: true)
+        }
     }
-    @IBAction func goGetDirections(_ sender: UIButton) {
+    func goToDirections() {
         let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: theRoute.location!.coordinate.latitude, longitude: theRoute.location!.coordinate.longitude), addressDictionary:nil))
         mapItem.name = theRoute.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey : MKLaunchOptionsDirectionsModeDriving])
+    }
+    
+    @IBAction func goGetDirections(_ sender: UIButton) {
+        goToDirections()
     }
     @IBAction func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
@@ -225,9 +272,12 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             dc.ardiagrams = self.theRoute.ardiagrams!
             dc.selectedImage = sender as! Int
         } else if segue.identifier == "goToArea" {
-            let dc: AreaView = segue.destination as! AreaView
-            dc.areaName = sender as! String
-            dc.areaArr = self.theRoute.localDesc
+//            let dc: AreaView = segue.destination as! AreaView
+//            dc.areaName = sender as! String
+//            dc.areaArr = self.theRoute.localDesc
+        } else if segue.identifier == "presentARView" {
+            let dc: ARView = segue.destination as! ARView
+            dc.theRoute = self.theRoute
         }
         
     }

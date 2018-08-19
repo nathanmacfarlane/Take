@@ -12,7 +12,6 @@ import CoreLocation
 /* returns array of routes of the user's favorite routes
  /  NOTE: array will be empty if user has no favorite routes
  /
- / To call this function: routesByIds(routeIDs: myIDs, completion: { (favorites) -> () in })
  */
 func routesByArea(coord: CLLocationCoordinate2D, maxDistance: Double, maxResults: Int, completion: @escaping (_ routes: [Route])->()) {
     let theURL = URL(string: "https://www.mountainproject.com/data/get-routes-for-lat-lon?lat=\(coord.latitude)&lon=\(coord.longitude)&maxDistance=\(maxDistance)&maxResults=\(maxResults)&key=200051285-43fc64b054234a9de6b9f73089e26d50")

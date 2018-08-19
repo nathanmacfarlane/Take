@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class SearchResultCell: UITableViewCell {
+class RouteCell: UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var bgView: UIView!
     @IBOutlet weak var theImageView: UIImageView!

@@ -24,6 +24,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet weak var addARPhotoButton: UIButton!
     @IBOutlet weak var ARDiagramsLabel: UILabel!
     @IBOutlet weak var photosLabel: UILabel!
+    @IBOutlet weak var feelsLikeABG: UILabel!
+    @IBOutlet weak var starsButton: UIButton!
     
     // MARK: - variables
     var theRoute : Route!
@@ -32,6 +34,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var sCV : UICollectionView!
     var username: String!
     var shouldEditPhoto : Bool!
+    var starRating = 0
 //    var newImages: [UIImage] = []
 //    var imageKeys: [String] = []
     var imgKeys : [String] = []
@@ -46,8 +49,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         imagePicker.sourceType = .photoLibrary
         
         self.setupButtons()
-        self.descriptionTextView.text = theRoute.info ?? "N/A"
-        self.feelsLikeField.text = theRoute.difficulty?.description ?? "N/A"
+        self.descriptionTextView.text = theRoute.info ?? ""
+        self.feelsLikeField.placeholder = "ex: \(theRoute.difficulty?.description ?? "")"
         
         photoCV.backgroundColor = .clear
         ARCV.backgroundColor = .clear
@@ -77,6 +80,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.sportButton.roundButton()
         self.tradButton.roundButton()
         self.boulderButton.roundButton()
+        self.feelsLikeABG.roundView(portion: 5)
     }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -91,6 +95,14 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     
     // MARK: - IBActions
+    @IBAction func tappedStars(_ sender: UIButton) {
+        self.starRating = self.starRating < 4 ? self.starRating + 1 : 0
+        if self.starRating == 0 {
+            self.starsButton.setTitle("", for: .normal)
+        } else {
+            self.starsButton.setTitle("\(String(repeating: "⭑", count: self.starRating))\(String(repeating: "⭒", count: 4-self.starRating))", for: .normal)
+        }
+    }
     @IBAction func addNewPhoto(_ sender: UIButton) {
         sCV = photoCV
         self.shouldEditPhoto = false
@@ -222,21 +234,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         
         let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
         if sCV == photoCV {
-//            self.images.insert(pickedImage!, at: 0)
             let instanceString = Date().instanceString()
-//            self.newImages.append(pickedImage!)
-//            self.imageKeys.append(instanceString)
             self.imgKeys.append(instanceString)
             self.newImagesWithKeys[instanceString] = pickedImage!
-//            if self.theRoute.images == nil {
-//                self.theRoute.images = [instanceString : pickedImage!]
-//            } else {
-//                self.theRoute.images![instanceString] = pickedImage!
-//            }
         } else {
             
             if self.shouldEditPhoto == false {
-//                self.arimages.insert(pickedImage!, at: 0)
                 if self.theRoute.ardiagrams == nil {
                     self.theRoute.ardiagrams = [ARDiagram(bgImage: pickedImage!)]
                 } else {
@@ -264,14 +267,37 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction func hitSave(_ sender: UIButton) {
-        //theRoute.feelsLike?.append(Rating(rating: self.feelsLikeField.text, username: username))
-        theRoute.feelsLike?.append(Rating(desc: self.feelsLikeField.text!))
+        for image in self.newImagesWithKeys {
+            if self.theRoute.images == nil { self.theRoute.images = [:] }
+            self.theRoute.images![image.key] = image.value
+        }
+        if self.feelsLikeField.text != "" {
+            if theRoute.feelsLike == nil { theRoute.feelsLike = [] }
+            theRoute.feelsLike?.append(Rating(desc: self.feelsLikeField.text!))
+        }
+        if self.starRating > 0 {
+            if theRoute.starVotes == nil || theRoute.star == nil {
+                theRoute.starVotes = 0
+                theRoute.star = 0
+            }
+            (theRoute.star!, theRoute.starVotes!) = calculateNewAvg(count: theRoute.starVotes!, avg: theRoute.star!, new: self.starRating)
+        }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
-//        theRoute.saveToFirebase(newImages: newImages, newKeys: imageKeys)
-        theRoute.saveToFirebase(newImagesWithKeys: newImagesWithKeys)
-        theRoute.saveToGeoFire()
+        DispatchQueue.global(qos: .background).async {
+            self.theRoute.saveARImagesToFirebase()
+            self.theRoute.saveToFirebase(newImagesWithKeys: self.newImagesWithKeys)
+            self.theRoute.saveToGeoFire()
+        }
         self.dismiss(animated: true, completion: nil)
+    }
+    func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double, Int) {
+        var total = avg * Double(count)
+        print("total: \(total)")
+        total += Double(new)
+        print("new total: \(total)")
+        print("new calculated average: \(total/Double(count+1))")
+        return (total/Double(count+1), count+1)
     }
     func populateTypes() -> String {
         var types : [String] = []

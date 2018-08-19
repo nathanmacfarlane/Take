@@ -11,4 +11,6 @@ import Foundation
 enum TYPE {
     case boulder
     case climb
+    case aid
+    case alpine
 }
