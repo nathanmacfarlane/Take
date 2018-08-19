@@ -1,40 +1,18 @@
 swiftlint_version: 0.26.0
 
 included:
-- Sources
-- Samples
-- Tests
+- Take
 
 excluded:
+- Pod
 - Pods
 - Carthage
-- Carthage/facebook-ios-sdk/samples
-- Carthage/facebook-ios-sdk/vendor
 - Vendor
 
 cyclomatic_complexity: 11
 explicit_type_interface:
   excluded:
   - local
-file_header:
-  required_pattern: |
-                    \/\/ Copyright \(c\) \d{4}-present, Facebook, Inc\. All rights reserved\.
-                    \/\/
-                    \/\/ You are hereby granted a non-exclusive, worldwide, royalty-free license to use,
-                    \/\/ copy, modify, and distribute this software in source code or binary form for use
-                    \/\/ in connection with the web services and APIs provided by Facebook\.
-                    \/\/
-                    \/\/ As with any software that integrates with the Facebook platform, your use of
-                    \/\/ this software is subject to the Facebook Developer Principles and Policies
-                    \/\/ \[http:\/\/developers\.facebook\.com\/policy\/\]\. This copyright notice shall be
-                    \/\/ included in all copies or substantial portions of the software\.
-                    \/\/
-                    \/\/ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-                    \/\/ IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-                    \/\/ FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT\. IN NO EVENT SHALL THE AUTHORS OR
-                    \/\/ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-                    \/\/ IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-                    \/\/ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE\.
 identifier_name:
   excluded:
   - ok
@@ -56,10 +34,6 @@ disabled_rules:
 - number_separator
 - prefixed_toplevel_constant
 - switch_case_on_newline
-# TODO: All below to move to Opt In
-- discouraged_optional_boolean
-- discouraged_optional_collection
-- function_default_parameter_at_end
 - todo
 
 opt_in_rules:
@@ -80,6 +54,8 @@ opt_in_rules:
 - cyclomatic_complexity
 - discarded_notification_center_observer
 - discouraged_direct_init
+- discouraged_optional_boolean
+- discouraged_optional_collection
 - dynamic_inline
 - empty_count
 - empty_string
@@ -101,6 +77,7 @@ opt_in_rules:
 - force_try
 - force_unwrapping
 - function_body_length
+- function_default_parameter_at_end
 - function_parameter_count
 - generic_type_name
 - identifier_name
