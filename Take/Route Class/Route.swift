@@ -14,7 +14,7 @@ import MapKit
 import UIKit
 
 class RouteService: Codable {
-    var routes: [Route]!
+    var routes: [Route] = []
 }
 
 class Route: NSObject, Comparable, Codable, MKAnnotation {
@@ -23,16 +23,16 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var photoURL: String?
     var id: Int
     var types: String? // TR (Top Rope), Sport, and Trad, Boulder
-    var stars: [Star]?
+    var stars: [Star] = []
     var star: Double?
     var starVotes: Int?
     var pitches: Int?
-    var localDesc: [String]?
-    var comments: [Comment]?
+    var localDesc: [String] = []
+    var comments: [Comment] = []
     var info: String?
-    var feelsLike: [Rating]?
-    var images: [String: UIImage]?
-    var ardiagrams: [ARDiagram]?
+    var feelsLike: [Rating] = []
+    var images: [String: UIImage] = [:]
+    var ardiagrams: [ARDiagram] = []
     var ref: DatabaseReference?
     var latitude: Double?
     var longitude: Double?
@@ -40,18 +40,18 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var area: String?
     var city: String?
 
-    var newARDiagrams: [ARDiagram]?
+    var newARDiagrams: [ARDiagram] = []
 
     //private stuff
-    private var allImages: [String: String]?
-    private var allDiagrams: [String: [String]]?
+    private var allImages: [String: String] = [:]
+    private var allDiagrams: [String: [String]] = [:]
     private var rating: String?
 
     var difficulty: Rating? {
-        if self.rating == nil {
-            return nil
+        if let tempRating = self.rating {
+            return Rating(desc: tempRating)
         }
-        return Rating(desc: self.rating!)
+        return nil
     }
 
     // MARK: - Inits
@@ -61,38 +61,45 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         self.latitude = lat
         self.longitude = long
     }
-    init(snapshot: DataSnapshot) {
-        id = Int(snapshot.key)!
-        let snapval = snapshot.value            as! [String: AnyObject]
-        name = snapval["name"]           as! String
-        if let tempLoc = snapval["location"]       as? [Double] {
-            latitude = tempLoc[0]
-            longitude = tempLoc[1]
+    init?(snapshot: DataSnapshot) {
+        self.id = Int(snapshot.key) ?? 0
+        guard let snapval = snapshot.value as? [String: AnyObject] else {
+            return nil
         }
-        photoURL = snapval["photoURL"]       as? String
-        types = snapval["types"]          as? String
-        rating = snapval["difficulty"]     as? String
-        star = snapval["stars"]          as? Double
-        starVotes = snapval["starVotes"]      as? Int
-        pitches = snapval["pitches"]        as? Int
-        localDesc = snapval["localDesc"]      as? [String]
-        if let tempComments = snapval["comments"]   as? [[String: Any]] {
+        guard let tempName = snapval["name"] as? String, let tempLoc = snapval["location"] as? [Double] else {
+            return nil
+        }
+        name = tempName
+        latitude = tempLoc[0]
+        longitude = tempLoc[1]
+        photoURL = snapval["photoURL"] as? String
+        types = snapval["types"] as? String
+        rating = snapval["difficulty"] as? String
+        star = snapval["stars"] as? Double
+        starVotes = snapval["starVotes"] as? Int
+        pitches = snapval["pitches"] as? Int
+        guard let tempLocalDesc = snapval["localDesc"] as? [String] else {
+            return nil
+        }
+        localDesc = tempLocalDesc
+        if let tempComments = snapval["comments"] as? [[String: Any]] {
             for tempComment in tempComments {
-                comments?.append(Comment(anyObject: tempComment))
+                comments.append(Comment(anyObject: tempComment))
             }
         }
-        info = snapval["info"]           as? String
+        info = snapval["info"] as? String
         if let tempFeelsLike = snapval["feelsLike"] as? [[String: Any]] {
             for tempFeels in tempFeelsLike {
-                if feelsLike == nil {
-                    feelsLike = []
-                }
-                feelsLike?.append(Rating(anyObject: tempFeels))
+                feelsLike.append(Rating(anyObject: tempFeels))
             }
         }
-        area = snapval["area"]           as? String
-        allImages = snapval["allImages"]      as? [String: String]
-        allDiagrams = snapval["allARDiagrams"]  as? [String: [String]]
+        area = snapval["area"] as? String
+        if let tempAllImages = snapval["allImages"] as? [String: String] {
+            allImages = tempAllImages
+        }
+        if let tempAllDiagrams = snapval["allARDiagrams"]  as? [String: [String]] {
+            allDiagrams = tempAllDiagrams
+        }
         wall = snapval["wall"]           as? String
         city = snapval["city"]           as? String
         self.ref = snapshot.ref
@@ -100,7 +107,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     // MARK: - MKAnnotation
     var coordinate: CLLocationCoordinate2D {
-        return CLLocationCoordinate2D(latitude: self.latitude!, longitude: self.longitude!)
+        if let lat = self.latitude, let long = self.longitude {
+            return CLLocationCoordinate2D(latitude: lat, longitude: long)
+        }
     }
     var title: String? {
         return self.name
@@ -110,10 +119,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
 
     var location: CLLocation? {
-        if latitude == nil || longitude == nil {
-            return nil
+        if let lat = latitude, let long = longitude {
+            return CLLocation(latitude: lat, longitude: long)
         }
-        return CLLocation(latitude: latitude!, longitude: longitude!)
     }
 
     enum CodingKeys: String, CodingKey {
@@ -136,8 +144,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if let tempTypes = types {
             desc += " \(tempTypes)"
         }
-        if let tempLocalDesc = localDesc {
-            desc += " \(tempLocalDesc)"
+        if !localDesc.isEmpty {
+            desc += " \(localDesc)"
         }
         return desc
     }
@@ -183,50 +191,63 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     func getARImagesFromFirebase(completion: @escaping () -> Void) {
         self.ardiagrams = []
         var count = 0
-        for arDiagram in self.allDiagrams ?? [:] {
+        for arDiagram in self.allDiagrams {
             guard let theDiagram = URL(string: arDiagram.value[0]) else { continue }
             URLSession.shared.dataTask(with: theDiagram) { bgImageData, _, _ in
 
-                URLSession.shared.dataTask(with: URL(string: arDiagram.value[1])!) { diagramData, _, _ in
-                    let newDiagram = ARDiagram(bgImage: UIImage(data: bgImageData!)!, diagram: UIImage(data: diagramData!)!)
-                    self.ardiagrams?.append(newDiagram)
+                guard let bgData = bgImageData else { return }
+                guard let theURL = URL(string: arDiagram.value[1]) else { return }
+                guard let bgImage = UIImage(data: bgData) else { return }
+                URLSession.shared.dataTask(with: theURL) { diagramData, _, _ in
+
+                    guard let dData = diagramData else { return }
+                    guard let dImage = UIImage(data: dData) else { return }
+                    let newDiagram = ARDiagram(bgImage: bgImage, diagram: dImage)
+                    self.ardiagrams.append(newDiagram)
                     count += 1
-                    if count == self.allDiagrams?.count {
+                    if count == self.allDiagrams.count {
                         completion()
                     }
-                    }.resume()
+                }
+                .resume()
 
-                }.resume()
+            }
+            .resume()
         }
     }
     func observeImageFromFirebase(completion: @escaping (_ snapshot: DataSnapshot, _ ref: DatabaseReference) -> Void) {
         let imagesRef = Database.database().reference().child("Routes/\(self.id)/allImages")
-        imagesRef.observe(.childAdded, with: { snapshot in
+        imagesRef.observe(.childAdded) { snapshot in
             completion(snapshot, imagesRef)
-        })
+        }
     }
     func getImagesFromFirebase(completion: @escaping () -> Void) {
         self.images = [:]
         var count = 0
-        for imgURL in self.allImages ?? [:] {
-            URLSession.shared.dataTask(with: URL(string: imgURL.value)!) { data, _, _ in
-                self.images?[imgURL.key] = UIImage(data: data!)!
+        for imgURL in self.allImages {
+            guard let theURL = URL(string: imgURL.value) else { continue }
+            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+                self.images[imgURL.key] = theImage
                 count += 1
-                if count == self.allImages?.count {
+                if count == self.allImages.count {
                     completion()
                 }
-                }.resume()
+            }
+            .resume()
         }
     }
     func getFirstImageFromFirebase(completion: @escaping (_ image: UIImage?) -> Void) {
-        if self.allImages?.values.first == nil {
+        if self.allImages.values.first == nil {
             completion(#imageLiteral(resourceName: "noImages.png"))
             return
         }
-        let firstImageKey = self.allImages!.values.first!
-        URLSession.shared.dataTask(with: URL(string: firstImageKey)!) { data, _, _ in
-            completion(UIImage(data: data!))
-            }.resume()
+        guard let firstImageKey = self.allImages.values.first, let theURL = URL(string: firstImageKey) else { return }
+        URLSession.shared.dataTask(with: theURL) { data, _, _ in
+            guard let theData = data else { return }
+            completion(UIImage(data: theData))
+        }
+        .resume()
     }
     private func saveToFirebase() {
         if self.ref == nil {
@@ -264,10 +285,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         let imageRef = storeRef.child("Routes/\(self.id)")
         let keys = Array(newImagesWithKeys.keys)
         for imageKey in keys {
-            let data = UIImagePNGRepresentation(newImagesWithKeys[imageKey]!.resizedToKB(numKB: 1024)!) as NSData?
+
+            guard let imageFromKey = newImagesWithKeys[imageKey], let resizedImage = imageFromKey.resizedToKB(numKB: 1024) else { return }
+            guard let data = UIImagePNGRepresentation(resizedImage) as NSData? else { return }
             let imageID = UUID().uuidString
             //save to firebase
-            _ = imageRef.child("\(imageID).png").putData(data! as Data, metadata: nil, completion: { metadata, error in
+            _ = imageRef.child("\(imageID).png").putData(data as Data, metadata: nil) { metadata, error in
                 guard metadata != nil else {
                     print("oh shoot... error occured: \(String(describing: error))")
                     return
@@ -278,13 +301,10 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
                         return
                     }
                     self.addImageURLToFirebase(imageURL: "\(downloadURL)")
-                    if self.allImages == nil {
-                        self.allImages = [:]
-                    }
-                    self.allImages![imageKey] = "\(downloadURL)"
+                    self.allImages[imageKey] = "\(downloadURL)"
                 }
 
-            })
+            }
         }
     }
     func addARURLToFirebase(bgImageURL: String, diagramURL: String) {
@@ -301,20 +321,20 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     func saveARImagesToFirebase() {
         let storeRef = Storage.storage().reference()
         let arRef = storeRef.child("Routes/\(self.id)")
-        if self.ardiagrams == nil {
-            self.ardiagrams = []
-        }
         print("going to save ar diagrms")
-        for arDiagram in self.newARDiagrams ?? [] {
+        for arDiagram in self.newARDiagrams {
             print("in for loop")
-            self.ardiagrams?.append(arDiagram)
-            let bgData = UIImagePNGRepresentation(arDiagram.bgImage.resizedToKB(numKB: 1024)!) as NSData?
-            let diagramData = UIImagePNGRepresentation(arDiagram.diagram!.resizedToKB(numKB: 1024)!) as NSData?
+            self.ardiagrams.append(arDiagram)
+            guard let resizedBGImage = arDiagram.bgImage.resizedToKB(numKB: 1024) else { return }
+            guard let bgData = UIImagePNGRepresentation(resizedBGImage) as NSData? else { return }
+
+            guard let theDiagram = arDiagram.diagram, let resizedDiagram = theDiagram.resizedToKB(numKB: 1024) else { return }
+            let diagramData = UIImagePNGRepresentation(resizedDiagram) as NSData?
             let bgImageID = UUID().uuidString
             let diagramID = UUID().uuidString
 
             //save bg image to firebase
-            _ = arRef.child("\(bgImageID).png").putData(bgData! as Data, metadata: nil, completion: { metadata, error in
+            _ = arRef.child("\(bgImageID).png").putData(bgData as Data, metadata: nil) { metadata, error in
                 guard metadata != nil else {
                     print("oh shoot... error occured: \(String(describing: error))")
                     return
@@ -326,7 +346,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
                     }
 
                     //save diagram to firebase
-                    _ = arRef.child("\(diagramID).png").putData(diagramData! as Data, metadata: nil, completion: { metadata, error in
+                    guard let dData = diagramData else { return }
+                    _ = arRef.child("\(diagramID).png").putData(dData as Data, metadata: nil) { metadata, error in
                         guard metadata != nil else {
                             print("oh shoot... error occured: \(String(describing: error))")
                             return
@@ -339,19 +360,19 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
                             self.addARURLToFirebase(bgImageURL: "\(bgImageIDDownloadURL)", diagramURL: "\(diagramDownloadURL)")
                         }
 
-                    })
+                    }
                 }
 
-            })
+            }
         }
     }
 
     // MARK: - equatable
     override func isEqual(_ object: Any?) -> Bool {
-        guard let r = object as? Route else {
+        guard let rhs = object as? Route else {
             return false
         }
-        return r.id == self.id
+        return rhs.id == self.id
     }
     static func == (lhs: Route, rhs: Route) -> Bool {
         return lhs.id == rhs.id
@@ -369,47 +390,43 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     // MARK: - functions
     func averageRating() -> String? {
         var sum: Int = 0
-        if feelsLike == nil {
-            return nil
-        }
-        for rating in feelsLike! {
+        for rating in feelsLike {
             sum += rating.intDiff
         }
-        let avg = sum / feelsLike!.count
+        let avg = sum / feelsLike.count
         let countedSet: NSCountedSet = []
-        for rating in feelsLike! {
-            if rating.intDiff == avg {
-                countedSet.add(rating.buffer ?? "")
-            }
+        for rating in feelsLike where rating.intDiff == avg {
+            countedSet.add(rating.buffer ?? "")
         }
         let mostFrequent = "\(countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) } ?? "")"
-        if feelsLike!.first?.type == .boulder {
+        if feelsLike.first?.type == .boulder {
             return "V\(avg)\(mostFrequent)"
         } else {
             return "5.\(avg)\(mostFrequent)"
         }
     }
     func averageStar() -> Int? {
-        if stars == nil {
-            return nil
-        }
         var sum: Double = 0
-        for star in stars! {
+        for star in stars {
             sum += star.star
         }
-        return Int(sum) / (stars!.count)
+        return Int(sum) / (stars.count)
     }
     func isTR() -> Bool {
-        return (self.types?.contains("TR"))!
+        guard theTypes = self.types else { return false }
+        return theTypes.contains("TR") ?? false
     }
     func isSport() -> Bool {
-        return (self.types?.contains("Sport"))!
+        guard theTypes = self.types else { return false }
+        return theTypes.contains("Sport") ?? false
     }
     func isTrad() -> Bool {
-        return (self.types?.contains("Trad"))!
+        guard theTypes = self.types else { return false }
+        return theTypes.contains("Trad") ?? false
     }
     func isBoulder() -> Bool {
-        return (self.types?.contains("Boulder"))!
+        guard theTypes = self.types else { return false }
+        return theTypes.contains("Boulder") ?? false
     }
     func toString() -> String {
         return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")', Types: \(types ?? "N/A")"
@@ -439,12 +456,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if pitches != nil {
             any["pitches"] = pitches
         }
-        if localDesc != nil {
+        if !localDesc.isEmpty {
             any["localDesc"] = localDesc
         }
-        if comments != nil {
+        if !comments.isEmpty {
             var commentsAnyArr: [Any] = []
-            for comment in comments! {
+            for comment in comments {
                 commentsAnyArr.append(comment.toAnyObject())
             }
             any["comments"] = commentsAnyArr
@@ -452,9 +469,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if info != nil {
             any["info"] = info
         }
-        if feelsLike != nil {
+        if !feelsLike.isEmpty {
             var feelsLikeAnyArr: [Any] = []
-            for feels in feelsLike! {
+            for feels in feelsLike {
                 feelsLikeAnyArr.append(feels.toAnyObject())
             }
             any["feelsLike"] = feelsLikeAnyArr
@@ -462,7 +479,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if area != nil {
             any["area"] = area
         }
-        if allImages != nil {
+        if !allImages.isEmpty {
             any["allImages"] = allImages
         }
 

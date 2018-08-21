@@ -15,8 +15,9 @@ class UIChartView: UIView {
     var data: [ChartData] = []
 
     // outlets
-    private var myScrollView: UIScrollView!
-    private var dateBG: UILabel!
+    private var myScrollView: UIScrollView
+//    private var dateBG: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
+    @IBOutlet private weak var dateBG: UILabel
     private var bottomBarOffset: CGFloat = 20
     private var barWidth: Int = 50
 
@@ -52,18 +53,18 @@ class UIChartView: UIView {
         var xOffset = 10
         //let maxValue = self.data.map{ $0.value }.max()
 
-        for d in self.data {
-            let label = UILabel(frame: CGRect(x: xOffset, y: Int(CGFloat(Int(self.frame.height) - d.value) - bottomBarOffset), width: barWidth, height: d.value))
+        for data in self.data {
+            let label = UILabel(frame: CGRect(x: xOffset, y: Int(CGFloat(Int(self.frame.height) - data.value) - bottomBarOffset), width: barWidth, height: data.value))
             label.backgroundColor = .black
-            if d.value > Int(self.frame.height / 10) {
-                label.text = "\(d.value)"
+            if data.value > Int(self.frame.height / 10) {
+                label.text = "\(data.value)"
                 label.textAlignment = .center
                 label.textColor = .white
             }
             let dateLabel = UILabel(frame: CGRect(x: xOffset, y: Int(self.frame.height - bottomBarOffset), width: barWidth, height: Int(bottomBarOffset)))
             dateLabel.textAlignment = .center
             //            dateLabel.text = "\(Array(d.month)[0])"
-            dateLabel.text = d.month
+            dateLabel.text = data.month
             //            let dateLabel = UILabel(frame: CGRect(x: xOffset, y: Int(CGFloat(Int(self.frame.height)-d.value), width: 30, height: 20)))
             myScrollView.addSubview(dateLabel)
             myScrollView.addSubview(label)
