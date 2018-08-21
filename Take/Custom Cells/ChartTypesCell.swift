@@ -10,8 +10,8 @@ import UIKit
 
 class ChartTypesCell: UITableViewCell {
 
-    @IBOutlet weak var circleIcon: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var countLabel: UILabel!
+    @IBOutlet private weak var circleIcon: UILabel!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var countLabel: UILabel!
 
 }

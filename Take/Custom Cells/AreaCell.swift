@@ -10,8 +10,8 @@ import UIKit
 
 class AreaCell: UITableViewCell {
 
-    @IBOutlet weak var areaLabel: UILabel!
-    @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var bgView: UIView!
+    @IBOutlet private weak var areaLabel: UILabel!
+    @IBOutlet private weak var bgImage: UIImageView!
+    @IBOutlet private weak var bgView: UIView!
 
 }

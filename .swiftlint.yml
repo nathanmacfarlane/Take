@@ -9,13 +9,14 @@ excluded:
 - Carthage
 - Vendor
 
-cyclomatic_complexity: 11
+cyclomatic_complexity: 15
 explicit_type_interface:
   excluded:
   - local
 identifier_name:
   excluded:
   - ok
+  - id
 indentation: 4
 large_tuple: 3
 line_length: 150
@@ -25,6 +26,7 @@ private_outlet:
   allow_private_set: true
 
 disabled_rules:
+- line_length
 - conditional_returns_on_newline
 - discouraged_object_literal
 - explicit_acl
@@ -93,7 +95,6 @@ opt_in_rules:
 - legacy_constructor
 - legacy_nsgeometry_functions
 - let_var_whitespace
-- line_length
 - literal_expression_end_indentation
 - lower_acl_than_parent
 - mark

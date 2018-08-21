@@ -9,8 +9,8 @@
 import UIKit
 
 class ViewNextPageCell: UITableViewCell {
-    @IBOutlet weak var firstButton: UIButton!
-    @IBOutlet weak var previousButton: UIButton!
-    @IBOutlet weak var nextButton: UIButton!
-    @IBOutlet weak var lastButton: UIButton!
+    @IBOutlet private weak var firstButton: UIButton!
+    @IBOutlet private weak var previousButton: UIButton!
+    @IBOutlet private weak var nextButton: UIButton!
+    @IBOutlet private weak var lastButton: UIButton!
 }

@@ -9,8 +9,11 @@
 import Foundation
 import UIKit
 
-func loadImageFrom(url: String, completion: @escaping (_ image: UIImage) -> Void) {
-    URLSession.shared.dataTask(with: URL(string: url)!) { data, _, _ in
-        completion(UIImage(data: data!)!)
-        }.resume()
+func loadImageFrom(url: URL, completion: @escaping (_ image: UIImage) -> Void) {
+    URLSession.shared.dataTask(with: url) { data, _, _ in
+        guard let tempData = data else { return }
+        guard let tempImage = UIImage(data: tempData) else { return }
+        completion(tempImage)
+    }
+    .resume()
 }

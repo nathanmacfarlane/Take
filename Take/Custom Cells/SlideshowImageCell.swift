@@ -11,14 +11,14 @@ import UIKit
 class SlideshowImageCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var theImage: UIImageView!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
-    @IBOutlet weak var usernameLabel: UILabel!
-    @IBOutlet weak var starsLabel: UILabel!
+    @IBOutlet private weak var theImage: UIImageView!
+    @IBOutlet private weak var descriptionLabel: UILabel!
+    @IBOutlet private weak var dateLabel: UILabel!
+    @IBOutlet private weak var usernameLabel: UILabel!
+    @IBOutlet private weak var starsLabel: UILabel!
 
     // MARK: - variables
-    var isZooming: Bool!
+    var isZooming: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,7 +34,7 @@ class SlideshowImageCell: UICollectionViewCell {
 
     // Actions
 
-    @IBAction func pinch(sender: UIPinchGestureRecognizer) {
+    @IBAction private func pinch(sender: UIPinchGestureRecognizer) {
 
         if sender.state == .began {
             let currentScale = self.theImage.frame.width / self.theImage.bounds.size.width
@@ -76,12 +76,12 @@ class SlideshowImageCell: UICollectionViewCell {
     }
 
     private func toggleStuff(alpha: CGFloat) {
-        UIView.animate(withDuration: 0.15, animations: {
+        UIView.animate(withDuration: 0.15) {
             self.usernameLabel.alpha = alpha
             self.dateLabel.alpha = alpha
             self.starsLabel.alpha = alpha
             self.descriptionLabel.alpha = alpha
-        })
+        }
     }
 
 }

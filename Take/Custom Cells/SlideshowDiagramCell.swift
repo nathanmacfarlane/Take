@@ -11,12 +11,12 @@ import UIKit
 class SlideshowDiagramCell: UICollectionViewCell {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var theImage: UIImageView!
-    @IBOutlet weak var diagramImage: UIImageView!
-    @IBOutlet weak var bgImageView: UIImageView!
+    @IBOutlet private weak var theImage: UIImageView!
+    @IBOutlet private weak var diagramImage: UIImageView!
+    @IBOutlet private weak var bgImageView: UIImageView!
 
     // MARK: - variables
-    var isZooming: Bool!
+    var isZooming: Bool = false
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,7 +32,7 @@ class SlideshowDiagramCell: UICollectionViewCell {
 
     // Actions
 
-    @IBAction func pinch(sender: UIPinchGestureRecognizer) {
+    @IBAction private func pinch(sender: UIPinchGestureRecognizer) {
 
         if sender.state == .began {
             let currentScale = self.diagramImage.frame.width / self.diagramImage.bounds.size.width
@@ -62,11 +62,12 @@ class SlideshowDiagramCell: UICollectionViewCell {
             }
         } else if sender.state == .ended || sender.state == .failed || sender.state == .cancelled {
             let center = self.bgImageView.center
-            UIView.animate(withDuration: 0.3, animations: {
-                self.diagramImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-                self.diagramImage.center = center
-                self.theImage.transform = CGAffineTransform(scaleX: 1, y: 1)
-                self.theImage.center = center
+            UIView.animate(withDuration: 0.3,
+                           animations: {
+                            self.diagramImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            self.diagramImage.center = center
+                            self.theImage.transform = CGAffineTransform(scaleX: 1, y: 1)
+                            self.theImage.center = center
             }, completion: { _ in
                 self.isZooming = false
             })

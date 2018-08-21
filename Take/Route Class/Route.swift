@@ -132,25 +132,23 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
 
     func description() -> String {
-        var desc = "\(name), \(id)"
-        if types != nil {
-            desc = "\(desc), \(types!)"
+        var desc = "\(name) \(id)"
+        if let tempTypes = types {
+            desc += " \(tempTypes)"
         }
-        if localDesc != nil {
-            desc = "\(desc), \(localDesc!)"
+        if let tempLocalDesc = localDesc {
+            desc += " \(tempLocalDesc)"
         }
         return desc
     }
 
     // MARK: - GeoFire
     func saveToGeoFire() {
-        if self.latitude == nil || self.longitude == nil {
-            return
-        }
+        guard let theLat = self.latitude, let theLong = self.longitude else { return }
         let DBRef = Database.database().reference().child("GeoFireRouteKeys")
         let geoFire = GeoFire(firebaseRef: DBRef)
-        geoFire.setLocation(CLLocation(latitude: self.latitude!, longitude: self.longitude!), forKey: "\(self.id)") { error in
-            if (error != nil) {
+        geoFire.setLocation(CLLocation(latitude: theLat, longitude: theLong), forKey: "\(self.id)") { error in
+            if error != nil {
                 print("An error occured: \(String(describing: error))")
             } else {
                 print("Saved location successfully!")
@@ -163,11 +161,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if let wallName = self.wall {
             let wallsRoot = Database.database().reference(withPath: "walls")
             let query = wallsRoot.queryOrdered(byChild: "name").queryEqual(toValue: wallName)
-            query.observeSingleEvent(of: .value, with: { snapshot in
+            query.observeSingleEvent(of: .value) { snapshot in
                 for item in snapshot.children {
-                    completion(Wall(snapshot: item as! DataSnapshot))
+                    guard let item = item as? DataSnapshot else { return }
+                    completion(Wall(snapshot: item))
                 }
-            })
+            }
         }
     }
     //    func getArea(completion: @escaping (_ area: RouteArea) -> Void) {
@@ -185,7 +184,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         self.ardiagrams = []
         var count = 0
         for arDiagram in self.allDiagrams ?? [:] {
-            URLSession.shared.dataTask(with: URL(string: arDiagram.value[0])!) { bgImageData, _, _ in
+            guard let theDiagram = URL(string: arDiagram.value[0]) else { continue }
+            URLSession.shared.dataTask(with: theDiagram) { bgImageData, _, _ in
 
                 URLSession.shared.dataTask(with: URL(string: arDiagram.value[1])!) { diagramData, _, _ in
                     let newDiagram = ARDiagram(bgImage: UIImage(data: bgImageData!)!, diagram: UIImage(data: diagramData!)!)
@@ -415,58 +415,58 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")', Types: \(types ?? "N/A")"
     }
     func toAnyObject() -> Any {
-        var a: [String: Any] = [:]
-        a["name"] = name
+        var any: [String: Any] = [:]
+        any["name"] = name
         if latitude != nil {
-            a["location"] = [latitude, longitude]
+            any["location"] = [latitude, longitude]
         }
         if photoURL != nil {
-            a["photoURL"] = photoURL
+            any["photoURL"] = photoURL
         }
-        a["id"] = id
+        any["id"] = id
         if types != nil {
-            a["types"] = types
+            any["types"] = types
         }
         if rating != nil {
-            a["difficulty"] = rating
+            any["difficulty"] = rating
         }
         if star != nil {
-            a["stars"] = star
+            any["stars"] = star
         }
         if starVotes != nil {
-            a["starVotes"] = starVotes
+            any["starVotes"] = starVotes
         }
         if pitches != nil {
-            a["pitches"] = pitches
+            any["pitches"] = pitches
         }
         if localDesc != nil {
-            a["localDesc"] = localDesc
+            any["localDesc"] = localDesc
         }
         if comments != nil {
             var commentsAnyArr: [Any] = []
             for comment in comments! {
                 commentsAnyArr.append(comment.toAnyObject())
             }
-            a["comments"] = commentsAnyArr
+            any["comments"] = commentsAnyArr
         }
         if info != nil {
-            a["info"] = info
+            any["info"] = info
         }
         if feelsLike != nil {
             var feelsLikeAnyArr: [Any] = []
             for feels in feelsLike! {
                 feelsLikeAnyArr.append(feels.toAnyObject())
             }
-            a["feelsLike"] = feelsLikeAnyArr
+            any["feelsLike"] = feelsLikeAnyArr
         }
         if area != nil {
-            a["area"] = area
+            any["area"] = area
         }
         if allImages != nil {
-            a["allImages"] = allImages
+            any["allImages"] = allImages
         }
 
-        return a
+        return any
     }
 
 }

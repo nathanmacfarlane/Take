@@ -10,8 +10,8 @@ import UIKit
 
 class WallCell: UITableViewCell {
 
-    @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var wallLabel: UILabel!
+    @IBOutlet private weak var bgView: UIView!
+    @IBOutlet private weak var bgImage: UIImageView!
+    @IBOutlet private weak var wallLabel: UILabel!
 
 }

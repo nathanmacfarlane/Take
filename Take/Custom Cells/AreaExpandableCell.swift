@@ -10,8 +10,8 @@ import UIKit
 
 class AreaExpandableCell: UITableViewCell {
 
-    @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet private weak var bgView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel!
 
     //    override var frame: CGRect {
     //        get {

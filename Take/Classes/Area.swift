@@ -12,10 +12,10 @@ import Foundation
 import GeoFire
 
 class Area {
-    var id: String!
-    var name: String!
-    var location: CLLocation!
-    var radius: Double!
+    var id: String
+    var name: String
+    var location: CLLocation
+    var radius: Double
 
     // MARK: - Inits
     init(name: String, location: CLLocation, radius: Double) {
@@ -24,12 +24,22 @@ class Area {
         self.location = location
         self.radius = radius
     }
-    init(snapshot: DataSnapshot) {
+    init?(snapshot: DataSnapshot) {
         id = snapshot.key
-        let snapval = snapshot.value as! [String: AnyObject]
-        name = snapval["name"]           as! String
-        location = CLLocation(latitude: (snapval["location"] as! [Double])[0], longitude: (snapval["location"] as! [Double])[1])
-        radius = snapval["radius"]         as! Double
+        guard let snapval = snapshot.value as? [String: AnyObject] else {
+            return nil
+        }
+
+        if let tempName = snapval["name"] as? String {
+            self.name = tempName
+        }
+        if let tempLocation = (snapval["location"] as? [Double]) {
+            self.location = CLLocation(latitude: tempLocation[0], longitude: tempLocation[1])
+        }
+        if let tempRadius = snapval["radius"] as? Double {
+            self.radius = tempRadius
+        }
+
     }
 
     // MARK: - Firebase
@@ -42,7 +52,7 @@ class Area {
     func saveAreaToGF() {
         let DBRef = Database.database().reference().child("GeoFireAreaKeys")
         let geoFire = GeoFire(firebaseRef: DBRef)
-        geoFire.setLocation(self.location, forKey: self.id!)
+        geoFire.setLocation(self.location, forKey: self.id)
     }
 
     // MARK: - Functions
