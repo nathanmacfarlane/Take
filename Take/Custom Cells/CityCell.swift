@@ -10,8 +10,8 @@ import UIKit
 
 class CityCell: UITableViewCell {
 
-    @IBOutlet weak var bgImage: UIImageView!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var bgView: UIView!
+    @IBOutlet private weak var bgImage: UIImageView!
+    @IBOutlet private weak var cityLabel: UILabel!
+    @IBOutlet private weak var bgView: UIView!
 
 }

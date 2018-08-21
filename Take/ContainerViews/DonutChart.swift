@@ -57,12 +57,11 @@ class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
         self.typesTableView.reloadData()
 
-        var entries = [PieChartDataEntry]()
-        for (index, value) in money.enumerated() {
+        let entries: [PieChartDataEntry] = money.enumerated().map {
             let entry = PieChartDataEntry()
-            entry.y = value
-            entry.label = track[index]
-            entries.append( entry)
+            entry.y = $1
+            entry.label = track[$0]
+            return entry
         }
 
         // 3. chart setup

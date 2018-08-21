@@ -67,7 +67,8 @@ func getIdsFromGeoFire(for key: String, from region: MKCoordinateRegion, complet
 //                print("error occured: \(String(describing: error))")
 //                return
 //            }
-//            //downloadURL is your url so once you have that, you might want to store it in your database so that next time you need to download the image, you can use this URL
+//            //downloadURL is your url so once you have that,
+//              you might want to store it in your database so that next time you need to download the image, you can use this URL
 //            print("downloadURL: \(downloadURL)")
 //        }
 //

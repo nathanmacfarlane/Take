@@ -9,8 +9,8 @@
 import UIKit
 
 class AddARImageCell: UICollectionViewCell {
-    @IBOutlet weak var bgImageView: UIImageView!
-    @IBOutlet weak var diagramImageView: UIImageView!
+    @IBOutlet private weak var bgImageView: UIImageView!
+    @IBOutlet private weak var diagramImageView: UIImageView!
     var hasImage: Bool = false
 
     //    override func awakeFromNib() {

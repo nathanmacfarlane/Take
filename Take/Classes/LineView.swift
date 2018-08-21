@@ -8,12 +8,12 @@
 
 import UIKit
 
-class ShapeView: UIView {
+class LineView: UIView {
 
     let size: CGFloat = 150
     let lineWidth: CGFloat = 3
-    var fillColor: UIColor!
-    var path: UIBezierPath!
+    var fillColor: UIColor
+    var path: UIBezierPath
 
     func randomColor() -> UIColor {
         let hue: CGFloat = CGFloat(Float(arc4random()) / Float(UINT32_MAX))
@@ -77,7 +77,8 @@ class ShapeView: UIView {
 
     func didPan(panGR: UIPanGestureRecognizer) {
 
-        self.superview!.bringSubviewToFront(self)
+        guard let theSuperview = self.superview else { return }
+        theSuperview.bringSubviewToFront(self)
 
         var translation = panGR.translationInView(self)
 
@@ -91,7 +92,8 @@ class ShapeView: UIView {
 
     func didPinch(pinchGR: UIPinchGestureRecognizer) {
 
-        self.superview!.bringSubviewToFront(self)
+        guard let theSuperview = self.superview else { return }
+        theSuperview.bringSubviewToFront(self)
 
         let scale = pinchGR.scale
 
@@ -102,7 +104,8 @@ class ShapeView: UIView {
 
     func didRotate(rotationGR: UIRotationGestureRecognizer) {
 
-        self.superview!.bringSubviewToFront(self)
+        guard let theSuperview = self.superview else { return }
+        theSuperview.bringSubviewToFront(self)
 
         let rotation = rotationGR.rotation
 

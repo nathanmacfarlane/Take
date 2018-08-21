@@ -10,11 +10,11 @@ import Foundation
 import UIKit
 
 class RouteCell: UITableViewCell {
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var bgView: UIView!
-    @IBOutlet weak var theImageView: UIImageView!
-    @IBOutlet weak var locationImageView: UIImageView!
-    @IBOutlet weak var areaButton: UIButton!
-    @IBOutlet weak var difficultyLabel: UILabel!
-    @IBOutlet weak var typesLabel: UILabel!
+    @IBOutlet private weak var nameLabel: UILabel!
+    @IBOutlet private weak var bgView: UIView!
+    @IBOutlet private weak var theImageView: UIImageView!
+    @IBOutlet private weak var locationImageView: UIImageView!
+    @IBOutlet private weak var areaButton: UIButton!
+    @IBOutlet private weak var difficultyLabel: UILabel!
+    @IBOutlet private weak var typesLabel: UILabel!
 }

@@ -9,7 +9,7 @@
 import UIKit
 
 class AddImageCell: UICollectionViewCell {
-    @IBOutlet weak var bgImageView: UIImageView!
+    @IBOutlet private weak var bgImageView: UIImageView!
     var hasImage: Bool = false
 
     override func awakeFromNib() {
@@ -20,7 +20,8 @@ class AddImageCell: UICollectionViewCell {
 
     }
 
-    @objc func heldCell(sender: UITapGestureRecognizer) {
+    @objc
+    func heldCell(sender: UITapGestureRecognizer) {
         if sender.state == .began && self.hasImage {
             self.removeImage()
         }

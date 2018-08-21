@@ -395,59 +395,5 @@
 //    func toString() -> String {
 //        return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")', Types: \(types ?? "N/A")"
 //    }
-//    func toAnyObject() -> Any {
-//        var a : [String : Any] = [:]
-//        a["name"] = name
-//        if latitude != nil {
-//            a["location"] = [latitude, longitude]
-//        }
-//        if photoURL != nil {
-//            a["photoURL"] = photoURL
-//        }
-//        a["id"] = id
-//        if types != nil {
-//            a["types"] = types
-//        }
-//        if rating != nil {
-//            a["difficulty"] = rating
-//        }
-//        if star != nil {
-//            a["stars"] = star
-//        }
-//        if starVotes != nil {
-//            a["starVotes"] = starVotes
-//        }
-//        if pitches != nil {
-//            a["pitches"] = pitches
-//        }
-//        if localDesc != nil {
-//            a["localDesc"] = localDesc
-//        }
-//        if comments != nil {
-//            var commentsAnyArr : [Any] = []
-//            for comment in comments! {
-//                commentsAnyArr.append(comment.toAnyObject())
-//            }
-//            a["comments"] = commentsAnyArr
-//        }
-//        if info != nil {
-//            a["info"] = info
-//        }
-//        if feelsLike != nil {
-//            var feelsLikeAnyArr : [Any] = []
-//            for feels in feelsLike! {
-//                feelsLikeAnyArr.append(feels.toAnyObject())
-//            }
-//            a["feelsLike"] = feelsLikeAnyArr
-//        }
-//        if area != nil {
-//            a["area"] = area
-//        }
-//        if allImages != nil {
-//            a["allImages"] = allImages
-//        }
-//
-//        return a
-//    }
 //
 //}
