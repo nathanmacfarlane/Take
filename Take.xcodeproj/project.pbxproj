@@ -19,7 +19,7 @@
 		043F789320B28D800043C08A /* ARDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F789220B28D800043C08A /* ARDiagram.swift */; };
 		043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F789420B2AAA00043C08A /* ImageSlideshow.swift */; };
 		043F789720B2B1880043C08A /* SlideshowImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043F789620B2B1880043C08A /* SlideshowImageCell.swift */; };
-		044061FA209D7DCD005C06C3 /* CustomSegues.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044061F9209D7DCD005C06C3 /* CustomSegues.swift */; };
+		044061FA209D7DCD005C06C3 /* SegueFromLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044061F9209D7DCD005C06C3 /* SegueFromLeft.swift */; };
 		044061FC209D83F2005C06C3 /* DetailImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044061FB209D83F2005C06C3 /* DetailImagesCell.swift */; };
 		044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044061FD209D8A9D005C06C3 /* TypeButton.swift */; };
 		0440620020A0F31A005C06C3 /* Comments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 044061FF20A0F31A005C06C3 /* Comments.swift */; };
@@ -86,6 +86,7 @@
 		2259C47520CEDAF70000065E /* user.png in Resources */ = {isa = PBXBuildFile; fileRef = 2259C47420CEDAF70000065E /* user.png */; };
 		225FE8B120C63DF000C98E1A /* noImages.png in Resources */ = {isa = PBXBuildFile; fileRef = 225FE8B020C63DF000C98E1A /* noImages.png */; };
 		225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 225FE8B420C63FAB00C98E1A /* imageLoading.png */; };
+		22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22762CE7212BD730004B41F9 /* SegueFromRight.swift */; };
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
 		228ED47920CA6DEF00A4DBA4 /* AreaOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */; };
 		229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */; };
@@ -121,7 +122,7 @@
 		043F789220B28D800043C08A /* ARDiagram.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDiagram.swift; sourceTree = "<group>"; };
 		043F789420B2AAA00043C08A /* ImageSlideshow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSlideshow.swift; sourceTree = "<group>"; };
 		043F789620B2B1880043C08A /* SlideshowImageCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowImageCell.swift; sourceTree = "<group>"; };
-		044061F9209D7DCD005C06C3 /* CustomSegues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomSegues.swift; sourceTree = "<group>"; };
+		044061F9209D7DCD005C06C3 /* SegueFromLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFromLeft.swift; sourceTree = "<group>"; };
 		044061FB209D83F2005C06C3 /* DetailImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImagesCell.swift; sourceTree = "<group>"; };
 		044061FD209D8A9D005C06C3 /* TypeButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TypeButton.swift; sourceTree = "<group>"; };
 		044061FF20A0F31A005C06C3 /* Comments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comments.swift; sourceTree = "<group>"; };
@@ -192,6 +193,7 @@
 		2259C47420CEDAF70000065E /* user.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = user.png; sourceTree = "<group>"; };
 		225FE8B020C63DF000C98E1A /* noImages.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = noImages.png; sourceTree = "<group>"; };
 		225FE8B420C63FAB00C98E1A /* imageLoading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLoading.png; sourceTree = "<group>"; };
+		22762CE7212BD730004B41F9 /* SegueFromRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFromRight.swift; sourceTree = "<group>"; };
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
 		228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOverlay.swift; sourceTree = "<group>"; };
 		229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Knot.png"; sourceTree = "<group>"; };
@@ -306,11 +308,12 @@
 		045255762091BA0900A4A384 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				044061F9209D7DCD005C06C3 /* CustomSegues.swift */,
 				04C83B0820B52D06008D842D /* DeepPressGesture.swift */,
 				04C83B0E20B54DDF008D842D /* User.swift */,
 				22ECE97220C91FD600DCF44E /* Area.swift */,
 				228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */,
+				044061F9209D7DCD005C06C3 /* SegueFromLeft.swift */,
+				22762CE7212BD730004B41F9 /* SegueFromRight.swift */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -676,6 +679,7 @@
 				04C83B4220BB6025008D842D /* UILabel.swift in Sources */,
 				22A2C982211A796C00743AC4 /* WallCell.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
+				22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */,
 				04C83B0320B3F788008D842D /* DiagramSlideshow.swift in Sources */,
 				2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */,
 				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
@@ -693,7 +697,7 @@
 				22A2C984211AAE5300743AC4 /* Wall.swift in Sources */,
 				22A2C98A211BFEFD00743AC4 /* AreaCell.swift in Sources */,
 				043F789320B28D800043C08A /* ARDiagram.swift in Sources */,
-				044061FA209D7DCD005C06C3 /* CustomSegues.swift in Sources */,
+				044061FA209D7DCD005C06C3 /* SegueFromLeft.swift in Sources */,
 				22546BCA21193CCC00F92025 /* RouteBuffer.swift in Sources */,
 				22A2C98C211C015E00743AC4 /* CityCell.swift in Sources */,
 				22E35FFB211FE3A100E95723 /* DonutChart.swift in Sources */,

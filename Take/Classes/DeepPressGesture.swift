@@ -9,14 +9,14 @@
 import AudioToolbox
 import UIKit.UIGestureRecognizerSubclass
 
-class DeepPressGestureRecognizer: UIGestureRecognizer {
-    var vibrateOnDeepPress = true
+class DeepPressGesture: UIGestureRecognizer {
+    var vibrateOnDeepPress: Bool = true
     var threshold: CGFloat = 0.75
     var hardTriggerMinTime: TimeInterval = 0.5
 
     private var deepPressed: Bool = false
     private var deepPressedAt: TimeInterval = 0
-    private var k_PeakSoundID: UInt32 = 1519
+    private var kPeakSoundID: UInt32 = 1519
     private var hardAction: Selector?
     private var target: AnyObject?
 
@@ -63,7 +63,7 @@ class DeepPressGestureRecognizer: UIGestureRecognizer {
             state = UIGestureRecognizerState.began
 
             if vibrateOnDeepPress {
-                AudioServicesPlaySystemSound(k_PeakSoundID)
+                AudioServicesPlaySystemSound(kPeakSoundID)
             }
 
             deepPressedAt = NSDate.timeIntervalSinceReferenceDate
@@ -74,7 +74,7 @@ class DeepPressGestureRecognizer: UIGestureRecognizer {
             endGesture()
 
             if vibrateOnDeepPress {
-                AudioServicesPlaySystemSound(k_PeakSoundID)
+                AudioServicesPlaySystemSound(kPeakSoundID)
             }
 
             //fire hard press
@@ -94,7 +94,7 @@ class DeepPressGestureRecognizer: UIGestureRecognizer {
 
 // MARK: DeepPressable protocol extension
 protocol DeepPressable {
-    var gestureRecognizers: [UIGestureRecognizer]? { get set }
+    var gestureRecognizers: [UIGestureRecognizer] { get set }
 
     func addGestureRecognizer(gestureRecognizer: UIGestureRecognizer)
     func removeGestureRecognizer(gestureRecognizer: UIGestureRecognizer)
@@ -105,17 +105,17 @@ protocol DeepPressable {
 
 extension DeepPressable {
     func setDeepPressAction(target: AnyObject, action: Selector) {
-        let deepPressGestureRecognizer = DeepPressGestureRecognizer(target: target, action: action, threshold: 0.75)
+        let deepPressGestureRecognizer = DeepPressGesture(target: target, action: action, threshold: 0.75)
 
         self.addGestureRecognizer(gestureRecognizer: deepPressGestureRecognizer)
     }
 
     func removeDeepPressAction() {
-        guard let gestureRecognizers = gestureRecognizers else {
+        if gestureRecognizers.isEmpty {
             return
         }
 
-        for recogniser in gestureRecognizers where recogniser is DeepPressGestureRecognizer {
+        for recogniser in gestureRecognizers where recogniser is DeepPressGesture {
             removeGestureRecognizer(gestureRecognizer: recogniser)
         }
     }

@@ -20,6 +20,7 @@ identifier_name:
 indentation: 4
 large_tuple: 3
 line_length: 150
+file_length: 500
 nesting:
   type_level: 2
 private_outlet:
