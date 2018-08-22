@@ -15,20 +15,23 @@ struct Wall {
     var name: String
     private var coverPhoto: String?
 
-    init(snapshot: DataSnapshot) {
-        let snapval = snapshot.value            as! [String: AnyObject]
-        self.area = snapval["area"]           as! Int
-        self.id = snapval["id"]             as! Int
-        self.name = snapval["name"]           as! String
+    init?(snapshot: DataSnapshot) {
+        guard let snapval = snapshot.value as? [String: AnyObject] else { return nil }
+        guard let tempArea = snapval["area"] as? Int, let tempId = snapval["id"] as? Int, let tempName = snapval["name"] as? String else { return nil }
+
+        self.area = tempArea
+        self.id = tempId
+        self.name = tempName
         self.coverPhoto = snapval["coverPhoto"] as? String
     }
 
     func getCoverPhoto(completion: @escaping (_ coverImage: UIImage) -> Void) {
-        if let photoURL = self.coverPhoto {
-            URLSession.shared.dataTask(with: URL(string: photoURL)!) { data, _, _ in
-                completion(UIImage(data: data!)!)
-                }.resume()
+        guard let photoURL = self.coverPhoto, let actualURL = URL(string: photoURL) else { return }
+        URLSession.shared.dataTask(with: actualURL) { data, _, _ in
+            guard let tempData = data, let coverPhoto = UIImage(data: tempData) else { return }
+            completion(coverPhoto)
         }
+        .resume()
     }
 
 }

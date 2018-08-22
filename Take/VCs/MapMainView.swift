@@ -11,7 +11,7 @@ import UIKit
 class MapMainView: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var browseButton: UIButton!
+    @IBOutlet private weak var browseButton: UIButton!
 
     // MARK: - view load/unload
     override func viewDidLoad() {

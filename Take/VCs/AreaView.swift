@@ -12,9 +12,9 @@ import UIKit
 class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var routeNameLabel: UILabel!
-    @IBOutlet weak var myTableView: UITableView!
-    var donutChartCV: DonutChart!
+    @IBOutlet private weak var routeNameLabel: UILabel!
+    @IBOutlet private weak var myTableView: UITableView!
+    var donutChartCV: DonutChart = DonutChart()
 
     // MARK: - Variables
     var routeArea: RouteArea!
@@ -74,23 +74,23 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.endUpdates()
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! AreaExpandableCell
-        cell.titleLabel.text = rows[indexPath.row].name
-        cell.titleLabel.textColor = rows[indexPath.row].color
-        cell.bgView.roundView(portion: 2)
+        let tempCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        guard let cell = tempCell as? AreaExpandableCell else { return UITableViewCell() }
+        cell.setTitleColor(with: rows[indexPath.row].color)
+        cell.setTitleLabel(with: rows[indexPath.row].name)
+        cell.roundBG()
         cell.selectionStyle = .none
-        //        cell.backgroundColor = UIColor(hexString: "#2F2F2F")
         return cell
     }
 
     // MARK: - Navigation
-    @IBAction func goBack(_ sender: Any) {
+    @IBAction private func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DonutChart" {
-            self.donutChartCV = segue.destination as! DonutChart
+        if segue.identifier == "DonutChart", let donutChart = segue.destination as? DonutChart {
+            self.donutChartCV = donutChart
         }
     }
 

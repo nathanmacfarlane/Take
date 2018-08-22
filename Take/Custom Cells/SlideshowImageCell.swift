@@ -34,6 +34,10 @@ class SlideshowImageCell: UICollectionViewCell {
 
     // Actions
 
+    func setImage(with newImage: UIImage) {
+        self.theImage.image = newImage
+    }
+
     @IBAction private func pinch(sender: UIPinchGestureRecognizer) {
 
         if sender.state == .began {

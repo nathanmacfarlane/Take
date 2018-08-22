@@ -689,7 +689,7 @@
                                     <color key="titleColor" red="0.18431372549019609" green="0.23921568627450981" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="TappedAreaButton:" destination="iTR-jd-3Uu" eventType="touchUpInside" id="YQp-4h-fjG"/>
+                                    <action selector="tappedAreaButton:" destination="iTR-jd-3Uu" eventType="touchUpInside" id="YQp-4h-fjG"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-55-sRa">
@@ -2053,20 +2053,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9W-1q-J0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1593" y="-1575"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="On2-wJ-iKc">
-            <objects>
-                <viewController id="UP4-GI-4Wm" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dCk-52-92M">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="o2g-h3-GN9"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aa2-sp-rDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
