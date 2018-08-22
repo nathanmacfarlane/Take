@@ -15,8 +15,16 @@ explicit_type_interface:
   - local
 identifier_name:
   excluded:
+  - i
+  - j
+  - n
   - ok
   - id
+  - g
+  - pg
+  - pg13
+  - r
+  - x
 indentation: 4
 large_tuple: 3
 line_length: 150
@@ -30,6 +38,7 @@ disabled_rules:
 - line_length
 - conditional_returns_on_newline
 - discouraged_object_literal
+- object_literal
 - explicit_acl
 - explicit_enum_raw_value
 - explicit_top_level_acl

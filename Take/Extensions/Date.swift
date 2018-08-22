@@ -59,9 +59,10 @@ extension Date {
     }
 
     //inits
-    init(fromString: String, style: String) {
+    init?(fromString: String, style: String) {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd\(style)MM\(style)yyyy"
-        self = formatter.date(from: fromString)!
+        guard let newDate = formatter.date(from: fromString) else { return nil }
+        return newDate
     }
 }

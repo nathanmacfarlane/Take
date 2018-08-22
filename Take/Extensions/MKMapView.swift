@@ -23,7 +23,8 @@ extension MKMapView {
 
     func addPin(from route: Route) {
         let annotation = MKPointAnnotation()
-        annotation.coordinate = route.location!.coordinate
+        guard let local = route.location else { return }
+        annotation.coordinate = local.coordinate
         annotation.title = route.name
         self.addAnnotation(annotation)
     }

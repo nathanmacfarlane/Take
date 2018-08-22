@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum TYPE {
+enum RouteType {
     case boulder
     case climb
     case aid

@@ -12,8 +12,8 @@ import UIKit
 class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var chart: PieChartView!
-    @IBOutlet weak var typesTableView: UITableView!
+    @IBOutlet private weak var chart: PieChartView!
+    @IBOutlet private weak var typesTableView: UITableView!
 
     // MARK: - Variables
     var routeTypes: [ChartType] = []

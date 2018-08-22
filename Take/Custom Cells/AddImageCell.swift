@@ -20,6 +20,10 @@ class AddImageCell: UICollectionViewCell {
 
     }
 
+    func setImage(with newImage: UIImage) {
+        self.bgImageView.image = newImage
+    }
+
     @objc
     func heldCell(sender: UITapGestureRecognizer) {
         if sender.state == .began && self.hasImage {

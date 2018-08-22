@@ -11,11 +11,11 @@ import UIKit
 class EditARPhoto: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myImageView: UIImageView!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var panGesture: UIPanGestureRecognizer!
-    @IBOutlet weak var canvasView: UIView!
-    @IBOutlet weak var colorSegControl: UISegmentedControl!
+    @IBOutlet private weak var myImageView: UIImageView!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private var panGesture: UIPanGestureRecognizer!
+    @IBOutlet private weak var canvasView: UIView!
+    @IBOutlet private weak var colorSegControl: UISegmentedControl!
 
     // MARK: - variables
     var theRoute: Route!

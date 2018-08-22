@@ -59,7 +59,7 @@
 		04C83B0B20B548EF008D842D /* profile.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 04C83B0A20B548EF008D842D /* profile.jpg */; };
 		04C83B0D20B54C49008D842D /* ProfileTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0C20B54C49008D842D /* ProfileTableViewCell.swift */; };
 		04C83B0F20B54DDF008D842D /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0E20B54DDF008D842D /* User.swift */; };
-		04C83B1120B54ED6008D842D /* Ticks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B1020B54ED6008D842D /* Ticks.swift */; };
+		04C83B1120B54ED6008D842D /* Tick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B1020B54ED6008D842D /* Tick.swift */; };
 		04C83B1320B556EF008D842D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B1220B556EF008D842D /* Date.swift */; };
 		04C83B3C20B93AD7008D842D /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B3B20B93AD7008D842D /* ChartData.swift */; };
 		04C83B3E20B93E0F008D842D /* UIChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B3D20B93E0F008D842D /* UIChartView.swift */; };
@@ -72,7 +72,7 @@
 		2204AAE320C23DFC0035E3B7 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 2204AAE220C23DFC0035E3B7 /* plus.png */; };
 		2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2214BC30211FE9900076E777 /* AreaExpandableCell.swift */; };
 		2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70B20C8D50D00F525EC /* GeoFire.swift */; };
-		2220E70E20C8D78600F525EC /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* Errors.swift */; };
+		2220E70E20C8D78600F525EC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* String.swift */; };
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
 		22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22468EAC20FA666F003C1B5A /* MapMainView.swift */; };
 		22546BC621192B9600F92025 /* BadRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC521192B9600F92025 /* BadRoute.swift */; };
@@ -165,7 +165,7 @@
 		04C83B0A20B548EF008D842D /* profile.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = profile.jpg; sourceTree = "<group>"; };
 		04C83B0C20B54C49008D842D /* ProfileTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewCell.swift; sourceTree = "<group>"; };
 		04C83B0E20B54DDF008D842D /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		04C83B1020B54ED6008D842D /* Ticks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ticks.swift; sourceTree = "<group>"; };
+		04C83B1020B54ED6008D842D /* Tick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tick.swift; sourceTree = "<group>"; };
 		04C83B1220B556EF008D842D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		04C83B3B20B93AD7008D842D /* ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		04C83B3D20B93E0F008D842D /* UIChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIChartView.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 		2204AAE220C23DFC0035E3B7 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		2214BC30211FE9900076E777 /* AreaExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaExpandableCell.swift; sourceTree = "<group>"; };
 		2220E70B20C8D50D00F525EC /* GeoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFire.swift; sourceTree = "<group>"; };
-		2220E70D20C8D78600F525EC /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		2220E70D20C8D78600F525EC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
 		22468EAC20FA666F003C1B5A /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		22546BC521192B9600F92025 /* BadRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadRoute.swift; sourceTree = "<group>"; };
@@ -252,7 +252,7 @@
 				04C83B1220B556EF008D842D /* Date.swift */,
 				04C83B3F20B95343008D842D /* UIScrollView.swift */,
 				04C83B4120BB6025008D842D /* UILabel.swift */,
-				2220E70D20C8D78600F525EC /* Errors.swift */,
+				2220E70D20C8D78600F525EC /* String.swift */,
 				2220E70F20C8E32400F525EC /* MKMapView.swift */,
 				2259C46E20CDDEAC0000065E /* UITableView.swift */,
 				229C93EC20DB41EE00FAA320 /* Array.swift */,
@@ -407,7 +407,7 @@
 				04BA11FA20AD343600D24C4F /* Rating.swift */,
 				04BA11FC20AD344400D24C4F /* Comment.swift */,
 				04BA11FE20AD345C00D24C4F /* Stars.swift */,
-				04C83B1020B54ED6008D842D /* Ticks.swift */,
+				04C83B1020B54ED6008D842D /* Tick.swift */,
 				043F789220B28D800043C08A /* ARDiagram.swift */,
 				04C83B3B20B93AD7008D842D /* ChartData.swift */,
 				22A2C983211AAE5300743AC4 /* Wall.swift */,
@@ -656,7 +656,7 @@
 				2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */,
 				043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */,
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
-				04C83B1120B54ED6008D842D /* Ticks.swift in Sources */,
+				04C83B1120B54ED6008D842D /* Tick.swift in Sources */,
 				04C83B0720B52B68008D842D /* ARView.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
 				04C83B4020B95343008D842D /* UIScrollView.swift in Sources */,
@@ -672,7 +672,7 @@
 				04C83B0D20B54C49008D842D /* ProfileTableViewCell.swift in Sources */,
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
 				2259C46D20CDD6F40000065E /* ViewNextPageCell.swift in Sources */,
-				2220E70E20C8D78600F525EC /* Errors.swift in Sources */,
+				2220E70E20C8D78600F525EC /* String.swift in Sources */,
 				0440620420A3646B005C06C3 /* RouteEdit.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
 				04BA11FF20AD345C00D24C4F /* Stars.swift in Sources */,

@@ -32,6 +32,16 @@ class SlideshowDiagramCell: UICollectionViewCell {
 
     // Actions
 
+    func setBgImage(with newBgImage: UIImage) {
+        self.bgImageView.image = newBgImage
+    }
+    func setDiagramImage(with newDiagram: UIImage) {
+        self.diagramImage.image = newDiagram
+    }
+    func setImage(with newImage: UIImage) {
+        self.theImage.image = newImage
+    }
+
     @IBAction private func pinch(sender: UIPinchGestureRecognizer) {
 
         if sender.state == .began {

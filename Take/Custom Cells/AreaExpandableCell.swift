@@ -13,6 +13,16 @@ class AreaExpandableCell: UITableViewCell {
     @IBOutlet private weak var bgView: UIView!
     @IBOutlet private weak var titleLabel: UILabel!
 
+    func setTitleLabel(with newString: String) {
+        self.titleLabel.text = newString
+    }
+    func setTitleColor(with color: UIColor) {
+        self.titleLabel.textColor = color
+    }
+    func roundBG() {
+        self.bgView.roundView(portion: 2)
+    }
+
     //    override var frame: CGRect {
     //        get {
     //            return super.frame

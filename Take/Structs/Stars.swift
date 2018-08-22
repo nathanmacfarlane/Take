@@ -14,8 +14,8 @@ struct Stars {
 }
 
 struct Star: Codable {
-    var star: Double!
-    var id: String!
+    var star: Double
+    var id: String
 
     func toAnyObject() -> Any {
         return [
@@ -24,9 +24,10 @@ struct Star: Codable {
         ]
     }
 
-    init(anyObject: [String: Any]) {
-        self.star = anyObject["star"] as! Double
-        self.id = anyObject["id"] as! String
+    init?(anyObject: [String: Any]) {
+        guard let tempStar = anyObject["star"] as? Double, let tempId = anyObject["id"] as? String else { return nil }
+        self.star = tempStar
+        self.id = tempId
     }
 
     init(star: Double, id: String) {

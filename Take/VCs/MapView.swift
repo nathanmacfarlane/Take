@@ -14,18 +14,18 @@ import UIKit
 class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myMapView: MKMapView!
-    @IBOutlet weak var mySegControl: UISegmentedControl!
+    @IBOutlet private weak var myMapView: MKMapView!
+    @IBOutlet private weak var mySegControl: UISegmentedControl!
     //    @IBOutlet weak var reloadAreaButton: UIButton!
-    @IBOutlet var longPressMapView: UILongPressGestureRecognizer!
-    @IBOutlet weak var viewAreaLabel: UILabel!
-    @IBOutlet weak var targetImage: UIImageView!
-    @IBOutlet weak var viewAreaSwitch: UISwitch!
+    @IBOutlet private var longPressMapView: UILongPressGestureRecognizer!
+    @IBOutlet private weak var viewAreaLabel: UILabel!
+    @IBOutlet private weak var targetImage: UIImageView!
+    @IBOutlet private weak var viewAreaSwitch: UISwitch!
 
     // MARK: - Variables
-    let locationManager = CLLocationManager()
-    var region: MKCoordinateRegion!
-    var mapType: MKMapType!
+    let locationManager: CLLocationManager = CLLocationManager()
+    var region: MKCoordinateRegion = MKCoordinateRegion()
+    var mapType: MKMapType = .standard
 
     // MARK: - view load/unload
     override func viewDidLoad() {
@@ -42,9 +42,9 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
 
-        let location = self.locationManager.location
-
-        self.myMapView.centerMapOn(location!, withRadius: 3000)
+        if let location = self.locationManager.location {
+            self.myMapView.centerMapOn(location, withRadius: 3000)
+        }
 
         //        queryFromFirebase()
         //        queryFromGeoFire()
@@ -59,7 +59,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     // MARK: - gesture recognizer
-    @IBAction func longPressRecognized(_ sender: UILongPressGestureRecognizer) {
+    @IBAction private func longPressRecognized(_ sender: UILongPressGestureRecognizer) {
         if sender.state == .began {
             let areaOverlay = self.myMapView.addCircle(name: "", coordinate: self.myMapView.centerCoordinate, radius: self.myMapView.visibleDistance() / 4)
             addTitle(areaOverlay: areaOverlay)
@@ -76,7 +76,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             let theLocation = CLLocation(latitude: self.myMapView.centerCoordinate.latitude, longitude: self.myMapView.centerCoordinate.longitude)
             let theRadius = self.myMapView.visibleDistance() / 4
-            let area = Area(name: myTextField.text!, location: theLocation, radius: theRadius)
+            let area = Area(name: myTextField.text ?? "", location: theLocation, radius: theRadius)
             areaOverlay.area = area
             //            getAreaFromGeoFire(for: "GeoFireAreaKeys", from: theLocation, with: theRadius, completion: { (locations) in
             //                print("done")
@@ -94,7 +94,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     // MARK: - Toggle Area Switch
-    @IBAction func toggleArea(_ sender: UISwitch) {
+    @IBAction private func toggleArea(_ sender: UISwitch) {
         //        self.targetImage.isHidden = !sender.isOn
         if !sender.isOn {
             self.myMapView.removeAllOverlays()
@@ -104,11 +104,11 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     // MARK: - SegControl
-    @IBAction func segChanged(_ sender: UISegmentedControl) {
+    @IBAction private func segChanged(_ sender: UISegmentedControl) {
         //self.targetImage.image = self.myMapView.mapType == .satellite ? UIImage(named: "NewAreaTarget.png") : UIImage(named: "NewAreaTargetWhite.png")
         self.queryFromFirebase()
-        self.myMapView.mapType = MKMapType(rawValue: UInt(sender.selectedSegmentIndex))!
-        self.mapType = MKMapType(rawValue: UInt(sender.selectedSegmentIndex))!
+        self.myMapView.mapType = MKMapType(rawValue: UInt(sender.selectedSegmentIndex)) ?? .standard
+        self.mapType = MKMapType(rawValue: UInt(sender.selectedSegmentIndex)) ?? .standard
         if viewAreaSwitch.isOn {
             self.myMapView.removeAllOverlays()
             self.queryFromGeoFire()
@@ -116,7 +116,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     // MARK: - MapView
-    @IBAction func goReloadArea(_ sender: UIButton) {
+    @IBAction private func goReloadArea(_ sender: UIButton) {
         //        queryFromFirebase()
     }
     func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
@@ -129,9 +129,9 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         self.myMapView.removeAllOverlays()
         getIdsFromGeoFire(for: "GeoFireAreaKeys", from: self.myMapView.region) { areaIds in
             for id in areaIds {
-                searchFBArea(with: id.key, completion: { area in
+                searchFBArea(with: id.key) { area in
                     _ = self.myMapView.addCircle(name: area.name, coordinate: area.location.coordinate, radius: area.radius)
-                })
+                }
 
             }
         }
@@ -142,7 +142,8 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             var allRoutes: [Route] = []
             var count = 0
             for id in routeIDs {
-                searchFBRoute(byProperty: "id", withValue: Int(id.key)!, completion: { fbRoutes in
+                guard let theKey = Int(id.key) else { continue }
+                searchFBRoute(byProperty: "id", withValue: theKey) { fbRoutes in
                     allRoutes.append(contentsOf: fbRoutes)
                     for route in fbRoutes {
                         if !allRoutes.contains(route) {
@@ -151,7 +152,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                     }
                     count += 1
                     if count == routeIDs.count {
-                        routesByArea(coord: self.myMapView.centerCoordinate, maxDistance: 1, maxResults: 500, completion: { mpRoutes in
+                        routesByArea(coord: self.myMapView.centerCoordinate, maxDistance: 1, maxResults: 500) { mpRoutes in
                             for route in mpRoutes {
                                 if !allRoutes.contains(route) {
                                     allRoutes.append(route)
@@ -161,9 +162,9 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
                                 self.myMapView.removeAllAnnotations()
                                 self.myMapView.addAnnotations(allRoutes)
                             }
-                        })
+                        }
                     }
-                })
+                }
             }
         }
     }
@@ -173,7 +174,8 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         }
     }
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-        let circleRenderer = MKCircleRenderer(overlay: overlay as! MKCircle)
+        guard let circleOverlay = overlay as? MKCircle else { return MKOverlayRenderer() }
+        let circleRenderer = MKCircleRenderer(overlay: circleOverlay)
         let whiteColor = UIColor(red: 255, green: 255, blue: 255, alpha: 0.4)
         let peachColor = UIColor(red: 187 / 255, green: 119 / 255, blue: 131 / 255, alpha: 0.3)
         circleRenderer.fillColor = mapType == .satellite ? whiteColor : peachColor
@@ -185,10 +187,10 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             annoView.annotation = annotation
             annoView.canShowCallout = true
             annoView.rightCalloutAccessoryView = UIButton(type: .infoDark)
-            let s = (annotation as! Route).star?.roundToInt() ?? 0
-            if s <= 2 {
+            guard let star = (annotation as? Route)?.star?.roundToInt() else { return nil }
+            if star <= 2 {
                 annoView.image = UIImage(named: "Anno-Circle-Pink.png")
-            } else if s < 4 {
+            } else if star < 4 {
                 annoView.image = UIImage(named: "Anno-Circle-Blue.png")
             } else {
                 annoView.image = UIImage(named: "Anno-Circle-Red.png")
@@ -202,8 +204,8 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let tappedPoint = tapGesture.location(in: tappedMapView)
         let tappedCoordinates = mapView.convert(tappedPoint, toCoordinateFrom: tappedMapView)
         let point: MKMapPoint = MKMapPointForCoordinate(tappedCoordinates)
-        let overlays = mapView.overlays.filter { o in
-            o is AreaOverlay
+        let overlays = mapView.overlays.filter { overlay in
+            overlay is AreaOverlay
         }
         for overlay in overlays {
             let circleRenderer = MKCircleRenderer(overlay: overlay)
@@ -217,21 +219,22 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
 
     // MARK: - gesture
-    @IBAction func tappedOnMap(_ sender: UITapGestureRecognizer) {
+    @IBAction private func tappedOnMap(_ sender: UITapGestureRecognizer) {
         //        if let tappedCircle = self.tapOnOverlay(with: sender, on: self.myMapView) {
         ////            self.performSegue(withIdentifier: "goToArea", sender: tappedCircle.area!.name!)
         //        }
     }
 
     // MARK: - Navigation
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction private func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToDetail" {
-            let dc: RouteDetail = segue.destination as! RouteDetail
-            dc.theRoute = sender as! Route
-            dc.mainImg = UIImage(named: "bg.jpg")
+            if let dct: RouteDetail = segue.destination as? RouteDetail, let theRoute = sender as? Route {
+                dct.theRoute = theRoute
+                dct.mainImg = UIImage(named: "bg.jpg")
+            }
         } else if segue.identifier == "goToArea" {
             //            let dc: AreaView = segue.destination as! AreaView
             //            dc.areaName = sender as! String
