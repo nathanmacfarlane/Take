@@ -23,8 +23,8 @@ extension UIImageView {
         if newText.count > 3 {
             let arr = newText.split(separator: " ")
             newText = ""
-            for c in arr {
-                newText += "\(Array(c)[0])"
+            for charac in arr {
+                newText += "\(Array(charac)[0])"
             }
         }
         let label = UILabel(frame: self.frame)

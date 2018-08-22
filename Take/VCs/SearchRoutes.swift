@@ -15,10 +15,10 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
 
     // Private Models
     struct SearchResults {
-        var walls: [String]!
-        var areas: [String]!
-        var cities: [String]!
-        var routes: [Route]!
+        var walls: [String] = []
+        var areas: [String] = []
+        var cities: [String] = []
+        var routes: [Route] = []
 
         mutating func clear() {
             self.walls.removeAll()
@@ -28,25 +28,25 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myTableView: UITableView!
-    @IBOutlet weak var mySearchBar: UISearchBar!
-    @IBOutlet weak var mySearchCV: UIView!
-    @IBOutlet weak var routesRangeLabel: UILabel!
-    @IBOutlet weak var myActivityIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var myTableView: UITableView!
+    @IBOutlet private weak var mySearchBar: UISearchBar!
+    @IBOutlet private weak var mySearchCV: UIView!
+    @IBOutlet private weak var routesRangeLabel: UILabel!
+    @IBOutlet private weak var myActivityIndicator: UIActivityIndicatorView!
 
     // MARK: - Variables
-    private var myCV: SearchContainerView!
-    let locationManager = CLLocationManager()
+    private var myCV: SearchContainerView = SearchContainerView()
+    let locationManager: CLLocationManager = CLLocationManager()
     var userCurrentLocation: CLLocation?
     //    var selectedRoute : Route!
-    var selectedImage: UIImage!
+    var selectedImage: UIImage = UIImage()
     var routesRoot: DatabaseReference?
     var firstImages: [String: UIImage] = [:]
-    var startIndex = 0
-    let NUM_CELLS = 10
-    let MAX_RESULTS = 20
+    var startIndex: Int = 0
+    let NUMCELLS: Int = 10
+    let MAXRESULTS: Int = 20
 
-    var results: SearchResults!
+    var results: SearchResults = SearchResults()
     var resultsMashed: [Any] = []
 
     // View load/unload
@@ -115,50 +115,50 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.myTableView.reloadData()
 
         var count = 0
-        searchFBRoute(byProperty: "name", withValue: searchBar.text!) { routes in
-            self.results.routes.append(contentsOf: routes)
-            self.resultsMashed.append(contentsOf: routes)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRoute(byProperty: "keyword", withValue: searchBar.text!) { routes in
-            self.results.routes.append(contentsOf: routes)
-            self.resultsMashed.append(contentsOf: routes)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteAreas(byProperty: "name", withValue: searchBar.text!) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteAreas(byProperty: "keyword", withValue: searchBar.text!) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteWalls(byProperty: "name", withValue: searchBar.text!) { walls in
-            self.resultsMashed.append(contentsOf: walls)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteWalls(byProperty: "keyword", withValue: searchBar.text!) { walls in
-            self.resultsMashed.append(contentsOf: walls)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteCities(byProperty: "name", withValue: searchBar.text!) { cities in
-            self.resultsMashed.append(contentsOf: cities)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteCities(byProperty: "keyword", withValue: searchBar.text!) { cities in
-            self.resultsMashed.append(contentsOf: cities)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-
         self.mySearchBar.resignFirstResponder()
+        guard let searchText = searchBar.text else { return }
+        searchFBRoute(byProperty: "name", withValue: searchText) { routes in
+            self.results.routes.append(contentsOf: routes)
+            self.resultsMashed.append(contentsOf: routes)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRoute(byProperty: "keyword", withValue: searchText) { routes in
+            self.results.routes.append(contentsOf: routes)
+            self.resultsMashed.append(contentsOf: routes)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteAreas(byProperty: "name", withValue: searchText) { areas in
+            self.resultsMashed.append(contentsOf: areas)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteAreas(byProperty: "keyword", withValue: searchText) { areas in
+            self.resultsMashed.append(contentsOf: areas)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteWalls(byProperty: "name", withValue: searchText) { walls in
+            self.resultsMashed.append(contentsOf: walls)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteWalls(byProperty: "keyword", withValue: searchText) { walls in
+            self.resultsMashed.append(contentsOf: walls)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteCities(byProperty: "name", withValue: searchText) { cities in
+            self.resultsMashed.append(contentsOf: cities)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
+        searchFBRouteCities(byProperty: "keyword", withValue: searchText) { cities in
+            self.resultsMashed.append(contentsOf: cities)
+            self.myTableView.reloadData()
+            count = self.manageSpinner(count: count)
+        }
     }
     func manageSpinner(count: Int) -> Int {
         if count == 7 {
@@ -174,11 +174,13 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         let anyItem = self.resultsMashed[indexPath.row]
         switch anyItem {
         case is Route:
-            self.performSegue(withIdentifier: "goToDetail", sender: anyItem as! Route)
+            guard let theRoute = anyItem as? Route else { return }
+            self.performSegue(withIdentifier: "goToDetail", sender: theRoute)
         case is Wall:
             print("selected wall")
         case is RouteArea:
-            self.performSegue(withIdentifier: "goToArea", sender: anyItem as! RouteArea)
+            guard let theRouteArea = anyItem as? RouteArea else { return }
+            self.performSegue(withIdentifier: "goToArea", sender: theRouteArea)
         case is City:
             print("selected city")
         default:
@@ -193,10 +195,10 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultsMashed.count
         //        if self.filteredRoutes.count == 0 { return 0 }
-        //        if startIndex > self.filteredRoutes.count-NUM_CELLS {
+        //        if startIndex > self.filteredRoutes.count-NUMCELLS {
         //            return (self.filteredRoutes.count-startIndex) + 1
         //        } else {
-        //            return self.filteredRoutes.count <= NUM_CELLS ? self.filteredRoutes.count + 1 : NUM_CELLS+1
+        //            return self.filteredRoutes.count <= NUMCELLS ? self.filteredRoutes.count + 1 : NUMCELLS+1
         //        }
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -206,121 +208,100 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         let anyItem = self.resultsMashed[indexPath.row]
         switch self.resultsMashed[indexPath.row] {
         case is Route:
-            return getRouteCell(route: anyItem as! Route)
+            guard let theRoute = anyItem as? Route else { return UITableViewCell() }
+            return getRouteCell(route: theRoute)
         case is Wall:
-            return getWallCell(wall: anyItem as! Wall)
+            guard let theWall = anyItem as? Wall else { return UITableViewCell() }
+            return getWallCell(wall: theWall)
         case is RouteArea:
-            return getAreaCell(area: anyItem as! RouteArea)
+            guard let theRouteArea = anyItem as? RouteArea else { return UITableViewCell() }
+            return getAreaCell(area: theRouteArea)
         case is City:
-            return getCityCell(city: anyItem as! City)
+            guard let theCity = anyItem as? City else { return UITableViewCell() }
+            return getCityCell(city: theCity)
         default:
-            let cell = tableView.dequeueReusableCell(withIdentifier: "WallCell") as! WallCell
-            cell.wallLabel.text = "NOT IMPLEMENTED YET"
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "WallCell") as? WallCell else { return UITableViewCell() }
+            cell.setWallLabel(with: "NOT IMPLEMENTED YET")
             return cell
         }
     }
     func getCityCell(city: City) -> CityCell {
-        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "CityCell") as! CityCell
-        cell.bgView.layer.cornerRadius = 10
-        cell.bgView.clipsToBounds = true
+        guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "CityCell") as? CityCell else { return CityCell() }
         cell.backgroundColor = .clear
-        cell.cityLabel.text = city.name
+        cell.setCityLabel(with: city.name)
         city.getCoverPhoto { coverImage in
             DispatchQueue.main.async {
-                cell.bgImage.image = coverImage
+                cell.setBgImage(with: coverImage)
             }
         }
         cell.selectionStyle = .none
         return cell
     }
     func getAreaCell(area: RouteArea) -> AreaCell {
-        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "AreaCell") as! AreaCell
-        cell.bgView.layer.cornerRadius = 10
-        cell.bgView.clipsToBounds = true
+        guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "AreaCell") as? AreaCell else { return AreaCell() }
         cell.backgroundColor = .clear
-        cell.areaLabel.text = area.name
+        cell.setAreaLabel(with: area.name)
         area.getCoverPhoto { coverImage in
             DispatchQueue.main.async {
-                cell.bgImage.image = coverImage
+                cell.setBgImage(with: coverImage)
             }
         }
         cell.selectionStyle = .none
         return cell
     }
     func getWallCell(wall: Wall) -> WallCell {
-        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "WallCell") as! WallCell
-        cell.wallLabel.text = wall.name
-        cell.bgView.layer.cornerRadius = 10
-        cell.bgView.clipsToBounds = true
-        cell.backgroundColor = .clear
+        guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "WallCell") as? WallCell else { return WallCell() }
+        cell.setWallLabel(with: wall.name)
         wall.getCoverPhoto { coverImage in
             DispatchQueue.main.async {
-                cell.bgImage.image = coverImage
+                cell.setBgImage(with: coverImage)
             }
         }
         cell.selectionStyle = .none
         return cell
     }
     func getRouteCell(route: Route) -> RouteCell {
-        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as! RouteCell
+        guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as? RouteCell else { return RouteCell() }
 
         // labels
-        cell.nameLabel.text = route.name
-        cell.nameLabel.textColor = UIColor.white
-        cell.difficultyLabel.text = route.difficulty?.description ?? "N/A"
-        cell.difficultyLabel.textColor = UIColor.white
-        cell.typesLabel.text = route.types
-        cell.typesLabel.textColor = UIColor.white
+        cell.setLabels(name: route.name, types: route.difficulty?.description ?? "N/A", difficulty: route.types ?? "N/A")
 
         // images
         if let firstImage = firstImages["\(route.id)"] {
             //there is an image loaded - could be an actual image or the noImages.png
-            cell.theImageView.image = firstImage
+            cell.setImage(with: firstImage)
         } else {
             //there is an image loading
-            cell.theImageView.image = UIImage(named: "imageLoading.png")
+            cell.setImage(with: UIImage(named: "imageLoading.png") ?? UIImage())
         }
-        cell.theImageView.roundImage(portion: 2)
-        cell.theImageView.addBorder(color: .white, width: 1)
         if let area = route.area {
-            cell.locationImageView.image = UIImage(named: "bg.jpg")
-            cell.locationImageView.roundImage(portion: 2)
-            cell.locationImageView.addBorder(color: .white, width: 1)
-            cell.areaButton.addAbrevText(text: area)
+            cell.setLocationImage(with: UIImage(named: "bg.jpg") ?? UIImage())
+            cell.setAreaAbrev(with: area)
         } else {
-            cell.areaButton.setTitle("", for: .normal)
+            cell.setAreaButtonTitle()
         }
 
-        // background
-        cell.backgroundColor = UIColor.clear
-        cell.bgView.backgroundColor = UIColor.black
-        cell.bgView.layer.cornerRadius = 10
-        cell.bgView.clipsToBounds = true
-        cell.selectionStyle = .none
         return cell
     }
 
     // MARK: - Navigation
-    @IBAction func goLogout(_ sender: UIButton) {
-        try! Auth.auth().signOut()
-        self.performSegue(withIdentifier: "goToLogin", sender: nil)
+    @IBAction private func goLogout(_ sender: UIButton) {
+//        try! Auth.auth().signOut()
+//        self.performSegue(withIdentifier: "goToLogin", sender: nil)
     }
-    @IBAction func tappedArea(_ sender: UIButton) {
+    @IBAction private func tappedArea(_ sender: UIButton) {
         self.performSegue(withIdentifier: "goToArea", sender: sender.titleLabel?.text)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let vc = segue.destination as? SearchContainerView, segue.identifier == "theCV" {
-            self.myCV = vc
+        if let vcntrl = segue.destination as? SearchContainerView, segue.identifier == "theCV" {
+            self.myCV = vcntrl
         }
-        if segue.identifier == "goToDetail" {
-            let dc: RouteDetail = segue.destination as! RouteDetail
-            dc.theRoute = sender as! Route
-            //            dc.mainImg  = selectedImage
+        if segue.identifier == "goToDetail", let dct = segue.destination as? RouteDetail, let theRoute = sender as? Route {
+            dct.theRoute = theRoute
         }
-        if segue.identifier == "goToArea" {
-            let dc: AreaView = segue.destination as! AreaView
-            dc.routeArea = sender as! RouteArea
+        if segue.identifier == "goToArea", let dct = segue.destination as? AreaView, let theRouteArea = sender as? RouteArea {
+            dct.routeArea = theRouteArea
         }
 
     }
@@ -356,7 +337,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
 //            }
 //            self.filteredRoutes.append(route)
 //        }
-//        self.routesRangeLabel.text = "Routes \(startIndex == 0 ? 1 : startIndex+1)-\(startIndex+self.NUM_CELLS < self.filteredRoutes.count ? startIndex+10 : self.filteredRoutes.count) of \(self.self.filteredRoutes.count)"
+//        self.routesRangeLabel.text = "Routes \(startIndex == 0 ? 1 : startIndex+1)-\(startIndex+self.NUMCELLS < self.filteredRoutes.count ? startIndex+10 : self.filteredRoutes.count) of \(self.self.filteredRoutes.count)"
 //    }
 
 //func addToRoutes(newRoutes: [Route], priority: Int) {
@@ -444,7 +425,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
  // reverse engeineer location
  forwardGeocoding(address: searchBar.text!) { (coordinate) in
  // search MP API for routes by coordinate
- routesByArea(coord: coordinate, maxDistance: 50, maxResults: self.MAX_RESULTS, completion: { (routesArea) in
+ routesByArea(coord: coordinate, maxDistance: 50, maxResults: self.MAXRESULTS, completion: { (routesArea) in
  var count = 0
  for route in routesArea {
  // search for route in Firebase by id

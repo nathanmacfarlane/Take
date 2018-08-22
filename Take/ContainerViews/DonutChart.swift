@@ -88,12 +88,10 @@ class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return self.routeTypes.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! ChartTypesCell
-        cell.titleLabel.text = "\(self.routeTypes[indexPath.row].type):"
-        cell.circleIcon.backgroundColor = self.routeTypes[indexPath.row].color
-        cell.circleIcon.roundView(portion: 2)
-        cell.countLabel.text = "\(self.routeTypes[indexPath.row].number)"
-        cell.backgroundColor = .clear
+        let tempCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        guard let cell = tempCell as? ChartTypesCell else { return UITableViewCell() }
+        cell.setLabels(title: "\(self.routeTypes[indexPath.row].type):", count: "\(self.routeTypes[indexPath.row].number)")
+        cell.setCircleIconColor(with: self.routeTypes[indexPath.row].color)
         return cell
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

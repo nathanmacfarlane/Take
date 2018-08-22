@@ -14,4 +14,19 @@ class ChartTypesCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var countLabel: UILabel!
 
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.circleIcon.roundView(portion: 2)
+        self.backgroundColor = .clear
+    }
+
+    func setCircleIconColor(with newColor: UIColor) {
+        self.circleIcon.backgroundColor = newColor
+    }
+
+    func setLabels(title: String, count: String) {
+        self.titleLabel.text = title
+        self.countLabel.text = count
+    }
+
 }

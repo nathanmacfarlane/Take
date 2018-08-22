@@ -63,6 +63,6 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd\(style)MM\(style)yyyy"
         guard let newDate = formatter.date(from: fromString) else { return nil }
-        return newDate
+        self = newDate
     }
 }

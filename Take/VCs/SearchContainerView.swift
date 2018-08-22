@@ -11,20 +11,20 @@ import UIKit
 class SearchContainerView: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var distanceLabel: UILabel!
-    @IBOutlet weak var distanceSlider: UISlider!
-    @IBOutlet weak var topRopeButton: UIButton!
-    @IBOutlet weak var sportButton: UIButton!
-    @IBOutlet weak var tradButton: UIButton!
-    @IBOutlet weak var boulderButton: UIButton!
-    @IBOutlet weak var minMinusButton: UIButton!
-    @IBOutlet weak var minPlusButton: UIButton!
-    @IBOutlet weak var maxMinusButton: UIButton!
-    @IBOutlet weak var maxPlusButton: UIButton!
-    @IBOutlet weak var minDifficultyLabel: UILabel!
-    @IBOutlet weak var maxDifficultyLabel: UILabel!
-    @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var pitchesSeg: UISegmentedControl!
+    @IBOutlet private weak var distanceLabel: UILabel!
+    @IBOutlet private weak var distanceSlider: UISlider!
+    @IBOutlet private weak var topRopeButton: UIButton!
+    @IBOutlet private weak var sportButton: UIButton!
+    @IBOutlet private weak var tradButton: UIButton!
+    @IBOutlet private weak var boulderButton: UIButton!
+    @IBOutlet private weak var minMinusButton: UIButton!
+    @IBOutlet private weak var minPlusButton: UIButton!
+    @IBOutlet private weak var maxMinusButton: UIButton!
+    @IBOutlet private weak var maxPlusButton: UIButton!
+    @IBOutlet private weak var minDifficultyLabel: UILabel!
+    @IBOutlet private weak var maxDifficultyLabel: UILabel!
+    @IBOutlet private weak var starsLabel: UILabel!
+    @IBOutlet private weak var pitchesSeg: UISegmentedControl!
 
     // MARK: - Variables
     var topRope: Bool = true
@@ -45,21 +45,21 @@ class SearchContainerView: UIViewController {
     }
 
     // MARK: - IBActions
-    @IBAction func distanceChanged(_ sender: UISlider) {
+    @IBAction private func distanceChanged(_ sender: UISlider) {
         distance = Int(distanceSlider.value)
         distanceLabel.text = "Max Distance: \(Int(distanceSlider.value)) m"
     }
     // MARK: Tapped Type
-    @IBAction func tappedTopRope(_ sender: Any) {
+    @IBAction private func tappedTopRope(_ sender: Any) {
         topRope = toggleButton(myButton: self.topRopeButton, myBool: topRope)
     }
-    @IBAction func tappedSport(_ sender: Any) {
+    @IBAction private func tappedSport(_ sender: Any) {
         sport = toggleButton(myButton: self.sportButton, myBool: sport)
     }
-    @IBAction func tappedTrad(_ sender: Any) {
+    @IBAction private func tappedTrad(_ sender: Any) {
         trad = toggleButton(myButton: self.tradButton, myBool: trad)
     }
-    @IBAction func tappedBoulder(_ sender: Any) {
+    @IBAction private func tappedBoulder(_ sender: Any) {
         boulder = toggleButton(myButton: self.boulderButton, myBool: boulder)
     }
     func toggleButton(myButton: UIButton, myBool: Bool) -> Bool {
@@ -74,18 +74,18 @@ class SearchContainerView: UIViewController {
         return newBool
     }
     // MARK: Changed Difficulty
-    @IBAction func minMinusPressed(_ sender: UIButton) {
-        minDiff = minDiff - 1
+    @IBAction private func minMinusPressed(_ sender: UIButton) {
+        minDiff -= 1
         if minDiff < 0 {
             minDiff = 0
             return
         }
         self.minDifficultyLabel.text = ratings[minDiff]
     }
-    @IBAction func minPlusPressed(_ sender: UIButton) {
-        minDiff = minDiff + 1
+    @IBAction private func minPlusPressed(_ sender: UIButton) {
+        minDiff += 1
         if minDiff == maxDiff {
-            minDiff = minDiff - 1
+            minDiff -= 1
             return
         }
         if minDiff > 15 {
@@ -94,10 +94,10 @@ class SearchContainerView: UIViewController {
         }
         self.minDifficultyLabel.text = ratings[minDiff]
     }
-    @IBAction func maxMinusPressed(_ sender: UIButton) {
-        maxDiff = maxDiff - 1
+    @IBAction private func maxMinusPressed(_ sender: UIButton) {
+        maxDiff -= 1
         if maxDiff == minDiff {
-            maxDiff = maxDiff + 1
+            maxDiff += 1
             return
         }
         if maxDiff < 0 {
@@ -106,8 +106,8 @@ class SearchContainerView: UIViewController {
         }
         self.maxDifficultyLabel.text = ratings[maxDiff]
     }
-    @IBAction func maxPlusPressed(_ sender: UIButton) {
-        maxDiff = maxDiff + 1
+    @IBAction private func maxPlusPressed(_ sender: UIButton) {
+        maxDiff += 1
         if maxDiff > 15 {
             maxDiff = 15
             return
@@ -115,12 +115,12 @@ class SearchContainerView: UIViewController {
         self.maxDifficultyLabel.text = ratings[maxDiff]
     }
     // MARK: Stars
-    @IBAction func starsChanged(_ sender: UISlider) {
+    @IBAction private func starsChanged(_ sender: UISlider) {
         stars = Double(sender.value)
         self.starsLabel.text = "\(String(repeating: "★", count: Int(stars)))\(String(repeating: "☆", count: 4 - Int(stars)))"
     }
 
-    @IBAction func pitchesChanged(_ sender: UISegmentedControl) {
+    @IBAction private func pitchesChanged(_ sender: UISegmentedControl) {
         pitches = sender.selectedSegmentIndex
         if pitches == 0 {
             pitches = Int(UInt32.max)

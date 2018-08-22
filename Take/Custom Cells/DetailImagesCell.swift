@@ -12,6 +12,6 @@ class DetailImagesCell: UICollectionViewCell {
     @IBOutlet private weak var theImage: UIImageView!
 
     func setImage(with newImage: UIImage) {
-        self.theImage = newImage
+        self.theImage.image = newImage
     }
 }

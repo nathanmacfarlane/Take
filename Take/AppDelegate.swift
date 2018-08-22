@@ -22,6 +22,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate/*, GIDSignInDelegate*/ {
         return true
     }
 
+//    private func applicationDidFinishLaunching(_ application: UIApplication) -> Bool {
+//        FirebaseApp.configure()
+//        return true
+//
+//    }
+
     //    @available(iOS 9.0, *)
     //    func application(_ application: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any])
     //        -> Bool {

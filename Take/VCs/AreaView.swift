@@ -17,7 +17,7 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var donutChartCV: DonutChart = DonutChart()
 
     // MARK: - Variables
-    var routeArea: RouteArea!
+    var routeArea: RouteArea = RouteArea()
     var rows: [TitleRow] = [TitleRow(name: "Description", color: UIColor(hexString: "#5DDE9E"), expanded: false), TitleRow(name: "Routes", color: UIColor(hexString: "#88DBFA"), expanded: false), TitleRow(name: "Images", color: UIColor(hexString: "#A3A0FB"), expanded: false), TitleRow(name: "Directions", color: UIColor(hexString: "#DE9898"), expanded: false), TitleRow(name: "Type", color: UIColor(hexString: "#D391C4"), expanded: false), TitleRow(name: "Difficulty", color: UIColor(hexString: "#E2C977"), expanded: false), TitleRow(name: "Popularity", color: UIColor(hexString: "#5DDE9E"), expanded: false)]
     var rowHeight: CGFloat = 61
 

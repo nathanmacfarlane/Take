@@ -44,7 +44,9 @@ class DiagramSlideshow: UIViewController, UICollectionViewDelegate, UICollection
         guard let cell = tempCell as? SlideshowDiagramCell else { return tempCell }
         cell.setBgImage(with: ardiagrams[indexPath.row].bgImage)
         cell.setImage(with: ardiagrams[indexPath.row].bgImage)
-        cell.setDiagramImage(with: ardiagrams[indexPath.row].diagram)
+        if let theDiagram = ardiagrams[indexPath.row].diagram {
+            cell.setDiagramImage(with: theDiagram)
+        }
 //        cell.bgImageView.image = ardiagrams[indexPath.row].bgImage
 //        cell.theImage.image = ardiagrams[indexPath.row].bgImage
 //        cell.diagramImage.image = ardiagrams[indexPath.row].diagram

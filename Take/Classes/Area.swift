@@ -26,19 +26,12 @@ class Area {
     }
     init?(snapshot: DataSnapshot) {
         id = snapshot.key
-        guard let snapval = snapshot.value as? [String: AnyObject] else {
-            return nil
-        }
+        guard let snapval = snapshot.value as? [String: AnyObject] else { return nil }
+        guard let tempName = snapval["name"] as? String, let tempLocation = (snapval["location"] as? [Double]), let tempRadius = snapval["radius"] as? Double else { return nil }
 
-        if let tempName = snapval["name"] as? String {
-            self.name = tempName
-        }
-        if let tempLocation = (snapval["location"] as? [Double]) {
-            self.location = CLLocation(latitude: tempLocation[0], longitude: tempLocation[1])
-        }
-        if let tempRadius = snapval["radius"] as? Double {
-            self.radius = tempRadius
-        }
+        self.location = CLLocation(latitude: tempLocation[0], longitude: tempLocation[1])
+        self.name = tempName
+        self.radius = tempRadius
 
     }
 
