@@ -401,6 +401,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         for rating in feelsLike {
             sum += rating.intDiff
         }
+        if feelsLike.isEmpty {
+            return nil
+        }
         let avg = sum / feelsLike.count
         let countedSet: NSCountedSet = []
         for rating in feelsLike where rating.intDiff == avg {

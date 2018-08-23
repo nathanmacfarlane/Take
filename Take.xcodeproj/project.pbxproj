@@ -467,8 +467,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 045255712091B6DE00A4A384 /* Build configuration list for PBXNativeTarget "Take" */;
 			buildPhases = (
-				22DC6F8B2128FFBC00FAF475 /* Swiftlint */,
 				47E128FA03AB815E78E57FCA /* [CP] Check Pods Manifest.lock */,
+				22DC6F8B2128FFBC00FAF475 /* Swiftlint */,
 				045255592091B6D600A4A384 /* Sources */,
 				0452555A2091B6D600A4A384 /* Frameworks */,
 				0452555B2091B6D600A4A384 /* Resources */,
@@ -562,7 +562,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		22DC6F8B2128FFBC00FAF475 /* Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -576,7 +576,7 @@
 		};
 		47E128FA03AB815E78E57FCA /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -594,7 +594,7 @@
 		};
 		67D17519BC25D1F33606DE81 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
@@ -612,7 +612,7 @@
 		};
 		D1B141EE6A4049E2615BB2C0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputPaths = (
