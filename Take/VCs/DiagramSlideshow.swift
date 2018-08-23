@@ -11,14 +11,14 @@ import UIKit
 class DiagramSlideshow: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myARCV: UICollectionView!
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var pageController: UIPageControl!
+    @IBOutlet private weak var myARCV: UICollectionView!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var pageController: UIPageControl!
 
     // MARK: - Variables
-    var ardiagrams: [ARDiagram]!
-    var selectedImage: Int!
-    var collectionViewFlowLayout: UICollectionViewFlowLayout!
+    var ardiagrams: [ARDiagram] = []
+    var selectedImage: Int = 0
+    var collectionViewFlowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
     // MARK: - View load/unload
     override func viewDidLoad() {
@@ -26,7 +26,9 @@ class DiagramSlideshow: UIViewController, UICollectionViewDelegate, UICollection
 
         self.closeButton.roundButton(portion: 4)
         self.pageController.numberOfPages = ardiagrams.count
-        collectionViewFlowLayout = myARCV.collectionViewLayout as! UICollectionViewFlowLayout
+        if let cvfl = myARCV.collectionViewLayout as? UICollectionViewFlowLayout {
+            collectionViewFlowLayout = cvfl
+        }
         self.myARCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .centeredHorizontally, animated: true)
         self.pageController.currentPage = selectedImage
 
@@ -38,17 +40,27 @@ class DiagramSlideshow: UIViewController, UICollectionViewDelegate, UICollection
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SlideshowDiagramCell
-        cell.bgImageView.image = ardiagrams[indexPath.row].bgImage
-        cell.theImage.image = ardiagrams[indexPath.row].bgImage
-        cell.diagramImage.image = ardiagrams[indexPath.row].diagram
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let cell = tempCell as? SlideshowDiagramCell else { return tempCell }
+        cell.setBgImage(with: ardiagrams[indexPath.row].bgImage)
+        cell.setImage(with: ardiagrams[indexPath.row].bgImage)
+        if let theDiagram = ardiagrams[indexPath.row].diagram {
+            cell.setDiagramImage(with: theDiagram)
+        }
+//        cell.bgImageView.image = ardiagrams[indexPath.row].bgImage
+//        cell.theImage.image = ardiagrams[indexPath.row].bgImage
+//        cell.diagramImage.image = ardiagrams[indexPath.row].diagram
         return cell
     }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        snapToNearestCell(scrollView as! UICollectionView)
+        if let scv = scrollView as? UICollectionView {
+            snapToNearestCell(scv)
+        }
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        snapToNearestCell(scrollView as! UICollectionView)
+        if let scv = scrollView as? UICollectionView {
+            snapToNearestCell(scv)
+        }
     }
     func snapToNearestCell(_ collectionView: UICollectionView) {
         for i in 0..<collectionView.numberOfItems(inSection: 0) {
@@ -66,7 +78,7 @@ class DiagramSlideshow: UIViewController, UICollectionViewDelegate, UICollection
     }
 
     // MARK: - Navigation
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction private func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
 }

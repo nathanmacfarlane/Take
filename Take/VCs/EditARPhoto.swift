@@ -11,18 +11,18 @@ import UIKit
 class EditARPhoto: UIViewController {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myImageView: UIImageView!
-    @IBOutlet weak var backButton: UIButton!
-    @IBOutlet var panGesture: UIPanGestureRecognizer!
-    @IBOutlet weak var canvasView: UIView!
-    @IBOutlet weak var colorSegControl: UISegmentedControl!
+    @IBOutlet private weak var myImageView: UIImageView!
+    @IBOutlet private weak var backButton: UIButton!
+    @IBOutlet private var panGesture: UIPanGestureRecognizer!
+    @IBOutlet private weak var canvasView: UIView!
+    @IBOutlet private weak var colorSegControl: UISegmentedControl!
 
     // MARK: - variables
-    var theRoute: Route!
-    var theImage: UIImage!
-    var path = UIBezierPath()
-    var startPoint = CGPoint()
-    var touchPoint = CGPoint()
+    var theRoute: Route = Route()
+    var theImage: UIImage = UIImage()
+    var path: UIBezierPath = UIBezierPath()
+    var startPoint: CGPoint = CGPoint()
+    var touchPoint: CGPoint = CGPoint()
     var paintColor: UIColor = .red
 
     override func viewDidLoad() {
@@ -70,7 +70,7 @@ class EditARPhoto: UIViewController {
     }
 
     // MARK: SegControl
-    @IBAction func colorSegChanged(_ sender: UISegmentedControl) {
+    @IBAction private func colorSegChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             self.paintColor = .red
@@ -81,15 +81,12 @@ class EditARPhoto: UIViewController {
     }
 
     // MARK: - Navigation
-    @IBAction func goBackWithoutSave(_ sender: UIButton) {
+    @IBAction private func goBackWithoutSave(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
-    @IBAction func goBack(_ sender: Any) {
-
-        if self.theRoute.newARDiagrams == nil {
-            self.theRoute.newARDiagrams = [ARDiagram(bgImage: self.myImageView.image!, diagram: self.canvasView.asImage())]
-        } else {
-            self.theRoute.newARDiagrams?.append(ARDiagram(bgImage: self.myImageView.image!, diagram: self.canvasView.asImage()))
+    @IBAction private func goBack(_ sender: Any) {
+        if let imageViewImage = self.myImageView.image {
+            self.theRoute.newARDiagrams.append(ARDiagram(bgImage: imageViewImage, diagram: self.canvasView.asImage()))
         }
         self.removeLines()
         self.dismiss(animated: true, completion: nil)

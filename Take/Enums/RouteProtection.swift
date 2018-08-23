@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Protection {
+enum RouteProtection {
     case g
     case pg
     case pg13

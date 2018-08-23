@@ -14,4 +14,18 @@ class WallCell: UITableViewCell {
     @IBOutlet private weak var bgImage: UIImageView!
     @IBOutlet private weak var wallLabel: UILabel!
 
+    func setBgImage(with newImage: UIImage) {
+        self.bgImage.image = newImage
+    }
+
+    func setWallLabel(with newText: String) {
+        self.wallLabel.text = newText
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.bgView.layer.cornerRadius = 10
+        self.bgView.clipsToBounds = true
+    }
+
 }

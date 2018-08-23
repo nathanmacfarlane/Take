@@ -15,9 +15,9 @@ class UIChartView: UIView {
     var data: [ChartData] = []
 
     // outlets
-    private var myScrollView: UIScrollView
+    private var myScrollView: UIScrollView!
 //    private var dateBG: UILabel = UILabel(frame: CGRect(x: 0, y: 0, width: 0, height: 0))
-    @IBOutlet private weak var dateBG: UILabel
+    @IBOutlet private weak var dateBG: UILabel!
     private var bottomBarOffset: CGFloat = 20
     private var barWidth: Int = 50
 

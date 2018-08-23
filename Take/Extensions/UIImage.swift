@@ -10,12 +10,14 @@ import Foundation
 import UIKit
 
 extension UIImage {
-    convenience init(view: UIView) {
+    convenience init?(view: UIView) {
         UIGraphicsBeginImageContext(view.frame.size)
-        view.layer.render(in: UIGraphicsGetCurrentContext()!)
+        guard let currentContext = UIGraphicsGetCurrentContext() else { return nil }
+        view.layer.render(in: currentContext)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
-        self.init(cgImage: image!.cgImage!)
+        guard let theImage = image?.cgImage else { return nil }
+        self.init(cgImage: theImage)
     }
 
     func overlayWith(image: UIImage, posX: CGFloat, posY: CGFloat) -> UIImage {
@@ -26,7 +28,7 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
         draw(in: CGRect(origin: CGPoint.zero, size: size))
         image.draw(in: CGRect(origin: CGPoint(x: posX, y: posY), size: image.size))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()!
+        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
         UIGraphicsEndImageContext()
 
         return newImage
@@ -62,7 +64,7 @@ extension UIImage {
 
         // Setup the font specific variables
         let textColor = UIColor.white
-        let textFont = UIFont(name: "Helvetica Bold", size: 200)!
+        guard let textFont = UIFont(name: "Helvetica Bold", size: 200) else { return UIImage() }
 
         // Setup the image context using the passed image
         let scale = UIScreen.main.scale
@@ -84,16 +86,16 @@ extension UIImage {
         drawText.draw(in: rect, withAttributes: textFontAttributes as [NSAttributedStringKey: Any])
 
         // Create a new image out of the images we have created
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
 
         // End the context now that we have the image we need
         UIGraphicsEndImageContext()
-        return newImage!
+        return newImage
     }
 
     func textToImage(drawText text: String, atPoint point: CGPoint) -> UIImage {
         let textColor = UIColor.white
-        let textFont = UIFont(name: "Helvetica Bold", size: 50)!
+        guard let textFont = UIFont(name: "Helvetica Bold", size: 50) else { return UIImage() }
 
         let scale = UIScreen.main.scale
         UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
@@ -101,16 +103,16 @@ extension UIImage {
         let textFontAttributes = [
             NSAttributedStringKey.font: textFont,
             NSAttributedStringKey.foregroundColor: textColor
-            ] as [NSAttributedStringKey: Any]
+        ] as [NSAttributedStringKey: Any]
         self.draw(in: CGRect(origin: CGPoint.zero, size: self.size))
 
         let rect = CGRect(origin: point, size: self.size)
         text.draw(in: rect, withAttributes: textFontAttributes)
 
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
+        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
         UIGraphicsEndImageContext()
 
-        return newImage!
+        return newImage
     }
 
 }

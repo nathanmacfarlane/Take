@@ -11,30 +11,30 @@ import UIKit
 class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var bgimageView: UIImageView!
-    @IBOutlet weak var photoCV: UICollectionView!
-    @IBOutlet weak var ARCV: UICollectionView!
-    @IBOutlet weak var topRopeButton: TypeButton!
-    @IBOutlet weak var sportButton: TypeButton!
-    @IBOutlet weak var tradButton: TypeButton!
-    @IBOutlet weak var boulderButton: TypeButton!
-    @IBOutlet weak var descriptionTextView: UITextView!
-    @IBOutlet weak var feelsLikeField: UITextField!
-    @IBOutlet weak var addPhotoButton: UIButton!
-    @IBOutlet weak var addARPhotoButton: UIButton!
-    @IBOutlet weak var ARDiagramsLabel: UILabel!
-    @IBOutlet weak var photosLabel: UILabel!
-    @IBOutlet weak var feelsLikeABG: UILabel!
-    @IBOutlet weak var starsButton: UIButton!
+    @IBOutlet private weak var bgimageView: UIImageView!
+    @IBOutlet private weak var photoCV: UICollectionView!
+    @IBOutlet private weak var ARCV: UICollectionView!
+    @IBOutlet private weak var topRopeButton: TypeButton!
+    @IBOutlet private weak var sportButton: TypeButton!
+    @IBOutlet private weak var tradButton: TypeButton!
+    @IBOutlet private weak var boulderButton: TypeButton!
+    @IBOutlet private weak var descriptionTextView: UITextView!
+    @IBOutlet private weak var feelsLikeField: UITextField!
+    @IBOutlet private weak var addPhotoButton: UIButton!
+    @IBOutlet private weak var addARPhotoButton: UIButton!
+    @IBOutlet private weak var ARDiagramsLabel: UILabel!
+    @IBOutlet private weak var photosLabel: UILabel!
+    @IBOutlet private weak var feelsLikeABG: UILabel!
+    @IBOutlet private weak var starsButton: UIButton!
 
     // MARK: - variables
-    var theRoute: Route!
-    let imagePicker = UIImagePickerController()
-    var selectedIndex: IndexPath!
-    var sCV: UICollectionView!
-    var username: String!
-    var shouldEditPhoto: Bool!
-    var starRating = 0
+    var theRoute: Route = Route(name: "", id: 0, lat: 0, long: 0)
+    let imagePicker: UIImagePickerController = UIImagePickerController()
+    var selectedIndex: IndexPath = IndexPath(row: 0, section: 0)
+    var sCV: UICollectionView = UICollectionView()
+    var username: String = ""
+    var shouldEditPhoto: Bool = false
+    var starRating: Int = 0
     //    var newImages: [UIImage] = []
     //    var imageKeys: [String] = []
     var imgKeys: [String] = []
@@ -90,12 +90,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     // MARK: - TypeButton functions
-    @IBAction func toggleButton(_ sender: TypeButton) {
+    @IBAction private func toggleButton(_ sender: TypeButton) {
         sender.setType(isType: !sender.isType)
     }
 
     // MARK: - IBActions
-    @IBAction func tappedStars(_ sender: UIButton) {
+    @IBAction private func tappedStars(_ sender: UIButton) {
         self.starRating = self.starRating < 4 ? self.starRating + 1 : 0
         if self.starRating == 0 {
             self.starsButton.setTitle("", for: .normal)
@@ -103,7 +103,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             self.starsButton.setTitle("\(String(repeating: "⭑", count: self.starRating))\(String(repeating: "⭒", count: 4 - self.starRating))", for: .normal)
         }
     }
-    @IBAction func addNewPhoto(_ sender: UIButton) {
+    @IBAction private func addNewPhoto(_ sender: UIButton) {
         sCV = photoCV
         self.shouldEditPhoto = false
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
@@ -112,7 +112,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             self.present(imagePicker, animated: true, completion: nil)
         }
     }
-    @IBAction func addNewARPhoto(_ sender: UIButton) {
+    @IBAction private func addNewARPhoto(_ sender: UIButton) {
         sCV = ARCV
         let alertController = UIAlertController(title: nil, message: "Edit a photo or upload a previously created diagram.", preferredStyle: .actionSheet)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -156,7 +156,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 //                }
                 self.photoCV.reloadData()
             } else {
-                self.theRoute.ardiagrams!.remove(at: indexPath.row)
+                self.theRoute.ardiagrams.remove(at: indexPath.row)
                 self.ARCV.reloadData()
             }
             let generator = UIImpactFeedbackGenerator(style: .heavy)
@@ -197,16 +197,18 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == photoCV {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath) as! AddImageCell
+            let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
             let itemKey = self.imgKeys[indexPath.row]
-            cell.bgImageView.image = newImagesWithKeys[itemKey]
+            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
+            cell.setImage(with: newImage)
             //            cell.bgImageView.image = self.theRoute.images![itemKey]
             //            cell.bgImageView.image = self.theRoute.images![indexPath.row]
             return cell
         }
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath) as! AddARImageCell
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
+        guard let cell = tempCell as? AddARImageCell else { return tempCell }
         //        cell.bgImageView.image = self.theRoute.ardiagrams?[indexPath.row].bgImage
-        cell.setImage(ardiagram: self.theRoute.ardiagrams![indexPath.row])
+        cell.setImage(ardiagram: self.theRoute.ardiagrams[indexPath.row])
         return cell
 
     }
@@ -228,31 +230,24 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     // MARK: - Image Picker
-    @objc internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    @objc
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
 
-        let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage
+        let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
         if sCV == photoCV {
             let instanceString = Date().instanceString()
             self.imgKeys.append(instanceString)
-            self.newImagesWithKeys[instanceString] = pickedImage!
-        } else {
-
-            if self.shouldEditPhoto == false {
-                if self.theRoute.ardiagrams == nil {
-                    self.theRoute.ardiagrams = [ARDiagram(bgImage: pickedImage!)]
-                } else {
-                    self.theRoute.ardiagrams?.insert(ARDiagram(bgImage: pickedImage!), at: 0)
-                }
-            }
-
+            self.newImagesWithKeys[instanceString] = pickedImage
+        } else if self.shouldEditPhoto == false {
+            self.theRoute.ardiagrams.insert(ARDiagram(bgImage: pickedImage), at: 0)
         }
         self.photoCV.reloadData()
         self.ARCV.reloadData()
-        dismiss(animated: true, completion: {
+        dismiss(animated: true) {
             if self.shouldEditPhoto == true {
-                self.performSegue(withIdentifier: "presentEditARPhoto", sender: pickedImage!)
+                self.performSegue(withIdentifier: "presentEditARPhoto", sender: pickedImage)
             }
-        })
+        }
 
     }
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
@@ -260,24 +255,22 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     // MARK: - Navigation
-    @IBAction func hitCancel(_ sender: Any) {
+    @IBAction private func hitCancel(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-    @IBAction func hitSave(_ sender: UIButton) {
+    @IBAction private func hitSave(_ sender: UIButton) {
         for image in self.newImagesWithKeys {
-            if self.theRoute.images == nil { self.theRoute.images = [:] }
-            self.theRoute.images![image.key] = image.value
+            self.theRoute.images[image.key] = image.value
         }
-        if self.feelsLikeField.text?.isEmpty == false {
-            if theRoute.feelsLike == nil { theRoute.feelsLike = [] }
-            theRoute.feelsLike?.append(Rating(desc: self.feelsLikeField.text!))
+        if let flft = self.feelsLikeField.text {
+            theRoute.feelsLike.append(Rating(desc: flft))
         }
         if self.starRating > 0 {
             if theRoute.starVotes == nil || theRoute.star == nil {
                 theRoute.starVotes = 0
                 theRoute.star = 0
             }
-            (theRoute.star!, theRoute.starVotes!) = calculateNewAvg(count: theRoute.starVotes!, avg: theRoute.star!, new: self.starRating)
+            (theRoute.star, theRoute.starVotes) = calculateNewAvg(count: theRoute.starVotes ?? 0, avg: theRoute.star ?? 0, new: self.starRating)
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
@@ -288,7 +281,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         self.dismiss(animated: true, completion: nil)
     }
-    func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double, Int) {
+    func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double?, Int?) {
         var total = avg * Double(count)
         print("total: \(total)")
         total += Double(new)
@@ -315,17 +308,17 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func populateImages(imageArr: [UIImage?]) -> [UIImage] {
         var theImages: [UIImage] = []
         for image in imageArr {
-            if image != nil {
-                theImages.append(image!)
-            }
+            guard let theImage = image else { continue }
+            theImages.append(theImage)
         }
         return theImages
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "presentEditARPhoto" {
-            let dc: EditARPhoto = segue.destination as! EditARPhoto
-            dc.theImage = sender as! UIImage
-            dc.theRoute = self.theRoute
+        if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
+            if let theImage = sender as? UIImage {
+                dct.theImage = theImage
+            }
+            dct.theRoute = self.theRoute
         }
     }
 }

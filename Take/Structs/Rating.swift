@@ -29,49 +29,56 @@ import Foundation
 //}
 
 struct Rating {
-    var desc: String!
-    var intDiff: Int!
-    var type: TYPE!
+    var desc: String
+    var intDiff: Int
+    var type: RouteType
     var buffer: String?
     var danger: String?
 
-    var description: String! {
+    var description: String {
         switch type {
         case .boulder:
-            return "V\(intDiff!)\(buffer ?? "")"
+            return "V\(intDiff)\(buffer ?? "")"
         case .climb:
-            return "5.\(intDiff!)\(buffer ?? "")"
+            return "5.\(intDiff)\(buffer ?? "")"
         default:
             fatalError("Unsupported")
         }
     }
 
     func toAnyObject() -> Any {
-        var a: [String: Any] = [:]
-        a["desc"] = desc
-        a["intDiff"] = intDiff
-        a["type"] = type.hashValue
+        var any: [String: Any] = [:]
+        any["desc"] = desc
+        any["intDiff"] = intDiff
+        any["type"] = type.hashValue
         if buffer != nil {
-            a["buffer"] = buffer
+            any["buffer"] = buffer
         }
         if danger != nil {
-            a["danger"] = danger
+            any["danger"] = danger
         }
-        return a
+        return any
     }
 
     init(desc: String) {
         self.desc = desc
+        self.type = .aid
+        self.intDiff = 0
+        self.buffer = ""
+        self.danger = ""
         self.type = getType(desc)
         self.intDiff = getDiff(desc)
         self.buffer = getBuffer(desc)
         self.danger = getDanger(desc)
     }
 
-    init(anyObject: [String: Any]) {
-        let typeInt = anyObject["type"] as! Int
-        self.desc = anyObject["desc"] as! String
-        self.intDiff = anyObject["intDiff"] as! Int
+    init?(anyObject: [String: Any]) {
+        guard let typeInt = anyObject["type"] as? Int else { return nil }
+
+        guard let tempDesc = anyObject["desc"] as? String else { return nil }
+        guard let tempDiff = anyObject["intDiff"] as? Int else { return nil }
+        self.intDiff = tempDiff
+        self.desc = tempDesc
         self.type = typeInt == 1 ? .climb : .boulder
         self.buffer = anyObject["buffer"] as? String
         self.danger = anyObject["danger"] as? String
@@ -79,23 +86,17 @@ struct Rating {
 
     private func getDanger(_ desc: String) -> String? {
         let chars = Array(desc)
-        let i = chars.index(of: " ")
+        guard let i = chars.index(of: " ") else { return nil }
         var danger = ""
-        if i == nil {
-            return nil
-        }
-        for n in i!..<chars.count {
+        for n in i..<chars.count {
             danger = "\(danger)\(chars[n])"
         }
-        if danger == "" {
-            return nil
-        }
-        return danger
+        return danger.isEmpty ? nil : danger
     }
 
     private func getBuffer(_ desc: String) -> String? {
         let chars = Array(desc)
-        var buff = ""
+        var buff: String = ""
         for n in 1..<chars.count {
             if (chars[n] >= "0" && chars[n] <= "9") || chars[n] == "." {
                 continue
@@ -105,13 +106,10 @@ struct Rating {
             }
             buff = "\(buff)\(chars[n])"
         }
-        if buff == "" {
-            return nil
-        }
-        return buff
+        return buff.isEmpty ? nil : buff
     }
 
-    private func getType(_ desc: String) -> TYPE {
+    private func getType(_ desc: String) -> RouteType {
         let chars = Array(desc)
         if chars[0] == "V" {
             return .boulder
