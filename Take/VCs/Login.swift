@@ -13,12 +13,12 @@ import UIKit
 class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var loginWithGoogleButton: UIButton!
-    @IBOutlet weak var typeLabel: UILabel!
-    @IBOutlet weak var passwordField: UITextField!
-    @IBOutlet weak var emailField: UITextField!
-    @IBOutlet weak var loginUsernameButton: UIButton!
-    @IBOutlet weak var accountTypeLabel: UILabel!
+    @IBOutlet private weak var loginWithGoogleButton: UIButton!
+    @IBOutlet private weak var typeLabel: UILabel!
+    @IBOutlet private weak var passwordField: UITextField!
+    @IBOutlet private weak var emailField: UITextField!
+    @IBOutlet private weak var loginUsernameButton: UIButton!
+    @IBOutlet private weak var accountTypeLabel: UILabel!
 
     // MARK: - Variables
 
@@ -42,7 +42,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     }
 
     // MARK: - Other Functions
-    @IBAction func changeType(_ sender: UIButton) {
+    @IBAction private func changeType(_ sender: UIButton) {
         if sender.titleLabel?.text == "Sign Up" {
             sender.setTitle("Login", for: .normal)
             self.typeLabel.text = "Sign Up"
@@ -58,8 +58,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     func showAlert(title: String, message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
 
-        let okAction = UIAlertAction(title: "OK", style: .default) {
-            (_: UIAlertAction) -> Void in
+        let okAction = UIAlertAction(title: "OK", style: .default) {(_: UIAlertAction) -> Void in
             print("OK")
         }
 
@@ -68,7 +67,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
     }
 
     // MARK: - Navigation
-    @IBAction func goLoginSignUp(_ sender: UIButton) {
+    @IBAction private func goLoginSignUp(_ sender: UIButton) {
 
         if let email = emailField.text, let password = passwordField.text {
             if sender.titleLabel?.text == "Login" {
@@ -102,7 +101,7 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
             }
         }
     }
-    @IBAction func loginWithGoogle(_ sender: UIButton) {
+    @IBAction private func loginWithGoogle(_ sender: UIButton) {
         GIDSignIn.sharedInstance().uiDelegate = self
         GIDSignIn.sharedInstance().signIn()
     }

@@ -16,4 +16,20 @@ class CommentCell: UITableViewCell {
     @IBOutlet private weak var commentLabel: UILabel!
     @IBOutlet private weak var bgView: UILabel!
 
+    func setNameLabel(with newText: String) {
+        self.nameLabel.text = newText
+    }
+    func setDateLabel(with newText: String) {
+        self.dateLabel.text = newText
+    }
+    func setCommentLabel(with newText: String) {
+        self.commentLabel.text = newText
+    }
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.userImage.roundImage(portion: 2)
+        self.userImage.addBorder(color: UIColor(hexString: "#2A313B"), width: 2)
+        self.bgView.layer.cornerRadius = 10
+    }
+
 }

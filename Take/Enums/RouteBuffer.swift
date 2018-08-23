@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum BUFFER {
+enum RouteBuffer {
     case plus
     case minus
 }

@@ -14,37 +14,39 @@ import UIKit
 class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var bgimageView: UIImageView!
-    @IBOutlet weak var myCV: UICollectionView!
-    @IBOutlet weak var myARVC: UICollectionView!
-    @IBOutlet weak var topRopeButton: TypeButton!
-    @IBOutlet weak var sportButton: TypeButton!
-    @IBOutlet weak var tradButton: TypeButton!
-    @IBOutlet weak var boulderButton: TypeButton!
-    @IBOutlet weak var directionsButton: UIButton!
-    @IBOutlet weak var augmentedButton: UIButton!
-    @IBOutlet weak var routeNameLabel: UILabel!
-    @IBOutlet weak var routeLocationButton: UIButton!
-    @IBOutlet weak var routeDescriptionTV: UITextView!
-    @IBOutlet weak var commentsButton: UIButton!
-    @IBOutlet weak var starsLabel: UILabel!
-    @IBOutlet weak var starVotersLabel: UILabel!
-    @IBOutlet weak var actualRatingLabel: UILabel!
-    @IBOutlet weak var feelsLikeRatingLabel: UILabel!
-    @IBOutlet weak var beTheFirstLabel: UILabel!
-    @IBOutlet weak var imageSegControl: UISegmentedControl!
+    @IBOutlet private weak var bgimageView: UIImageView!
+    @IBOutlet private weak var myCV: UICollectionView!
+    @IBOutlet private weak var myARVC: UICollectionView!
+    @IBOutlet private weak var topRopeButton: TypeButton!
+    @IBOutlet private weak var sportButton: TypeButton!
+    @IBOutlet private weak var tradButton: TypeButton!
+    @IBOutlet private weak var boulderButton: TypeButton!
+    @IBOutlet private weak var directionsButton: UIButton!
+    @IBOutlet private weak var augmentedButton: UIButton!
+    @IBOutlet private weak var routeNameLabel: UILabel!
+    @IBOutlet private weak var routeLocationButton: UIButton!
+    @IBOutlet private weak var routeDescriptionTV: UITextView!
+    @IBOutlet private weak var commentsButton: UIButton!
+    @IBOutlet private weak var starsLabel: UILabel!
+    @IBOutlet private weak var starVotersLabel: UILabel!
+    @IBOutlet private weak var actualRatingLabel: UILabel!
+    @IBOutlet private weak var feelsLikeRatingLabel: UILabel!
+    @IBOutlet private weak var beTheFirstLabel: UILabel!
+    @IBOutlet private weak var imageSegControl: UISegmentedControl!
 
     // MARK: - Variables
-    var theRoute: Route!
+    var theRoute: Route = Route(name: "", id: 0, lat: 0, long: 0)
     var mainImg: UIImage?
     var imageKeys: [String] = []
     var arDiagramKeys: [String] = []
-    var imageRef: DatabaseReference!
-    let locationManager = CLLocationManager()
+    var imageRef: DatabaseReference = DatabaseReference()
+    var locationManager: CLLocationManager = CLLocationManager()
 
     // MARK: - load/unloads
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        locationManager = CLLocationManager()
 
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -59,23 +61,21 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myARVC.isHidden = true
         self.myCV.backgroundColor = UIColor.clear
         self.myARVC.backgroundColor = UIColor.clear
-        if mainImg != nil {
-            self.bgimageView.image = mainImg!
+        if let tempMainImg = mainImg {
+            self.bgimageView.image = tempMainImg
         }
 
         theRoute.observeImageFromFirebase {  imageSnapshot, imageRef  in
             self.imageRef = imageRef
-            let imageURL = imageSnapshot.value! as! String
-            loadImageFrom(url: imageURL) { image in
-                if self.theRoute.images == nil {
-                    self.theRoute.images = [:]
-                }
-                self.theRoute.images![imageSnapshot.key] = image
-                self.imageKeys.append(imageSnapshot.key)
-                DispatchQueue.main.async {
-                    self.bgimageView.image = image
-                    self.updateLabel()
-                    self.myCV.reloadData()
+            if let tempValue = imageSnapshot.value, let imageURLString = tempValue as? String, let imageURL = URL(string: imageURLString) {
+                loadImageFrom(url: imageURL) { image in
+                    self.theRoute.images[imageSnapshot.key] = image
+                    self.imageKeys.append(imageSnapshot.key)
+                    DispatchQueue.main.async {
+                        self.bgimageView.image = image
+                        self.updateLabel()
+                        self.myCV.reloadData()
+                    }
                 }
             }
         }
@@ -89,8 +89,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myCV.reloadData()
 
         self.routeNameLabel.text = theRoute.name
-        self.routeLocationButton.setTitle(theRoute.localDesc?.last ?? "N/A", for: .normal)
-        self.commentsButton.setTitle("\(theRoute.comments?.count ?? 0) 💬", for: .normal)
+        self.routeLocationButton.setTitle(theRoute.localDesc.last ?? "N/A", for: .normal)
+        self.commentsButton.setTitle("\(theRoute.comments.count) 💬", for: .normal)
         //        self.starsLabel.text = "\(String(repeating: "★", count: theRoute.averageStar() ?? 0))\(String(repeating: "☆", count: 5 - (theRoute.averageStar() ?? 0)))"
         self.starsLabel.text = "\(String(repeating: "★", count: Int(theRoute.star?.roundToInt() ?? 0)))\(String(repeating: "☆", count: Int(4 - (theRoute.star?.roundToInt() ?? 0))))"
         self.starVotersLabel.text = "\(theRoute.starVotes ?? 0)"
@@ -101,7 +101,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.updateLabel()
         setupButtons()
 
-        if theRoute.images == nil && theRoute.ardiagrams != nil {
+        if theRoute.images.isEmpty {
             imageSegControl.selectedSegmentIndex = 1
             checkStatus()
         }
@@ -109,9 +109,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
-        if imageRef != nil {
-            imageRef.removeAllObservers()
-        }
+        imageRef.removeAllObservers()
     }
 
     // MARK: - initial functions
@@ -134,14 +132,14 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     func updateLabel() {
         if self.imageSegControl.selectedSegmentIndex == 0 {
-            if self.theRoute.images == nil || self.theRoute.images?.count == 0 {
+            if self.theRoute.images.isEmpty {
                 self.beTheFirstLabel.text = "Be the first to add an image"
                 self.beTheFirstLabel.isHidden = false
             } else {
                 self.beTheFirstLabel.isHidden = true
             }
         } else {
-            if self.theRoute.ardiagrams == nil || self.theRoute.ardiagrams?.count == 0 {
+            if self.theRoute.ardiagrams.isEmpty {
                 self.beTheFirstLabel.text = "Be the first to add a diagram"
                 self.beTheFirstLabel.isHidden = false
             } else {
@@ -157,10 +155,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     // MARK: - IBActions
-    @IBAction func TappedAreaButton(_ sender: UIButton) {
+    @IBAction private func tappedAreaButton(_ sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: "Areas", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        for area in self.theRoute.localDesc ?? [] {
+        for area in self.theRoute.localDesc {
             let areaAction = UIAlertAction(title: "\(area)", style: .default) { _ in
                 self.performSegue(withIdentifier: "goToArea", sender: area)
             }
@@ -176,23 +174,24 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         if collectionView == self.myCV {
             return self.imageKeys.count
         } else {
-            return theRoute.ardiagrams?.count ?? 0
+            return theRoute.ardiagrams.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.myCV {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! DetailImagesCell
-            cell.theImage.image = theRoute.images![self.imageKeys[indexPath.row]]
-            cell.layer.borderColor = UIColor.white.cgColor
-            cell.layer.borderWidth = 2
-            return cell
-        } else {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath) as! AddARImageCell
-            cell.setImage(ardiagram: theRoute.ardiagrams![indexPath.row])
+            let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+            guard let cell = tempCell as? DetailImagesCell, let cellImage = theRoute.images[self.imageKeys[indexPath.row]] else { return tempCell }
+            cell.setImage(with: cellImage)
             cell.layer.borderColor = UIColor.white.cgColor
             cell.layer.borderWidth = 2
             return cell
         }
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
+        guard let cell = tempCell as? AddARImageCell else { return tempCell }
+        cell.setImage(ardiagram: theRoute.ardiagrams[indexPath.row])
+        cell.layer.borderColor = UIColor.white.cgColor
+        cell.layer.borderWidth = 2
+        return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.myCV {
@@ -203,7 +202,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     // MARK: - Seg Control
-    @IBAction func imageSegChanged(_ sender: UISegmentedControl) {
+    @IBAction private func imageSegChanged(_ sender: UISegmentedControl) {
         self.updateLabel()
         checkStatus()
     }
@@ -220,8 +219,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     // MARK: - Navigation
-    @IBAction func goToARView(_ sender: UIButton) {
-        if (locationManager.location?.distance(from: theRoute.location!))! < 100.0 {
+    @IBAction private func goToARView(_ sender: UIButton) {
+        if let localMngLcl = locationManager.location, let routeLocation = theRoute.location, localMngLcl.distance(from: routeLocation) < 100.0 {
             self.performSegue(withIdentifier: "presentARView", sender: nil)
         } else {
             let alertController = UIAlertController(title: "Oh no...", message: "You're too far from the route to view it in AR. Would you like to get directions to the crag?", preferredStyle: .actionSheet)
@@ -239,44 +238,50 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
     func goToDirections() {
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: theRoute.location!.coordinate.latitude, longitude: theRoute.location!.coordinate.longitude), addressDictionary: nil))
+        guard let routeLocal = theRoute.location else { return }
+        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: routeLocal.coordinate.latitude, longitude: routeLocal.coordinate.longitude), addressDictionary: nil))
         mapItem.name = theRoute.name
         mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 
-    @IBAction func goGetDirections(_ sender: UIButton) {
+    @IBAction private func goGetDirections(_ sender: UIButton) {
         goToDirections()
     }
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction private func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         if segue.identifier == "pushToComments" {
-            let dc: Comments = segue.destination as! Comments
-            dc.theRoute = self.theRoute
-        } else if segue.identifier == "pushToEdit" {
-            let dc: RouteEdit = segue.destination as! RouteEdit
-            dc.theRoute = self.theRoute
-        } else if segue.identifier == "presentAllImages" {
-            let dc: ImageSlideshow = segue.destination as! ImageSlideshow
-            if self.theRoute.images != nil {
-                dc.images = Array(self.theRoute.images!.values)
-            } else {
-                dc.images = []
+            if let dct: Comments = segue.destination as? Comments {
+                dct.theRoute = self.theRoute
             }
-            dc.selectedImage = sender as! Int
+        } else if segue.identifier == "pushToEdit" {
+            if let dct: RouteEdit = segue.destination as? RouteEdit {
+                dct.theRoute = self.theRoute
+            }
+        } else if segue.identifier == "presentAllImages" {
+            if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
+                dct.images = Array(self.theRoute.images.values)
+                if let selectedImage = sender as? Int {
+                    dct.selectedImage = selectedImage
+                }
+            }
         } else if segue.identifier == "presentAllIDiagrams" {
-            let dc: DiagramSlideshow = segue.destination as! DiagramSlideshow
-            dc.ardiagrams = self.theRoute.ardiagrams!
-            dc.selectedImage = sender as! Int
+            if let dct: DiagramSlideshow = segue.destination as? DiagramSlideshow {
+                dct.ardiagrams = self.theRoute.ardiagrams
+                if let selectedImage = sender as? Int {
+                    dct.selectedImage = selectedImage
+                }
+            }
         } else if segue.identifier == "goToArea" {
             //            let dc: AreaView = segue.destination as! AreaView
             //            dc.areaName = sender as! String
             //            dc.areaArr = self.theRoute.localDesc
         } else if segue.identifier == "presentARView" {
-            let dc: ARView = segue.destination as! ARView
-            dc.theRoute = self.theRoute
+            if let dct: ARView = segue.destination as? ARView {
+                dct.theRoute = self.theRoute
+            }
         }
 
     }

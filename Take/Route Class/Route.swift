@@ -84,13 +84,15 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         localDesc = tempLocalDesc
         if let tempComments = snapval["comments"] as? [[String: Any]] {
             for tempComment in tempComments {
-                comments.append(Comment(anyObject: tempComment))
+                guard let newComment = Comment(anyObject: tempComment) else { continue }
+                comments.append(newComment)
             }
         }
         info = snapval["info"] as? String
         if let tempFeelsLike = snapval["feelsLike"] as? [[String: Any]] {
             for tempFeels in tempFeelsLike {
-                feelsLike.append(Rating(anyObject: tempFeels))
+                guard let newRating = Rating(anyObject: tempFeels) else { continue }
+                feelsLike.append(newRating)
             }
         }
         area = snapval["area"] as? String
@@ -104,12 +106,17 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         city = snapval["city"]           as? String
         self.ref = snapshot.ref
     }
+    override init() {
+        self.name = ""
+        self.id = -1
+    }
 
     // MARK: - MKAnnotation
     var coordinate: CLLocationCoordinate2D {
         if let lat = self.latitude, let long = self.longitude {
             return CLLocationCoordinate2D(latitude: lat, longitude: long)
         }
+        return CLLocationCoordinate2D(latitude: -1, longitude: -1)
     }
     var title: String? {
         return self.name
@@ -122,6 +129,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         if let lat = latitude, let long = longitude {
             return CLLocation(latitude: lat, longitude: long)
         }
+        return CLLocation(latitude: -1, longitude: -1)
     }
 
     enum CodingKeys: String, CodingKey {
@@ -171,8 +179,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
             let query = wallsRoot.queryOrdered(byChild: "name").queryEqual(toValue: wallName)
             query.observeSingleEvent(of: .value) { snapshot in
                 for item in snapshot.children {
-                    guard let item = item as? DataSnapshot else { return }
-                    completion(Wall(snapshot: item))
+                    guard let item = item as? DataSnapshot, let newWall = Wall(snapshot: item) else { return }
+                    completion(newWall)
                 }
             }
         }
@@ -393,6 +401,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         for rating in feelsLike {
             sum += rating.intDiff
         }
+        if feelsLike.isEmpty {
+            return nil
+        }
         let avg = sum / feelsLike.count
         let countedSet: NSCountedSet = []
         for rating in feelsLike where rating.intDiff == avg {
@@ -413,20 +424,20 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return Int(sum) / (stars.count)
     }
     func isTR() -> Bool {
-        guard theTypes = self.types else { return false }
-        return theTypes.contains("TR") ?? false
+        guard let theTypes = self.types else { return false }
+        return theTypes.contains("TR")
     }
     func isSport() -> Bool {
-        guard theTypes = self.types else { return false }
-        return theTypes.contains("Sport") ?? false
+        guard let theTypes = self.types else { return false }
+        return theTypes.contains("Sport")
     }
     func isTrad() -> Bool {
-        guard theTypes = self.types else { return false }
-        return theTypes.contains("Trad") ?? false
+        guard let theTypes = self.types else { return false }
+        return theTypes.contains("Trad")
     }
     func isBoulder() -> Bool {
-        guard theTypes = self.types else { return false }
-        return theTypes.contains("Boulder") ?? false
+        guard let theTypes = self.types else { return false }
+        return theTypes.contains("Boulder")
     }
     func toString() -> String {
         return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")', Types: \(types ?? "N/A")"

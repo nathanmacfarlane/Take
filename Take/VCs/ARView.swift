@@ -12,8 +12,8 @@ import UIKit
 class ARView: UIViewController, ARSCNViewDelegate {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var sceneView: ARSCNView!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var sceneView: ARSCNView!
 
     // MARK: - Variables
     var theRoute: Route?
@@ -27,11 +27,9 @@ class ARView: UIViewController, ARSCNViewDelegate {
 
         var refImageArr: [ARReferenceImage] = []
 
-        print("adding \(theRoute?.ardiagrams?.count ?? 0) to ref images")
-
         var count = 0
         for image in theRoute?.ardiagrams ?? [] {
-            let cgImage = image.bgImage.cgImage!
+            guard let cgImage = image.bgImage.cgImage else { continue }
             let refImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: 10)
             refImage.name = "\(count)"
             refImageArr.append(refImage)
@@ -55,12 +53,13 @@ class ARView: UIViewController, ARSCNViewDelegate {
         DispatchQueue.global(qos: .background).async {
             let plane = SCNPlane(width: referenceImage.physicalSize.width,
                                  height: referenceImage.physicalSize.height)
-            let index = Int(referenceImage.name!)!
-            var theImage = self.imageByCombiningImage(firstImage: self.theRoute!.ardiagrams![index].diagram!, withImage: self.theRoute!.ardiagrams![index].bgImage)
+            guard let referenceName = referenceImage.name, let index = Int(referenceName) else { return }
+            guard let theRoute = self.theRoute, let theDiagram = theRoute.ardiagrams[index].diagram else { return }
+            var theImage = self.imageByCombiningImage(firstImage: theDiagram, withImage: theRoute.ardiagrams[index].bgImage)
             //            plane.materials[0].diffuse.contents = theImage
             //            var theImage = self.theRoute!.ardiagrams![index].diagram!
             //            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
-            theImage = theImage.textToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
+            theImage = theImage.textToImage(drawText: theRoute.name, atPoint: CGPoint(x: 20, y: 20))
             plane.materials[0].diffuse.contents = theImage
             self.rotatePlane(planeMaterial: plane.materials[0])
 
@@ -86,13 +85,13 @@ class ARView: UIViewController, ARSCNViewDelegate {
         let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
         firstImage.draw(in: areaSize)
         secondImage.draw(in: areaSize, blendMode: .destinationAtop, alpha: 1.0)
-        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        guard let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
         UIGraphicsEndImageContext()
         return newImage
     }
 
     // MARK: - Navigation
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction private func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
 }

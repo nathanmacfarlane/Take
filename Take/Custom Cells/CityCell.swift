@@ -14,4 +14,18 @@ class CityCell: UITableViewCell {
     @IBOutlet private weak var cityLabel: UILabel!
     @IBOutlet private weak var bgView: UIView!
 
+    func setCityLabel(with newText: String) {
+        self.cityLabel.text = newText
+    }
+
+    func setBgImage(with newImage: UIImage) {
+        self.bgImage.image = newImage
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.bgView.layer.cornerRadius = 10
+        self.bgView.clipsToBounds = true
+    }
+
 }

@@ -13,23 +13,24 @@ cyclomatic_complexity: 15
 explicit_type_interface:
   excluded:
   - local
-identifier_name:
-  excluded:
-  - ok
-  - id
 indentation: 4
 large_tuple: 3
 line_length: 150
 file_length: 500
+function_body_length: 45
 nesting:
   type_level: 2
 private_outlet:
   allow_private_set: true
+type_body_length: 400
 
 disabled_rules:
+- identifier_name
+- implicitly_unwrapped_optional
 - line_length
 - conditional_returns_on_newline
 - discouraged_object_literal
+- object_literal
 - explicit_acl
 - explicit_enum_raw_value
 - explicit_top_level_acl
@@ -38,6 +39,7 @@ disabled_rules:
 - number_separator
 - prefixed_toplevel_constant
 - switch_case_on_newline
+- discouraged_optional_collection
 - todo
 
 opt_in_rules:
@@ -59,7 +61,6 @@ opt_in_rules:
 - discarded_notification_center_observer
 - discouraged_direct_init
 - discouraged_optional_boolean
-- discouraged_optional_collection
 - dynamic_inline
 - empty_count
 - empty_string
@@ -83,10 +84,8 @@ opt_in_rules:
 - function_default_parameter_at_end
 - function_parameter_count
 - generic_type_name
-- identifier_name
 - implicit_getter
 - implicit_return
-- implicitly_unwrapped_optional
 - is_disjoint
 - joined_default_parameter
 - large_tuple

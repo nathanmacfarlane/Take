@@ -16,20 +16,23 @@ struct City {
     var keyword: String?
     private var coverPhoto: String?
 
-    init(snapshot: DataSnapshot) {
-        let snapval = snapshot.value            as! [String: AnyObject]
-        self.state = snapval["state"]          as! String
-        self.id = snapval["id"]             as! Int
-        self.name = snapval["name"]           as! String
-        self.keyword = snapval["keyword"]        as? String
-        self.coverPhoto = snapval["coverPhoto"]     as? String
+    init?(snapshot: DataSnapshot) {
+        guard let snapval = snapshot.value as? [String: AnyObject] else { return nil }
+        guard let tempState = snapval["state"] as? String, let tempId = snapval["id"] as? Int else { return nil }
+        guard let tempName = snapval["name"] as? String, let tempKeyword = snapval["keyword"] as? String, let tempCoverPhoto = snapval["coverPhoto"] as? String else { return nil }
+        self.state = tempState
+        self.id = tempId
+        self.name = tempName
+        self.keyword = tempKeyword
+        self.coverPhoto = tempCoverPhoto
     }
 
     func getCoverPhoto(completion: @escaping (_ coverImage: UIImage) -> Void) {
-        if let photoURL = self.coverPhoto {
-            URLSession.shared.dataTask(with: URL(string: photoURL)!) { data, _, _ in
-                completion(UIImage(data: data!)!)
-                }.resume()
+        guard let photoURL = self.coverPhoto, let tempURL = URL(string: photoURL) else { return }
+        URLSession.shared.dataTask(with: tempURL) { data, _, _ in
+            guard let tempData = data, let tempImage = UIImage(data: tempData) else { return }
+            completion(tempImage)
         }
+        .resume()
     }
 }

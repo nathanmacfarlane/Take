@@ -14,4 +14,18 @@ class AreaCell: UITableViewCell {
     @IBOutlet private weak var bgImage: UIImageView!
     @IBOutlet private weak var bgView: UIView!
 
+    func setAreaLabel(with newText: String) {
+        self.areaLabel.text = newText
+    }
+
+    func setBgImage(with newImage: UIImage) {
+        self.bgImage.image = newImage
+    }
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.bgView.layer.cornerRadius = 10
+        self.bgView.clipsToBounds = true
+    }
+
 }

@@ -11,22 +11,24 @@ import UIKit
 class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - IBOutlets
-    @IBOutlet weak var myImageCV: UICollectionView!
-    @IBOutlet weak var closeButton: UIButton!
-    @IBOutlet weak var imageNumberLabel: UILabel!
+    @IBOutlet private weak var myImageCV: UICollectionView!
+    @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var imageNumberLabel: UILabel!
 
     // MARK: - Variables
     var images: [UIImage] = []
-    var selectedImage: Int!
-    var collectionViewFlowLayout: UICollectionViewFlowLayout!
+    var selectedImage: Int = 0
+    var collectionViewFlowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
     // View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
         //        self.pageController.numberOfPages = images.count
-        self.imageNumberLabel.text = "Image \(selectedImage! + 1) of \(images.count)"
+        self.imageNumberLabel.text = "Image \(selectedImage + 1) of \(images.count)"
         self.closeButton.roundButton(portion: 4)
-        collectionViewFlowLayout = myImageCV.collectionViewLayout as! UICollectionViewFlowLayout
+        if let cvfl = myImageCV.collectionViewLayout as? UICollectionViewFlowLayout {
+            collectionViewFlowLayout = cvfl
+        }
         self.myImageCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .centeredHorizontally, animated: true)
         //        self.pageController.currentPage = selectedImage
     }
@@ -36,16 +38,18 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
         return images.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! SlideshowImageCell
-        cell.theImage.image = images[indexPath.row]
-        //        cell.bgImageView.image = images[indexPath.row]
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let cell = tempCell as? SlideshowImageCell else { return tempCell }
+        cell.setImage(with: images[indexPath.row])
         return cell
     }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        snapToNearestCell(scrollView as! UICollectionView)
+        guard let scv = scrollView as? UICollectionView else { return }
+        snapToNearestCell(scv)
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        snapToNearestCell(scrollView as! UICollectionView)
+        guard let scv = scrollView as? UICollectionView else { return }
+        snapToNearestCell(scv)
     }
     func snapToNearestCell(_ collectionView: UICollectionView) {
         for i in 0..<collectionView.numberOfItems(inSection: 0) {
@@ -64,7 +68,7 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
 
     // MARK: - Navigation
-    @IBAction func goBack(_ sender: UIButton) {
+    @IBAction private func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)
     }
 

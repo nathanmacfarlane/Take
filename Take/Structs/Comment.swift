@@ -9,9 +9,9 @@
 import Foundation
 
 struct Comment: Codable {
-    var id: String!
-    var text: String!
-    var date: Date!
+    var id: String
+    var text: String
+    var date: Date
 
     func toAnyObject() -> Any {
         return [
@@ -21,11 +21,14 @@ struct Comment: Codable {
         ]
     }
 
-    init(anyObject: [String: Any]) {
-        let tempDate = anyObject["date"] as! String
-        self.id = anyObject["id"] as! String
-        self.text = anyObject["text"] as! String
-        self.date = Date(fromString: tempDate, style: "/")
+    init?(anyObject: [String: Any]) {
+        guard let tempDateString = anyObject["date"] as? String else { return nil }
+        guard let tempId = anyObject["id"] as? String else { return nil }
+        guard let tempText = anyObject["text"] as? String else { return nil }
+        guard let tempDate = Date(fromString: tempDateString, style: "/") else { return nil }
+        self.id = tempId
+        self.text = tempText
+        self.date = tempDate
     }
 
     init(id: String, text: String, date: Date) {

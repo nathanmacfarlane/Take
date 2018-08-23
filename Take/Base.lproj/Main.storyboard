@@ -689,7 +689,7 @@
                                     <color key="titleColor" red="0.18431372549019609" green="0.23921568627450981" blue="0.28235294117647058" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="TappedAreaButton:" destination="iTR-jd-3Uu" eventType="touchUpInside" id="YQp-4h-fjG"/>
+                                    <action selector="tappedAreaButton:" destination="iTR-jd-3Uu" eventType="touchUpInside" id="YQp-4h-fjG"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-55-sRa">
@@ -1629,7 +1629,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.1658727475" green="0.19340391009999999" blue="0.22957645939999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.16470588235294117" green="0.19215686274509802" blue="0.23137254901960785" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="user.png" selectedImage="user.png" id="cPa-gy-q4n"/>
@@ -2053,20 +2053,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9W-1q-J0G" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1593" y="-1575"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="On2-wJ-iKc">
-            <objects>
-                <viewController id="UP4-GI-4Wm" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dCk-52-92M">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="o2g-h3-GN9"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="aa2-sp-rDd" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
         </scene>
     </scenes>
     <resources>
