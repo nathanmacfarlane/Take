@@ -29,9 +29,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     // MARK: - variables
     var theRoute: Route = Route(name: "", id: 0, lat: 0, long: 0)
-    let imagePicker: UIImagePickerController = UIImagePickerController()
+    var imagePicker: UIImagePickerController!
     var selectedIndex: IndexPath = IndexPath(row: 0, section: 0)
-    var sCV: UICollectionView = UICollectionView()
+    var sCV: UICollectionView!
     var username: String = ""
     var shouldEditPhoto: Bool = false
     var starRating: Int = 0
@@ -44,6 +44,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         imagePicker.allowsEditing = false
         imagePicker.sourceType = .photoLibrary
@@ -262,7 +263,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         for image in self.newImagesWithKeys {
             self.theRoute.images[image.key] = image.value
         }
-        if let flft = self.feelsLikeField.text {
+        if let flft = self.feelsLikeField.text, !flft.isEmpty {
             theRoute.feelsLike.append(Rating(desc: flft))
         }
         if self.starRating > 0 {
