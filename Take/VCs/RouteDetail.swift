@@ -46,6 +46,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.theRoute.images = [:]
+
         locationManager = CLLocationManager()
 
         locationManager.delegate = self
@@ -53,9 +55,32 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
 
-        print("going to load ar images")
-        self.theRoute.getARImagesFromFirebase {
-            print("got em: \(String(describing: self.theRoute.ardiagrams))")
+        if !self.theRoute.imageUrls.keys.isEmpty {
+            self.beTheFirstLabel.text = "Images loading"
+        }
+
+        DispatchQueue.global(qos: .background).async {
+            self.theRoute.getARImagesFromFirebase {
+                print("got em: \(String(describing: self.theRoute.ardiagrams))")
+            }
+            self.theRoute.fbLoadImages(size: "Thumbnail") {
+                for key in self.theRoute.images.keys {
+                    self.imageKeys.append(key)
+                }
+                DispatchQueue.main.async {
+                    self.updateLabel()
+                    self.myCV.reloadData()
+                }
+            }
+            self.theRoute.fbLoadImages(size: "Large") {
+                for key in self.theRoute.images.keys {
+                    self.imageKeys.append(key)
+                }
+                DispatchQueue.main.async {
+                    self.updateLabel()
+                    self.myCV.reloadData()
+                }
+            }
         }
 
         self.myARVC.isHidden = true
@@ -65,20 +90,20 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.bgimageView.image = tempMainImg
         }
 
-        theRoute.observeImageFromFirebase {  imageSnapshot, imageRef  in
-            self.imageRef = imageRef
-            if let tempValue = imageSnapshot.value, let imageURLString = tempValue as? String, let imageURL = URL(string: imageURLString) {
-                loadImageFrom(url: imageURL) { image in
-                    self.theRoute.images[imageSnapshot.key] = image
-                    self.imageKeys.append(imageSnapshot.key)
-                    DispatchQueue.main.async {
-                        self.bgimageView.image = image
-                        self.updateLabel()
-                        self.myCV.reloadData()
-                    }
-                }
-            }
-        }
+//        theRoute.observeImageFromFirebase {  imageSnapshot, imageRef  in
+//            self.imageRef = imageRef
+//            if let tempValue = imageSnapshot.value, let imageURLString = tempValue as? String, let imageURL = URL(string: imageURLString) {
+//                loadImageFrom(url: imageURL) { image in
+//                    self.theRoute.images[imageSnapshot.key] = image
+//                    self.imageKeys.append(imageSnapshot.key)
+//                    DispatchQueue.main.async {
+//                        self.bgimageView.image = image
+//                        self.updateLabel()
+//                        self.myCV.reloadData()
+//                    }
+//                }
+//            }
+//        }
 
         addBlur()
     }
@@ -98,10 +123,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         self.feelsLikeRatingLabel.text = theRoute.averageRating() ?? "N/A"
 
-        self.updateLabel()
+//        self.updateLabel()
         setupButtons()
 
-        if theRoute.images.isEmpty {
+        if theRoute.images.isEmpty && !theRoute.ardiagrams.isEmpty {
             imageSegControl.selectedSegmentIndex = 1
             checkStatus()
         }
@@ -172,7 +197,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.myCV {
-            return self.imageKeys.count
+            return self.theRoute.images.count
         } else {
             return theRoute.ardiagrams.count
         }

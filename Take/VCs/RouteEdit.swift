@@ -28,9 +28,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var starsButton: UIButton!
 
     // MARK: - variables
-    var theRoute: Route = Route(name: "", id: 0, lat: 0, long: 0)
+    var theRoute: Route!
     var imagePicker: UIImagePickerController!
-    var selectedIndex: IndexPath = IndexPath(row: 0, section: 0)
+    var selectedIndex: IndexPath!
     var sCV: UICollectionView!
     var username: String = ""
     var shouldEditPhoto: Bool = false
@@ -38,6 +38,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     //    var newImages: [UIImage] = []
     //    var imageKeys: [String] = []
     var imgKeys: [String] = []
+    var selectedImages: [UIImage] = []
     var newImagesWithKeys: [String: UIImage] = [:]
 
     // MARK: - View load/unload
@@ -60,7 +61,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        //print("ar image count: \(self.theRoute.ardiagrams?.count)")
         self.photoCV.reloadData()
         self.ARCV.reloadData()
     }
@@ -142,36 +142,36 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
 
-        let alertController = UIAlertController(title: nil, message: "Delete image?", preferredStyle: .actionSheet)
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
-            if collectionView == self.photoCV {
-                let itemKey = self.imgKeys[indexPath.row]
-                self.newImagesWithKeys.removeValue(forKey: itemKey)
-                self.imgKeys.remove(at: indexPath.row)
-                //                let itemKey = self.imageKeys[indexPath.row]
-                //                self.theRoute.images!.removeValue(forKey: itemKey)
-                //                self.theRoute.images!.remove(at: indexPath.row)
-                //                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
-                //                    print("finished deleting")
-                //                }
-                self.photoCV.reloadData()
-            } else {
-                self.theRoute.ardiagrams.remove(at: indexPath.row)
-                self.ARCV.reloadData()
-            }
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
-        }
-        alertController.addAction(cancelAction)
-        alertController.addAction(deleteAction)
-        self.present(alertController, animated: true)
+//        let alertController = UIAlertController(title: nil, message: "Delete image?", preferredStyle: .actionSheet)
+//        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+//        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { _ in
+//            if collectionView == self.photoCV {
+//                let itemKey = self.imgKeys[indexPath.row]
+//                self.newImagesWithKeys.removeValue(forKey: itemKey)
+//                self.imgKeys.remove(at: indexPath.row)
+//                //                let itemKey = self.imageKeys[indexPath.row]
+//                //                self.theRoute.images!.removeValue(forKey: itemKey)
+//                //                self.theRoute.images!.remove(at: indexPath.row)
+//                //                self.theRoute.deleteImageFromFB(indexOfDeletion: indexPath.row, imageURL: self.theRoute.allImages![indexPath.row]) {
+//                //                    print("finished deleting")
+//                //                }
+//                self.photoCV.reloadData()
+//            } else {
+//                self.theRoute.ardiagrams.remove(at: indexPath.row)
+//                self.ARCV.reloadData()
+//            }
+//            let generator = UIImpactFeedbackGenerator(style: .heavy)
+//            generator.impactOccurred()
+//        }
+//        alertController.addAction(cancelAction)
+//        alertController.addAction(deleteAction)
+//        self.present(alertController, animated: true)
 
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 
         if collectionView == photoCV {
-            return self.imgKeys.count
+            return self.selectedImages.count
         } else {
             return 0
         }
@@ -199,11 +199,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == photoCV {
             let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
-            let itemKey = self.imgKeys[indexPath.row]
-            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
-            cell.setImage(with: newImage)
-            //            cell.bgImageView.image = self.theRoute.images![itemKey]
-            //            cell.bgImageView.image = self.theRoute.images![indexPath.row]
+//            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
+//            let itemKey = self.imgKeys[indexPath.row]
+            guard let cell = tempCell as? AddImageCell else { return tempCell }
+            let image = selectedImages[indexPath.row]
+            cell.setImage(with: image)
             return cell
         }
         let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
@@ -236,9 +236,10 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
         if sCV == photoCV {
-            let instanceString = Date().instanceString()
-            self.imgKeys.append(instanceString)
-            self.newImagesWithKeys[instanceString] = pickedImage
+            self.selectedImages.append(pickedImage)
+//            let instanceString = Date().instanceString()
+//            self.imgKeys.append(instanceString)
+//            self.newImagesWithKeys[instanceString] = pickedImage
         } else if self.shouldEditPhoto == false {
             self.theRoute.ardiagrams.insert(ARDiagram(bgImage: pickedImage), at: 0)
         }
@@ -260,9 +261,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction private func hitSave(_ sender: UIButton) {
-        for image in self.newImagesWithKeys {
-            self.theRoute.images[image.key] = image.value
-        }
+//        for image in self.newImagesWithKeys {
+//            self.theRoute.images[image.key] = image.value
+//        }
         if let flft = self.feelsLikeField.text, !flft.isEmpty {
             theRoute.feelsLike.append(Rating(desc: flft))
         }
@@ -275,6 +276,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
+        for image in self.selectedImages {
+            image.saveToFb(route: self.theRoute)
+        }
         DispatchQueue.global(qos: .background).async {
             self.theRoute.saveARImagesToFirebase()
             self.theRoute.saveToFirebase(newImagesWithKeys: self.newImagesWithKeys)
