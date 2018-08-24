@@ -17,7 +17,8 @@ class RouteService: Codable {
     var routes: [Route] = []
 }
 
-class Route: NSObject, Comparable, Codable, MKAnnotation {
+class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
+
     // MARK: - properties
     var name: String
     var photoURL: String?
@@ -32,6 +33,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var info: String?
     var feelsLike: [Rating] = []
     var images: [String: UIImage] = [:]
+    var imageUrls: [String: [String: String]] = [:]
     var ardiagrams: [ARDiagram] = []
     var ref: DatabaseReference?
     var latitude: Double?
@@ -69,6 +71,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         guard let tempName = snapval["name"] as? String, let tempLoc = snapval["location"] as? [Double] else {
             return nil
         }
+        print(snapval)
         name = tempName
         latitude = tempLoc[0]
         longitude = tempLoc[1]
@@ -101,6 +104,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         }
         if let tempAllDiagrams = snapval["allARDiagrams"]  as? [String: [String]] {
             allDiagrams = tempAllDiagrams
+        }
+        if let tempImageUrls = snapval["imageUrls"]  as? [String: [String: String]] {
+            imageUrls = tempImageUrls
         }
         wall = snapval["wall"]           as? String
         city = snapval["city"]           as? String
@@ -145,6 +151,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         case wall
         case city
         case area
+        case imageUrls
+//        case images
     }
 
     func description() -> String {
@@ -196,6 +204,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     //            })
     //        }
     //    }
+
     func getARImagesFromFirebase(completion: @escaping () -> Void) {
         self.ardiagrams = []
         var count = 0
@@ -229,22 +238,22 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
             completion(snapshot, imagesRef)
         }
     }
-    func getImagesFromFirebase(completion: @escaping () -> Void) {
-        self.images = [:]
-        var count = 0
-        for imgURL in self.allImages {
-            guard let theURL = URL(string: imgURL.value) else { continue }
-            URLSession.shared.dataTask(with: theURL) { data, _, _ in
-                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                self.images[imgURL.key] = theImage
-                count += 1
-                if count == self.allImages.count {
-                    completion()
-                }
-            }
-            .resume()
-        }
-    }
+//    func getImagesFromFirebase(completion: @escaping () -> Void) {
+//        self.images = [:]
+//        var count = 0
+//        for imgURL in self.allImages {
+//            guard let theURL = URL(string: imgURL.value) else { continue }
+//            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+//                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+//                self.images[imgURL.key] = theImage
+//                count += 1
+//                if count == self.allImages.count {
+//                    completion()
+//                }
+//            }
+//            .resume()
+//        }
+//    }
     func getFirstImageFromFirebase(completion: @escaping (_ image: UIImage?) -> Void) {
         if self.allImages.values.first == nil {
             completion(#imageLiteral(resourceName: "noImages.png"))
@@ -495,6 +504,73 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         }
 
         return any
+    }
+
+    // MARK: - Protocol
+
+    func fbLoadImages(size: String, completion: @escaping () -> Void) {
+        var count = 0
+        let keys = imageUrls.keys
+        for key in keys {
+            guard let imageUrls = imageUrls[key], let largeUrl = imageUrls[size] else { continue }
+            guard let theURL = URL(string: largeUrl) else { continue }
+            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+                self.images[key] = theImage
+                count += 1
+                if count == keys.count {
+                    completion()
+                }
+            }
+            .resume()
+        }
+    }
+
+    func fbLoadFirstImage(size: String, completion: @escaping (_ image: UIImage?) -> Void) {
+        guard let key = imageUrls.keys.first, let imageUrls = imageUrls[key],
+            let largeUrl = imageUrls[size],
+            let theURL = URL(string: largeUrl)
+            else {
+                completion(nil)
+                return
+        }
+        URLSession.shared.dataTask(with: theURL) { data, _, _ in
+            guard let theData = data,
+                let theImage = UIImage(data: theData)
+                else {
+                    completion(nil)
+                    return
+            }
+            completion(theImage)
+        }
+        .resume()
+    }
+
+    func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void) {
+        let keys = Array(images.keys)
+        for imageKey in keys {
+
+            guard let image = images[imageKey],
+                let largeImage = image.resizedToKB(numKB: 2048),
+                let smallImage = image.resizedToKB(numKB: 2048)
+                else { return }
+            savePhotoToFb(image: largeImage, size: "Large")
+            savePhotoToFb(image: smallImage, size: "Thumbnail")
+        }
+    }
+
+    private func savePhotoToFb(image: UIImage, size: String) {
+        let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
+        guard let data = UIImagePNGRepresentation(image) as NSData? else { return }
+        let imageId = UUID().uuidString
+        _ = imageRef.child("\(imageId)-\(size).png").putData(data as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-\(size).png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                self.ref?.child("images").updateChildValues([imageId: downloadURL])
+            }
+
+        }
     }
 
 }

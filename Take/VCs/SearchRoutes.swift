@@ -266,14 +266,23 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         // labels
         cell.setLabels(name: route.name, types: route.difficulty?.description ?? "N/A", difficulty: route.types ?? "N/A")
 
-        // images
-        if let firstImage = firstImages["\(route.id)"] {
-            //there is an image loaded - could be an actual image or the noImages.png
-            cell.setImage(with: firstImage)
-        } else {
-            //there is an image loading
-            cell.setImage(with: UIImage(named: "imageLoading.png") ?? UIImage())
+        DispatchQueue.global(qos: .background).async {
+            route.fbLoadFirstImage(size: "Thumbnail") { firstImage in
+                guard let noImages = UIImage(named: "noImages.png") else { return }
+                DispatchQueue.main.async {
+                    cell.setImage(with: firstImage ?? noImages)
+                }
+            }
         }
+
+//        // images
+//        if let firstImage = firstImages["\(route.id)"] {
+//            //there is an image loaded - could be an actual image or the noImages.png
+//            cell.setImage(with: firstImage)
+//        } else {
+//            //there is an image loading
+//            cell.setImage(with: UIImage(named: "imageLoading.png") ?? UIImage())
+//        }
         if let area = route.area {
             cell.setLocationImage(with: UIImage(named: "bg.jpg") ?? UIImage())
             cell.setAreaAbrev(with: area)
