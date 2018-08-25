@@ -85,6 +85,12 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.actualRatingLabel.text = theRoute.difficulty?.description ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         self.feelsLikeRatingLabel.text = theRoute.averageRating() ?? "N/A"
+        if let averageStar = theRoute.averageStar {
+            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
+        } else {
+            self.starsLabel.text = "N/A"
+        }
+        self.starVotersLabel.text = "\(theRoute.stars.count)"
 
         setupButtons()
 
@@ -168,7 +174,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         if collectionView == self.myCV {
             let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
             guard let cell = tempCell as? DetailImagesCell, let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
-            print("setting image at index: \(indexPath.row)")
             cell.setImage(with: cellImage)
             cell.layer.borderColor = UIColor.white.cgColor
             cell.layer.borderWidth = 2
