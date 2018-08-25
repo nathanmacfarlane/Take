@@ -56,10 +56,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myARVC.backgroundColor = UIColor.clear
         self.myARVC.isHidden = true
 
-        if !self.theRoute.imageUrls.isEmpty {
-            self.beTheFirstLabel.text = "Images loading"
-        }
-
         self.theRoute.fsLoadImages { images in
             self.images = images
             for image in self.images {
@@ -71,22 +67,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         }
 
-//        DispatchQueue.global(qos: .background).async {
-//            for routeImage in self.theRoute.routeImages {
-//                guard let theURL = URL(string: routeImage.smallUrl) else { continue }
-//                URLSession.shared.dataTask(with: theURL) { data, _, _ in
-//                    guard let theData = data, let theImage = UIImage(data: theData) else { return }
-//                    self.images[routeImage.imageId] = theImage
-//                    self.imageKeys.append(routeImage.imageId)
-//                    DispatchQueue.main.async {
-//                        self.updateLabel()
-//                        self.myCV.reloadData()
-//                    }
-//                }
-//                .resume()
-//            }
-//        }
-
         addBlur()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +74,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         self.myARVC.reloadData()
         self.myCV.reloadData()
+
+        if !self.theRoute.imageUrls.isEmpty {
+            self.beTheFirstLabel.text = "Images loading"
+        }
 
         self.routeNameLabel.text = theRoute.name
         self.routeLocationButton.setTitle(theRoute.localDesc.last ?? "N/A", for: .normal)
@@ -153,6 +137,11 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     // MARK: - IBActions
+    @IBAction func hitEditButton(_ sender: Any) {
+//        RouteEdit.delegate = self
+        self.performSegue(withIdentifier: "pushToEdit", sender: nil)
+        return
+    }
     @IBAction private func tappedAreaButton(_ sender: UIButton) {
         let alertController = UIAlertController(title: nil, message: "Areas", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
@@ -257,6 +246,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         } else if segue.identifier == "pushToEdit" {
             if let dct: RouteEdit = segue.destination as? RouteEdit {
+                dct.selectedImages = self.images
                 dct.theRoute = self.theRoute
             }
         } else if segue.identifier == "presentAllImages" {

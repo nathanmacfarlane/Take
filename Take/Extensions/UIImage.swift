@@ -127,7 +127,10 @@ extension UIImage {
             }
             imageRef.child("\(imageId)-large.png").downloadURL { url, _ in
                 guard let downloadURL = url else { return }
-                route.ref?.child("imageUrls").updateChildValues([imageId: downloadURL])
+                route.imageUrls[imageId] = "\(downloadURL)"
+                Firestore.firestore().collection("routes").document("\(route.id)").setData(["imageUrls": route.imageUrls], merge: true)
+//                print("updating ref with: \([imageId: downloadURL])")
+//                route.ref?.child("imageUrls").updateChildValues([imageId: downloadURL])
             }
 
         }
