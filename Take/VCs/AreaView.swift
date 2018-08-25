@@ -31,29 +31,29 @@ class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        searchFBRoute(byProperty: "area", withValue: routeArea.name) { routes in
-            var trad = 0
-            var topRope = 0
-            var sport = 0
-            var boulder = 0
-            for route in routes {
-                if let types = route.types {
-                    if types.contains("TR") {
-                        topRope += 1
-                    }
-                    if types.contains("Sport") {
-                        sport += 1
-                    }
-                    if types.contains("Trad") {
-                        trad += 1
-                    }
-                    if types.contains("Boulder") {
-                        boulder += 1
-                    }
-                }
-            }
-            self.donutChartCV.updateChartData(trad: trad, boulder: boulder, topRope: topRope, sport: sport, count: routes.count)
-        }
+//        searchFBRoute(byProperty: "area", withValue: routeArea.name) { routes in
+//            var trad = 0
+//            var topRope = 0
+//            var sport = 0
+//            var boulder = 0
+//            for route in routes {
+//                if let types = route.types {
+//                    if types.contains("TR") {
+//                        topRope += 1
+//                    }
+//                    if types.contains("Sport") {
+//                        sport += 1
+//                    }
+//                    if types.contains("Trad") {
+//                        trad += 1
+//                    }
+//                    if types.contains("Boulder") {
+//                        boulder += 1
+//                    }
+//                }
+//            }
+//            self.donutChartCV.updateChartData(trad: trad, boulder: boulder, topRope: topRope, sport: sport, count: routes.count)
+//        }
 
         self.routeNameLabel.text = routeArea.name
     }

@@ -50,16 +50,16 @@ func searchFBRouteAreas(byProperty property: String, withValue value: Any, compl
 }
 
 func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route]) -> Void) {
-    var routeResults: [Route] = []
-    let routesRoot = Database.database().reference(withPath: "routes")
-    let namequery = routesRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
-    namequery.observeSingleEvent(of: .value) { snapshot in
-        for item in snapshot.children {
-            guard let item = item as? DataSnapshot, let newRoute = Route(snapshot: item) else { continue }
-            routeResults.append(newRoute)
-        }
-        completion(routeResults)
-    }
+//    var routeResults: [Route] = []
+//    let routesRoot = Database.database().reference(withPath: "routes")
+//    let namequery = routesRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
+//    namequery.observeSingleEvent(of: .value) { snapshot in
+//        for item in snapshot.children {
+//            guard let item = item as? DataSnapshot, let newRoute = Route(snapshot: item) else { continue }
+//            routeResults.append(newRoute)
+//        }
+//        completion(routeResults)
+//    }
 }
 
 func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]) -> Void) {
@@ -75,12 +75,12 @@ func searchFBRoute(inArea path: String, completion: @escaping (_ routeIDs: [Int]
 }
 
 func searchFBArea(with key: String, completion: @escaping (_ area: Area) -> Void) {
-    let routesRoot = Database.database().reference(withPath: "areas/\(key)")
-    routesRoot.observeSingleEvent(of: .value) { snapshot in
-        guard let newArea = Area(snapshot: snapshot) else { return }
-        //        for item in snapshot.children {
-        //            print("item: \(item)")
-        //        }
-        completion(newArea)
-    }
+//    let routesRoot = Database.database().reference(withPath: "areas/\(key)")
+//    routesRoot.observeSingleEvent(of: .value) { snapshot in
+//        guard let newArea = Area(snapshot: snapshot) else { return }
+//        //        for item in snapshot.children {
+//        //            print("item: \(item)")
+//        //        }
+//        completion(newArea)
+//    }
 }

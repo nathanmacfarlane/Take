@@ -66,23 +66,23 @@ struct Rating {
         self.intDiff = 0
         self.buffer = ""
         self.danger = ""
-        self.type = getType(desc)
-        self.intDiff = getDiff(desc)
+//        self.type = getType(desc)
+//        self.intDiff = getDiff(desc)
         self.buffer = getBuffer(desc)
         self.danger = getDanger(desc)
     }
 
-    init?(anyObject: [String: Any]) {
-        guard let typeInt = anyObject["type"] as? Int else { return nil }
-
-        guard let tempDesc = anyObject["desc"] as? String else { return nil }
-        guard let tempDiff = anyObject["intDiff"] as? Int else { return nil }
-        self.intDiff = tempDiff
-        self.desc = tempDesc
-        self.type = typeInt == 1 ? .climb : .boulder
-        self.buffer = anyObject["buffer"] as? String
-        self.danger = anyObject["danger"] as? String
-    }
+//    init?(anyObject: [String: Any]) {
+//        guard let typeInt = anyObject["type"] as? Int else { return nil }
+//
+//        guard let tempDesc = anyObject["desc"] as? String else { return nil }
+//        guard let tempDiff = anyObject["intDiff"] as? Int else { return nil }
+//        self.intDiff = tempDiff
+//        self.desc = tempDesc
+//        self.type = typeInt == 1 ? .climb : .boulder
+//        self.buffer = anyObject["buffer"] as? String
+//        self.danger = anyObject["danger"] as? String
+//    }
 
     private func getDanger(_ desc: String) -> String? {
         let chars = Array(desc)
@@ -109,37 +109,37 @@ struct Rating {
         return buff.isEmpty ? nil : buff
     }
 
-    private func getType(_ desc: String) -> RouteType {
-        let chars = Array(desc)
-        if chars[0] == "V" {
-            return .boulder
-        } else {
-            return .climb
-        }
-    }
+//    private func getType(_ desc: String) -> RouteType {
+//        let chars = Array(desc)
+//        if chars[0] == "V" {
+//            return .boulder
+//        } else {
+//            return .climb
+//        }
+//    }
 
-    private func getDiff(_ desc: String) -> Int {
-        let chars = Array(desc)
-        var diff = ""
-        var start = 1
-        if self.type == .climb {
-            start += 1
-        }
-        for n in start..<chars.count {
-            if chars[n] > "9" || chars[n] < "0" {
-                if let toReturn = Int(diff) {
-                    return toReturn
-                } else {
-                    return 0
-                }
-            }
-            diff = "\(diff)\(chars[n])"
-        }
-        if let toReturn = Int(diff) {
-            return toReturn
-        } else {
-            return 0
-        }
-    }
+//    private func getDiff(_ desc: String) -> Int {
+//        let chars = Array(desc)
+//        var diff = ""
+//        var start = 1
+//        if self.type == .climb {
+//            start += 1
+//        }
+//        for n in start..<chars.count {
+//            if chars[n] > "9" || chars[n] < "0" {
+//                if let toReturn = Int(diff) {
+//                    return toReturn
+//                } else {
+//                    return 0
+//                }
+//            }
+//            diff = "\(diff)\(chars[n])"
+//        }
+//        if let toReturn = Int(diff) {
+//            return toReturn
+//        } else {
+//            return 0
+//        }
+//    }
 
 }

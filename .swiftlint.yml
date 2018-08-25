@@ -26,6 +26,7 @@ type_body_length: 400
 
 disabled_rules:
 - identifier_name
+- force_try
 - implicitly_unwrapped_optional
 - line_length
 - conditional_returns_on_newline
@@ -78,7 +79,6 @@ opt_in_rules:
 - first_where
 - for_where
 - force_cast
-- force_try
 - force_unwrapping
 - function_body_length
 - function_default_parameter_at_end

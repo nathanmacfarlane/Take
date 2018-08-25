@@ -12,8 +12,7 @@ import UIKit
 
 protocol RouteFirebase: class {
 
-    var images: [String: UIImage] { get }
-
-    func fbLoadImages(size: String, completion: @escaping () -> Void)
+    func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void)
+    func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void)
     func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void)
 }
