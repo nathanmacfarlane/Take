@@ -6,7 +6,9 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import CodableFirebase
 import FirebaseDatabase
+import FirebaseFirestore
 import FirebaseStorage
 import Foundation
 import GeoFire
@@ -17,21 +19,19 @@ class RouteService: Codable {
     var routes: [Route] = []
 }
 
-class Route: NSObject, Comparable, Codable, MKAnnotation {
+class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
+
     // MARK: - properties
     var name: String
     var photoURL: String?
     var id: Int
-    var types: String? // TR (Top Rope), Sport, and Trad, Boulder
+    var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
     var stars: [Star] = []
-    var star: Double?
-    var starVotes: Int?
     var pitches: Int?
     var localDesc: [String] = []
     var comments: [Comment] = []
     var info: String?
     var feelsLike: [Rating] = []
-    var images: [String: UIImage] = [:]
     var ardiagrams: [ARDiagram] = []
     var ref: DatabaseReference?
     var latitude: Double?
@@ -39,11 +39,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var wall: String?
     var area: String?
     var city: String?
+    // urls to images in storage
+    var imageUrls: [String: String] = [:]
 
     var newARDiagrams: [ARDiagram] = []
 
     //private stuff
-    private var allImages: [String: String] = [:]
     private var allDiagrams: [String: [String]] = [:]
     private var rating: String?
 
@@ -54,61 +55,20 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return nil
     }
 
+    var typesString: String {
+        var types: [String] = []
+        for type in self.types {
+            types.append("\(type)")
+        }
+        return types.joined(separator: ", ")
+    }
+
     // MARK: - Inits
     init(name: String, id: Int, lat: Double, long: Double) {
         self.name = name
         self.id = id
         self.latitude = lat
         self.longitude = long
-    }
-    init?(snapshot: DataSnapshot) {
-        self.id = Int(snapshot.key) ?? 0
-        guard let snapval = snapshot.value as? [String: AnyObject] else {
-            return nil
-        }
-        guard let tempName = snapval["name"] as? String, let tempLoc = snapval["location"] as? [Double] else {
-            return nil
-        }
-        name = tempName
-        latitude = tempLoc[0]
-        longitude = tempLoc[1]
-        photoURL = snapval["photoURL"] as? String
-        types = snapval["types"] as? String
-        rating = snapval["difficulty"] as? String
-        star = snapval["stars"] as? Double
-        starVotes = snapval["starVotes"] as? Int
-        pitches = snapval["pitches"] as? Int
-        guard let tempLocalDesc = snapval["localDesc"] as? [String] else {
-            return nil
-        }
-        localDesc = tempLocalDesc
-        if let tempComments = snapval["comments"] as? [[String: Any]] {
-            for tempComment in tempComments {
-                guard let newComment = Comment(anyObject: tempComment) else { continue }
-                comments.append(newComment)
-            }
-        }
-        info = snapval["info"] as? String
-        if let tempFeelsLike = snapval["feelsLike"] as? [[String: Any]] {
-            for tempFeels in tempFeelsLike {
-                guard let newRating = Rating(anyObject: tempFeels) else { continue }
-                feelsLike.append(newRating)
-            }
-        }
-        area = snapval["area"] as? String
-        if let tempAllImages = snapval["allImages"] as? [String: String] {
-            allImages = tempAllImages
-        }
-        if let tempAllDiagrams = snapval["allARDiagrams"]  as? [String: [String]] {
-            allDiagrams = tempAllDiagrams
-        }
-        wall = snapval["wall"]           as? String
-        city = snapval["city"]           as? String
-        self.ref = snapshot.ref
-    }
-    override init() {
-        self.name = ""
-        self.id = -1
     }
 
     // MARK: - MKAnnotation
@@ -135,27 +95,20 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     enum CodingKeys: String, CodingKey {
         case name
         case id
-        case types      = "type"
-        case localDesc  = "location"
+        case types
         case latitude
         case longitude
-        case rating
-        case star       = "stars"
-        case starVotes
-        case wall
-        case city
         case area
-    }
-
-    func description() -> String {
-        var desc = "\(name) \(id)"
-        if let tempTypes = types {
-            desc += " \(tempTypes)"
-        }
-        if !localDesc.isEmpty {
-            desc += " \(localDesc)"
-        }
-        return desc
+        case info
+        case imageUrls
+//        case localDesc  = "location"
+//        case rating
+//        case star       = "stars"
+//        case starVotes
+//        case wall
+//        case city
+//        case imageUrls
+//        case images
     }
 
     // MARK: - GeoFire
@@ -168,209 +121,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
                 print("An error occured: \(String(describing: error))")
             } else {
                 print("Saved location successfully!")
-            }
-        }
-    }
-
-    // MARK: - Firebase
-    func getWall(completion: @escaping (_ wall: Wall) -> Void) {
-        if let wallName = self.wall {
-            let wallsRoot = Database.database().reference(withPath: "walls")
-            let query = wallsRoot.queryOrdered(byChild: "name").queryEqual(toValue: wallName)
-            query.observeSingleEvent(of: .value) { snapshot in
-                for item in snapshot.children {
-                    guard let item = item as? DataSnapshot, let newWall = Wall(snapshot: item) else { return }
-                    completion(newWall)
-                }
-            }
-        }
-    }
-    //    func getArea(completion: @escaping (_ area: RouteArea) -> Void) {
-    //        if let areaName = self.area {
-    //            let areasRoot = Database.database().reference(withPath: "areas")
-    //            let query = areasRoot.queryOrdered(byChild: "name").queryEqual(toValue: areaName)
-    //            query.observeSingleEvent(of: .value, with: { (snapshot) in
-    //                for item in snapshot.children {
-    //                    completion(RouteArea(snapshot: item as! DataSnapshot))
-    //                }
-    //            })
-    //        }
-    //    }
-    func getARImagesFromFirebase(completion: @escaping () -> Void) {
-        self.ardiagrams = []
-        var count = 0
-        for arDiagram in self.allDiagrams {
-            guard let theDiagram = URL(string: arDiagram.value[0]) else { continue }
-            URLSession.shared.dataTask(with: theDiagram) { bgImageData, _, _ in
-
-                guard let bgData = bgImageData else { return }
-                guard let theURL = URL(string: arDiagram.value[1]) else { return }
-                guard let bgImage = UIImage(data: bgData) else { return }
-                URLSession.shared.dataTask(with: theURL) { diagramData, _, _ in
-
-                    guard let dData = diagramData else { return }
-                    guard let dImage = UIImage(data: dData) else { return }
-                    let newDiagram = ARDiagram(bgImage: bgImage, diagram: dImage)
-                    self.ardiagrams.append(newDiagram)
-                    count += 1
-                    if count == self.allDiagrams.count {
-                        completion()
-                    }
-                }
-                .resume()
-
-            }
-            .resume()
-        }
-    }
-    func observeImageFromFirebase(completion: @escaping (_ snapshot: DataSnapshot, _ ref: DatabaseReference) -> Void) {
-        let imagesRef = Database.database().reference().child("Routes/\(self.id)/allImages")
-        imagesRef.observe(.childAdded) { snapshot in
-            completion(snapshot, imagesRef)
-        }
-    }
-    func getImagesFromFirebase(completion: @escaping () -> Void) {
-        self.images = [:]
-        var count = 0
-        for imgURL in self.allImages {
-            guard let theURL = URL(string: imgURL.value) else { continue }
-            URLSession.shared.dataTask(with: theURL) { data, _, _ in
-                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                self.images[imgURL.key] = theImage
-                count += 1
-                if count == self.allImages.count {
-                    completion()
-                }
-            }
-            .resume()
-        }
-    }
-    func getFirstImageFromFirebase(completion: @escaping (_ image: UIImage?) -> Void) {
-        if self.allImages.values.first == nil {
-            completion(#imageLiteral(resourceName: "noImages.png"))
-            return
-        }
-        guard let firstImageKey = self.allImages.values.first, let theURL = URL(string: firstImageKey) else { return }
-        URLSession.shared.dataTask(with: theURL) { data, _, _ in
-            guard let theData = data else { return }
-            completion(UIImage(data: theData))
-        }
-        .resume()
-    }
-    private func saveToFirebase() {
-        if self.ref == nil {
-            let ref = Database.database().reference().child("Routes/\(self.id)")
-            ref.setValue(self.toAnyObject())
-            self.ref = ref
-        } else {
-            ref?.setValue(self.toAnyObject())
-        }
-    }
-    func deleteImageFromFB(indexOfDeletion: Int, imageURL: String, completion: @escaping () -> Void) {
-        //        let storage = Storage.storage()
-        //        let storageRef = storage.reference(forURL: imageURL)
-        //        storageRef.delete { error in
-        //            if let error = error {
-        //                print(error)
-        //            } else {
-        //                completion()
-        //            }
-        //        }
-        //        self.allImages?.remove(at: indexOfDeletion)
-        //        self.saveToFirebase()
-    }
-    func saveToFirebase(newImagesWithKeys: [String: UIImage]) {
-        saveToFirebase()
-        self.saveImagesToFirebase(newImagesWithKeys: newImagesWithKeys)
-    }
-    func addImageURLToFirebase(imageURL: String) {
-        let rightNow = Date().instanceString()
-        self.ref?.child("allImages").updateChildValues([rightNow: imageURL])
-        print("just saved image with key: '\(imageURL)'")
-    }
-    func saveImagesToFirebase(newImagesWithKeys: [String: UIImage]) {
-        let storeRef = Storage.storage().reference()
-        let imageRef = storeRef.child("Routes/\(self.id)")
-        let keys = Array(newImagesWithKeys.keys)
-        for imageKey in keys {
-
-            guard let imageFromKey = newImagesWithKeys[imageKey], let resizedImage = imageFromKey.resizedToKB(numKB: 1024) else { return }
-            guard let data = UIImagePNGRepresentation(resizedImage) as NSData? else { return }
-            let imageID = UUID().uuidString
-            //save to firebase
-            _ = imageRef.child("\(imageID).png").putData(data as Data, metadata: nil) { metadata, error in
-                guard metadata != nil else {
-                    print("oh shoot... error occured: \(String(describing: error))")
-                    return
-                }
-                imageRef.child("\(imageID).png").downloadURL { url, error in
-                    guard let downloadURL = url else {
-                        print("error occured: \(String(describing: error))")
-                        return
-                    }
-                    self.addImageURLToFirebase(imageURL: "\(downloadURL)")
-                    self.allImages[imageKey] = "\(downloadURL)"
-                }
-
-            }
-        }
-    }
-    func addARURLToFirebase(bgImageURL: String, diagramURL: String) {
-        //        self.ref?.child("allARDiagrams").setValue([bgImageURL: diagramURL])
-        let rightNow = Date().instanceString()
-        self.ref?.child("allARDiagrams").updateChildValues([rightNow: [bgImageURL, diagramURL]])
-        //        if self.allDiagrams == nil {
-        //            self.allDiagrams = [:]
-        //        }
-        //        self.allDiagrams![rightNow] = [bgImageURL, diagramURL]
-        self.ref?.child("allARDiagrmas").setValue(self.allDiagrams)
-        print("just saved image with key: '\(bgImageURL)' and value: '\(diagramURL)'")
-    }
-    func saveARImagesToFirebase() {
-        let storeRef = Storage.storage().reference()
-        let arRef = storeRef.child("Routes/\(self.id)")
-        print("going to save ar diagrms")
-        for arDiagram in self.newARDiagrams {
-            print("in for loop")
-            self.ardiagrams.append(arDiagram)
-            guard let resizedBGImage = arDiagram.bgImage.resizedToKB(numKB: 1024) else { return }
-            guard let bgData = UIImagePNGRepresentation(resizedBGImage) as NSData? else { return }
-
-            guard let theDiagram = arDiagram.diagram, let resizedDiagram = theDiagram.resizedToKB(numKB: 1024) else { return }
-            let diagramData = UIImagePNGRepresentation(resizedDiagram) as NSData?
-            let bgImageID = UUID().uuidString
-            let diagramID = UUID().uuidString
-
-            //save bg image to firebase
-            _ = arRef.child("\(bgImageID).png").putData(bgData as Data, metadata: nil) { metadata, error in
-                guard metadata != nil else {
-                    print("oh shoot... error occured: \(String(describing: error))")
-                    return
-                }
-                arRef.child("\(bgImageID).png").downloadURL { url, error in
-                    guard let bgImageIDDownloadURL = url else {
-                        print("error occured in bg image: \(String(describing: error))")
-                        return
-                    }
-
-                    //save diagram to firebase
-                    guard let dData = diagramData else { return }
-                    _ = arRef.child("\(diagramID).png").putData(dData as Data, metadata: nil) { metadata, error in
-                        guard metadata != nil else {
-                            print("oh shoot... error occured: \(String(describing: error))")
-                            return
-                        }
-                        arRef.child("\(diagramID).png").downloadURL { url, error in
-                            guard let diagramDownloadURL = url else {
-                                print("error occured in diagram: \(String(describing: error))")
-                                return
-                            }
-                            self.addARURLToFirebase(bgImageURL: "\(bgImageIDDownloadURL)", diagramURL: "\(diagramDownloadURL)")
-                        }
-
-                    }
-                }
-
             }
         }
     }
@@ -424,77 +174,92 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return Int(sum) / (stars.count)
     }
     func isTR() -> Bool {
-        guard let theTypes = self.types else { return false }
-        return theTypes.contains("TR")
+        return self.types.contains("TR")
     }
     func isSport() -> Bool {
-        guard let theTypes = self.types else { return false }
-        return theTypes.contains("Sport")
+        return self.types.contains("Sport")
     }
     func isTrad() -> Bool {
-        guard let theTypes = self.types else { return false }
-        return theTypes.contains("Trad")
+        return self.types.contains("Trad")
     }
     func isBoulder() -> Bool {
-        guard let theTypes = self.types else { return false }
-        return theTypes.contains("Boulder")
+        return self.types.contains("Boulder")
     }
     func toString() -> String {
-        return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")', Types: \(types ?? "N/A")"
+        return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")'"
     }
-    func toAnyObject() -> Any {
-        var any: [String: Any] = [:]
-        any["name"] = name
-        if latitude != nil {
-            any["location"] = [latitude, longitude]
-        }
-        if photoURL != nil {
-            any["photoURL"] = photoURL
-        }
-        any["id"] = id
-        if types != nil {
-            any["types"] = types
-        }
-        if rating != nil {
-            any["difficulty"] = rating
-        }
-        if star != nil {
-            any["stars"] = star
-        }
-        if starVotes != nil {
-            any["starVotes"] = starVotes
-        }
-        if pitches != nil {
-            any["pitches"] = pitches
-        }
-        if !localDesc.isEmpty {
-            any["localDesc"] = localDesc
-        }
-        if !comments.isEmpty {
-            var commentsAnyArr: [Any] = []
-            for comment in comments {
-                commentsAnyArr.append(comment.toAnyObject())
-            }
-            any["comments"] = commentsAnyArr
-        }
-        if info != nil {
-            any["info"] = info
-        }
-        if !feelsLike.isEmpty {
-            var feelsLikeAnyArr: [Any] = []
-            for feels in feelsLike {
-                feelsLikeAnyArr.append(feels.toAnyObject())
-            }
-            any["feelsLike"] = feelsLikeAnyArr
-        }
-        if area != nil {
-            any["area"] = area
-        }
-        if !allImages.isEmpty {
-            any["allImages"] = allImages
-        }
 
-        return any
+    func fsSave() {
+        guard let data = try! FirebaseEncoder().encode(self) as? [String: Any] else { return }
+        Firestore.firestore().collection("routes").document("\(self.id)").setData(data)
+    }
+
+    func getArea(completion: @escaping (_ area: Area?) -> Void) {
+        guard let areaName = self.area else { return }
+        Firestore.firestore().query(type: Area.self, by: "name", with: areaName) { areas in
+            guard let theArea = areas.first else { return }
+            completion(theArea)
+        }
+    }
+
+    // MARK: - Protocol
+    func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
+        var images: [String: UIImage] = [:]
+        var count = 0
+        for routeImage in imageUrls {
+            guard let theURL = URL(string: routeImage.value) else { continue }
+            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+                images[routeImage.key] = theImage
+                count += 1
+                if count == self.imageUrls.count {
+                    completion(images)
+                }
+            }
+            .resume()
+        }
+    }
+
+    func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
+        guard let routeImage = imageUrls.first, let theURL = URL(string: routeImage.value) else {
+            completion(nil, nil)
+            return
+        }
+        URLSession.shared.dataTask(with: theURL) { data, _, _ in
+            guard let theData = data, let theImage = UIImage(data: theData) else {
+                completion(nil, nil)
+                return
+            }
+            completion(routeImage.key, theImage)
+        }
+        .resume()
+    }
+
+    func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void) {
+        let keys = Array(images.keys)
+        for imageKey in keys {
+
+            guard let image = images[imageKey],
+                let largeImage = image.resizedToKB(numKB: 2048),
+                let smallImage = image.resizedToKB(numKB: 2048)
+                else { return }
+            savePhotoToFb(image: largeImage, size: "Large")
+            savePhotoToFb(image: smallImage, size: "Thumbnail")
+        }
+    }
+
+    private func savePhotoToFb(image: UIImage, size: String) {
+        let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
+        guard let data = UIImagePNGRepresentation(image) as NSData? else { return }
+        let imageId = UUID().uuidString
+        _ = imageRef.child("\(imageId)-\(size).png").putData(data as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-\(size).png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                self.ref?.child("images").updateChildValues([imageId: downloadURL])
+            }
+
+        }
     }
 
 }

@@ -35,10 +35,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet private weak var imageSegControl: UISegmentedControl!
 
     // MARK: - Variables
-    var theRoute: Route = Route(name: "", id: 0, lat: 0, long: 0)
+    var theRoute: Route!
     var mainImg: UIImage?
     var imageKeys: [String] = []
-    var arDiagramKeys: [String] = []
+    var images: [String: UIImage] = [:]
     var imageRef: DatabaseReference = DatabaseReference()
     var locationManager: CLLocationManager = CLLocationManager()
 
@@ -52,33 +52,40 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-
-        print("going to load ar images")
-        self.theRoute.getARImagesFromFirebase {
-            print("got em: \(String(describing: self.theRoute.ardiagrams))")
-        }
-
-        self.myARVC.isHidden = true
         self.myCV.backgroundColor = UIColor.clear
         self.myARVC.backgroundColor = UIColor.clear
-        if let tempMainImg = mainImg {
-            self.bgimageView.image = tempMainImg
+        self.myARVC.isHidden = true
+
+        if !self.theRoute.imageUrls.isEmpty {
+            self.beTheFirstLabel.text = "Images loading"
         }
 
-        theRoute.observeImageFromFirebase {  imageSnapshot, imageRef  in
-            self.imageRef = imageRef
-            if let tempValue = imageSnapshot.value, let imageURLString = tempValue as? String, let imageURL = URL(string: imageURLString) {
-                loadImageFrom(url: imageURL) { image in
-                    self.theRoute.images[imageSnapshot.key] = image
-                    self.imageKeys.append(imageSnapshot.key)
-                    DispatchQueue.main.async {
-                        self.bgimageView.image = image
-                        self.updateLabel()
-                        self.myCV.reloadData()
-                    }
-                }
+        self.theRoute.fsLoadImages { images in
+            self.images = images
+            for image in self.images {
+                self.imageKeys.append(image.key)
+            }
+            DispatchQueue.main.async {
+                self.updateLabel()
+                self.myCV.reloadData()
             }
         }
+
+//        DispatchQueue.global(qos: .background).async {
+//            for routeImage in self.theRoute.routeImages {
+//                guard let theURL = URL(string: routeImage.smallUrl) else { continue }
+//                URLSession.shared.dataTask(with: theURL) { data, _, _ in
+//                    guard let theData = data, let theImage = UIImage(data: theData) else { return }
+//                    self.images[routeImage.imageId] = theImage
+//                    self.imageKeys.append(routeImage.imageId)
+//                    DispatchQueue.main.async {
+//                        self.updateLabel()
+//                        self.myCV.reloadData()
+//                    }
+//                }
+//                .resume()
+//            }
+//        }
 
         addBlur()
     }
@@ -91,20 +98,11 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.routeNameLabel.text = theRoute.name
         self.routeLocationButton.setTitle(theRoute.localDesc.last ?? "N/A", for: .normal)
         self.commentsButton.setTitle("\(theRoute.comments.count) 💬", for: .normal)
-        //        self.starsLabel.text = "\(String(repeating: "★", count: theRoute.averageStar() ?? 0))\(String(repeating: "☆", count: 5 - (theRoute.averageStar() ?? 0)))"
-        self.starsLabel.text = "\(String(repeating: "★", count: Int(theRoute.star?.roundToInt() ?? 0)))\(String(repeating: "☆", count: Int(4 - (theRoute.star?.roundToInt() ?? 0))))"
-        self.starVotersLabel.text = "\(theRoute.starVotes ?? 0)"
         self.actualRatingLabel.text = theRoute.difficulty?.description ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         self.feelsLikeRatingLabel.text = theRoute.averageRating() ?? "N/A"
 
-        self.updateLabel()
         setupButtons()
-
-        if theRoute.images.isEmpty {
-            imageSegControl.selectedSegmentIndex = 1
-            checkStatus()
-        }
 
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -132,7 +130,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     func updateLabel() {
         if self.imageSegControl.selectedSegmentIndex == 0 {
-            if self.theRoute.images.isEmpty {
+            if self.images.isEmpty {
                 self.beTheFirstLabel.text = "Be the first to add an image"
                 self.beTheFirstLabel.isHidden = false
             } else {
@@ -180,7 +178,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.myCV {
             let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-            guard let cell = tempCell as? DetailImagesCell, let cellImage = theRoute.images[self.imageKeys[indexPath.row]] else { return tempCell }
+            guard let cell = tempCell as? DetailImagesCell, let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
+            print("setting image at index: \(indexPath.row)")
             cell.setImage(with: cellImage)
             cell.layer.borderColor = UIColor.white.cgColor
             cell.layer.borderWidth = 2
@@ -262,7 +261,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         } else if segue.identifier == "presentAllImages" {
             if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
-                dct.images = Array(self.theRoute.images.values)
+                dct.images = Array(self.images.values)
                 if let selectedImage = sender as? Int {
                     dct.selectedImage = selectedImage
                 }

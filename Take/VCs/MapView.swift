@@ -74,15 +74,17 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             self.myMapView.remove(areaOverlay)
         }
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            let theLocation = CLLocation(latitude: self.myMapView.centerCoordinate.latitude, longitude: self.myMapView.centerCoordinate.longitude)
+            let latitude = self.myMapView.centerCoordinate.latitude
+            let longitude = self.myMapView.centerCoordinate.longitude
             let theRadius = self.myMapView.visibleDistance() / 4
-            let area = Area(name: myTextField.text ?? "", location: theLocation, radius: theRadius)
+            let area = Area(name: myTextField.text ?? "", radius: theRadius, latitude: latitude, longitude: longitude)
+//            let area = Area(name: myTextField.text ?? "", location: theLocation, radius: theRadius)
             areaOverlay.area = area
             //            getAreaFromGeoFire(for: "GeoFireAreaKeys", from: theLocation, with: theRadius, completion: { (locations) in
             //                print("done")
             //            })
-            area.saveAreaToFB()
-            area.saveAreaToGF()
+//            area.saveAreaToFB()
+//            area.saveAreaToGF()
         }
         alertController.addTextField { textField in
             myTextField = textField
@@ -187,14 +189,15 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
             annoView.annotation = annotation
             annoView.canShowCallout = true
             annoView.rightCalloutAccessoryView = UIButton(type: .infoDark)
-            guard let star = (annotation as? Route)?.star?.roundToInt() else { return nil }
-            if star <= 2 {
-                annoView.image = UIImage(named: "Anno-Circle-Pink.png")
-            } else if star < 4 {
-                annoView.image = UIImage(named: "Anno-Circle-Blue.png")
-            } else {
-                annoView.image = UIImage(named: "Anno-Circle-Red.png")
-            }
+            annoView.image = UIImage(named: "Anno-Circle-Blue.png")
+//            guard let star = (annotation as? Route)?.star?.roundToInt() else { return nil }
+//            if star <= 2 {
+//                annoView.image = UIImage(named: "Anno-Circle-Pink.png")
+//            } else if star < 4 {
+//                annoView.image = UIImage(named: "Anno-Circle-Blue.png")
+//            } else {
+//                annoView.image = UIImage(named: "Anno-Circle-Red.png")
+//            }
             return annoView
         }
         return nil

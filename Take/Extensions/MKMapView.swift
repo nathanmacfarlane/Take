@@ -46,7 +46,8 @@ extension MKMapView {
     }
     func addCircle(name: String, coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) -> AreaOverlay {
         let circle = AreaOverlay(center: coordinate, radius: radius)
-        circle.area = Area(name: name, location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), radius: radius)
+        circle.area = Area(name: name, radius: radius, latitude: coordinate.latitude, longitude: coordinate.longitude)
+//        circle.area = Area(name: name, location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), radius: radius)
         self.add(circle)
         return circle
     }

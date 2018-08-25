@@ -6,9 +6,12 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import CodableFirebase
 import CoreLocation
+import Firebase
 import FirebaseAuth
 import FirebaseDatabase
+import FirebaseFirestore
 import UIKit
 
 class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, CLLocationManagerDelegate {
@@ -68,8 +71,6 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
                 self.performSegue(withIdentifier: "goToLogin", sender: nil)
                 print("not logged in")
             }
-        } else {
-            //            print("welcome: \(String(describing: Auth.auth().currentUser?.uid))")
         }
 
         routesRoot = Database.database().reference(withPath: "routes")
@@ -107,58 +108,84 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     // MARK: - SearchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
 
-        self.myActivityIndicator.isHidden = false
+        self.myActivityIndicator.hidesWhenStopped = true
         self.myActivityIndicator.startAnimating()
 
         self.results.clear()
         self.resultsMashed.removeAll()
         self.myTableView.reloadData()
 
-        var count = 0
         self.mySearchBar.resignFirstResponder()
+
         guard let searchText = searchBar.text else { return }
-        searchFBRoute(byProperty: "name", withValue: searchText) { routes in
-            self.results.routes.append(contentsOf: routes)
+
+        let db = Firestore.firestore()
+        db.query(type: Route.self, by: "name", with: searchText) { routes in
             self.resultsMashed.append(contentsOf: routes)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRoute(byProperty: "keyword", withValue: searchText) { routes in
             self.results.routes.append(contentsOf: routes)
-            self.resultsMashed.append(contentsOf: routes)
             self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
+            self.myActivityIndicator.stopAnimating()
         }
-        searchFBRouteAreas(byProperty: "name", withValue: searchText) { areas in
+        db.query(type: Area.self, by: "name", with: searchText) { areas in
             self.resultsMashed.append(contentsOf: areas)
+            for area in areas {
+                self.results.areas.append(area.name)
+            }
             self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
+            self.myActivityIndicator.stopAnimating()
         }
-        searchFBRouteAreas(byProperty: "keyword", withValue: searchText) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteWalls(byProperty: "name", withValue: searchText) { walls in
-            self.resultsMashed.append(contentsOf: walls)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteWalls(byProperty: "keyword", withValue: searchText) { walls in
-            self.resultsMashed.append(contentsOf: walls)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteCities(byProperty: "name", withValue: searchText) { cities in
-            self.resultsMashed.append(contentsOf: cities)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
-        searchFBRouteCities(byProperty: "keyword", withValue: searchText) { cities in
-            self.resultsMashed.append(contentsOf: cities)
-            self.myTableView.reloadData()
-            count = self.manageSpinner(count: count)
-        }
+//        db.getRoutesBy("name", withValue: searchText) { routes in
+//            self.results.routes.append(contentsOf: routes)
+//            self.resultsMashed.append(contentsOf: routes)
+//            self.myTableView.reloadData()
+//            self.myActivityIndicator.stopAnimating()
+//        }
+
+//        var count = 0
+//        self.mySearchBar.resignFirstResponder()
+////        guard let searchText = searchBar.text else { return }
+//        searchFBRoute(byProperty: "name", withValue: searchText) { routes in
+//            self.results.routes.append(contentsOf: routes)
+//            self.resultsMashed.append(contentsOf: routes)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRoute(byProperty: "keyword", withValue: searchText) { routes in
+//            self.results.routes.append(contentsOf: routes)
+//            self.resultsMashed.append(contentsOf: routes)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteAreas(byProperty: "name", withValue: searchText) { areas in
+//            self.resultsMashed.append(contentsOf: areas)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteAreas(byProperty: "keyword", withValue: searchText) { areas in
+//            self.resultsMashed.append(contentsOf: areas)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteWalls(byProperty: "name", withValue: searchText) { walls in
+//            self.resultsMashed.append(contentsOf: walls)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteWalls(byProperty: "keyword", withValue: searchText) { walls in
+//            self.resultsMashed.append(contentsOf: walls)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteCities(byProperty: "name", withValue: searchText) { cities in
+//            self.resultsMashed.append(contentsOf: cities)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
+//        searchFBRouteCities(byProperty: "keyword", withValue: searchText) { cities in
+//            self.resultsMashed.append(contentsOf: cities)
+//            self.myTableView.reloadData()
+//            count = self.manageSpinner(count: count)
+//        }
     }
     func manageSpinner(count: Int) -> Int {
         if count == 7 {
@@ -213,8 +240,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         case is Wall:
             guard let theWall = anyItem as? Wall else { return UITableViewCell() }
             return getWallCell(wall: theWall)
-        case is RouteArea:
-            guard let theRouteArea = anyItem as? RouteArea else { return UITableViewCell() }
+        case is Area:
+            guard let theRouteArea = anyItem as? Area else { return UITableViewCell() }
             return getAreaCell(area: theRouteArea)
         case is City:
             guard let theCity = anyItem as? City else { return UITableViewCell() }
@@ -237,13 +264,15 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         cell.selectionStyle = .none
         return cell
     }
-    func getAreaCell(area: RouteArea) -> AreaCell {
+    func getAreaCell(area: Area) -> AreaCell {
         guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "AreaCell") as? AreaCell else { return AreaCell() }
         cell.backgroundColor = .clear
         cell.setAreaLabel(with: area.name)
         area.getCoverPhoto { coverImage in
-            DispatchQueue.main.async {
-                cell.setBgImage(with: coverImage)
+            if let coverImage = coverImage {
+                DispatchQueue.main.async {
+                    cell.setBgImage(with: coverImage)
+                }
             }
         }
         cell.selectionStyle = .none
@@ -264,18 +293,31 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as? RouteCell else { return RouteCell() }
 
         // labels
-        cell.setLabels(name: route.name, types: route.difficulty?.description ?? "N/A", difficulty: route.types ?? "N/A")
+        cell.setLabels(name: route.name, types: route.difficulty?.description ?? "N/A", difficulty: route.typesString)
 
-        // images
-        if let firstImage = firstImages["\(route.id)"] {
-            //there is an image loaded - could be an actual image or the noImages.png
-            cell.setImage(with: firstImage)
-        } else {
-            //there is an image loading
-            cell.setImage(with: UIImage(named: "imageLoading.png") ?? UIImage())
+        DispatchQueue.global(qos: .background).async {
+            route.fsLoadFirstImage { _, image in
+                DispatchQueue.main.async {
+                    if let image = image {
+                        cell.setImage(with: image)
+                    }
+                }
+            }
+            route.getArea { area in
+                if let area = area {
+                    area.getCoverPhoto { image in
+                        DispatchQueue.main.async {
+                            if let image = image {
+                                cell.setLocationImage(with: image)
+                            }
+                        }
+                    }
+                }
+            }
         }
+
         if let area = route.area {
-            cell.setLocationImage(with: UIImage(named: "bg.jpg") ?? UIImage())
+            cell.setLocationImage(with: UIImage())
             cell.setAreaAbrev(with: area)
         } else {
             cell.setAreaButtonTitle()
@@ -307,154 +349,3 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
 
 }
-
-//    func filterRoutes() {
-//        self.filteredRoutes = []
-//        for route in routeResults {
-//            if !(myCV.topRope && route.isTR() || myCV.sport && route.isSport() || myCV.trad && route.isTrad() || myCV.boulder && route.isBoulder()) {
-//                print("\(route.toString()) didn't pass type")
-//                continue
-//            }
-//            if route.difficulty == nil || route.difficulty!.intDiff < myCV.minDiff || route.difficulty!.intDiff > myCV.maxDiff {
-//                print("\(route.toString()) didn't pass difficult")
-//                continue
-//            }
-//            if route.pitches ?? 0 > myCV.pitches {
-//                print("\(route.toString()) didn't pass pitches")
-//                continue
-//            }
-//            if route.star != nil && route.star! < myCV.stars {
-//                print("\(route.toString()) didn't pass stars")
-//                continue
-//            }
-//            if myCV.distance == 50 {
-//                self.filteredRoutes.append(route)
-//                continue
-//            }
-//            if route.location == nil || userCurrentLocation == nil || Int(((route.location?.distance(from: userCurrentLocation!))!)/1609.34) > myCV.distance {
-//                print("\(route.toString()) didn't pass locations")
-//                continue
-//            }
-//            self.filteredRoutes.append(route)
-//        }
-//        self.routesRangeLabel.text = "Routes \(startIndex == 0 ? 1 : startIndex+1)-\(startIndex+self.NUMCELLS < self.filteredRoutes.count ? startIndex+10 : self.filteredRoutes.count) of \(self.self.filteredRoutes.count)"
-//    }
-
-//func addToRoutes(newRoutes: [Route], priority: Int) {
-//    let prevCount = self.filteredRoutes.count
-//    //if it doesn't already exist, add to array
-//    for route in newRoutes {
-//        if !self.routeResults.contains(route) {
-//            self.routeResults.append(route)
-//            self.filteredRoutes.append(route)
-//            //download first image
-//            route.getFirstImageFromFirebase { (firstImage) in
-//                self.firstImages["\(route.id)"] = firstImage
-//                DispatchQueue.main.async {
-//                    if self.myActivityIndicator.isAnimating {
-//                        self.myActivityIndicator.isHidden = true
-//                        self.myActivityIndicator.stopAnimating()
-//                        self.routesRangeLabel.text = "Routes 1-\(self.startIndex+self.NUM_CELLS < self.filteredRoutes.count ? self.startIndex+self.NUM_CELLS : self.filteredRoutes.count) of \(self.filteredRoutes.count)"
-//                    }
-//                    self.myTableView.reloadData()
-//                }
-//            }
-//        }
-//    }
-//    //if images were added, sort and reload table view
-//    if self.filteredRoutes.count != prevCount {
-//        self.filteredRoutes.sort(by: { $0.name < $1.name })
-//        DispatchQueue.main.async {
-//            self.myTableView.reloadData()
-//        }
-//    }
-//}
-
-//    @IBAction func clickedNext(_ sender: UIButton) {
-//        startIndex = startIndex+NUM_CELLS > filteredRoutes.count ? filteredRoutes.count - startIndex : startIndex + NUM_CELLS
-//        self.updateRange()
-//    }
-//    @IBAction func clickedLast(_ sender: UIButton) {
-//        if self.filteredRoutes.count % NUM_CELLS == 0 {
-//            startIndex = self.filteredRoutes.count-NUM_CELLS
-//        } else {
-//            startIndex = (self.filteredRoutes.count/NUM_CELLS)*NUM_CELLS
-//        }
-//        self.updateRange()
-//    }
-//    func updateRange() {
-//        self.routesRangeLabel.text = "Routes \(startIndex == 0 ? 1 : startIndex+1)-\(startIndex+NUM_CELLS < self.filteredRoutes.count ? startIndex+NUM_CELLS : self.filteredRoutes.count) of \(self.self.filteredRoutes.count)"
-////        self.myTableView.scrollToTop {
-//            self.myTableView.reloadData()
-////        }
-//    }
-
-//    @IBAction func clickedFirst(_ sender: UIButton) {
-//        startIndex = 0
-//        self.updateRange()
-//    }
-//    @IBAction func clickedPrevious(_ sender: UIButton) {
-//        startIndex = startIndex-NUM_CELLS <= 0 ? 0 : startIndex-NUM_CELLS
-//        self.updateRange()
-//    }
-
-//    func getPaginationCell() -> ViewNextPageCell {
-//        let cell = self.myTableView.dequeueReusableCell(withIdentifier: "ViewNextPageCell") as! ViewNextPageCell
-//        cell.backgroundColor = UIColor.clear
-//        cell.firstButton.alpha = startIndex == 0 ? 0 : 1
-//        cell.previousButton.alpha = startIndex == 0 ? 0 : 1
-//        cell.nextButton.alpha = startIndex >= self.filteredRoutes.count-NUM_CELLS ? 0 : 1
-//        cell.lastButton.alpha = startIndex >= self.filteredRoutes.count-NUM_CELLS ? 0 : 1
-//        cell.firstButton.roundButton(portion: 5)
-//        cell.previousButton.roundButton(portion: 5)
-//        cell.nextButton.roundButton(portion: 5)
-//        cell.lastButton.roundButton(portion: 5)
-//        return cell
-//
-//    }
-
-/*
- // search for route by name
- searchFBRoute(byProperty: "name", withValue: searchBar.text!) { (routes) in
- //            print("addiong from FB by name")
- self.addToRoutes(newRoutes: routes, priority: 1)
- // search for route by area
- searchFBRoute(byProperty: "area", withValue: searchBar.text!) { (otherRoutes) in
- //                print("addiong from FB by area")
- self.addToRoutes(newRoutes: otherRoutes, priority: 0)
- // reverse engeineer location
- forwardGeocoding(address: searchBar.text!) { (coordinate) in
- // search MP API for routes by coordinate
- routesByArea(coord: coordinate, maxDistance: 50, maxResults: self.MAXRESULTS, completion: { (routesArea) in
- var count = 0
- for route in routesArea {
- // search for route in Firebase by id
- searchFBRoute(byProperty: "id", withValue: route.id, completion: { (moreRoutes) in
- // add firebase data first because it's more updated that mountain project
- //                                print("addiong from FB by id")
- self.addToRoutes(newRoutes: moreRoutes, priority: 1)
- count += 1
- if count == routesArea.count {
- //                                    print("addiong from MP")
- self.addToRoutes(newRoutes: routesArea, priority: 0)
- }
- })
- }
- })
- }
- }
- }
-
- */
-
-//func toggleCV() {
-//    var pos : CGRect!
-//    if self.mySearchCV.frame.minX < 0 {
-//        pos = CGRect(x: 0, y: 0, width: 223, height: 618)
-//    } else {
-//        pos = CGRect(x: -223, y: 0, width: 223, height: 618)
-//    }
-//    UIView.animate(withDuration: 0.3, animations: {
-//        self.mySearchCV.frame = pos
-//    }, completion: nil)
-//}
