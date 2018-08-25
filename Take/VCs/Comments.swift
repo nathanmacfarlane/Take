@@ -22,7 +22,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource {
     @IBOutlet private weak var userCommentField: UITextView!
 
     // MARK: - Variables
-    var theRoute: Route = Route()
+    var theRoute: Route!
     let dateFormatterPrint: DateFormatter = DateFormatter()
     var id: String = "IDdbKJxtW9gGxaxHncMaJzTIb9j2"
 

@@ -9,8 +9,8 @@
 import Foundation
 
 enum RouteType {
-    case boulder
     case climb
+    case boulder
     case aid
     case alpine
 }

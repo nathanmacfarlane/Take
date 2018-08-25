@@ -14,5 +14,7 @@ target 'Take' do
   pod 'Charts'
   pod 'ChartsRealm'
   pod 'SwiftLint'
+  pod 'CodableFirebase'
+  pod 'Firebase/Firestore'
 
 end
