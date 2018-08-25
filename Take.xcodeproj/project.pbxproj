@@ -51,7 +51,6 @@
 		047866C62099930900DF4439 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047866C52099930900DF4439 /* UIColor.swift */; };
 		04BA11FB20AD343600D24C4F /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA11FA20AD343600D24C4F /* Rating.swift */; };
 		04BA11FD20AD344400D24C4F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA11FC20AD344400D24C4F /* Comment.swift */; };
-		04BA11FF20AD345C00D24C4F /* Stars.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA11FE20AD345C00D24C4F /* Stars.swift */; };
 		04C83B0320B3F788008D842D /* DiagramSlideshow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0220B3F788008D842D /* DiagramSlideshow.swift */; };
 		04C83B0520B3F996008D842D /* SlideshowDiagramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */; };
 		04C83B0720B52B68008D842D /* ARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0620B52B68008D842D /* ARView.swift */; };
@@ -90,7 +89,6 @@
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
 		228ED47920CA6DEF00A4DBA4 /* AreaOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */; };
 		22963F50212F922B008D26C9 /* RouteFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963F4F212F922B008D26C9 /* RouteFirebase.swift */; };
-		22963F54213062E1008D26C9 /* RouteImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963F53213062E1008D26C9 /* RouteImage.swift */; };
 		229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */; };
 		229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */; };
 		229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */; };
@@ -160,7 +158,6 @@
 		047866C52099930900DF4439 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		04BA11FA20AD343600D24C4F /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		04BA11FC20AD344400D24C4F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
-		04BA11FE20AD345C00D24C4F /* Stars.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stars.swift; sourceTree = "<group>"; };
 		04C83B0220B3F788008D842D /* DiagramSlideshow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSlideshow.swift; sourceTree = "<group>"; };
 		04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowDiagramCell.swift; sourceTree = "<group>"; };
 		04C83B0620B52B68008D842D /* ARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
@@ -200,7 +197,6 @@
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
 		228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOverlay.swift; sourceTree = "<group>"; };
 		22963F4F212F922B008D26C9 /* RouteFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirebase.swift; sourceTree = "<group>"; };
-		22963F53213062E1008D26C9 /* RouteImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteImage.swift; sourceTree = "<group>"; };
 		229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Knot.png"; sourceTree = "<group>"; };
 		229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Fire.png"; sourceTree = "<group>"; };
 		229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Blue.png"; sourceTree = "<group>"; };
@@ -414,14 +410,12 @@
 			children = (
 				04BA11FA20AD343600D24C4F /* Rating.swift */,
 				04BA11FC20AD344400D24C4F /* Comment.swift */,
-				04BA11FE20AD345C00D24C4F /* Stars.swift */,
 				04C83B1020B54ED6008D842D /* Tick.swift */,
 				043F789220B28D800043C08A /* ARDiagram.swift */,
 				04C83B3B20B93AD7008D842D /* ChartData.swift */,
 				22A2C983211AAE5300743AC4 /* Wall.swift */,
 				22A2C985211AB75500743AC4 /* RouteArea.swift */,
 				22A2C987211BE67900743AC4 /* City.swift */,
-				22963F53213062E1008D26C9 /* RouteImage.swift */,
 			);
 			path = Structs;
 			sourceTree = "<group>";
@@ -706,8 +700,6 @@
 				2220E70E20C8D78600F525EC /* String.swift in Sources */,
 				0440620420A3646B005C06C3 /* RouteEdit.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
-				04BA11FF20AD345C00D24C4F /* Stars.swift in Sources */,
-				22963F54213062E1008D26C9 /* RouteImage.swift in Sources */,
 				04C83B4220BB6025008D842D /* UILabel.swift in Sources */,
 				22A2C982211A796C00743AC4 /* WallCell.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,

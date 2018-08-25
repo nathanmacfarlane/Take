@@ -6,9 +6,9 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import Firebase
 import Foundation
 import UIKit
-import Firebase
 
 extension UIImage {
     convenience init?(view: UIView) {
@@ -42,7 +42,7 @@ extension UIImage {
         draw(in: CGRect(origin: .zero, size: canvasSize))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-
+    
     func resizedToKB(numKB: Double) -> UIImage? {
         guard let imageData = UIImagePNGRepresentation(self) else { return nil }
 
