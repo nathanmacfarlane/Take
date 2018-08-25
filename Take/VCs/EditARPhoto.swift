@@ -18,7 +18,7 @@ class EditARPhoto: UIViewController {
     @IBOutlet private weak var colorSegControl: UISegmentedControl!
 
     // MARK: - variables
-    var theRoute: Route = Route()
+    var theRoute: Route!
     var theImage: UIImage = UIImage()
     var path: UIBezierPath = UIBezierPath()
     var startPoint: CGPoint = CGPoint()

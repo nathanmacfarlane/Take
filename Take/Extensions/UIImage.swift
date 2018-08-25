@@ -118,32 +118,45 @@ extension UIImage {
 
     func saveToFb(route: Route) {
         let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
-//        guard let data = UIImagePNGRepresentation(self) as NSData? else { return }
-        var imageUrls: [String: String] = [:]
-        let sizes: [[String: Any]] = [["sizeString": "Thumbnail", "sizeInt": 400.0], ["sizeString": "Large", "sizeInt": 2048.0]]
-        for i in 0...1 {
-            let imageId = UUID().uuidString
-            guard let sizeString = sizes[i]["sizeString"] as? String,
-                let sizeInt = sizes[i]["sizeInt"] as? Double,
-                let theImage = self.resizedToKB(numKB: sizeInt)
-                else { return }
-            guard let data = UIImagePNGRepresentation(theImage) as NSData? else { return }
-            _ = imageRef.child("\(imageId)-\(sizeString).png").putData(data as Data, metadata: nil) { metadata, _ in
-                guard metadata != nil else {
-                    return
-                }
-                imageRef.child("\(imageId)-\(sizeString).png").downloadURL { url, _ in
-                    guard let downloadURL = url else {
-                        return
-                    }
-                    imageUrls[sizeString] = "\(downloadURL)"
-                    if imageUrls.keys.count == 2 {
-                        route.ref?.child("imageUrls").updateChildValues([imageId: imageUrls])
-                    }
-                }
-
+        guard let theImage = self.resizedToKB(numKB: 1024) else { return }
+        let imageId = UUID().uuidString
+        guard let data = UIImagePNGRepresentation(theImage) as NSData? else { return }
+        _ = imageRef.child("\(imageId)-large.png").putData(data as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else {
+                return
             }
+            imageRef.child("\(imageId)-large.png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                route.ref?.child("imageUrls").updateChildValues([imageId: downloadURL])
+            }
+
         }
+
+//        var imageUrls: [String: String] = [:]
+//        let sizes: [[String: Any]] = [["sizeString": "Thumbnail", "sizeInt": 400.0], ["sizeString": "Large", "sizeInt": 2048.0]]
+//        for i in 0...1 {
+//            let imageId = UUID().uuidString
+//            guard let sizeString = sizes[i]["sizeString"] as? String,
+//                let sizeInt = sizes[i]["sizeInt"] as? Double,
+//                let theImage = self.resizedToKB(numKB: sizeInt)
+//                else { return }
+//            guard let data = UIImagePNGRepresentation(theImage) as NSData? else { return }
+//            _ = imageRef.child("\(imageId)-\(sizeString).png").putData(data as Data, metadata: nil) { metadata, _ in
+//                guard metadata != nil else {
+//                    return
+//                }
+//                imageRef.child("\(imageId)-\(sizeString).png").downloadURL { url, _ in
+//                    guard let downloadURL = url else {
+//                        return
+//                    }
+//                    imageUrls[sizeString] = "\(downloadURL)"
+//                    if imageUrls.keys.count == 2 {
+//                        route.ref?.child("imageUrls").updateChildValues([imageId: imageUrls])
+//                    }
+//                }
+//
+//            }
+//        }
     }
 
 }

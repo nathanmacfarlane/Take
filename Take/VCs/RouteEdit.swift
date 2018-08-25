@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import CodableFirebase
+import FirebaseFirestore
 
 class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate {
 
@@ -35,11 +37,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var username: String = ""
     var shouldEditPhoto: Bool = false
     var starRating: Int = 0
-    //    var newImages: [UIImage] = []
-    //    var imageKeys: [String] = []
-    var imgKeys: [String] = []
     var selectedImages: [UIImage] = []
-    var newImagesWithKeys: [String: UIImage] = [:]
+//    var newImages: [UIImage] = []
+//    var imageKeys: [String] = []
+//    var selectedImages: [RouteImage] = []
+//    var imgKeys: [String] = []
+//    var newImagesWithKeys: [String: UIImage] = [:]
 
     // MARK: - View load/unload
     override func viewDidLoad() {
@@ -202,7 +205,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 //            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
 //            let itemKey = self.imgKeys[indexPath.row]
             guard let cell = tempCell as? AddImageCell else { return tempCell }
-            let image = selectedImages[indexPath.row]
+            let image = self.selectedImages[indexPath.row]
             cell.setImage(with: image)
             return cell
         }
@@ -230,6 +233,13 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return true
     }
 
+    var alertTextField: UITextField?
+
+    func configurationTextField(textField: UITextField) {
+        self.alertTextField = textField
+        self.alertTextField?.placeholder = "Description"
+    }
+
     // MARK: - Image Picker
     @objc
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
@@ -237,9 +247,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
         if sCV == photoCV {
             self.selectedImages.append(pickedImage)
-//            let instanceString = Date().instanceString()
-//            self.imgKeys.append(instanceString)
-//            self.newImagesWithKeys[instanceString] = pickedImage
         } else if self.shouldEditPhoto == false {
             self.theRoute.ardiagrams.insert(ARDiagram(bgImage: pickedImage), at: 0)
         }
@@ -261,18 +268,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction private func hitSave(_ sender: UIButton) {
-//        for image in self.newImagesWithKeys {
-//            self.theRoute.images[image.key] = image.value
-//        }
         if let flft = self.feelsLikeField.text, !flft.isEmpty {
             theRoute.feelsLike.append(Rating(desc: flft))
-        }
-        if self.starRating > 0 {
-            if theRoute.starVotes == nil || theRoute.star == nil {
-                theRoute.starVotes = 0
-                theRoute.star = 0
-            }
-            (theRoute.star, theRoute.starVotes) = calculateNewAvg(count: theRoute.starVotes ?? 0, avg: theRoute.star ?? 0, new: self.starRating)
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
@@ -280,21 +277,19 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             image.saveToFb(route: self.theRoute)
         }
         DispatchQueue.global(qos: .background).async {
-            self.theRoute.saveARImagesToFirebase()
-            self.theRoute.saveToFirebase(newImagesWithKeys: self.newImagesWithKeys)
-            self.theRoute.saveToGeoFire()
+            self.theRoute.fsSave()
+//            self.theRoute.saveARImagesToFirebase()
+//            self.theRoute.saveToFirebase(newImagesWithKeys: self.newImagesWithKeys)
+//            self.theRoute.saveToGeoFire()f
         }
         self.dismiss(animated: true, completion: nil)
     }
     func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double?, Int?) {
         var total = avg * Double(count)
-        print("total: \(total)")
         total += Double(new)
-        print("new total: \(total)")
-        print("new calculated average: \(total / Double(count + 1))")
         return (total / Double(count + 1), count + 1)
     }
-    func populateTypes() -> String {
+    func populateTypes() -> [String] {
         var types: [String] = []
         if topRopeButton.isType {
             types.append("TR")
@@ -308,7 +303,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if boulderButton.isType {
             types.append("Boulder")
         }
-        return types.joined(separator: ", ")
+        return types
     }
     func populateImages(imageArr: [UIImage?]) -> [UIImage] {
         var theImages: [UIImage] = []

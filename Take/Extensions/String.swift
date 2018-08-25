@@ -8,4 +8,8 @@
 
 import Foundation
 
-extension String: Error {}
+extension String: Error {
+    func getUid() -> String {
+        return UUID().uuidString
+    }
+}
