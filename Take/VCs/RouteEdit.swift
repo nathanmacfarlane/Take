@@ -6,9 +6,10 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import UIKit
+import Firebase
 import CodableFirebase
 import FirebaseFirestore
+import UIKit
 
 class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate {
 
@@ -40,6 +41,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var selectedImages: [String: UIImage] = [:]
     var imageKeys: [String] = []
     var newKeys: [String] = []
+    let uniOn: String = "★"
+    let uniOff: String = "☆"
 
     // MARK: - View load/unload
     override func viewDidLoad() {
@@ -51,6 +54,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         if !selectedImages.isEmpty {
             self.photosLabel.text = ""
+        }
+
+        if let stars = self.theRoute.averageStar {
+            self.starRating = stars
+            self.starsButton.setTitle("\(String(repeating: uniOn, count: stars))\(String(repeating: uniOff, count: 4 - stars))", for: .normal)
         }
 
         imagePicker = UIImagePickerController()
@@ -109,7 +117,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if self.starRating == 0 {
             self.starsButton.setTitle("", for: .normal)
         } else {
-            self.starsButton.setTitle("\(String(repeating: "⭑", count: self.starRating))\(String(repeating: "⭒", count: 4 - self.starRating))", for: .normal)
+            self.starsButton.setTitle("\(String(repeating: uniOn, count: self.starRating))\(String(repeating: uniOff, count: 4 - self.starRating))", for: .normal)
         }
     }
     @IBAction private func addNewPhoto(_ sender: UIButton) {
@@ -280,6 +288,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBAction private func hitSave(_ sender: UIButton) {
         if let flft = self.feelsLikeField.text, !flft.isEmpty {
             theRoute.feelsLike.append(Rating(desc: flft))
+        }
+        if let userId = Auth.auth().currentUser?.uid {
+            theRoute.stars[userId] = self.starRating
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()

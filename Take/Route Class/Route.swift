@@ -26,7 +26,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     var photoURL: String?
     var id: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
-    var stars: [Star] = []
+    var stars: [String: Int] = [:]
     var pitches: Int?
     var localDesc: [String] = []
     var comments: [Comment] = []
@@ -44,9 +44,30 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
 
     var newARDiagrams: [ARDiagram] = []
 
+    enum CodingKeys: String, CodingKey {
+        case name
+        case id
+        case types
+        case latitude
+        case longitude
+        case area
+        case info
+        case imageUrls
+        case stars
+    }
+
     //private stuff
     private var allDiagrams: [String: [String]] = [:]
     private var rating: String?
+
+    var averageStar: Int? {
+        if stars.isEmpty { return nil }
+        var sum: Int = 0
+        for star in stars.values {
+            sum += star
+        }
+        return Int(sum) / (stars.count)
+    }
 
     var difficulty: Rating? {
         if let tempRating = self.rating {
@@ -90,25 +111,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
             return CLLocation(latitude: lat, longitude: long)
         }
         return CLLocation(latitude: -1, longitude: -1)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case name
-        case id
-        case types
-        case latitude
-        case longitude
-        case area
-        case info
-        case imageUrls
-//        case localDesc  = "location"
-//        case rating
-//        case star       = "stars"
-//        case starVotes
-//        case wall
-//        case city
-//        case imageUrls
-//        case images
     }
 
     // MARK: - GeoFire
@@ -165,13 +167,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         } else {
             return "5.\(avg)\(mostFrequent)"
         }
-    }
-    func averageStar() -> Int? {
-        var sum: Double = 0
-        for star in stars {
-            sum += star.star
-        }
-        return Int(sum) / (stars.count)
     }
     func isTR() -> Bool {
         return self.types.contains("TR")
