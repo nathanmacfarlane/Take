@@ -37,16 +37,21 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var username: String = ""
     var shouldEditPhoto: Bool = false
     var starRating: Int = 0
-    var selectedImages: [UIImage] = []
-//    var newImages: [UIImage] = []
-//    var imageKeys: [String] = []
-//    var selectedImages: [RouteImage] = []
-//    var imgKeys: [String] = []
-//    var newImagesWithKeys: [String: UIImage] = [:]
+    var selectedImages: [String: UIImage] = [:]
+    var imageKeys: [String] = []
+    var newKeys: [String] = []
 
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        for image in selectedImages {
+            imageKeys.append(image.key)
+        }
+
+        if !selectedImages.isEmpty {
+            self.photosLabel.text = ""
+        }
 
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -205,7 +210,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 //            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
 //            let itemKey = self.imgKeys[indexPath.row]
             guard let cell = tempCell as? AddImageCell else { return tempCell }
-            let image = self.selectedImages[indexPath.row]
+            let imageKey = self.imageKeys[indexPath.row]
+            guard let image = self.selectedImages[imageKey] else { return tempCell }
             cell.setImage(with: image)
             return cell
         }
@@ -246,7 +252,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
         if sCV == photoCV {
-            self.selectedImages.append(pickedImage)
+            let imageId = UUID().uuidString
+            self.selectedImages[imageId] = pickedImage
+            self.imageKeys.append(imageId)
+            self.newKeys.append(imageId)
+            self.photosLabel.text = ""
         } else if self.shouldEditPhoto == false {
             self.theRoute.ardiagrams.insert(ARDiagram(bgImage: pickedImage), at: 0)
         }
@@ -273,15 +283,19 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()
-        for image in self.selectedImages {
-            image.saveToFb(route: self.theRoute)
+        for imageKey in self.newKeys {
+            guard let newImage = self.selectedImages[imageKey] else { continue }
+            newImage.saveToFb(route: self.theRoute)
         }
         DispatchQueue.global(qos: .background).async {
             self.theRoute.fsSave()
-//            self.theRoute.saveARImagesToFirebase()
-//            self.theRoute.saveToFirebase(newImagesWithKeys: self.newImagesWithKeys)
-//            self.theRoute.saveToGeoFire()f
         }
+
+        if let presenter = presentingViewController as? RouteDetail {
+            presenter.imageKeys = self.imageKeys
+            presenter.images = self.selectedImages
+        }
+
         self.dismiss(animated: true, completion: nil)
     }
     func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double?, Int?) {
