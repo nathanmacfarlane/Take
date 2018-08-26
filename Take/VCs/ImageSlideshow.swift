@@ -14,8 +14,10 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     @IBOutlet private weak var myImageCV: UICollectionView!
     @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var imageNumberLabel: UILabel!
+    @IBOutlet private weak var bgImageView: UIImageView!
 
     // MARK: - Variables
+    var bgImage: UIImage?
     var images: [UIImage] = []
     var selectedImage: Int = 0
     var collectionViewFlowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -23,14 +25,17 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     // View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
-        //        self.pageController.numberOfPages = images.count
+
+        self.myImageCV.backgroundColor = .clear
+        if let image = bgImage {
+            self.bgImageView.image = image
+        }
         self.imageNumberLabel.text = "Image \(selectedImage + 1) of \(images.count)"
         self.closeButton.roundButton(portion: 4)
         if let cvfl = myImageCV.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewFlowLayout = cvfl
         }
         self.myImageCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .centeredHorizontally, animated: true)
-        //        self.pageController.currentPage = selectedImage
     }
 
     // MARK: - UICollectionView
@@ -61,7 +66,6 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
                 let indexPath = IndexPath(item: i, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
                 self.imageNumberLabel.text = "Image \(indexPath.row + 1) of \(images.count)"
-                //                self.pageController.currentPage = indexPath.row
                 break
             }
         }

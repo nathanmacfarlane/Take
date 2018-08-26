@@ -42,7 +42,6 @@ extension UIImage {
         draw(in: CGRect(origin: .zero, size: canvasSize))
         return UIGraphicsGetImageFromCurrentImageContext()
     }
-    
     func resizedToKB(numKB: Double) -> UIImage? {
         guard let imageData = UIImagePNGRepresentation(self) else { return nil }
 

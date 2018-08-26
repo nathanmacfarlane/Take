@@ -141,6 +141,7 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
+  - PBImageView (1.0.3)
   - Protobuf (3.6.1)
   - Realm (3.7.6):
     - Realm/Headers (= 3.7.6)
@@ -160,6 +161,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - GeoFire
   - GoogleSignIn
+  - PBImageView
   - SwiftLint
 
 SPEC REPOS:
@@ -190,6 +192,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
+    - PBImageView
     - Protobuf
     - Realm
     - RealmSwift
@@ -222,11 +225,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  PBImageView: 15d12320ce9b484808dee8caacc456c2dbef8a84
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
 
-PODFILE CHECKSUM: a010eb11a60816dda5a68e9d6e558b72c9c80438
+PODFILE CHECKSUM: b0c4ae543bbf8da971d70b4fa3199e3ce8e4590d
 
 COCOAPODS: 1.5.3
