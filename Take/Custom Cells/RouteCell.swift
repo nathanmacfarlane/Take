@@ -47,6 +47,10 @@ class RouteCell: UITableViewCell {
         self.theImageView.image = newImage
     }
 
+    func getImage() -> UIImage? {
+        return self.theImageView.image
+    }
+
     func setAreaImage(with newImage: UIImage) {
         self.locationImageView.image = newImage
     }

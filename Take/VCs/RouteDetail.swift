@@ -21,22 +21,22 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet private weak var sportButton: TypeButton!
     @IBOutlet private weak var tradButton: TypeButton!
     @IBOutlet private weak var boulderButton: TypeButton!
+    @IBOutlet private weak var pitchesLabel: UILabel!
+    @IBOutlet private weak var starVotersLabel: UILabel!
     @IBOutlet private weak var directionsButton: UIButton!
+    @IBOutlet private weak var commentsButton: UIButton!
     @IBOutlet private weak var augmentedButton: UIButton!
     @IBOutlet private weak var routeNameLabel: UILabel!
-    @IBOutlet private weak var routeLocationButton: UIButton!
     @IBOutlet private weak var routeDescriptionTV: UITextView!
-    @IBOutlet private weak var commentsButton: UIButton!
     @IBOutlet private weak var starsLabel: UILabel!
-    @IBOutlet private weak var starVotersLabel: UILabel!
     @IBOutlet private weak var actualRatingLabel: UILabel!
-    @IBOutlet private weak var feelsLikeRatingLabel: UILabel!
     @IBOutlet private weak var beTheFirstLabel: UILabel!
     @IBOutlet private weak var imageSegControl: UISegmentedControl!
+    @IBOutlet private weak var informationSegControl: UISegmentedControl!
 
     // MARK: - Variables
     var theRoute: Route!
-    var mainImg: UIImage?
+    var bgImage: UIImage?
     var imageKeys: [String] = []
     var images: [String: UIImage] = [:]
     var imageRef: DatabaseReference = DatabaseReference()
@@ -56,7 +56,16 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.myARVC.backgroundColor = UIColor.clear
         self.myARVC.isHidden = true
 
+        if let bgImage = self.bgImage {
+            self.bgimageView.image = bgImage
+        }
+
         self.theRoute.fsLoadImages { images in
+            if self.bgImage == nil {
+                if let firstImage = images.first {
+                    self.bgimageView.image = firstImage.value
+                }
+            }
             self.images = images
             for image in self.images {
                 self.imageKeys.append(image.key)
@@ -79,18 +88,18 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.beTheFirstLabel.text = "Images loading"
         }
 
-        self.routeNameLabel.text = theRoute.name
-        self.routeLocationButton.setTitle(theRoute.localDesc.last ?? "N/A", for: .normal)
-        self.commentsButton.setTitle("\(theRoute.comments.count) 💬", for: .normal)
-        self.actualRatingLabel.text = theRoute.difficulty?.description ?? "N/A"
-        self.routeDescriptionTV.text = theRoute.info ?? "N/A"
-        self.feelsLikeRatingLabel.text = theRoute.averageRating() ?? "N/A"
-        if let averageStar = theRoute.averageStar {
-            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
-        } else {
-            self.starsLabel.text = "N/A"
+        if let pitches = self.theRoute.pitches {
+            self.pitchesLabel.text = "\(pitches)"
         }
-        self.starVotersLabel.text = "\(theRoute.stars.count)"
+        self.routeNameLabel.text = theRoute.name
+        self.commentsButton.setTitle("\(theRoute.comments.count) Comments", for: .normal)
+        self.actualRatingLabel.text = theRoute.rating ?? "N/A"
+        self.routeDescriptionTV.text = theRoute.info ?? "N/A"
+        if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
+            self.starsLabel.text = "\(averageStar)"
+//            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
+        }
+        self.starVotersLabel.text = "\(theRoute.stars.count) Stars"
 
         setupButtons()
 
@@ -115,6 +124,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.tradButton.roundButton()
         self.boulderButton.roundButton()
 
+        self.commentsButton.roundButton(portion: 4)
         self.directionsButton.roundButton(portion: 4)
         self.augmentedButton.roundButton(portion: 4)
     }
@@ -143,23 +153,15 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
 
     // MARK: - IBActions
-    @IBAction func hitEditButton(_ sender: Any) {
-//        RouteEdit.delegate = self
-        self.performSegue(withIdentifier: "pushToEdit", sender: nil)
-        return
-    }
-    @IBAction private func tappedAreaButton(_ sender: UIButton) {
-        let alertController = UIAlertController(title: nil, message: "Areas", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        for area in self.theRoute.localDesc {
-            let areaAction = UIAlertAction(title: "\(area)", style: .default) { _ in
-                self.performSegue(withIdentifier: "goToArea", sender: area)
-            }
-            alertController.addAction(areaAction)
+    @IBAction private func informationSegChange(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            self.routeDescriptionTV.text = self.theRoute.info
+        } else if sender.selectedSegmentIndex == 1 {
+            self.routeDescriptionTV.text = self.theRoute.protection
         }
-
-        alertController.addAction(cancel)
-        self.present(alertController, animated: true)
+    }
+    @IBAction private func hitEditButton(_ sender: Any) {
+        self.performSegue(withIdentifier: "pushToEdit", sender: nil)
     }
 
     // MARK: - CollectionView
@@ -257,6 +259,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         } else if segue.identifier == "presentAllImages" {
             if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
                 dct.images = Array(self.images.values)
+                dct.bgImage = self.bgImage
                 if let selectedImage = sender as? Int {
                     dct.selectedImage = selectedImage
                 }
