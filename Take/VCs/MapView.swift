@@ -236,7 +236,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         if segue.identifier == "goToDetail" {
             if let dct: RouteDetail = segue.destination as? RouteDetail, let theRoute = sender as? Route {
                 dct.theRoute = theRoute
-                dct.mainImg = UIImage(named: "bg.jpg")
+                dct.bgImage = UIImage(named: "bg.jpg")
             }
         } else if segue.identifier == "goToArea" {
             //            let dc: AreaView = segue.destination as! AreaView
