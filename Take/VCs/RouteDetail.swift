@@ -61,16 +61,17 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
 
         self.theRoute.fsLoadImages { images in
-            if self.bgImage == nil {
-                if let firstImage = images.first {
-                    self.bgimageView.image = firstImage.value
-                }
-            }
             self.images = images
             for image in self.images {
                 self.imageKeys.append(image.key)
             }
             DispatchQueue.main.async {
+                if self.bgImage == nil {
+                    if let firstImage = images.first {
+                        self.bgimageView.image = firstImage.value
+                        self.bgImage = firstImage.value
+                    }
+                }
                 self.updateLabel()
                 self.myCV.reloadData()
             }
