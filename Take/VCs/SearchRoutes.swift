@@ -42,7 +42,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     let locationManager: CLLocationManager = CLLocationManager()
     var userCurrentLocation: CLLocation?
     //    var selectedRoute : Route!
-    var selectedImage: UIImage = UIImage()
+    var selectedImage: UIImage?
     var routesRoot: DatabaseReference?
     var firstImages: [String: UIImage] = [:]
     var startIndex: Int = 0
@@ -202,6 +202,9 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         switch anyItem {
         case is Route:
             guard let theRoute = anyItem as? Route else { return }
+            if let routeCell = tableView.cellForRow(at: indexPath) as? RouteCell {
+                self.selectedImage = routeCell.getImage()
+            }
             self.performSegue(withIdentifier: "goToDetail", sender: theRoute)
         case is Wall:
             print("selected wall")
@@ -293,7 +296,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as? RouteCell else { return RouteCell() }
 
         // labels
-        cell.setLabels(name: route.name, types: route.difficulty?.description ?? "N/A", difficulty: route.typesString)
+        cell.setLabels(name: route.name, types: route.typesString, difficulty: route.rating ?? "N/A")
 
         DispatchQueue.global(qos: .background).async {
             route.fsLoadFirstImage { _, image in
@@ -340,6 +343,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.myCV = vcntrl
         }
         if segue.identifier == "goToDetail", let dct = segue.destination as? RouteDetail, let theRoute = sender as? Route {
+            dct.bgImage = selectedImage
             dct.theRoute = theRoute
         }
         if segue.identifier == "goToArea", let dct = segue.destination as? AreaView, let theRouteArea = sender as? RouteArea {

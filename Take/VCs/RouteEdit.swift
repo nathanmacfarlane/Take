@@ -6,8 +6,8 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import Firebase
 import CodableFirebase
+import Firebase
 import FirebaseFirestore
 import UIKit
 
@@ -22,12 +22,10 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var tradButton: TypeButton!
     @IBOutlet private weak var boulderButton: TypeButton!
     @IBOutlet private weak var descriptionTextView: UITextView!
-    @IBOutlet private weak var feelsLikeField: UITextField!
     @IBOutlet private weak var addPhotoButton: UIButton!
     @IBOutlet private weak var addARPhotoButton: UIButton!
     @IBOutlet private weak var ARDiagramsLabel: UILabel!
     @IBOutlet private weak var photosLabel: UILabel!
-    @IBOutlet private weak var feelsLikeABG: UILabel!
     @IBOutlet private weak var starsButton: UIButton!
 
     // MARK: - variables
@@ -37,7 +35,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var sCV: UICollectionView!
     var username: String = ""
     var shouldEditPhoto: Bool = false
-    var starRating: Int = 0
+    var starRating: Double = 0
     var selectedImages: [String: UIImage] = [:]
     var imageKeys: [String] = []
     var newKeys: [String] = []
@@ -58,7 +56,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         if let stars = self.theRoute.averageStar {
             self.starRating = stars
-            self.starsButton.setTitle("\(String(repeating: uniOn, count: stars))\(String(repeating: uniOff, count: 4 - stars))", for: .normal)
+            self.starsButton.setTitle("\(String(repeating: uniOn, count: Int(stars)))\(String(repeating: uniOff, count: 4 - Int(stars)))", for: .normal)
         }
 
         imagePicker = UIImagePickerController()
@@ -68,7 +66,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         self.setupButtons()
         self.descriptionTextView.text = theRoute.info ?? ""
-        self.feelsLikeField.placeholder = "ex: \(theRoute.difficulty?.description ?? "")"
 
         photoCV.backgroundColor = .clear
         ARCV.backgroundColor = .clear
@@ -97,7 +94,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.sportButton.roundButton()
         self.tradButton.roundButton()
         self.boulderButton.roundButton()
-        self.feelsLikeABG.roundView(portion: 5)
     }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .dark)
@@ -117,7 +113,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if self.starRating == 0 {
             self.starsButton.setTitle("", for: .normal)
         } else {
-            self.starsButton.setTitle("\(String(repeating: uniOn, count: self.starRating))\(String(repeating: uniOff, count: 4 - self.starRating))", for: .normal)
+            self.starsButton.setTitle("\(String(repeating: uniOn, count: Int(self.starRating)))\(String(repeating: uniOff, count: 4 - Int(self.starRating)))", for: .normal)
         }
     }
     @IBAction private func addNewPhoto(_ sender: UIButton) {
@@ -286,11 +282,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction private func hitSave(_ sender: UIButton) {
-        if let flft = self.feelsLikeField.text, !flft.isEmpty {
-            theRoute.feelsLike.append(Rating(desc: flft))
-        }
         if let userId = Auth.auth().currentUser?.uid {
-            theRoute.stars[userId] = self.starRating
+            theRoute.stars[userId] = Int(self.starRating)
         }
         theRoute.info = self.descriptionTextView.text
         theRoute.types = populateTypes()

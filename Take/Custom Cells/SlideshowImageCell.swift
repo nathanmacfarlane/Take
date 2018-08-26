@@ -20,11 +20,24 @@ class SlideshowImageCell: UICollectionViewCell {
     // MARK: - variables
 //    var isZooming: Bool = false
 
-//    override func awakeFromNib() {
-//        super.awakeFromNib()
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(self.longPress(sender:)))
+        theImage.addGestureRecognizer(longPress)
 //        let pinch = UIPinchGestureRecognizer(target: self, action: #selector(self.pinch(sender:)))
 //        theImage.addGestureRecognizer(pinch)
-//    }
+    }
+
+    @IBAction private func longPress(sender: UIPinchGestureRecognizer) {
+        if sender.state == .began {
+
+
+
+//        } else if sender.state == .changed {
+        } else if sender.state == .ended || sender.state == .failed || sender.state == .cancelled {
+
+        }
+    }
 
 //    @IBAction private func pinch(sender: UIPinchGestureRecognizer) {
 //

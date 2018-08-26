@@ -23,24 +23,26 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
 
     // MARK: - properties
     var name: String
-    var photoURL: String?
     var id: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
     var stars: [String: Int] = [:]
-    var pitches: Int?
-    var localDesc: [String] = []
-    var comments: [Comment] = []
     var info: String?
-    var feelsLike: [Rating] = []
+    var protection: String?
+    var area: String?
+    var pitches: Int?
+    var imageUrls: [String: String] = [:]
+    var rating: String?
+
+    // not really implemented on the new model
+    var comments: [Comment] = []
+    var localDesc: [String] = []
     var ardiagrams: [ARDiagram] = []
     var ref: DatabaseReference?
     var latitude: Double?
     var longitude: Double?
     var wall: String?
-    var area: String?
     var city: String?
     // urls to images in storage
-    var imageUrls: [String: String] = [:]
 
     var newARDiagrams: [ARDiagram] = []
 
@@ -52,21 +54,23 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         case longitude
         case area
         case info
+        case protection
         case imageUrls
         case stars
+        case pitches
+        case rating
     }
 
     //private stuff
     private var allDiagrams: [String: [String]] = [:]
-    private var rating: String?
 
-    var averageStar: Int? {
+    var averageStar: Double? {
         if stars.isEmpty { return nil }
-        var sum: Int = 0
+        var sum: Double = 0
         for star in stars.values {
-            sum += star
+            sum += Double(star)
         }
-        return Int(sum) / (stars.count)
+        return sum / Double(stars.count)
     }
 
     var difficulty: Rating? {
@@ -147,27 +151,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         return true
     }
 
-    // MARK: - functions
-    func averageRating() -> String? {
-        var sum: Int = 0
-        for rating in feelsLike {
-            sum += rating.intDiff
-        }
-        if feelsLike.isEmpty {
-            return nil
-        }
-        let avg = sum / feelsLike.count
-        let countedSet: NSCountedSet = []
-        for rating in feelsLike where rating.intDiff == avg {
-            countedSet.add(rating.buffer ?? "")
-        }
-        let mostFrequent = "\(countedSet.max { countedSet.count(for: $0) < countedSet.count(for: $1) } ?? "")"
-        if feelsLike.first?.type == .boulder {
-            return "V\(avg)\(mostFrequent)"
-        } else {
-            return "5.\(avg)\(mostFrequent)"
-        }
-    }
     func isTR() -> Bool {
         return self.types.contains("TR")
     }
