@@ -23,13 +23,14 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
 
     // MARK: - properties
     var name: String
+    var keyword: String?
     var id: Int
+    var pitches: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
     var stars: [String: Int] = [:]
     var info: String?
     var protection: String?
     var area: String?
-    var pitches: Int?
     var imageUrls: [String: String] = [:]
     var rating: String?
 
@@ -48,6 +49,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
 
     enum CodingKeys: String, CodingKey {
         case name
+        case keyword
         case id
         case types
         case latitude
@@ -89,11 +91,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     }
 
     // MARK: - Inits
-    init(name: String, id: Int, lat: Double, long: Double) {
+    init(name: String, id: Int, lat: Double, long: Double, pitches: Int) {
         self.name = name
         self.id = id
         self.latitude = lat
         self.longitude = long
+        self.pitches = pitches
     }
 
     // MARK: - MKAnnotation

@@ -28,6 +28,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var ARDiagramsLabel: UILabel!
     @IBOutlet private weak var photosLabel: UILabel!
     @IBOutlet private weak var starsSlider: UISlider!
+    @IBOutlet private weak var keywordTextField: UITextField!
+    @IBOutlet private weak var pitchStepper: UIStepper!
+    @IBOutlet private weak var pitchLabel: UILabel!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
 
     // MARK: - variables
@@ -47,6 +50,16 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.keywordTextField.underlined()
+        self.keywordTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+
+        if let keyword = self.theRoute.keyword {
+            self.keywordTextField.text = keyword
+        }
+
+        self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
+        self.pitchStepper.value = Double(self.theRoute.pitches)
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
@@ -117,6 +130,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     // MARK: - IBActions
+    @IBAction private func pitchStepperChanged(_ sender: UIStepper) {
+        self.pitchLabel.text = "\(Int(sender.value)) Pitch\(Int(sender.value) > 1 ? "es" : "")"
+    }
     @IBAction private func starsSliderChanged(_ sender: UISlider) {
         if sender.value < 1 {
             self.addRatingLabel.text = "No Rating"
@@ -315,6 +331,14 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 self.theRoute.stars[userId] = starValue
             }
         }
+        if let keyword = self.keywordTextField.text {
+            if keyword.isEmpty {
+                theRoute.keyword = nil
+            } else {
+                theRoute.keyword = keyword
+            }
+        }
+        theRoute.pitches = Int(self.pitchStepper.value)
         theRoute.info = self.newDescription
         theRoute.protection = self.newProtection
         theRoute.types = populateTypes()

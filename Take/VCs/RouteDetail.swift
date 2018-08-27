@@ -33,6 +33,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet private weak var beTheFirstLabel: UILabel!
     @IBOutlet private weak var imageSegControl: UISegmentedControl!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
+    @IBOutlet private weak var pitchesSubLabel: UILabel!
 
     // MARK: - Variables
     var theRoute: Route!
@@ -89,16 +90,14 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             self.beTheFirstLabel.text = "Images loading"
         }
 
-        if let pitches = self.theRoute.pitches {
-            self.pitchesLabel.text = "\(pitches)"
-        }
+        self.pitchesLabel.text = "\(theRoute.pitches)"
+        self.pitchesSubLabel.text = "Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.routeNameLabel.text = theRoute.name
         self.commentsButton.setTitle("\(theRoute.comments.count) Comments", for: .normal)
         self.actualRatingLabel.text = theRoute.rating ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
             self.starsLabel.text = "\(averageStar) ★"
-//            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
         }
         self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
 
