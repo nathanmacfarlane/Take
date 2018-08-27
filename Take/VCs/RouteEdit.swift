@@ -14,6 +14,7 @@ import UIKit
 class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate, UIActionSheetDelegate {
 
     // MARK: - IBOutlets
+    @IBOutlet private weak var addRatingLabel: UILabel!
     @IBOutlet private weak var bgimageView: UIImageView!
     @IBOutlet private weak var photoCV: UICollectionView!
     @IBOutlet private weak var ARCV: UICollectionView!
@@ -26,28 +27,30 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var addARPhotoButton: UIButton!
     @IBOutlet private weak var ARDiagramsLabel: UILabel!
     @IBOutlet private weak var photosLabel: UILabel!
-    @IBOutlet private weak var starsButton: UIButton!
+    @IBOutlet private weak var starsSlider: UISlider!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
 
     // MARK: - variables
     var theRoute: Route!
+    var bgImage: UIImage?
     var imagePicker: UIImagePickerController!
     var selectedIndex: IndexPath!
     var sCV: UICollectionView!
     var username: String = ""
     var shouldEditPhoto: Bool = false
-    var starRating: Double = 0
     var selectedImages: [String: UIImage] = [:]
     var imageKeys: [String] = []
     var newKeys: [String] = []
     var newDescription: String?
     var newProtection: String?
-    let uniOn: String = "★"
-    let uniOff: String = "☆"
 
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if let bgImage = self.bgImage {
+            self.bgimageView.image = bgImage
+        }
 
         self.newDescription = self.theRoute.info
         self.newProtection = self.theRoute.protection
@@ -60,9 +63,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             self.photosLabel.text = ""
         }
 
-        if let stars = self.theRoute.averageStar {
-            self.starRating = stars
-            self.starsButton.setTitle("\(String(repeating: uniOn, count: Int(stars)))\(String(repeating: uniOff, count: 4 - Int(stars)))", for: .normal)
+        if let userId = Auth.auth().currentUser?.uid, let userRating = self.theRoute.stars[userId] {
+            self.addRatingLabel.text = "\(userRating) ★"
+            self.starsSlider.setValue(Float(userRating), animated: true)
         }
 
         imagePicker = UIImagePickerController()
@@ -114,6 +117,13 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
 
     // MARK: - IBActions
+    @IBAction private func starsSliderChanged(_ sender: UISlider) {
+        if sender.value < 1 {
+            self.addRatingLabel.text = "No Rating"
+        } else {
+            self.addRatingLabel.text = "\(Int(sender.value)) ★"
+        }
+    }
     @IBAction private func informationSegChanged(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
             self.descriptionTextView.text = self.newDescription
@@ -121,14 +131,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             self.descriptionTextView.text = self.newProtection
         }
         self.descriptionTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
-    }
-    @IBAction private func tappedStars(_ sender: UIButton) {
-        self.starRating = self.starRating < 4 ? self.starRating + 1 : 0
-        if self.starRating == 0 {
-            self.starsButton.setTitle("", for: .normal)
-        } else {
-            self.starsButton.setTitle("\(String(repeating: uniOn, count: Int(self.starRating)))\(String(repeating: uniOff, count: 4 - Int(self.starRating)))", for: .normal)
-        }
     }
     @IBAction private func addNewPhoto(_ sender: UIButton) {
         sCV = photoCV
@@ -304,7 +306,14 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     @IBAction private func hitSave(_ sender: UIButton) {
         if let userId = Auth.auth().currentUser?.uid {
-            theRoute.stars[userId] = Int(self.starRating)
+            let starValue = Int(self.starsSlider.value)
+            if starValue < 1 {
+                // remove rating
+                self.theRoute.stars.removeValue(forKey: userId)
+            } else {
+                // add or update rating
+                self.theRoute.stars[userId] = starValue
+            }
         }
         theRoute.info = self.newDescription
         theRoute.protection = self.newProtection
