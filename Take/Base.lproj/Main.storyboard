@@ -1468,27 +1468,8 @@
                                     <action selector="hitCancel:" destination="4Zz-Du-SCf" eventType="touchUpInside" id="gVa-Fj-fjr"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="      Add a Rating:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQl-vf-Td1">
-                                <rect key="frame" x="45" y="277" width="275" height="54"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.67766497459999997" green="0.67766497459999997" blue="0.67766497459999997" alpha="0.40410958899999999" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Avenir-BlackOblique" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.069769978819999995" green="0.10279785080000001" blue="0.1243654822" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lY2-GR-16S">
-                                <rect key="frame" x="68" y="277" width="238" height="51"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="tappedStars:" destination="4Zz-Du-SCf" eventType="touchUpInside" id="fG2-jk-mhn"/>
-                                </connections>
-                            </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="kDW-Z6-roR">
-                                <rect key="frame" x="16" y="129" width="343" height="109"/>
+                                <rect key="frame" x="16" y="129" width="343" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1510,6 +1491,21 @@
                                     <action selector="informationSegChanged:" destination="4Zz-Du-SCf" eventType="valueChanged" id="uBq-JJ-0su"/>
                                 </connections>
                             </segmentedControl>
+                            <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="4" translatesAutoresizingMaskIntoConstraints="NO" id="aGq-p0-AJN">
+                                <rect key="frame" x="18" y="289" width="341" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <connections>
+                                    <action selector="starsSliderChanged:" destination="4Zz-Du-SCf" eventType="valueChanged" id="Vvg-hW-bW0"/>
+                                </connections>
+                            </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="No Rating" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MQl-vf-Td1">
+                                <rect key="frame" x="18" y="267" width="339" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="Avenir-BlackOblique" family="Avenir" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="5mt-hb-O4y"/>
@@ -1519,6 +1515,7 @@
                         <outlet property="ARDiagramsLabel" destination="xZQ-Tq-o1x" id="hKQ-sY-JJb"/>
                         <outlet property="addARPhotoButton" destination="5oc-y4-64w" id="qty-tp-l9m"/>
                         <outlet property="addPhotoButton" destination="LlO-f8-vMT" id="Y2f-5r-P2K"/>
+                        <outlet property="addRatingLabel" destination="MQl-vf-Td1" id="wcb-iD-HJe"/>
                         <outlet property="bgimageView" destination="csq-Ri-FcQ" id="JkC-te-icq"/>
                         <outlet property="boulderButton" destination="uk1-ZU-82g" id="h03-hC-hCM"/>
                         <outlet property="descriptionTextView" destination="kDW-Z6-roR" id="gmy-7J-zko"/>
@@ -1526,7 +1523,7 @@
                         <outlet property="photoCV" destination="L4w-PJ-6Cb" id="k0i-bX-yvY"/>
                         <outlet property="photosLabel" destination="PHd-jU-OKu" id="yPW-vn-oYT"/>
                         <outlet property="sportButton" destination="DLR-mI-HA1" id="2nz-qk-S4u"/>
-                        <outlet property="starsButton" destination="lY2-GR-16S" id="2HB-kz-m3n"/>
+                        <outlet property="starsSlider" destination="aGq-p0-AJN" id="vhF-K4-Nwt"/>
                         <outlet property="topRopeButton" destination="O9n-qP-vEK" id="dyK-2d-vYJ"/>
                         <outlet property="tradButton" destination="xJL-Cx-ucM" id="ULI-Wa-jCL"/>
                         <segue destination="gB9-ws-bse" kind="presentation" identifier="presentEditARPhoto" id="KGb-Af-ba2"/>

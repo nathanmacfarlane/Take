@@ -97,10 +97,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.actualRatingLabel.text = theRoute.rating ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
-            self.starsLabel.text = "\(averageStar)"
+            self.starsLabel.text = "\(averageStar) ★"
 //            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
         }
-        self.starVotersLabel.text = "\(theRoute.stars.count) Stars"
+        self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
 
         setupButtons()
 
@@ -255,6 +255,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         } else if segue.identifier == "pushToEdit" {
             if let dct: RouteEdit = segue.destination as? RouteEdit {
                 dct.selectedImages = self.images
+                dct.bgImage = self.bgImage
                 dct.theRoute = self.theRoute
             }
         } else if segue.identifier == "presentAllImages" {
