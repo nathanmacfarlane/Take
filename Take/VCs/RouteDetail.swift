@@ -40,6 +40,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var bgImage: UIImage?
     var imageKeys: [String] = []
     var images: [String: UIImage] = [:]
+    var diagramKeys: [String] = []
+    var diagrams: [String: [UIImage]] = [:]
     var imageRef: DatabaseReference = DatabaseReference()
     var locationManager: CLLocationManager = CLLocationManager()
 
@@ -59,6 +61,17 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
+        }
+
+        self.theRoute.fsLoadAR { diagrams in
+            self.diagrams = diagrams
+            for diagram in self.diagrams {
+                self.diagramKeys.append(diagram.key)
+            }
+            DispatchQueue.main.async {
+                self.updateLabel()
+                self.myARVC.reloadData()
+            }
         }
 
         self.theRoute.fsLoadImages { images in
@@ -137,7 +150,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 self.beTheFirstLabel.isHidden = true
             }
         } else {
-            if self.theRoute.ardiagrams.isEmpty {
+            if self.diagrams.isEmpty {
                 self.beTheFirstLabel.text = "Be the first to add a diagram"
                 self.beTheFirstLabel.isHidden = false
             } else {
@@ -169,7 +182,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         if collectionView == self.myCV {
             return self.imageKeys.count
         } else {
-            return theRoute.ardiagrams.count
+            return self.diagramKeys.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -182,8 +195,9 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             return cell
         }
         let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
-        guard let cell = tempCell as? AddARImageCell else { return tempCell }
-        cell.setImage(ardiagram: theRoute.ardiagrams[indexPath.row])
+        let arKey = diagramKeys[indexPath.row]
+        guard let cell = tempCell as? AddARImageCell, let ar = diagrams[arKey] else { return tempCell }
+        cell.setImage(bg: ar[0], diagram: ar[1])
         cell.layer.borderColor = UIColor.white.cgColor
         cell.layer.borderWidth = 2
         return cell

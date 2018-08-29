@@ -32,6 +32,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     var protection: String?
     var area: String?
     var imageUrls: [String: String] = [:]
+    var routeArUrls: [String: [String]] = [:]
     var rating: String?
 
     // not really implemented on the new model
@@ -61,6 +62,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         case stars
         case pitches
         case rating
+        case routeArUrls
     }
 
     //private stuff
@@ -195,6 +197,42 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
                 count += 1
                 if count == self.imageUrls.count {
                     completion(images)
+                }
+            }
+            .resume()
+        }
+    }
+
+    func fsLoadAR(completion: @escaping ([String: [UIImage]]) -> Void) {
+        var arMap: [String: [UIImage]] = [:]
+        var count = 0
+        for routeAR in routeArUrls {
+            guard let bgUrl = URL(string: routeAR.value[0]), let diagramUrl = URL(string: routeAR.value[1]) else { continue }
+            URLSession.shared.dataTask(with: bgUrl) { data, _, _ in
+                guard let bgData = data, let bgImage = UIImage(data: bgData) else { return }
+                if var ar = arMap[routeAR.key] {
+                    ar.insert(bgImage, at: 0)
+                    arMap.updateValue(ar, forKey: routeAR.key)
+                } else {
+                    arMap.updateValue([bgImage], forKey: routeAR.key)
+                }
+                count += 1
+                if count == self.routeArUrls.count * 2 {
+                    completion(arMap)
+                }
+            }
+            .resume()
+            URLSession.shared.dataTask(with: diagramUrl) { data, _, _ in
+                guard let dgData = data, let dgImage = UIImage(data: dgData) else { return }
+                if var dg = arMap[routeAR.key] {
+                    dg.append(dgImage)
+                    arMap.updateValue(dg, forKey: routeAR.key)
+                } else {
+                    arMap.updateValue([dgImage], forKey: routeAR.key)
+                }
+                count += 1
+                if count == self.routeArUrls.count * 2 {
+                    completion(arMap)
                 }
             }
             .resume()

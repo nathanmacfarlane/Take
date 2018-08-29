@@ -15,4 +15,5 @@ protocol RouteFirebase: class {
     func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void)
     func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void)
     func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void)
+    func fsLoadAR(completion: @escaping (_ ar: [String: [UIImage]]) -> Void)
 }
