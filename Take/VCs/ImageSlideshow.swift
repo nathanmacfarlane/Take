@@ -26,6 +26,10 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeDown(sender:)))
+        swipeDown.direction = .down
+        self.myImageCV.addGestureRecognizer(swipeDown)
+
         self.myImageCV.backgroundColor = .clear
         if let image = bgImage {
             self.bgImageView.image = image
@@ -68,6 +72,12 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
                 self.imageNumberLabel.text = "Image \(indexPath.row + 1) of \(images.count)"
                 break
             }
+        }
+    }
+
+    @IBAction private func swipeDown(sender: UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            self.dismiss(animated: true, completion: nil)
         }
     }
 
