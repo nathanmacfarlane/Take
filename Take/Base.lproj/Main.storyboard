@@ -1069,16 +1069,6 @@
                                     <outlet property="delegate" destination="JaO-GN-Ucr" id="1qZ-9W-KI6"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcm-m6-txZ">
-                                <rect key="frame" x="20" y="15" width="94" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="23"/>
-                                <color key="tintColor" red="0.1647058824" green="0.23529411759999999" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Back"/>
-                                <connections>
-                                    <action selector="goBack:" destination="JaO-GN-Ucr" eventType="touchUpInside" id="hm2-xB-xcd"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Image 1 of 1" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qAb-Zw-mkc">
                                 <rect key="frame" x="243" y="25" width="116" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1092,7 +1082,6 @@
                     </view>
                     <connections>
                         <outlet property="bgImageView" destination="TGo-vF-jqH" id="pGg-8y-g4a"/>
-                        <outlet property="closeButton" destination="tcm-m6-txZ" id="P4V-Pd-8c7"/>
                         <outlet property="imageNumberLabel" destination="qAb-Zw-mkc" id="mNd-Yu-Byw"/>
                         <outlet property="myImageCV" destination="H3v-bf-ntn" id="IIB-Ax-glh"/>
                     </connections>

@@ -12,7 +12,6 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     // MARK: - IBOutlets
     @IBOutlet private weak var myImageCV: UICollectionView!
-    @IBOutlet private weak var closeButton: UIButton!
     @IBOutlet private weak var imageNumberLabel: UILabel!
     @IBOutlet private weak var bgImageView: UIImageView!
 
@@ -35,7 +34,6 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
             self.bgImageView.image = image
         }
         self.imageNumberLabel.text = "Image \(selectedImage + 1) of \(images.count)"
-        self.closeButton.roundButton(portion: 4)
         if let cvfl = myImageCV.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewFlowLayout = cvfl
         }
@@ -79,11 +77,6 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
         if sender.state == .ended {
             self.dismiss(animated: true, completion: nil)
         }
-    }
-
-    // MARK: - Navigation
-    @IBAction private func goBack(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
     }
 
 }
