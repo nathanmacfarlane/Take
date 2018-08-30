@@ -33,7 +33,8 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let image = bgImage {
             self.bgImageView.image = image
         }
-        self.imageNumberLabel.text = "Image \(selectedImage + 1) of \(images.count)"
+        self.imageNumberLabel.text = "image \(selectedImage + 1) of \(images.count)"
+        self.imageNumberLabel.roundView(portion: 4)
         if let cvfl = myImageCV.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewFlowLayout = cvfl
         }
@@ -67,7 +68,7 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
             if collectionView.contentOffset.x <= CGFloat(i) * itemWithSpaceWidth + itemWidth / 2 {
                 let indexPath = IndexPath(item: i, section: 0)
                 collectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
-                self.imageNumberLabel.text = "Image \(indexPath.row + 1) of \(images.count)"
+                self.imageNumberLabel.text = "image \(indexPath.row + 1) of \(images.count)"
                 break
             }
         }
