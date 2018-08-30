@@ -678,44 +678,6 @@
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="hCl-55-sRa">
-                                <rect key="frame" x="16" y="128" width="343" height="150"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="wf2-Re-GkC">
-                                    <size key="itemSize" width="226" height="150"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ARCell" id="rFw-F2-z6i" customClass="AddARImageCell" customModule="Take" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="226" height="150"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="226" height="150"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5gx-r3-bet">
-                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="150"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7PY-y6-SNO">
-                                                    <rect key="frame" x="0.0" y="0.0" width="226" height="150"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <connections>
-                                            <outlet property="bgImageView" destination="5gx-r3-bet" id="ZcA-bt-cu6"/>
-                                            <outlet property="diagramImageView" destination="7PY-y6-SNO" id="DF5-fb-a0R"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="iTR-jd-3Uu" id="jPE-9v-cLn"/>
-                                    <outlet property="delegate" destination="iTR-jd-3Uu" id="ePp-r7-h1N"/>
-                                </connections>
-                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oe6-x4-aSZ">
                                 <rect key="frame" x="232" y="568" width="127" height="35"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -762,7 +724,6 @@
                         <outlet property="directionsButton" destination="cGX-Xh-unK" id="JiQ-lo-Kan"/>
                         <outlet property="imageSegControl" destination="r4k-7p-BS2" id="FAD-rs-9f0"/>
                         <outlet property="informationSegControl" destination="DSl-qt-1fV" id="R9l-yH-qI0"/>
-                        <outlet property="myARVC" destination="hCl-55-sRa" id="KiY-bl-tuU"/>
                         <outlet property="myCV" destination="h59-bA-qVo" id="Tew-Dc-H7e"/>
                         <outlet property="pitchesLabel" destination="xPs-Gp-UlD" id="Agh-Z4-Gul"/>
                         <outlet property="pitchesSubLabel" destination="EZ9-8B-SXu" id="BX6-2J-wH5"/>

@@ -16,7 +16,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - IBOutlets
     @IBOutlet private weak var bgimageView: UIImageView!
     @IBOutlet private weak var myCV: UICollectionView!
-    @IBOutlet private weak var myARVC: UICollectionView!
     @IBOutlet private weak var topRopeButton: TypeButton!
     @IBOutlet private weak var sportButton: TypeButton!
     @IBOutlet private weak var tradButton: TypeButton!
@@ -56,8 +55,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         self.myCV.backgroundColor = UIColor.clear
-        self.myARVC.backgroundColor = UIColor.clear
-        self.myARVC.isHidden = true
+
+        beTheFirstLabel.isHidden = true
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
@@ -68,10 +67,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             for diagram in self.diagrams {
                 self.diagramKeys.append(diagram.key)
             }
-            DispatchQueue.main.async {
-                self.updateLabel()
-                self.myARVC.reloadData()
-            }
+//            DispatchQueue.main.async {
+//                self.updateLabel()
+//                self.myARVC.reloadData()
+//            }
         }
 
         self.theRoute.fsLoadImages { images in
@@ -96,7 +95,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
-        self.myARVC.reloadData()
         self.myCV.reloadData()
 
         if !self.theRoute.imageUrls.isEmpty {
@@ -142,21 +140,21 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.augmentedButton.roundButton(portion: 4)
     }
     func updateLabel() {
-        if self.imageSegControl.selectedSegmentIndex == 0 {
-            if self.images.isEmpty {
-                self.beTheFirstLabel.text = "Be the first to add an image"
-                self.beTheFirstLabel.isHidden = false
-            } else {
-                self.beTheFirstLabel.isHidden = true
-            }
-        } else {
-            if self.diagrams.isEmpty {
-                self.beTheFirstLabel.text = "Be the first to add a diagram"
-                self.beTheFirstLabel.isHidden = false
-            } else {
-                self.beTheFirstLabel.isHidden = true
-            }
-        }
+//        if self.imageSegControl.selectedSegmentIndex == 0 {
+//            if self.images.isEmpty {
+//                self.beTheFirstLabel.text = "Be the first to add an image"
+//                self.beTheFirstLabel.isHidden = false
+//            } else {
+//                self.beTheFirstLabel.isHidden = true
+//            }
+//        } else {
+//            if self.diagrams.isEmpty {
+//                self.beTheFirstLabel.text = "Be the first to add a diagram"
+//                self.beTheFirstLabel.isHidden = false
+//            } else {
+//                self.beTheFirstLabel.isHidden = true
+//            }
+//        }
     }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .light)
@@ -179,57 +177,48 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.myCV {
+        if imageSegControl.selectedSegmentIndex == 0 {
             return self.imageKeys.count
         } else {
             return self.diagramKeys.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.myCV {
-            let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-            guard let cell = tempCell as? DetailImagesCell, let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let cell = tempCell as? DetailImagesCell else { return tempCell }
+        if imageSegControl.selectedSegmentIndex == 0 {
+            guard let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
             cell.setImage(with: cellImage)
             cell.layer.borderColor = UIColor.white.cgColor
             cell.layer.borderWidth = 2
             return cell
         }
-        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
         let arKey = diagramKeys[indexPath.row]
 //        guard let cell = tempCell as? DetailImagesCell, let ar = diagrams[arKey] else { return tempCell }
 //        let bgImage = ar[0]
 //        let diagramImage = ar[1]
 //        let theImage = bgImage.overlayWith(image: diagramImage, posX: 0, posY: 0)
 //        cell.setImage(with: theImage)
-        guard let cell = tempCell as? AddARImageCell, let ar = diagrams[arKey] else { return tempCell }
-        cell.setImage(bg: ar[0], diagram: ar[1])
+//        guard let cell = tempCell as? AddARImageCell, let ar = diagrams[arKey] else { return tempCell }
+        guard let ar = diagrams[arKey] else { return tempCell }
+        let bgImage = ar[0]
+        let diagramImage = ar[1]
+        let theImage = bgImage.overlayWith(image: diagramImage, posX: 0, posY: 0)
+        cell.setImage(with: theImage)
+
+//        cell.setImage(bg: ar[0], diagram: ar[1])
         cell.layer.borderColor = UIColor.white.cgColor
         cell.layer.borderWidth = 2
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.myCV {
-            self.performSegue(withIdentifier: "presentAllImages", sender: indexPath.row)
-        } else if collectionView == self.myARVC {
-            self.performSegue(withIdentifier: "presentAllIDiagrams", sender: indexPath.row)
-        }
+        self.performSegue(withIdentifier: "presentAllImages", sender: indexPath.row)
     }
 
     // MARK: - Seg Control
     @IBAction private func imageSegChanged(_ sender: UISegmentedControl) {
         self.updateLabel()
-        checkStatus()
-    }
-    func checkStatus() {
-        if imageSegControl.selectedSegmentIndex == 0 {
-            self.myARVC.isHidden = true
-            self.myCV.reloadData()
-            self.myCV.isHidden = false
-        } else {
-            self.myCV.isHidden = true
-            self.myARVC.reloadData()
-            self.myARVC.isHidden = false
-        }
+        self.myCV.reloadData()
     }
 
     // MARK: - Navigation
@@ -277,9 +266,24 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 dct.theRoute = self.theRoute
             }
         } else if segue.identifier == "presentAllImages" {
-            if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
-                dct.images = Array(self.images.values)
-                dct.bgImage = self.bgImage
+            if self.imageSegControl.selectedSegmentIndex == 0 {
+                if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
+                    dct.images = Array(self.images.values)
+                    dct.bgImage = self.bgImage
+                    if let selectedImage = sender as? Int {
+                        dct.selectedImage = selectedImage
+                    }
+                }
+            } else if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
+                var images: [UIImage] = []
+                for key in diagramKeys {
+                    guard let ar = diagrams[key] else { continue }
+                    let bgImage = ar[0]
+                    let diagram = ar[1]
+                    let arImage = bgImage.overlayWith(image: diagram, posX: 0, posY: 0)
+                    images.append(arImage)
+                }
+                dct.images = images
                 if let selectedImage = sender as? Int {
                     dct.selectedImage = selectedImage
                 }
@@ -295,17 +299,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                     images.append(arImage)
                 }
                 dct.images = images
-//                dct.ardiagrams = self.theRoute.ardiagrams
                 if let selectedImage = sender as? Int {
                     dct.selectedImage = selectedImage
                 }
             }
-//            if let dct: DiagramSlideshow = segue.destination as? DiagramSlideshow {
-//                dct.ardiagrams = self.theRoute.ardiagrams
-//                if let selectedImage = sender as? Int {
-//                    dct.selectedImage = selectedImage
-//                }
-//            }
         } else if segue.identifier == "goToArea" {
             //            let dc: AreaView = segue.destination as! AreaView
             //            dc.areaName = sender as! String
