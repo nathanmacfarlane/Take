@@ -196,6 +196,11 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
         let arKey = diagramKeys[indexPath.row]
+//        guard let cell = tempCell as? DetailImagesCell, let ar = diagrams[arKey] else { return tempCell }
+//        let bgImage = ar[0]
+//        let diagramImage = ar[1]
+//        let theImage = bgImage.overlayWith(image: diagramImage, posX: 0, posY: 0)
+//        cell.setImage(with: theImage)
         guard let cell = tempCell as? AddARImageCell, let ar = diagrams[arKey] else { return tempCell }
         cell.setImage(bg: ar[0], diagram: ar[1])
         cell.layer.borderColor = UIColor.white.cgColor
@@ -280,12 +285,27 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 }
             }
         } else if segue.identifier == "presentAllIDiagrams" {
-            if let dct: DiagramSlideshow = segue.destination as? DiagramSlideshow {
-                dct.ardiagrams = self.theRoute.ardiagrams
+            if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
+                var images: [UIImage] = []
+                for key in diagramKeys {
+                    guard let ar = diagrams[key] else { continue }
+                    let bgImage = ar[0]
+                    let diagram = ar[1]
+                    let arImage = bgImage.overlayWith(image: diagram, posX: 0, posY: 0)
+                    images.append(arImage)
+                }
+                dct.images = images
+//                dct.ardiagrams = self.theRoute.ardiagrams
                 if let selectedImage = sender as? Int {
                     dct.selectedImage = selectedImage
                 }
             }
+//            if let dct: DiagramSlideshow = segue.destination as? DiagramSlideshow {
+//                dct.ardiagrams = self.theRoute.ardiagrams
+//                if let selectedImage = sender as? Int {
+//                    dct.selectedImage = selectedImage
+//                }
+//            }
         } else if segue.identifier == "goToArea" {
             //            let dc: AreaView = segue.destination as! AreaView
             //            dc.areaName = sender as! String
