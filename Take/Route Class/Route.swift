@@ -23,20 +23,21 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
 
     // MARK: - properties
     var name: String
+    var keyword: String?
     var id: Int
+    var pitches: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
     var stars: [String: Int] = [:]
     var info: String?
     var protection: String?
     var area: String?
-    var pitches: Int?
     var imageUrls: [String: String] = [:]
+    var routeArUrls: [String: [String]] = [:]
     var rating: String?
 
     // not really implemented on the new model
     var comments: [Comment] = []
     var localDesc: [String] = []
-    var ardiagrams: [ARDiagram] = []
     var ref: DatabaseReference?
     var latitude: Double?
     var longitude: Double?
@@ -44,10 +45,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     var city: String?
     // urls to images in storage
 
-    var newARDiagrams: [ARDiagram] = []
+//    var newARDiagrams: [ARDiagram] = []
+    var ardiagrams: [ARDiagram] = []
 
     enum CodingKeys: String, CodingKey {
         case name
+        case keyword
         case id
         case types
         case latitude
@@ -59,6 +62,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         case stars
         case pitches
         case rating
+        case routeArUrls
     }
 
     //private stuff
@@ -89,11 +93,12 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     }
 
     // MARK: - Inits
-    init(name: String, id: Int, lat: Double, long: Double) {
+    init(name: String, id: Int, lat: Double, long: Double, pitches: Int) {
         self.name = name
         self.id = id
         self.latitude = lat
         self.longitude = long
+        self.pitches = pitches
     }
 
     // MARK: - MKAnnotation
@@ -198,6 +203,48 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         }
     }
 
+    func fsLoadAR(completion: @escaping ([String: [UIImage]]) -> Void) {
+        DispatchQueue.global(qos: .background).async {
+            var arMap: [String: [UIImage]] = [:]
+            var count = 0
+            for routeAR in self.routeArUrls {
+                guard let bgUrl = URL(string: routeAR.value[0]), let diagramUrl = URL(string: routeAR.value[1]) else { continue }
+                URLSession.shared.dataTask(with: bgUrl) { data, _, _ in
+                    guard let bgData = data, let bgImage = UIImage(data: bgData) else { return }
+                    if var ar = arMap[routeAR.key] {
+                        ar.insert(bgImage, at: 0)
+                        arMap.updateValue(ar, forKey: routeAR.key)
+                    } else {
+                        arMap.updateValue([bgImage], forKey: routeAR.key)
+                    }
+                    DispatchQueue.main.async {
+                        count += 1
+                        if count == self.routeArUrls.count * 2 {
+                            completion(arMap)
+                        }
+                    }
+                }
+                .resume()
+                URLSession.shared.dataTask(with: diagramUrl) { data, _, _ in
+                    guard let dgData = data, let dgImage = UIImage(data: dgData) else { return }
+                    if var dg = arMap[routeAR.key] {
+                        dg.append(dgImage)
+                        arMap.updateValue(dg, forKey: routeAR.key)
+                    } else {
+                        arMap.updateValue([dgImage], forKey: routeAR.key)
+                    }
+                    DispatchQueue.main.async {
+                        count += 1
+                        if count == self.routeArUrls.count * 2 {
+                            completion(arMap)
+                        }
+                    }
+                }
+                .resume()
+            }
+        }
+    }
+
     func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
         guard let routeImage = imageUrls.first, let theURL = URL(string: routeImage.value) else {
             completion(nil, nil)
@@ -216,14 +263,56 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void) {
         let keys = Array(images.keys)
         for imageKey in keys {
-
             guard let image = images[imageKey],
                 let largeImage = image.resizedToKB(numKB: 2048),
                 let smallImage = image.resizedToKB(numKB: 2048)
-                else { return }
+                else { continue }
             savePhotoToFb(image: largeImage, size: "Large")
             savePhotoToFb(image: smallImage, size: "Thumbnail")
         }
+    }
+
+    func fsSaveAr(ar: [String: [UIImage]], completion: @escaping () -> Void) {
+        let keys = Array(ar.keys)
+        for arKey in keys {
+            guard let arImage = ar[arKey], let bgImage = arImage[0].resizedToKB(numKB: 1024), let dgImage = arImage[1].resizedToKB(numKB: 1024) else { continue }
+            saveArToFb(imageId: arKey, bgImage: bgImage, dgImage: dgImage)
+        }
+    }
+
+    func saveArToFb(imageId: String, bgImage: UIImage, dgImage: UIImage) {
+        let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
+        guard let bgData = UIImageJPEGRepresentation(bgImage, 0.25) as NSData?, let dgData = UIImagePNGRepresentation(dgImage) as NSData? else { return }
+
+        var bgUrl: String = ""
+        var dgUrl: String = ""
+
+        _ = imageRef.child("\(imageId)-bgImage.png").putData(bgData as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-bgImage.png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                bgUrl = "\(downloadURL)"
+                print("bgUrl: \(bgUrl)")
+                if !dgUrl.isEmpty {
+                    self.routeArUrls[imageId] = [bgUrl, dgUrl]
+                    Firestore.firestore().collection("routes").document("\(self.id)").setData(["routeArUrls": self.routeArUrls], merge: true)
+                }
+            }
+        }
+
+        _ = imageRef.child("\(imageId)-dgImage.png").putData(dgData as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-dgImage.png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                dgUrl = "\(downloadURL)"
+                print("dgUrl: \(dgUrl)")
+                if !bgUrl.isEmpty {
+                    self.routeArUrls[imageId] = [bgUrl, dgUrl]
+                    Firestore.firestore().collection("routes").document("\(self.id)").setData(["routeArUrls": self.routeArUrls], merge: true)
+                }
+            }
+        }
+
     }
 
     private func savePhotoToFb(image: UIImage, size: String) {

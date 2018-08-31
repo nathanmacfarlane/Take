@@ -126,6 +126,12 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.myTableView.reloadData()
             self.myActivityIndicator.stopAnimating()
         }
+        db.query(type: Route.self, by: "keyword", with: searchText) { routes in
+            self.resultsMashed.append(contentsOf: routes)
+            self.results.routes.append(contentsOf: routes)
+            self.myTableView.reloadData()
+            self.myActivityIndicator.stopAnimating()
+        }
         db.query(type: Area.self, by: "name", with: searchText) { areas in
             self.resultsMashed.append(contentsOf: areas)
             for area in areas {

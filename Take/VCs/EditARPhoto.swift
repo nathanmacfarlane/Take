@@ -85,8 +85,11 @@ class EditARPhoto: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction private func goBack(_ sender: Any) {
-        if let imageViewImage = self.myImageView.image {
-            self.theRoute.newARDiagrams.append(ARDiagram(bgImage: imageViewImage, diagram: self.canvasView.asImage()))
+        if let presenter = presentingViewController as? RouteEdit {
+            let imageId = UUID().uuidString
+            presenter.newArKeys.append(imageId)
+            presenter.arKeys.append(imageId)
+            presenter.selectedAr.updateValue([theImage, self.canvasView.asImage()], forKey: imageId)
         }
         self.removeLines()
         self.dismiss(animated: true, completion: nil)
