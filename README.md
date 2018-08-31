@@ -31,3 +31,4 @@
 - [ ] Add tick/todo icon on list view
 - [ ] Add support for Alpine and Aid routes
 - [ ] Consider adding functionality to drag and drop stickers onto AR images
+- [ ] Change blurred background image on image slideshow when user swipes through (smooth fade)
