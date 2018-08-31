@@ -735,7 +735,6 @@
                         <outlet property="topRopeButton" destination="dnd-6N-hhz" id="efD-Fr-5hK"/>
                         <outlet property="tradButton" destination="rk7-ne-jFp" id="l1e-xQ-ggS"/>
                         <segue destination="JaO-GN-Ucr" kind="presentation" identifier="presentAllImages" id="3Qn-8W-CaS"/>
-                        <segue destination="MbT-9z-i2G" kind="presentation" identifier="presentAllIDiagrams" id="v8z-ui-PTj"/>
                         <segue destination="YH4-Te-LR8" kind="presentation" identifier="presentARView" id="vOe-f2-6Mt"/>
                         <segue destination="pHm-NG-7kv" kind="presentation" identifier="goToArea" id="Fwn-ga-FRF"/>
                     </connections>
@@ -1056,89 +1055,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="drZ-Wc-eOl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2405.5999999999999" y="358.4707646176912"/>
-        </scene>
-        <!--Diagram Slideshow-->
-        <scene sceneID="XU2-Pu-O1L">
-            <objects>
-                <viewController id="MbT-9z-i2G" customClass="DiagramSlideshow" customModule="Take" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="pFX-oa-IaT">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Mb7-15-MuB">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="w6q-ko-8Xa">
-                                    <size key="itemSize" width="376" height="667"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="tkY-nU-QnL" customClass="SlideshowDiagramCell" customModule="Take" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="376" height="667"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
-                                            <rect key="frame" x="0.0" y="0.0" width="376" height="667"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3rz-z6-Xve">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="667"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iPD-sB-HgU">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="667"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <imageView multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hBt-uA-0uu">
-                                                    <rect key="frame" x="0.0" y="0.0" width="376" height="667"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                            </subviews>
-                                        </view>
-                                        <connections>
-                                            <outlet property="bgImageView" destination="3rz-z6-Xve" id="P6U-Je-Sc9"/>
-                                            <outlet property="diagramImage" destination="hBt-uA-0uu" id="g7e-uQ-3JH"/>
-                                            <outlet property="theImage" destination="iPD-sB-HgU" id="xUN-5N-qUO"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="MbT-9z-i2G" id="zGv-7I-yzX"/>
-                                    <outlet property="delegate" destination="MbT-9z-i2G" id="l63-qF-RJ7"/>
-                                </connections>
-                            </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LIS-Wg-7bg">
-                                <rect key="frame" x="16" y="610" width="94" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="23"/>
-                                <color key="tintColor" red="0.1647058824" green="0.23529411759999999" blue="0.2784313725" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <state key="normal" title="Close"/>
-                                <connections>
-                                    <action selector="goBack:" destination="MbT-9z-i2G" eventType="touchUpInside" id="zif-0u-a6d"/>
-                                </connections>
-                            </button>
-                            <pageControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="CIe-Ja-yXB">
-                                <rect key="frame" x="118" y="608" width="241" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="pageIndicatorTintColor" red="0.54336532360000001" green="0.54336532360000001" blue="0.54336532360000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="currentPageIndicatorTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </pageControl>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="agZ-L0-Ss4"/>
-                    </view>
-                    <connections>
-                        <outlet property="closeButton" destination="LIS-Wg-7bg" id="rFa-hB-WvM"/>
-                        <outlet property="myARCV" destination="Mb7-15-MuB" id="h31-As-By8"/>
-                        <outlet property="pageController" destination="CIe-Ja-yXB" id="1Py-Om-hSJ"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="alg-dL-gro" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3092" y="358"/>
         </scene>
         <!--Area View-->
         <scene sceneID="h9g-zU-3H2">

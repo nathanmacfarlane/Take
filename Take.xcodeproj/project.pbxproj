@@ -51,7 +51,6 @@
 		047866C62099930900DF4439 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 047866C52099930900DF4439 /* UIColor.swift */; };
 		04BA11FB20AD343600D24C4F /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA11FA20AD343600D24C4F /* Rating.swift */; };
 		04BA11FD20AD344400D24C4F /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04BA11FC20AD344400D24C4F /* Comment.swift */; };
-		04C83B0320B3F788008D842D /* DiagramSlideshow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0220B3F788008D842D /* DiagramSlideshow.swift */; };
 		04C83B0520B3F996008D842D /* SlideshowDiagramCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */; };
 		04C83B0720B52B68008D842D /* ARView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0620B52B68008D842D /* ARView.swift */; };
 		04C83B0920B52D06008D842D /* DeepPressGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 04C83B0820B52D06008D842D /* DeepPressGesture.swift */; };
@@ -159,7 +158,6 @@
 		047866C52099930900DF4439 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		04BA11FA20AD343600D24C4F /* Rating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
 		04BA11FC20AD344400D24C4F /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
-		04C83B0220B3F788008D842D /* DiagramSlideshow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagramSlideshow.swift; sourceTree = "<group>"; };
 		04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SlideshowDiagramCell.swift; sourceTree = "<group>"; };
 		04C83B0620B52B68008D842D /* ARView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARView.swift; sourceTree = "<group>"; };
 		04C83B0820B52D06008D842D /* DeepPressGesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepPressGesture.swift; sourceTree = "<group>"; };
@@ -336,7 +334,6 @@
 				044061FF20A0F31A005C06C3 /* Comments.swift */,
 				043F788C20AEACF00043C08A /* EditARPhoto.swift */,
 				043F789420B2AAA00043C08A /* ImageSlideshow.swift */,
-				04C83B0220B3F788008D842D /* DiagramSlideshow.swift */,
 				04C83B0620B52B68008D842D /* ARView.swift */,
 				04C83B4320BB6520008D842D /* AreaView.swift */,
 				046E3E5D20BBF6E2009E63D8 /* Login.swift */,
@@ -710,7 +707,6 @@
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
 				22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */,
 				22963F50212F922B008D26C9 /* RouteFirebase.swift in Sources */,
-				04C83B0320B3F788008D842D /* DiagramSlideshow.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */,
 				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
