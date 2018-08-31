@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -150,17 +151,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" fixedFrame="YES" barStyle="black" searchBarStyle="minimal" text="" placeholder="Ex: Bishops Peak" translatesAutoresizingMaskIntoConstraints="NO" id="POx-vt-9v6">
+                            <searchBar contentMode="redraw" barStyle="black" searchBarStyle="minimal" text="" placeholder="Ex: Bishops Peak" translatesAutoresizingMaskIntoConstraints="NO" id="POx-vt-9v6">
                                 <rect key="frame" x="36" y="60" width="303" height="56"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                 <connections>
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="rdh-Xf-lhT"/>
                                 </connections>
                             </searchBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R9a-no-NhM">
-                                <rect key="frame" x="36" y="146" width="303" height="472"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynm-tM-JU7">
+                                <rect key="frame" x="17" y="20" width="71" height="36"/>
+                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
+                                <state key="normal" title="logout">
+                                    <color key="titleColor" red="0.79618099620000005" green="0.46141096170000001" blue="0.52700443779999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="goLogout:" destination="9pv-A4-QxB" eventType="touchUpInside" id="X8h-E3-Lhy"/>
+                                </connections>
+                            </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VHJ-Jb-AVV">
+                                <rect key="frame" x="169" y="159" width="37" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </activityIndicatorView>
+                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Taw-3H-yxD">
+                                <rect key="frame" x="-223" y="0.0" width="223" height="618"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <connections>
+                                    <segue destination="ph9-5c-4gH" kind="embed" identifier="theCV" id="644-2S-Ehg"/>
+                                </connections>
+                            </containerView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="R9a-no-NhM">
+                                <rect key="frame" x="36" y="116" width="303" height="667"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="90" id="XLI-I2-K5x" customClass="RouteCell" customModule="Take" customModuleProvider="target">
@@ -417,38 +437,22 @@
                                     <outlet property="delegate" destination="9pv-A4-QxB" id="vRU-wH-9b6"/>
                                 </connections>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ynm-tM-JU7">
-                                <rect key="frame" x="17" y="20" width="71" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="17"/>
-                                <state key="normal" title="logout">
-                                    <color key="titleColor" red="0.79618099620000005" green="0.46141096170000001" blue="0.52700443779999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="goLogout:" destination="9pv-A4-QxB" eventType="touchUpInside" id="X8h-E3-Lhy"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Viewing routes 1-10" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bG2-Te-Lpy">
-                                <rect key="frame" x="46" y="116" width="284" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="17"/>
-                                <color key="textColor" red="0.96461818740000005" green="0.96338201509999999" blue="0.98497486570000004" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="VHJ-Jb-AVV">
-                                <rect key="frame" x="169" y="159" width="37" height="37"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </activityIndicatorView>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Taw-3H-yxD">
-                                <rect key="frame" x="-223" y="0.0" width="223" height="618"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <connections>
-                                    <segue destination="ph9-5c-4gH" kind="embed" identifier="theCV" id="644-2S-Ehg"/>
-                                </connections>
-                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.16587274754381889" green="0.1934039101435362" blue="0.22957645939086291" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="R9a-no-NhM" secondAttribute="trailing" constant="36" id="336-Vm-8d5"/>
+                            <constraint firstItem="POx-vt-9v6" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" constant="40" id="5By-zb-FLf"/>
+                            <constraint firstItem="ynm-tM-JU7" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="6jg-pg-K41"/>
+                            <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="POx-vt-9v6" secondAttribute="trailing" constant="36" id="9uJ-de-SNa"/>
+                            <constraint firstItem="POx-vt-9v6" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="36" id="Oef-rf-Zhc"/>
+                            <constraint firstItem="ynm-tM-JU7" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="17" id="Qc0-NC-kpy"/>
+                            <constraint firstItem="ynm-tM-JU7" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="height" multiplier="71:667" id="SU0-LE-7lp"/>
+                            <constraint firstItem="R9a-no-NhM" firstAttribute="height" secondItem="tsR-hK-woN" secondAttribute="height" id="eH6-U7-XYX"/>
+                            <constraint firstItem="R9a-no-NhM" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" constant="36" id="gCH-ry-YoL"/>
+                            <constraint firstItem="POx-vt-9v6" firstAttribute="width" secondItem="tsR-hK-woN" secondAttribute="height" multiplier="303:667" id="h2k-TR-ciW"/>
+                            <constraint firstItem="R9a-no-NhM" firstAttribute="top" secondItem="POx-vt-9v6" secondAttribute="bottom" id="oOr-72-TRO"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Search" image="search.png" selectedImage="search.png" id="acW-dT-cKf"/>
@@ -457,7 +461,6 @@
                         <outlet property="mySearchBar" destination="POx-vt-9v6" id="oj6-QU-avR"/>
                         <outlet property="mySearchCV" destination="Taw-3H-yxD" id="j7X-Bt-zza"/>
                         <outlet property="myTableView" destination="R9a-no-NhM" id="hMg-wr-lVG"/>
-                        <outlet property="routesRangeLabel" destination="bG2-Te-Lpy" id="ax6-T3-LNA"/>
                         <segue destination="iTR-jd-3Uu" kind="presentation" identifier="goToDetail" id="Jij-Sr-DMQ"/>
                         <segue destination="pHm-NG-7kv" kind="presentation" identifier="goToArea" id="nV1-oS-Dwd"/>
                         <segue destination="6BC-YW-8fj" kind="presentation" identifier="goToLogin" id="Uox-Ty-YNV"/>
@@ -2020,7 +2023,7 @@
         <image name="user.png" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Fwn-ga-FRF"/>
+        <segue reference="nV1-oS-Dwd"/>
         <segue reference="Jij-Sr-DMQ"/>
     </inferredMetricsTieBreakers>
 </document>
