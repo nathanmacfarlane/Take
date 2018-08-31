@@ -16,7 +16,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - IBOutlets
     @IBOutlet private weak var bgimageView: UIImageView!
     @IBOutlet private weak var myCV: UICollectionView!
-    @IBOutlet private weak var myARVC: UICollectionView!
     @IBOutlet private weak var topRopeButton: TypeButton!
     @IBOutlet private weak var sportButton: TypeButton!
     @IBOutlet private weak var tradButton: TypeButton!
@@ -30,15 +29,17 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet private weak var routeDescriptionTV: UITextView!
     @IBOutlet private weak var starsLabel: UILabel!
     @IBOutlet private weak var actualRatingLabel: UILabel!
-    @IBOutlet private weak var beTheFirstLabel: UILabel!
     @IBOutlet private weak var imageSegControl: UISegmentedControl!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
+    @IBOutlet private weak var pitchesSubLabel: UILabel!
 
     // MARK: - Variables
     var theRoute: Route!
     var bgImage: UIImage?
     var imageKeys: [String] = []
     var images: [String: UIImage] = [:]
+    var diagramKeys: [String] = []
+    var diagrams: [String: [UIImage]] = [:]
     var imageRef: DatabaseReference = DatabaseReference()
     var locationManager: CLLocationManager = CLLocationManager()
 
@@ -53,11 +54,21 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
         self.myCV.backgroundColor = UIColor.clear
-        self.myARVC.backgroundColor = UIColor.clear
-        self.myARVC.isHidden = true
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
+        }
+
+        self.theRoute.fsLoadAR { diagrams in
+            self.diagrams = diagrams
+            DispatchQueue.global(qos: .background).async {
+                for diagram in self.diagrams {
+                    self.diagramKeys.append(diagram.key)
+                }
+                DispatchQueue.main.async {
+                    self.myCV.reloadData()
+                }
+            }
         }
 
         self.theRoute.fsLoadImages { images in
@@ -72,7 +83,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                         self.bgImage = firstImage.value
                     }
                 }
-                self.updateLabel()
                 self.myCV.reloadData()
             }
         }
@@ -82,25 +92,18 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
-        self.myARVC.reloadData()
         self.myCV.reloadData()
 
-        if !self.theRoute.imageUrls.isEmpty {
-            self.beTheFirstLabel.text = "Images loading"
-        }
-
-        if let pitches = self.theRoute.pitches {
-            self.pitchesLabel.text = "\(pitches)"
-        }
+        self.pitchesLabel.text = "\(theRoute.pitches)"
+        self.pitchesSubLabel.text = "Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.routeNameLabel.text = theRoute.name
         self.commentsButton.setTitle("\(theRoute.comments.count) Comments", for: .normal)
         self.actualRatingLabel.text = theRoute.rating ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
-            self.starsLabel.text = "\(averageStar)"
-//            self.starsLabel.text = "\(String(repeating: "★", count: averageStar))\(String(repeating: "☆", count: 4 - averageStar))"
+            self.starsLabel.text = "\(averageStar) ★"
         }
-        self.starVotersLabel.text = "\(theRoute.stars.count) Stars"
+        self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
 
         setupButtons()
 
@@ -129,23 +132,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.directionsButton.roundButton(portion: 4)
         self.augmentedButton.roundButton(portion: 4)
     }
-    func updateLabel() {
-        if self.imageSegControl.selectedSegmentIndex == 0 {
-            if self.images.isEmpty {
-                self.beTheFirstLabel.text = "Be the first to add an image"
-                self.beTheFirstLabel.isHidden = false
-            } else {
-                self.beTheFirstLabel.isHidden = true
-            }
-        } else {
-            if self.theRoute.ardiagrams.isEmpty {
-                self.beTheFirstLabel.text = "Be the first to add a diagram"
-                self.beTheFirstLabel.isHidden = false
-            } else {
-                self.beTheFirstLabel.isHidden = true
-            }
-        }
-    }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -167,51 +153,35 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.myCV {
+        if imageSegControl.selectedSegmentIndex == 0 {
             return self.imageKeys.count
         } else {
-            return theRoute.ardiagrams.count
+            return self.diagramKeys.count
         }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.myCV {
-            let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
-            guard let cell = tempCell as? DetailImagesCell, let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let cell = tempCell as? DetailImagesCell else { return tempCell }
+        if imageSegControl.selectedSegmentIndex == 0 {
+            guard let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
             cell.setImage(with: cellImage)
-            cell.layer.borderColor = UIColor.white.cgColor
-            cell.layer.borderWidth = 2
+            cell.clearDgImage()
+            return cell
+        } else {
+            let arKey = diagramKeys[indexPath.row]
+            guard let theImage = self.diagrams[arKey] else { return tempCell }
+            cell.setImage(with: theImage[0])
+            cell.setDgImage(with: theImage[1])
             return cell
         }
-        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
-        guard let cell = tempCell as? AddARImageCell else { return tempCell }
-        cell.setImage(ardiagram: theRoute.ardiagrams[indexPath.row])
-        cell.layer.borderColor = UIColor.white.cgColor
-        cell.layer.borderWidth = 2
-        return cell
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.myCV {
-            self.performSegue(withIdentifier: "presentAllImages", sender: indexPath.row)
-        } else if collectionView == self.myARVC {
-            self.performSegue(withIdentifier: "presentAllIDiagrams", sender: indexPath.row)
-        }
+        self.performSegue(withIdentifier: "presentAllImages", sender: indexPath.row)
     }
 
     // MARK: - Seg Control
     @IBAction private func imageSegChanged(_ sender: UISegmentedControl) {
-        self.updateLabel()
-        checkStatus()
-    }
-    func checkStatus() {
-        if imageSegControl.selectedSegmentIndex == 0 {
-            self.myARVC.isHidden = true
-            self.myCV.reloadData()
-            self.myCV.isHidden = false
-        } else {
-            self.myCV.isHidden = true
-            self.myARVC.reloadData()
-            self.myARVC.isHidden = false
-        }
+        self.myCV.reloadData()
     }
 
     // MARK: - Navigation
@@ -248,40 +218,71 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if segue.identifier == "pushToComments" {
-            if let dct: Comments = segue.destination as? Comments {
-                dct.theRoute = self.theRoute
-            }
-        } else if segue.identifier == "pushToEdit" {
-            if let dct: RouteEdit = segue.destination as? RouteEdit {
-                dct.selectedImages = self.images
-                dct.theRoute = self.theRoute
-            }
-        } else if segue.identifier == "presentAllImages" {
-            if let dct: ImageSlideshow = segue.destination as? ImageSlideshow {
-                dct.images = Array(self.images.values)
+        switch segue.identifier {
+        case "pushToComments":
+            guard let dct: Comments = segue.destination as? Comments else { return }
+            dct.theRoute = self.theRoute
+        case "pushToEdit":
+            guard let dct: RouteEdit = segue.destination as? RouteEdit else { return }
+            dct.selectedImages = self.images
+            dct.selectedAr = self.diagrams
+            dct.bgImage = self.bgImage
+            dct.theRoute = self.theRoute
+        case "presentAllImages":
+            guard let dct: ImageSlideshow = segue.destination as? ImageSlideshow else { return }
+            if self.imageSegControl.selectedSegmentIndex == 0 {
+                // images
+                var images: [[UIImage]] = []
+                for image in self.images.values {
+                    images.append([image])
+                }
+                dct.images = images
                 dct.bgImage = self.bgImage
-                if let selectedImage = sender as? Int {
-                    dct.selectedImage = selectedImage
-                }
+                guard let selectedImage = sender as? Int else { return }
+                dct.selectedImage = selectedImage
+            } else {
+                dct.images = Array(self.diagrams.values)
+                dct.isAr = true
+                dct.bgImage = self.bgImage
+                guard let selectedImage = sender as? Int else { return }
+                dct.selectedImage = selectedImage
             }
-        } else if segue.identifier == "presentAllIDiagrams" {
-            if let dct: DiagramSlideshow = segue.destination as? DiagramSlideshow {
-                dct.ardiagrams = self.theRoute.ardiagrams
-                if let selectedImage = sender as? Int {
-                    dct.selectedImage = selectedImage
-                }
+        case "presentAllIDiagrams":
+            guard let dct: ImageSlideshow = segue.destination as? ImageSlideshow else { return }
+            var images: [UIImage] = []
+            for key in diagramKeys {
+                guard let ar = diagrams[key] else { continue }
+                let bgImage = ar[0]
+                let diagram = ar[1]
+//                let arImage = bgImage.overlayWith(image: diagram, posX: 0, posY: 0)
+                let arImage = self.combineImages(image1: bgImage, image2: diagram)
+                images.append(arImage)
             }
-        } else if segue.identifier == "goToArea" {
-            //            let dc: AreaView = segue.destination as! AreaView
-            //            dc.areaName = sender as! String
-            //            dc.areaArr = self.theRoute.localDesc
-        } else if segue.identifier == "presentARView" {
-            if let dct: ARView = segue.destination as? ARView {
-                dct.theRoute = self.theRoute
-            }
+//            dct.images = images
+            guard let selectedImage = sender as? Int else { return }
+            dct.selectedImage = selectedImage
+        case "goToArea":
+//            let dc: AreaView = segue.destination as! AreaView
+//            dc.areaName = sender as! String
+//            dc.areaArr = self.theRoute.localDesc
+            return
+        case "presentARView":
+            guard let dct: ARView = segue.destination as? ARView else { return }
+            dct.theRoute = self.theRoute
+        default:
+            print("bad segue identifier")
         }
 
+    }
+
+    func combineImages(image1: UIImage, image2: UIImage) -> UIImage {
+        let rect = CGRect(x: 0, y: 0, width: image1.size.width, height: image1.size.height)
+        let renderer = UIGraphicsImageRenderer(size: image1.size)
+
+        return renderer.image { _ in
+            image1.draw(in: rect, blendMode: .normal, alpha: 1)
+            image2.draw(in: rect, blendMode: .normal, alpha: 1)
+        }
     }
 
 }

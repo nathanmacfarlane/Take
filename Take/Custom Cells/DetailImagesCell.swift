@@ -9,9 +9,22 @@
 import UIKit
 
 class DetailImagesCell: UICollectionViewCell {
-    @IBOutlet private weak var theImage: UIImageView!
+    @IBOutlet private weak var bgImageView: UIImageView!
+    @IBOutlet private weak var dgImageView: UIImageView!
+
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        self.layer.borderColor = UIColor.white.cgColor
+        self.layer.borderWidth = 2
+    }
 
     func setImage(with newImage: UIImage) {
-        self.theImage.image = newImage
+        self.bgImageView.image = newImage
+    }
+    func setDgImage(with newDiagram: UIImage) {
+        self.dgImageView.image = newDiagram
+    }
+    func clearDgImage() {
+        self.dgImageView.image = nil
     }
 }

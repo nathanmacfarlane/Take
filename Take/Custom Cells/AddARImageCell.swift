@@ -27,6 +27,12 @@ class AddARImageCell: UICollectionViewCell {
     //        }
     //    }
 
+    func setImage(bg: UIImage, diagram: UIImage) {
+        self.bgImageView.image = bg
+        self.diagramImageView.image = diagram
+        self.hasImage = true
+    }
+
     func setImage(ardiagram: ARDiagram) {
         self.bgImageView.image = ardiagram.bgImage
         self.diagramImageView.image = ardiagram.diagram
