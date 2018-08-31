@@ -38,12 +38,20 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     var bgImage: UIImage?
     var imagePicker: UIImagePickerController!
     var selectedIndex: IndexPath!
-    var sCV: UICollectionView!
+    var selectedCV: UICollectionView!
     var username: String = ""
-    var shouldEditPhoto: Bool = false
+
+    // ar
+    var selectedAr: [String: [UIImage]] = [:]
+    var arKeys: [String] = []
+    var newArKeys: [String] = []
+
+    // images
     var selectedImages: [String: UIImage] = [:]
     var imageKeys: [String] = []
-    var newKeys: [String] = []
+    var newImageKeys: [String] = []
+
+    // general information
     var newDescription: String?
     var newProtection: String?
 
@@ -68,12 +76,15 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.newDescription = self.theRoute.info
         self.newProtection = self.theRoute.protection
 
-        for image in selectedImages {
-            imageKeys.append(image.key)
-        }
+        imageKeys = Array(selectedImages.keys)
+        arKeys = Array(selectedAr.keys)
 
         if !selectedImages.isEmpty {
             self.photosLabel.text = ""
+        }
+
+        if !selectedAr.isEmpty {
+            self.ARDiagramsLabel.text = ""
         }
 
         if let userId = Auth.auth().currentUser?.uid, let userRating = self.theRoute.stars[userId] {
@@ -149,8 +160,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.descriptionTextView.scrollRangeToVisible(NSRange(location: 0, length: 0))
     }
     @IBAction private func addNewPhoto(_ sender: UIButton) {
-        sCV = photoCV
-        self.shouldEditPhoto = false
+        selectedCV = photoCV
         if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
             imagePicker.sourceType = .savedPhotosAlbum
             imagePicker.allowsEditing = false
@@ -158,29 +168,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
     }
     @IBAction private func addNewARPhoto(_ sender: UIButton) {
-        sCV = ARCV
-        let alertController = UIAlertController(title: nil, message: "Edit a photo or upload a previously created diagram.", preferredStyle: .actionSheet)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
-        let editPhoto = UIAlertAction(title: "Edit Photo", style: .default) { _ in
-            self.shouldEditPhoto = true
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
-                self.imagePicker.sourceType = .savedPhotosAlbum
-                self.imagePicker.allowsEditing = false
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }
+        selectedCV = ARCV
+        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
+            self.imagePicker.sourceType = .savedPhotosAlbum
+            self.imagePicker.allowsEditing = false
+            self.present(self.imagePicker, animated: true, completion: nil)
         }
-        let uploadDiagram = UIAlertAction(title: "Upload Diagram", style: .default) { _ in
-            self.shouldEditPhoto = false
-            if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum) {
-                self.imagePicker.sourceType = .savedPhotosAlbum
-                self.imagePicker.allowsEditing = false
-                self.present(self.imagePicker, animated: true, completion: nil)
-            }
-        }
-        alertController.addAction(cancel)
-        alertController.addAction(editPhoto)
-        alertController.addAction(uploadDiagram)
-        self.present(alertController, animated: true)
     }
 
     // MARK: - CollectionView
@@ -217,46 +210,25 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if collectionView == photoCV {
             return self.selectedImages.count
         } else {
-            return 0
+            return self.selectedAr.count
         }
-
-        //        if collectionView == photoCV {
-        ////            if self.images.count > 0 {
-        //            if self.theRoute.images?.count ?? 0 > 0 {
-        //                self.photosLabel.isHidden = true
-        //            } else {
-        //                self.photosLabel.isHidden = false
-        //            }
-        //            return self.theRoute.images?.count ?? 0
-        ////            return self.images.count
-        //        } else {
-        ////            if self.arimages.count > 0 {
-        //            if self.theRoute.ardiagrams?.count ?? 0 > 0 {
-        //                self.ARDiagramsLabel.isHidden = true
-        //            } else {
-        //                self.ARDiagramsLabel.isHidden = false
-        //            }
-        //            return self.theRoute.ardiagrams?.count ?? 0
-        ////            return self.arimages.count
-        //        }
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == photoCV {
             let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoCell", for: indexPath)
-//            guard let cell = tempCell as? AddImageCell, let newImage = newImagesWithKeys[itemKey] else { return tempCell }
-//            let itemKey = self.imgKeys[indexPath.row]
             guard let cell = tempCell as? AddImageCell else { return tempCell }
             let imageKey = self.imageKeys[indexPath.row]
             guard let image = self.selectedImages[imageKey] else { return tempCell }
             cell.setImage(with: image)
             return cell
+        } else {
+            let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
+            guard let cell = tempCell as? AddARImageCell else { return tempCell }
+            let arKey = self.arKeys[indexPath.row]
+            guard let ar = self.selectedAr[arKey] else { return tempCell }
+            cell.setImage(bg: ar[0], diagram: ar[1])
+            return cell
         }
-        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ARCell", for: indexPath)
-        guard let cell = tempCell as? AddARImageCell else { return tempCell }
-        //        cell.bgImageView.image = self.theRoute.ardiagrams?[indexPath.row].bgImage
-        cell.setImage(ardiagram: self.theRoute.ardiagrams[indexPath.row])
-        return cell
-
     }
 
     // MARK: - Action Sheet
@@ -294,19 +266,16 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
 
         let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
-        if sCV == photoCV {
+        if selectedCV == photoCV {
             let imageId = UUID().uuidString
             self.selectedImages[imageId] = pickedImage
             self.imageKeys.append(imageId)
-            self.newKeys.append(imageId)
+            self.newImageKeys.append(imageId)
             self.photosLabel.text = ""
-        } else if self.shouldEditPhoto == false {
-            self.theRoute.ardiagrams.insert(ARDiagram(bgImage: pickedImage), at: 0)
+            self.photoCV.reloadData()
         }
-        self.photoCV.reloadData()
-        self.ARCV.reloadData()
         dismiss(animated: true) {
-            if self.shouldEditPhoto == true {
+            if self.selectedCV == self.ARCV {
                 self.performSegue(withIdentifier: "presentEditARPhoto", sender: pickedImage)
             }
         }
@@ -342,10 +311,17 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         theRoute.info = self.newDescription
         theRoute.protection = self.newProtection
         theRoute.types = populateTypes()
-        for imageKey in self.newKeys {
+
+        //save images
+        for imageKey in self.newImageKeys {
             guard let newImage = self.selectedImages[imageKey] else { continue }
             newImage.saveToFb(route: self.theRoute)
         }
+        for arKey in self.newArKeys {
+            guard let newAr = self.selectedAr[arKey] else { continue }
+            self.theRoute.saveArToFb(imageId: arKey, bgImage: newAr[0], dgImage: newAr[1])
+        }
+
         DispatchQueue.global(qos: .background).async {
             self.theRoute.fsSave()
         }
@@ -388,9 +364,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
-            if let theImage = sender as? UIImage {
-                dct.theImage = theImage
-            }
+            if let theImage = sender as? UIImage { dct.theImage = theImage }
             dct.theRoute = self.theRoute
         }
     }

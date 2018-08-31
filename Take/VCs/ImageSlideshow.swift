@@ -17,7 +17,8 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
 
     // MARK: - Variables
     var bgImage: UIImage?
-    var images: [UIImage] = []
+    var images: [[UIImage]] = []
+    var isAr: Bool = false
     var selectedImage: Int = 0
     var collectionViewFlowLayout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
 
@@ -48,7 +49,10 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         guard let cell = tempCell as? SlideshowImageCell else { return tempCell }
-        cell.setImage(with: images[indexPath.row])
+        cell.setImage(with: images[indexPath.row][0])
+        if self.isAr {
+            cell.setDiagram(with: images[indexPath.row][1])
+        }
         return cell
     }
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
