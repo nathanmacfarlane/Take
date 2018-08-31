@@ -128,37 +128,9 @@ extension UIImage {
                 guard let downloadURL = url else { return }
                 route.imageUrls[imageId] = "\(downloadURL)"
                 Firestore.firestore().collection("routes").document("\(route.id)").setData(["imageUrls": route.imageUrls], merge: true)
-//                print("updating ref with: \([imageId: downloadURL])")
-//                route.ref?.child("imageUrls").updateChildValues([imageId: downloadURL])
             }
 
         }
-
-//        var imageUrls: [String: String] = [:]
-//        let sizes: [[String: Any]] = [["sizeString": "Thumbnail", "sizeInt": 400.0], ["sizeString": "Large", "sizeInt": 2048.0]]
-//        for i in 0...1 {
-//            let imageId = UUID().uuidString
-//            guard let sizeString = sizes[i]["sizeString"] as? String,
-//                let sizeInt = sizes[i]["sizeInt"] as? Double,
-//                let theImage = self.resizedToKB(numKB: sizeInt)
-//                else { return }
-//            guard let data = UIImagePNGRepresentation(theImage) as NSData? else { return }
-//            _ = imageRef.child("\(imageId)-\(sizeString).png").putData(data as Data, metadata: nil) { metadata, _ in
-//                guard metadata != nil else {
-//                    return
-//                }
-//                imageRef.child("\(imageId)-\(sizeString).png").downloadURL { url, _ in
-//                    guard let downloadURL = url else {
-//                        return
-//                    }
-//                    imageUrls[sizeString] = "\(downloadURL)"
-//                    if imageUrls.keys.count == 2 {
-//                        route.ref?.child("imageUrls").updateChildValues([imageId: imageUrls])
-//                    }
-//                }
-//
-//            }
-//        }
     }
 
 }
