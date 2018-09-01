@@ -26,8 +26,6 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.myImageCV.contentInset = UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 20)
-
         let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(self.swipeDown(sender:)))
         swipeDown.direction = .down
         self.myImageCV.addGestureRecognizer(swipeDown)
