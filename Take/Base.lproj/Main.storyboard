@@ -874,7 +874,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="120" id="Oea-1P-ima" customClass="CommentCell" customModule="Take" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="120" id="Oea-1P-ima" customClass="CommentCell" customModule="Take" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="343" height="120"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Oea-1P-ima" id="S7B-vi-iUT">
@@ -882,7 +882,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZQs-Yg-3Sn">
-                                                    <rect key="frame" x="7" y="0.0" width="290" height="109"/>
+                                                    <rect key="frame" x="7" y="0.0" width="329" height="109"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -1195,7 +1195,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="61" id="ng8-qI-ElU" customClass="AreaExpandableCell" customModule="Take" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="61" id="ng8-qI-ElU" customClass="AreaExpandableCell" customModule="Take" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="320" height="61"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ng8-qI-ElU" id="xYp-UH-ipJ">
@@ -1460,7 +1460,7 @@
                                     <outlet property="delegate" destination="4Zz-Du-SCf" id="pVD-ir-x9U"/>
                                 </connections>
                             </textView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WUh-38-8cp">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="WUh-38-8cp">
                                 <rect key="frame" x="18" y="98" width="339" height="29"/>
                                 <segments>
                                     <segment title="Description"/>
@@ -1541,6 +1541,7 @@
                             <constraint firstItem="kDW-Z6-roR" firstAttribute="leading" secondItem="5mt-hb-O4y" secondAttribute="leading" constant="16" id="Va2-h3-3Is"/>
                             <constraint firstItem="llu-R3-LG6" firstAttribute="bottom" secondItem="hd1-XK-H1j" secondAttribute="bottom" id="Vxv-3E-kAV"/>
                             <constraint firstItem="uk1-ZU-82g" firstAttribute="bottom" secondItem="xJL-Cx-ucM" secondAttribute="bottom" id="XNY-50-fwc"/>
+                            <constraint firstItem="WUh-38-8cp" firstAttribute="width" secondItem="SR1-LT-ret" secondAttribute="width" id="XXt-oL-MAl"/>
                             <constraint firstItem="MQl-vf-Td1" firstAttribute="centerX" secondItem="aGq-p0-AJN" secondAttribute="centerX" id="XdE-cs-7eI"/>
                             <constraint firstItem="PHd-jU-OKu" firstAttribute="trailing" secondItem="L4w-PJ-6Cb" secondAttribute="trailing" id="Zc9-mP-0OV"/>
                             <constraint firstItem="L4w-PJ-6Cb" firstAttribute="top" secondItem="LlO-f8-vMT" secondAttribute="top" id="aTz-Uw-a1g"/>
@@ -2045,7 +2046,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="26" id="1ap-v3-8Lc" customClass="ChartTypesCell" customModule="Take" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" rowHeight="26" id="1ap-v3-8Lc" customClass="ChartTypesCell" customModule="Take" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="174" height="26"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="1ap-v3-8Lc" id="WNA-Jx-O6R">
