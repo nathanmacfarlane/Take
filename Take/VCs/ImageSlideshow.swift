@@ -39,7 +39,7 @@ class ImageSlideshow: UIViewController, UICollectionViewDelegate, UICollectionVi
         if let cvfl = myImageCV.collectionViewLayout as? UICollectionViewFlowLayout {
             collectionViewFlowLayout = cvfl
         }
-        self.myImageCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .centeredHorizontally, animated: true)
+        self.myImageCV.scrollToItem(at: IndexPath(item: selectedImage, section: 0), at: .left, animated: true)
     }
 
     // MARK: - UICollectionView
