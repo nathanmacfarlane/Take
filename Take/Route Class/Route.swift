@@ -19,7 +19,7 @@ class RouteService: Codable {
     var routes: [Route] = []
 }
 
-class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
+class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirestore {
 
     // MARK: - properties
     var name: String
@@ -46,7 +46,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     // urls to images in storage
 
 //    var newARDiagrams: [ARDiagram] = []
-    var ardiagrams: [ARDiagram] = []
+//    var ardiagrams: [ARDiagram] = []
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -66,7 +66,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
     }
 
     //private stuff
-    private var allDiagrams: [String: [String]] = [:]
+//    private var allDiagrams: [String: [String]] = [:]
 
     var averageStar: Double? {
         if stars.isEmpty { return nil }
@@ -260,27 +260,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
         .resume()
     }
 
-    func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void) {
-        let keys = Array(images.keys)
-        for imageKey in keys {
-            guard let image = images[imageKey],
-                let largeImage = image.resizedToKB(numKB: 2048),
-                let smallImage = image.resizedToKB(numKB: 2048)
-                else { continue }
-            savePhotoToFb(image: largeImage, size: "Large")
-            savePhotoToFb(image: smallImage, size: "Thumbnail")
-        }
-    }
-
-    func fsSaveAr(ar: [String: [UIImage]], completion: @escaping () -> Void) {
-        let keys = Array(ar.keys)
-        for arKey in keys {
-            guard let arImage = ar[arKey], let bgImage = arImage[0].resizedToKB(numKB: 1024), let dgImage = arImage[1].resizedToKB(numKB: 1024) else { continue }
-            saveArToFb(imageId: arKey, bgImage: bgImage, dgImage: dgImage)
-        }
-    }
-
-    func saveArToFb(imageId: String, bgImage: UIImage, dgImage: UIImage) {
+    func fsSaveAr(imageId: String, bgImage: UIImage, dgImage: UIImage) {
         let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
         guard let bgData = UIImageJPEGRepresentation(bgImage, 0.25) as NSData?, let dgData = UIImagePNGRepresentation(dgImage) as NSData? else { return }
 
@@ -313,20 +293,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation, RouteFirebase {
             }
         }
 
-    }
-
-    private func savePhotoToFb(image: UIImage, size: String) {
-        let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
-        guard let data = UIImagePNGRepresentation(image) as NSData? else { return }
-        let imageId = UUID().uuidString
-        _ = imageRef.child("\(imageId)-\(size).png").putData(data as Data, metadata: nil) { metadata, _ in
-            guard metadata != nil else { return }
-            imageRef.child("\(imageId)-\(size).png").downloadURL { url, _ in
-                guard let downloadURL = url else { return }
-                self.ref?.child("images").updateChildValues([imageId: downloadURL])
-            }
-
-        }
     }
 
 }

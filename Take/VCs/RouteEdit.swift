@@ -319,7 +319,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         for arKey in self.newArKeys {
             guard let newAr = self.selectedAr[arKey] else { continue }
-            self.theRoute.saveArToFb(imageId: arKey, bgImage: newAr[0], dgImage: newAr[1])
+            self.theRoute.fsSaveAr(imageId: arKey, bgImage: newAr[0], dgImage: newAr[1])
         }
 
         DispatchQueue.global(qos: .background).async {
