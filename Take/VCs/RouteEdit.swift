@@ -329,6 +329,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if let presenter = presentingViewController as? RouteDetail {
             presenter.imageKeys = self.imageKeys
             presenter.images = self.selectedImages
+            presenter.diagramKeys = self.arKeys
+            presenter.diagrams = self.selectedAr
         }
 
         self.dismiss(animated: true, completion: nil)

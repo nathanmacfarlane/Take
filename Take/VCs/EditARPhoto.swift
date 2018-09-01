@@ -11,11 +11,11 @@ import UIKit
 class EditARPhoto: UIViewController {
 
     // MARK: - IBOutlets
+    @IBOutlet private weak var bgImageView: UIImageView!
     @IBOutlet private weak var myImageView: UIImageView!
     @IBOutlet private weak var backButton: UIButton!
     @IBOutlet private var panGesture: UIPanGestureRecognizer!
     @IBOutlet private weak var canvasView: UIView!
-    @IBOutlet private weak var colorSegControl: UISegmentedControl!
 
     // MARK: - variables
     var theRoute: Route!
@@ -23,7 +23,7 @@ class EditARPhoto: UIViewController {
     var path: UIBezierPath = UIBezierPath()
     var startPoint: CGPoint = CGPoint()
     var touchPoint: CGPoint = CGPoint()
-    var paintColor: UIColor = .red
+    let paintColor: UIColor = UIColor(hexString: "A6D7FF")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +32,7 @@ class EditARPhoto: UIViewController {
         canvasView.isMultipleTouchEnabled = false
 
         self.myImageView.image = theImage
+        self.bgImageView.image = theImage
         self.backButton.roundButton(portion: 4)
 
     }
@@ -67,17 +68,6 @@ class EditARPhoto: UIViewController {
         path.removeAllPoints()
         canvasView.layer.sublayers = nil
         canvasView.setNeedsDisplay()
-    }
-
-    // MARK: SegControl
-    @IBAction private func colorSegChanged(_ sender: UISegmentedControl) {
-        switch sender.selectedSegmentIndex {
-        case 0:
-            self.paintColor = .red
-        case 1:
-            self.paintColor = .blue
-        default: break
-        }
     }
 
     // MARK: - Navigation
