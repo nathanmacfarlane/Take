@@ -68,6 +68,8 @@
 		04C83B4820BB6D6B008D842D /* close-white.png in Resources */ = {isa = PBXBuildFile; fileRef = 04C83B4720BB6D6B008D842D /* close-white.png */; };
 		04C83B4A20BBEB8A008D842D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */; };
 		2204AAE320C23DFC0035E3B7 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 2204AAE220C23DFC0035E3B7 /* plus.png */; };
+		220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725A8213A6C01005448E8 /* RouteFirestore.swift */; };
+		220725AB213A6CE7005448E8 /* RouteFirestoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725AA213A6CE7005448E8 /* RouteFirestoreExtension.swift */; };
 		2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2214BC30211FE9900076E777 /* AreaExpandableCell.swift */; };
 		2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70B20C8D50D00F525EC /* GeoFire.swift */; };
 		2220E70E20C8D78600F525EC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* String.swift */; };
@@ -87,7 +89,6 @@
 		22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22762CE7212BD730004B41F9 /* SegueFromRight.swift */; };
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
 		228ED47920CA6DEF00A4DBA4 /* AreaOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */; };
-		22963F50212F922B008D26C9 /* RouteFirebase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22963F4F212F922B008D26C9 /* RouteFirebase.swift */; };
 		229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */; };
 		229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */; };
 		229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */; };
@@ -176,6 +177,8 @@
 		04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		04FFDFE6487317316789CBF4 /* Pods-Take.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.release.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.release.xcconfig"; sourceTree = "<group>"; };
 		2204AAE220C23DFC0035E3B7 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		220725A8213A6C01005448E8 /* RouteFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestore.swift; sourceTree = "<group>"; };
+		220725AA213A6CE7005448E8 /* RouteFirestoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestoreExtension.swift; sourceTree = "<group>"; };
 		2214BC30211FE9900076E777 /* AreaExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaExpandableCell.swift; sourceTree = "<group>"; };
 		2220E70B20C8D50D00F525EC /* GeoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFire.swift; sourceTree = "<group>"; };
 		2220E70D20C8D78600F525EC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -195,7 +198,6 @@
 		22762CE7212BD730004B41F9 /* SegueFromRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegueFromRight.swift; sourceTree = "<group>"; };
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
 		228ED47820CA6DEF00A4DBA4 /* AreaOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaOverlay.swift; sourceTree = "<group>"; };
-		22963F4F212F922B008D26C9 /* RouteFirebase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirebase.swift; sourceTree = "<group>"; };
 		229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Knot.png"; sourceTree = "<group>"; };
 		229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Fire.png"; sourceTree = "<group>"; };
 		229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Blue.png"; sourceTree = "<group>"; };
@@ -441,7 +443,8 @@
 		22963F4E212F9216008D26C9 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
-				22963F4F212F922B008D26C9 /* RouteFirebase.swift */,
+				220725A8213A6C01005448E8 /* RouteFirestore.swift */,
+				220725AA213A6CE7005448E8 /* RouteFirestoreExtension.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -685,6 +688,7 @@
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
 				04C83B1120B54ED6008D842D /* Tick.swift in Sources */,
 				04C83B0720B52B68008D842D /* ARView.swift in Sources */,
+				220725AB213A6CE7005448E8 /* RouteFirestoreExtension.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
 				04C83B4020B95343008D842D /* UIScrollView.swift in Sources */,
 				043F788B20AEA44E0043C08A /* UITextView.swift in Sources */,
@@ -706,7 +710,6 @@
 				22A2C982211A796C00743AC4 /* WallCell.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
 				22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */,
-				22963F50212F922B008D26C9 /* RouteFirebase.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */,
 				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
@@ -714,6 +717,7 @@
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
 				045145452094273200FE72BB /* SearchContainerView.swift in Sources */,
 				22A2C986211AB75500743AC4 /* RouteArea.swift in Sources */,
+				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
 				04BA11FD20AD344400D24C4F /* Comment.swift in Sources */,
 				2259C46F20CDDEAC0000065E /* UITableView.swift in Sources */,
 				22546BC621192B9600F92025 /* BadRoute.swift in Sources */,

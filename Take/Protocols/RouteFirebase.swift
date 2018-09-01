@@ -10,11 +10,9 @@ import Firebase
 import Foundation
 import UIKit
 
-protocol RouteFirebase: class {
-
+protocol RouteFirestore: class {
     func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void)
     func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void)
-    func fbSaveImages(images: [String: UIImage], completion: @escaping () -> Void)
-    func fsSaveAr(ar: [String: [UIImage]], completion: @escaping () -> Void)
+    func fsSaveAr(imageId: String, bgImage: UIImage, dgImage: UIImage)
     func fsLoadAR(completion: @escaping (_ ar: [String: [UIImage]]) -> Void)
 }
