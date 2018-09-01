@@ -28,13 +28,13 @@ class ARView: UIViewController, ARSCNViewDelegate {
         var refImageArr: [ARReferenceImage] = []
 
         var count = 0
-        for image in theRoute?.ardiagrams ?? [] {
-            guard let cgImage = image.bgImage.cgImage else { continue }
-            let refImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: 10)
-            refImage.name = "\(count)"
-            refImageArr.append(refImage)
-            count += 1
-        }
+//        for image in theRoute?.ardiagrams ?? [] {
+//            guard let cgImage = image.bgImage.cgImage else { continue }
+//            let refImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: 10)
+//            refImage.name = "\(count)"
+//            refImageArr.append(refImage)
+//            count += 1
+//        }
         let referenceImages = Set(refImageArr)
         let configuration = ARWorldTrackingConfiguration()
         configuration.detectionImages = referenceImages
@@ -48,28 +48,28 @@ class ARView: UIViewController, ARSCNViewDelegate {
 
     // MARK: - ARView
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-        guard let imageAnchor = anchor as? ARImageAnchor else { return }
-        let referenceImage = imageAnchor.referenceImage
-        DispatchQueue.global(qos: .background).async {
-            let plane = SCNPlane(width: referenceImage.physicalSize.width,
-                                 height: referenceImage.physicalSize.height)
-            guard let referenceName = referenceImage.name, let index = Int(referenceName) else { return }
-            guard let theRoute = self.theRoute, let theDiagram = theRoute.ardiagrams[index].diagram else { return }
-            var theImage = self.imageByCombiningImage(firstImage: theDiagram, withImage: theRoute.ardiagrams[index].bgImage)
-            //            plane.materials[0].diffuse.contents = theImage
-            //            var theImage = self.theRoute!.ardiagrams![index].diagram!
-            //            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
-            theImage = theImage.textToImage(drawText: theRoute.name, atPoint: CGPoint(x: 20, y: 20))
-            plane.materials[0].diffuse.contents = theImage
-            self.rotatePlane(planeMaterial: plane.materials[0])
-
-            let planeNode = SCNNode(geometry: plane)
-            planeNode.opacity = 1.0
-            planeNode.eulerAngles.x = -.pi / 2
-            node.addChildNode(planeNode)
-            //            self.planes.removeAll()
-            //            self.planes.append(planeNode)
-        }
+//        guard let imageAnchor = anchor as? ARImageAnchor else { return }
+//        let referenceImage = imageAnchor.referenceImage
+//        DispatchQueue.global(qos: .background).async {
+//            let plane = SCNPlane(width: referenceImage.physicalSize.width,
+//                                 height: referenceImage.physicalSize.height)
+//            guard let referenceName = referenceImage.name, let index = Int(referenceName) else { return }
+//            guard let theRoute = self.theRoute, let theDiagram = theRoute.ardiagrams[index].diagram else { return }
+//            var theImage = self.imageByCombiningImage(firstImage: theDiagram, withImage: theRoute.ardiagrams[index].bgImage)
+//            //            plane.materials[0].diffuse.contents = theImage
+//            //            var theImage = self.theRoute!.ardiagrams![index].diagram!
+//            //            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
+//            theImage = theImage.textToImage(drawText: theRoute.name, atPoint: CGPoint(x: 20, y: 20))
+//            plane.materials[0].diffuse.contents = theImage
+//            self.rotatePlane(planeMaterial: plane.materials[0])
+//
+//            let planeNode = SCNNode(geometry: plane)
+//            planeNode.opacity = 1.0
+//            planeNode.eulerAngles.x = -.pi / 2
+//            node.addChildNode(planeNode)
+//            //            self.planes.removeAll()
+//            //            self.planes.append(planeNode)
+//        }
     }
 
     func rotatePlane(planeMaterial: SCNMaterial) {
