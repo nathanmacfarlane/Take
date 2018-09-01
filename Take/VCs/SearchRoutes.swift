@@ -34,7 +34,6 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     @IBOutlet private weak var myTableView: UITableView!
     @IBOutlet private weak var mySearchBar: UISearchBar!
     @IBOutlet private weak var mySearchCV: UIView!
-    @IBOutlet private weak var routesRangeLabel: UILabel!
     @IBOutlet private weak var myActivityIndicator: UIActivityIndicatorView!
 
     // MARK: - Variables
@@ -62,8 +61,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         UITabBar.appearance().barTintColor = self.view.backgroundColor
 
         self.myActivityIndicator.isHidden = true
-        self.routesRangeLabel.text = ""
-
+        
         results = SearchResults(walls: [], areas: [], cities: [], routes: [])
 
         if Auth.auth().currentUser == nil {
