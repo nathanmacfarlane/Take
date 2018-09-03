@@ -20,6 +20,7 @@ class Area: Codable {
     var radius: Double
     var coverPhotoUrl: String?
     var description: String
+    var directions: String?
     var city: Int?
     var keyword: String?
 
@@ -35,6 +36,7 @@ class Area: Codable {
         case longitude
         case coverPhotoUrl
         case description
+        case directions
         case city
         case keyword
     }

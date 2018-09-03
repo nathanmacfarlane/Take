@@ -7,90 +7,116 @@
 //
 
 import Charts
+import FirebaseFirestore
 import UIKit
 
-class AreaView: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var routeNameLabel: UILabel!
-    @IBOutlet private weak var myTableView: UITableView!
-    var donutChartCV: DonutChart = DonutChart()
+    @IBOutlet private weak var informationLabel: UILabel!
+    @IBOutlet private weak var photosCV: UICollectionView!
+    @IBOutlet private weak var routesContainer: UIView!
+    @IBOutlet private weak var difficultyContainer: UIView!
 
     // MARK: - Variables
-    var routeArea: RouteArea = RouteArea()
-    var rows: [TitleRow] = [TitleRow(name: "Description", color: UIColor(hexString: "#5DDE9E"), expanded: false), TitleRow(name: "Routes", color: UIColor(hexString: "#88DBFA"), expanded: false), TitleRow(name: "Images", color: UIColor(hexString: "#A3A0FB"), expanded: false), TitleRow(name: "Directions", color: UIColor(hexString: "#DE9898"), expanded: false), TitleRow(name: "Type", color: UIColor(hexString: "#D391C4"), expanded: false), TitleRow(name: "Difficulty", color: UIColor(hexString: "#E2C977"), expanded: false), TitleRow(name: "Popularity", color: UIColor(hexString: "#5DDE9E"), expanded: false)]
-    var rowHeight: CGFloat = 61
-
-    // MARK: - Structs
-    struct TitleRow {
-        var name: String
-        var color: UIColor
-        var expanded: Bool
-    }
+    var areaImage: UIImage?
+    var theArea: Area!
+    var routes: [Route] = []
+    var images: [String: UIImage] = [:]
+    var imageKeys: [String] = []
+    var selectedImage: UIImage?
+    var routesCV: RoutesList?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        searchFBRoute(byProperty: "area", withValue: routeArea.name) { routes in
-//            var trad = 0
-//            var topRope = 0
-//            var sport = 0
-//            var boulder = 0
-//            for route in routes {
-//                if let types = route.types {
-//                    if types.contains("TR") {
-//                        topRope += 1
-//                    }
-//                    if types.contains("Sport") {
-//                        sport += 1
-//                    }
-//                    if types.contains("Trad") {
-//                        trad += 1
-//                    }
-//                    if types.contains("Boulder") {
-//                        boulder += 1
-//                    }
-//                }
-//            }
-//            self.donutChartCV.updateChartData(trad: trad, boulder: boulder, topRope: topRope, sport: sport, count: routes.count)
-//        }
+        self.photosCV.backgroundColor = .clear
+        self.difficultyContainer.isHidden = true
 
-        self.routeNameLabel.text = routeArea.name
+        Firestore.firestore().query(type: Route.self, by: "areaId", with: theArea.id) { routes in
+            DispatchQueue.main.async {
+                if let routesCV = self.routesCV {
+                    routesCV.routes = routes
+                    routesCV.reloadTV()
+                }
+            }
+            self.routes = routes
+            var count = 0
+            for route in self.routes {
+                route.fsLoadImages { images in
+                    for image in images {
+                        self.images[image.key] = image.value
+                        self.imageKeys.append(image.key)
+                    }
+                    count += 1
+                    if count == self.routes.count {
+                        DispatchQueue.main.async {
+                            self.photosCV.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+
+        informationLabel.text = theArea.description
+        routeNameLabel.text = theArea.name
     }
 
-    // MARK: - UITableView
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return rows.count
+    // MARK: - SegControl
+    @IBAction private func informationSegChanged(_ sender: UISegmentedControl) {
+        self.informationLabel.text = sender.selectedSegmentIndex == 0 ? theArea.description : theArea.directions
     }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return rows[indexPath.row].expanded ? 120 : rowHeight
+    @IBAction func routesSegChanged(_ sender: UISegmentedControl) {
+        switch sender.selectedSegmentIndex {
+        case 0:
+            self.difficultyContainer.isHidden = true
+            self.routesContainer.isHidden = false
+        case 1:
+            self.difficultyContainer.isHidden = false
+            self.routesContainer.isHidden = true
+        case 2:
+            self.difficultyContainer.isHidden = true
+            self.routesContainer.isHidden = true
+        default:
+            print("un-accounted for seg stuff")
+        }
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        tableView.beginUpdates()
-        var new = rows[indexPath.row]
-        new.expanded = !new.expanded
-        rows[indexPath.row] = new
-        tableView.endUpdates()
+
+    // MARK: - CollectionView
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageKeys.count
     }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let tempCell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        guard let cell = tempCell as? AreaExpandableCell else { return UITableViewCell() }
-        cell.setTitleColor(with: rows[indexPath.row].color)
-        cell.setTitleLabel(with: rows[indexPath.row].name)
-        cell.roundBG()
-        cell.selectionStyle = .none
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
+        guard let cell = tempCell as? DetailImagesCell else { return tempCell }
+        guard let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
+        cell.setImage(with: cellImage)
+        cell.clearDgImage()
         return cell
     }
 
     // MARK: - Navigation
+    func goToRoute(route: Route, image: UIImage?) {
+        self.selectedImage = image
+        self.performSegue(withIdentifier: "goToDetail", sender: route)
+    }
     @IBAction private func goBack(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
-
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "DonutChart", let donutChart = segue.destination as? DonutChart {
-            self.donutChartCV = donutChart
+        if segue.identifier == "routesList" {
+            guard let dct = segue.destination as? RoutesList else { return }
+            routesCV = dct
+            dct.routes = self.routes
+            dct.areaImage = self.areaImage
+            dct.theArea = self.theArea
+        } else if segue.identifier == "goToDetail" {
+            guard let dct = segue.destination as? RouteDetail else { return }
+            guard let theRoute = sender as? Route else { return }
+            dct.theRoute = theRoute
+            dct.bgImage = selectedImage
         }
     }
 

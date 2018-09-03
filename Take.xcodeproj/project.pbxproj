@@ -75,6 +75,8 @@
 		2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70B20C8D50D00F525EC /* GeoFire.swift */; };
 		2220E70E20C8D78600F525EC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* String.swift */; };
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
+		2222133E213D1B280042AFC9 /* RoutesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133D213D1B280042AFC9 /* RoutesList.swift */; };
+		22221340213D2C800042AFC9 /* DifficultyChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133F213D2C800042AFC9 /* DifficultyChart.swift */; };
 		22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22468EAC20FA666F003C1B5A /* MapMainView.swift */; };
 		22546BC621192B9600F92025 /* BadRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC521192B9600F92025 /* BadRoute.swift */; };
 		22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC721193A5B00F92025 /* RouteProtection.swift */; };
@@ -185,6 +187,8 @@
 		2220E70B20C8D50D00F525EC /* GeoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFire.swift; sourceTree = "<group>"; };
 		2220E70D20C8D78600F525EC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
+		2222133D213D1B280042AFC9 /* RoutesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesList.swift; sourceTree = "<group>"; };
+		2222133F213D2C800042AFC9 /* DifficultyChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyChart.swift; sourceTree = "<group>"; };
 		22468EAC20FA666F003C1B5A /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		22546BC521192B9600F92025 /* BadRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadRoute.swift; sourceTree = "<group>"; };
 		22546BC721193A5B00F92025 /* RouteProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProtection.swift; sourceTree = "<group>"; };
@@ -456,6 +460,8 @@
 			isa = PBXGroup;
 			children = (
 				22E35FFA211FE3A100E95723 /* DonutChart.swift */,
+				2222133D213D1B280042AFC9 /* RoutesList.swift */,
+				2222133F213D2C800042AFC9 /* DifficultyChart.swift */,
 			);
 			path = ContainerViews;
 			sourceTree = "<group>";
@@ -716,6 +722,7 @@
 				22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */,
+				2222133E213D1B280042AFC9 /* RoutesList.swift in Sources */,
 				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
 				04C83B3E20B93E0F008D842D /* UIChartView.swift in Sources */,
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
@@ -743,6 +750,7 @@
 				043F788720AEA4120043C08A /* UIButton.swift in Sources */,
 				04C83B4420BB6520008D842D /* AreaView.swift in Sources */,
 				043F788920AEA4220043C08A /* UIView.swift in Sources */,
+				22221340213D2C800042AFC9 /* DifficultyChart.swift in Sources */,
 				046E3E5E20BBF6E2009E63D8 /* Login.swift in Sources */,
 				0452557A2091BCAD00A4A384 /* RouteCell.swift in Sources */,
 				043F789120AEBF270043C08A /* UIImage.swift in Sources */,
