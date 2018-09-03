@@ -40,7 +40,6 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     private var myCV: SearchContainerView = SearchContainerView()
     let locationManager: CLLocationManager = CLLocationManager()
     var userCurrentLocation: CLLocation?
-    //    var selectedRoute : Route!
     var selectedImage: UIImage?
     var routesRoot: DatabaseReference?
     var firstImages: [String: UIImage] = [:]
@@ -61,7 +60,6 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         UITabBar.appearance().barTintColor = self.view.backgroundColor
 
         self.myActivityIndicator.isHidden = true
-        
         results = SearchResults(walls: [], areas: [], cities: [], routes: [])
 
         if Auth.auth().currentUser == nil {
@@ -83,8 +81,6 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.myTableView.reloadData()
 
     }
-
-    // MARK: - Actions
 
     // MARK: - Functions
     func setupLocations() {
@@ -138,58 +134,14 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.myTableView.reloadData()
             self.myActivityIndicator.stopAnimating()
         }
-//        db.getRoutesBy("name", withValue: searchText) { routes in
-//            self.results.routes.append(contentsOf: routes)
-//            self.resultsMashed.append(contentsOf: routes)
-//            self.myTableView.reloadData()
-//            self.myActivityIndicator.stopAnimating()
-//        }
-
-//        var count = 0
-//        self.mySearchBar.resignFirstResponder()
-////        guard let searchText = searchBar.text else { return }
-//        searchFBRoute(byProperty: "name", withValue: searchText) { routes in
-//            self.results.routes.append(contentsOf: routes)
-//            self.resultsMashed.append(contentsOf: routes)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRoute(byProperty: "keyword", withValue: searchText) { routes in
-//            self.results.routes.append(contentsOf: routes)
-//            self.resultsMashed.append(contentsOf: routes)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteAreas(byProperty: "name", withValue: searchText) { areas in
-//            self.resultsMashed.append(contentsOf: areas)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteAreas(byProperty: "keyword", withValue: searchText) { areas in
-//            self.resultsMashed.append(contentsOf: areas)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteWalls(byProperty: "name", withValue: searchText) { walls in
-//            self.resultsMashed.append(contentsOf: walls)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteWalls(byProperty: "keyword", withValue: searchText) { walls in
-//            self.resultsMashed.append(contentsOf: walls)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteCities(byProperty: "name", withValue: searchText) { cities in
-//            self.resultsMashed.append(contentsOf: cities)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
-//        searchFBRouteCities(byProperty: "keyword", withValue: searchText) { cities in
-//            self.resultsMashed.append(contentsOf: cities)
-//            self.myTableView.reloadData()
-//            count = self.manageSpinner(count: count)
-//        }
+        db.query(type: Area.self, by: "keyword", with: searchText) { areas in
+            self.resultsMashed.append(contentsOf: areas)
+            for area in areas {
+                self.results.areas.append(area.name)
+            }
+            self.myTableView.reloadData()
+            self.myActivityIndicator.stopAnimating()
+        }
     }
     func manageSpinner(count: Int) -> Int {
         if count == 7 {
@@ -206,25 +158,25 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         switch anyItem {
         case is Route:
             guard let theRoute = anyItem as? Route else { return }
+            self.selectedImage = nil
             if let routeCell = tableView.cellForRow(at: indexPath) as? RouteCell {
                 self.selectedImage = routeCell.getImage()
             }
             self.performSegue(withIdentifier: "goToDetail", sender: theRoute)
         case is Wall:
             print("selected wall")
-        case is RouteArea:
-            guard let theRouteArea = anyItem as? RouteArea else { return }
+        case is Area:
+            guard let theRouteArea = anyItem as? Area else { return }
+            self.selectedImage = nil
+            if let areaCell = tableView.cellForRow(at: indexPath) as? AreaCell {
+                self.selectedImage = areaCell.getImage()
+            }
             self.performSegue(withIdentifier: "goToArea", sender: theRouteArea)
         case is City:
             print("selected city")
         default:
             print("not accounted for")
         }
-        //        if tableView.cellForRow(at: indexPath) is RouteCell {
-        //            selectedRoute = self.filteredRoutes[indexPath.row]
-        //            selectedImage = (tableView.cellForRow(at: indexPath) as! RouteCell).theImageView.image
-        //            self.performSegue(withIdentifier: "goToDetail", sender: nil)
-        //        }
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultsMashed.count
@@ -350,8 +302,9 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
             dct.bgImage = selectedImage
             dct.theRoute = theRoute
         }
-        if segue.identifier == "goToArea", let dct = segue.destination as? AreaView, let theRouteArea = sender as? RouteArea {
-            dct.routeArea = theRouteArea
+        if segue.identifier == "goToArea", let dct = segue.destination as? AreaView, let theRouteArea = sender as? Area {
+            dct.areaImage = selectedImage
+            dct.theArea = theRouteArea
         }
 
     }
