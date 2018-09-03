@@ -34,9 +34,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var imageUrls: [String: String] = [:]
     var routeArUrls: [String: [String]] = [:]
     var rating: String?
+    var commentIds: [String] = []
 
     // not really implemented on the new model
-    var comments: [Comment] = []
     var localDesc: [String] = []
     var latitude: Double?
     var longitude: Double?
@@ -58,6 +58,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         case pitches
         case rating
         case routeArUrls
+        case commentIds
     }
 
     var averageStar: Double? {
@@ -177,4 +178,17 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         }
     }
 
+    func getComments(completion: @escaping (_ comments: [Comment]) -> Void) {
+        var comments: [Comment] = []
+        var count = 0
+        for commentId in self.commentIds {
+            Firestore.firestore().getComment(id: commentId) { comment in
+                comments.append(comment)
+                count += 1
+                if count == self.commentIds.count {
+                    completion(comments)
+                }
+            }
+        }
+    }
 }

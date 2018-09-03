@@ -25,14 +25,38 @@ extension Firestore {
                 for document in snap.documents {
                     let route = try! FirebaseDecoder().decode(Route.self, from: document.data())
                     routes.append(route)
-//                    do {
-//                        let route = try FirebaseDecoder().decode(Route.self, from: document.data())
-//                        routes.append(route)
-//                    } catch let error {
-//                        print(error)
-//                    }
                 }
                 completion(routes)
+            }
+        }
+    }
+
+    func getUser(id: String, completion: @escaping (_ user: User) -> Void) {
+        let docRef = Firestore.firestore().collection("users").document(id)
+        docRef.getDocument { document, _ in
+            if let document = document, document.exists {
+                guard let user = try? FirebaseDecoder().decode(User.self, from: document.data() as Any) else {
+                    print("couldn't get comment")
+                    return
+                }
+                completion(user)
+            } else {
+                print("Document does not exist")
+            }
+        }
+    }
+
+    func getComment(id: String, completion: @escaping (_ comment: Comment) -> Void) {
+        let docRef = Firestore.firestore().collection("comments").document(id)
+        docRef.getDocument { document, _ in
+            if let document = document, document.exists {
+                guard let comment = try? FirebaseDecoder().decode(Comment.self, from: document.data() as Any) else {
+                    print("couldn't get comment")
+                    return
+                }
+                completion(comment)
+            } else {
+                print("Document does not exist")
             }
         }
     }

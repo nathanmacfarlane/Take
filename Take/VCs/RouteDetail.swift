@@ -97,7 +97,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.pitchesLabel.text = "\(theRoute.pitches)"
         self.pitchesSubLabel.text = "Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.routeNameLabel.text = theRoute.name
-        self.commentsButton.setTitle("\(theRoute.comments.count) Comments", for: .normal)
+        self.commentsButton.setTitle("\(theRoute.commentIds.count) \(theRoute.commentIds.count != 1 ? "Comments" : "Comment")", for: .normal)
         self.actualRatingLabel.text = theRoute.rating ?? "N/A"
         self.routeDescriptionTV.text = theRoute.info ?? "N/A"
         if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
