@@ -25,6 +25,9 @@ class CommentCell: UITableViewCell {
     func setCommentLabel(with newText: String) {
         self.commentLabel.text = newText
     }
+    func setUserImage(with newImage: UIImage) {
+        self.userImage.image = newImage
+    }
     override func awakeFromNib() {
         super.awakeFromNib()
         self.userImage.roundImage(portion: 2)

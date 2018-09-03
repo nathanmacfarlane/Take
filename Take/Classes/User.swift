@@ -6,26 +6,26 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import CodableFirebase
 import Foundation
 import UIKit
 
-class User {
+class User: Codable {
     var name: String
-    var membershipDate: Date
-    var location: String
-    var profileImage: UIImage?
-    var favorites: [Route]
-    var todos: [Route]
-    var ticks: [Tick]
+    var id: String
+    var profilePhotoUrl: String?
 
-    init(name: String, location: String, profileImage: UIImage?) {
-        self.name = name
-        self.membershipDate = Date()
-        self.location = location
-        self.profileImage = profileImage
-        self.favorites      = []
-        self.todos          = []
-        self.ticks          = []
+    func getProfilePhoto(completion: @escaping (_ profileImage: UIImage) -> Void) {
+        guard let profilePhotoUrl = profilePhotoUrl, let actualUrl = URL(string: profilePhotoUrl) else { return }
+        URLSession.shared.dataTask(with: actualUrl) { data, _, _ in
+            guard let theData = data, let theImage = UIImage(data: theData) else { return }
+            completion(theImage)
+        }
+        .resume()
     }
 
+    init(name: String) {
+        self.name = name
+        self.id = UUID().uuidString
+    }
 }

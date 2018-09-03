@@ -6,34 +6,31 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import FirebaseFirestore
 import Foundation
 
 struct Comment: Codable {
     var id: String
+    var userId: String
     var text: String
-    var date: Date
-
-    func toAnyObject() -> Any {
-        return [
-            "id": id,
-            "text": text,
-            "date": date.monthDayYear(style: "/")
-        ]
+    var dateString: String
+    var date: Date {
+        let dateFormatter: DateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        return dateFormatter.date(from: self.dateString) ?? Date()
     }
 
-    init?(anyObject: [String: Any]) {
-        guard let tempDateString = anyObject["date"] as? String else { return nil }
-        guard let tempId = anyObject["id"] as? String else { return nil }
-        guard let tempText = anyObject["text"] as? String else { return nil }
-        guard let tempDate = Date(fromString: tempDateString, style: "/") else { return nil }
-        self.id = tempId
-        self.text = tempText
-        self.date = tempDate
+    enum CodingKeys: String, CodingKey {
+        case id
+        case userId
+        case text
+        case dateString
     }
 
-    init(id: String, text: String, date: Date) {
-        self.id = id
-        self.text = text
-        self.date = date
+    func delete(route: Route) {
+        guard let index = route.commentIds.index(of: self.id) else { return }
+        route.commentIds.remove(at: index)
+        route.fsSave()
+        Firestore.firestore().collection("comments").document(self.id).delete()
     }
 }
