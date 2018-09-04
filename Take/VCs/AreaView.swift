@@ -14,7 +14,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
 
     // MARK: - IBOutlets
     @IBOutlet private weak var routeNameLabel: UILabel!
-    @IBOutlet private weak var informationLabel: UILabel!
+    @IBOutlet private weak var informationTextView: UITextView!
     @IBOutlet private weak var photosCV: UICollectionView!
     @IBOutlet private weak var routesContainer: UIView!
     @IBOutlet private weak var difficultyContainer: UIView!
@@ -43,7 +43,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 }
                 if let difficultyCV = self.difficultyCV {
                     difficultyCV.routes = routes
-                    difficultyCV.reload()
+                    difficultyCV.setupChart()
                 }
             }
             self.routes = routes
@@ -64,13 +64,13 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             }
         }
 
-        informationLabel.text = theArea.description
+        informationTextView.text = theArea.description
         routeNameLabel.text = theArea.name
     }
 
     // MARK: - SegControl
     @IBAction private func informationSegChanged(_ sender: UISegmentedControl) {
-        self.informationLabel.text = sender.selectedSegmentIndex == 0 ? theArea.description : theArea.directions
+        self.informationTextView.text = sender.selectedSegmentIndex == 0 ? theArea.description : theArea.directions
     }
     @IBAction private func routesSegChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
@@ -80,7 +80,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         case 1:
             self.difficultyContainer.isHidden = false
             self.routesContainer.isHidden = true
-            if let difficultyCV = self.difficultyCV { difficultyCV.reanimate() }
+            if let difficultyCV = self.difficultyCV { difficultyCV.reload() }
         case 2:
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = true
