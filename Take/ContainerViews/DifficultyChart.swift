@@ -69,7 +69,7 @@ class DifficultyChart: UIViewController {
 
     }
 
-    func xAxisVisbility(alpha: CGFloat) {
+    private func xAxisVisbility(alpha: CGFloat) {
         for barLabel in self.barLabels {
             barLabel.alpha = alpha
         }
@@ -95,13 +95,9 @@ class DifficultyChart: UIViewController {
             }
         }
         ratio = barHeight / maxVal
-//        for i in 0...15 {
-//            guard let val = valuesMap[i] else { continue }
-//            self.resizeBar(val: val, index: i)
-//        }
     }
 
-    func resetPositions() {
+    private func resetPositions() {
         self.xAxisVisbility(alpha: 0.0)
         for bar in bars {
             var newFrame = bar.frame
@@ -111,7 +107,7 @@ class DifficultyChart: UIViewController {
         }
     }
 
-    func resizeBar(val: Int, index: Int) {
+    private func resizeBar(val: Int, index: Int) {
         let newBarHeight = CGFloat(val * ratio)
         var newFrame = self.bars[index].frame
         newFrame.size.height = newBarHeight

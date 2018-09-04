@@ -29,12 +29,14 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var selectedImage: UIImage?
     var routesCV: RoutesList?
     var difficultyCV: DifficultyChart?
+    var typesCV: DonutChart?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         self.photosCV.backgroundColor = .clear
         self.difficultyContainer.isHidden = true
+        self.typesContainer.isHidden = true
 
         Firestore.firestore().query(type: Route.self, by: "areaId", with: theArea.id) { routes in
             DispatchQueue.main.async {
@@ -45,6 +47,10 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 if let difficultyCV = self.difficultyCV {
                     difficultyCV.routes = routes
                     difficultyCV.setupChart()
+                }
+                if let typesCV = self.typesCV {
+                    typesCV.routes = routes
+                    typesCV.setupChart()
                 }
             }
             self.routes = routes
@@ -88,6 +94,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = true
             self.typesContainer.isHidden = false
+            if let typesCV = self.typesCV { typesCV.animateChart() }
         default:
             print("un-accounted for seg stuff")
         }
@@ -130,6 +137,10 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         } else if segue.identifier == "difficultyChart" {
             guard let dct = segue.destination as? DifficultyChart else { return }
             difficultyCV = dct
+            dct.routes = self.routes
+        } else if segue.identifier == "donutChart" {
+            guard let dct = segue.destination as? DonutChart else { return }
+            typesCV = dct
             dct.routes = self.routes
         }
     }
