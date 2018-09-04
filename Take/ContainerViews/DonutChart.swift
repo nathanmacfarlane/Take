@@ -17,6 +17,7 @@ class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     // MARK: - Variables
     var routeTypes: [ChartType] = []
+    var routes: [Route] = []
 
     // structs
     struct ChartType {
@@ -25,8 +26,33 @@ class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
         var number: Int
     }
 
+    func setupChart() {
+        var trad = 0
+        var boulder = 0
+        var topRope = 0
+        var sport = 0
+        for route in self.routes {
+            if route.types.contains("TR") {
+                topRope += 1
+            }
+            if route.types.contains("Trad") {
+                trad += 1
+            }
+            if route.types.contains("Boulder") {
+                boulder += 1
+            }
+            if route.types.contains("Sport") {
+                sport += 1
+            }
+        }
+        let total = trad + boulder + topRope + sport
+        self.updateChartData(trad: trad, boulder: boulder, topRope: topRope, sport: sport, count: total)
+    }
+
     // MARK: - Other Functions
-    func updateChartData(trad: Int, boulder: Int, topRope: Int, sport: Int, count: Int) {
+    private func updateChartData(trad: Int, boulder: Int, topRope: Int, sport: Int, count: Int) {
+
+        self.routeTypes = []
 
         let red = UIColor(red: 191 / 256, green: 105 / 256, blue: 98 / 256, alpha: 1.0)
         let blue = UIColor(red: 139 / 256, green: 191 / 256, blue: 191 / 256, alpha: 1.0)
@@ -81,6 +107,12 @@ class DonutChart: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
         chart.holeRadiusPercent = 0.4
 
+        self.animateChart()
+
+    }
+
+    func animateChart() {
+        self.chart.animate(xAxisDuration: 0.5, yAxisDuration: 0.5)
     }
 
     // MARK: - TableView

@@ -30,7 +30,7 @@ import Foundation
 
 struct Rating {
     var desc: String
-    var intDiff: Int
+    var intDiff: Int?
     var type: RouteType
     var buffer: String?
     var danger: String?
@@ -38,9 +38,9 @@ struct Rating {
     var description: String {
         switch type {
         case .boulder:
-            return "V\(intDiff)\(buffer ?? "")"
+            return "V\(intDiff ?? -1)\(buffer ?? "")"
         case .climb:
-            return "5.\(intDiff)\(buffer ?? "")"
+            return "5.\(intDiff ?? -1)\(buffer ?? "")"
         default:
             fatalError("Unsupported")
         }
@@ -66,8 +66,8 @@ struct Rating {
         self.intDiff = 0
         self.buffer = ""
         self.danger = ""
-//        self.type = getType(desc)
-//        self.intDiff = getDiff(desc)
+        self.type = getType(desc)
+        self.intDiff = getDiff(desc)
         self.buffer = getBuffer(desc)
         self.danger = getDanger(desc)
     }
@@ -109,17 +109,29 @@ struct Rating {
         return buff.isEmpty ? nil : buff
     }
 
-//    private func getType(_ desc: String) -> RouteType {
-//        let chars = Array(desc)
-//        if chars[0] == "V" {
-//            return .boulder
-//        } else {
-//            return .climb
-//        }
-//    }
+    private func getType(_ desc: String) -> RouteType {
+        let chars = Array(desc)
+        if chars[0] == "V" {
+            return .boulder
+        } else {
+            return .climb
+        }
+    }
 
-//    private func getDiff(_ desc: String) -> Int {
-//        let chars = Array(desc)
+    private func getDiff(_ desc: String) -> Int? {
+        let chars = Array(desc)
+        var diff = ""
+        if self.type == .climb {
+            print("its a climb")
+            for n in 2..<chars.count {
+                if chars[n] > "9" || chars[n] < "0" {
+                    return diff.isEmpty ? nil : Int(diff)
+                }
+                print("appending: \(chars[n])")
+                diff.append(chars[n])
+            }
+            return Int(diff)
+        }
 //        var diff = ""
 //        var start = 1
 //        if self.type == .climb {
@@ -140,6 +152,7 @@ struct Rating {
 //        } else {
 //            return 0
 //        }
-//    }
+        return 0
+    }
 
 }

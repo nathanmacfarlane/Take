@@ -22,6 +22,10 @@ class AreaCell: UITableViewCell {
         self.bgImage.image = newImage
     }
 
+    func getImage() -> UIImage? {
+        return bgImage.image
+    }
+
     override func awakeFromNib() {
         super.awakeFromNib()
         self.bgView.layer.cornerRadius = 10
