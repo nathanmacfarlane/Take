@@ -2537,14 +2537,15 @@
             </objects>
             <point key="canvasLocation" x="2230" y="-1924"/>
         </scene>
-        <!--View Controller-->
+        <!--Donut Chart-->
         <scene sceneID="Lvc-8W-cyR">
             <objects>
-                <viewController id="Edd-Ib-Gb4" sceneMemberID="viewController">
+                <viewController id="Edd-Ib-Gb4" customClass="DonutChart" customModule="Take" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Oew-Tm-v7l">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="239"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.094117647058823528" green="0.098039215686274508" blue="0.10588235294117647" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="HUe-Nu-4N7"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f2I-u6-8Rx" userLabel="First Responder" sceneMemberID="firstResponder"/>
