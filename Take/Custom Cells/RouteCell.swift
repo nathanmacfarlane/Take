@@ -39,12 +39,17 @@ class RouteCell: UITableViewCell {
     func setAreaAbrev(with newText: String) {
         self.areaButton.addAbrevText(text: newText)
     }
+    
     func setAreaButtonTitle() {
         self.areaButton.setTitle("", for: .normal)
     }
 
     func setImage(with newImage: UIImage) {
         self.theImageView.image = newImage
+    }
+
+    func clearImage() {
+        self.theImageView.image = nil
     }
 
     func getImage() -> UIImage? {
