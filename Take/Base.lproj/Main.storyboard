@@ -1309,9 +1309,11 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
-                            <containerView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BTR-dF-YWD">
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BTR-dF-YWD">
                                 <rect key="frame" x="16" y="408" width="343" height="239"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="343" id="yPI-JG-53P"/>
+                                </constraints>
                                 <connections>
                                     <segue destination="Edd-Ib-Gb4" kind="embed" id="Bs5-Lz-uH7"/>
                                 </connections>
@@ -1321,6 +1323,7 @@
                         <constraints>
                             <constraint firstItem="B3H-Pi-pT0" firstAttribute="trailing" secondItem="dUr-wx-vDS" secondAttribute="trailing" constant="17" id="0gp-i5-Exy"/>
                             <constraint firstItem="7Ik-cf-MYg" firstAttribute="leading" secondItem="B3H-Pi-pT0" secondAttribute="leading" constant="15" id="46O-qy-YId"/>
+                            <constraint firstItem="BTR-dF-YWD" firstAttribute="centerX" secondItem="B3H-Pi-pT0" secondAttribute="centerX" id="4KX-il-hlL"/>
                             <constraint firstItem="1Km-pO-3kg" firstAttribute="top" secondItem="LB2-I3-mOX" secondAttribute="bottom" constant="13" id="6uS-ec-bDE"/>
                             <constraint firstItem="B3H-Pi-pT0" firstAttribute="trailing" secondItem="LB2-I3-mOX" secondAttribute="trailing" constant="57" id="BBV-1H-IIw"/>
                             <constraint firstItem="B3H-Pi-pT0" firstAttribute="trailing" secondItem="D68-fK-bGi" secondAttribute="trailing" constant="16.5" id="DA4-ag-2Qs"/>
@@ -1335,6 +1338,8 @@
                             <constraint firstItem="D68-fK-bGi" firstAttribute="leading" secondItem="B3H-Pi-pT0" secondAttribute="leading" constant="16" id="eQI-yv-8cM"/>
                             <constraint firstItem="mjY-Cw-94C" firstAttribute="centerX" secondItem="B3H-Pi-pT0" secondAttribute="centerX" id="gZa-ac-at2"/>
                             <constraint firstItem="dUr-wx-vDS" firstAttribute="leading" secondItem="B3H-Pi-pT0" secondAttribute="leading" constant="15" id="gaB-5g-fDi"/>
+                            <constraint firstItem="B3H-Pi-pT0" firstAttribute="bottom" secondItem="BTR-dF-YWD" secondAttribute="bottom" constant="20" id="gfj-vT-GSZ"/>
+                            <constraint firstItem="BTR-dF-YWD" firstAttribute="top" secondItem="7Ik-cf-MYg" secondAttribute="bottom" constant="8" id="gkM-Bc-von"/>
                             <constraint firstItem="h9N-cI-nZn" firstAttribute="top" secondItem="B3H-Pi-pT0" secondAttribute="top" constant="22" id="o1A-qH-18t"/>
                             <constraint firstItem="B3H-Pi-pT0" firstAttribute="trailing" secondItem="1Km-pO-3kg" secondAttribute="trailing" constant="16" id="ogE-Dq-qhi"/>
                             <constraint firstItem="B3H-Pi-pT0" firstAttribute="bottom" secondItem="mjY-Cw-94C" secondAttribute="bottom" constant="20" id="omt-3T-VRr"/>
@@ -1353,6 +1358,7 @@
                         <outlet property="photosCV" destination="4sy-fJ-vUd" id="CzJ-fT-b3Q"/>
                         <outlet property="routeNameLabel" destination="LB2-I3-mOX" id="LVj-Hd-AhD"/>
                         <outlet property="routesContainer" destination="Xng-Wr-J0m" id="AdW-t1-SOm"/>
+                        <outlet property="typesContainer" destination="BTR-dF-YWD" id="0bA-R2-A52"/>
                         <segue destination="iTR-jd-3Uu" kind="presentation" identifier="goToDetail" id="CxN-lq-O1J"/>
                     </connections>
                 </viewController>

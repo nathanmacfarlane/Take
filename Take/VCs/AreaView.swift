@@ -18,6 +18,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBOutlet private weak var photosCV: UICollectionView!
     @IBOutlet private weak var routesContainer: UIView!
     @IBOutlet private weak var difficultyContainer: UIView!
+    @IBOutlet private weak var typesContainer: UIView!
 
     // MARK: - Variables
     var areaImage: UIImage?
@@ -77,13 +78,16 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         case 0:
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = false
+            self.typesContainer.isHidden = true
         case 1:
             self.difficultyContainer.isHidden = false
             self.routesContainer.isHidden = true
+            self.typesContainer.isHidden = true
             if let difficultyCV = self.difficultyCV { difficultyCV.reload() }
         case 2:
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = true
+            self.typesContainer.isHidden = false
         default:
             print("un-accounted for seg stuff")
         }
