@@ -251,8 +251,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     func getRouteCell(route: Route) -> RouteCell {
         guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as? RouteCell else { return RouteCell() }
 
-        // labels
         cell.setLabels(name: route.name, types: route.typesString, difficulty: route.rating ?? "N/A")
+        cell.clearImage()
 
         DispatchQueue.global(qos: .background).async {
             route.fsLoadFirstImage { _, image in

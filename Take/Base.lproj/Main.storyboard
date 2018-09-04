@@ -1297,7 +1297,7 @@
                                 <rect key="frame" x="16" y="436" width="343" height="222"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
-                                    <segue destination="aQS-ar-pRr" kind="embed" id="EEa-fJ-045"/>
+                                    <segue destination="aQS-ar-pRr" kind="embed" identifier="difficultyChart" id="EEa-fJ-045"/>
                                 </connections>
                             </containerView>
                         </subviews>
@@ -2194,7 +2194,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eLq-Ux-F0z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2231" y="-1857"/>
+            <point key="canvasLocation" x="2230" y="-2010"/>
         </scene>
         <!--Difficulty Chart-->
         <scene sceneID="auB-ee-GWG">
@@ -2203,12 +2203,20 @@
                     <view key="view" contentMode="scaleToFill" id="4oR-Gb-Ttn">
                         <rect key="frame" x="0.0" y="0.0" width="343" height="222"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cW4-UR-a9Y" customClass="BarChartView" customModule="Charts">
+                                <rect key="frame" x="0.0" y="0.0" width="343" height="222"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </view>
+                        </subviews>
                     </view>
+                    <connections>
+                        <outlet property="barChartView" destination="cW4-UR-a9Y" id="0dT-26-B0I"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="D7u-o3-56x" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2230" y="-1569"/>
+            <point key="canvasLocation" x="2230" y="-1716"/>
         </scene>
     </scenes>
     <resources>
