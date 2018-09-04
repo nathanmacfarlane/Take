@@ -35,11 +35,11 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var routeArUrls: [String: [String]] = [:]
     var rating: String?
     var commentIds: [String] = []
+    var latitude: Double?
+    var longitude: Double?
 
     // not really implemented on the new model
     var localDesc: [String] = []
-    var latitude: Double?
-    var longitude: Double?
     var wall: String?
     var city: String?
 

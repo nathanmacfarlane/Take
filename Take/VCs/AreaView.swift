@@ -27,6 +27,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var imageKeys: [String] = []
     var selectedImage: UIImage?
     var routesCV: RoutesList?
+    var difficultyCV: DifficultyChart?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +40,10 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 if let routesCV = self.routesCV {
                     routesCV.routes = routes
                     routesCV.reloadTV()
+                }
+                if let difficultyCV = self.difficultyCV {
+                    difficultyCV.routes = routes
+                    difficultyCV.reload()
                 }
             }
             self.routes = routes
@@ -67,7 +72,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     @IBAction private func informationSegChanged(_ sender: UISegmentedControl) {
         self.informationLabel.text = sender.selectedSegmentIndex == 0 ? theArea.description : theArea.directions
     }
-    @IBAction func routesSegChanged(_ sender: UISegmentedControl) {
+    @IBAction private func routesSegChanged(_ sender: UISegmentedControl) {
         switch sender.selectedSegmentIndex {
         case 0:
             self.difficultyContainer.isHidden = true
@@ -75,6 +80,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         case 1:
             self.difficultyContainer.isHidden = false
             self.routesContainer.isHidden = true
+            if let difficultyCV = self.difficultyCV { difficultyCV.reanimate() }
         case 2:
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = true
@@ -117,6 +123,10 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             guard let theRoute = sender as? Route else { return }
             dct.theRoute = theRoute
             dct.bgImage = selectedImage
+        } else if segue.identifier == "difficultyChart" {
+            guard let dct = segue.destination as? DifficultyChart else { return }
+            difficultyCV = dct
+            dct.routes = self.routes
         }
     }
 
