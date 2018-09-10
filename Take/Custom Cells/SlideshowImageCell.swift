@@ -6,7 +6,6 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import PBImageView
 import UIKit
 
 class SlideshowImageCell: UICollectionViewCell {

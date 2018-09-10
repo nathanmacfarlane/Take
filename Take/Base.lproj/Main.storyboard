@@ -1783,27 +1783,6 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0tq-pm-wtO">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="hlO-Gy-H6u">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                </view>
-                                <blurEffect style="light"/>
-                            </visualEffectView>
-                            <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NjT-bs-c1v">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="6ZI-MQ-7o8" appends="YES" id="r4x-br-dg0"/>
-                                </connections>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U91-o0-l26">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </view>
                             <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-xK-a3h">
                                 <rect key="frame" x="121" y="596" width="133" height="45"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1816,6 +1795,11 @@
                                     <action selector="goBack:" destination="gB9-ws-bse" eventType="touchUpInside" id="08I-vL-zQK"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-JN-uhI" customClass="SwiftyDrawView" customModule="SwiftyDraw">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="YV3-kj-kOJ"/>
@@ -1823,15 +1807,12 @@
                     <connections>
                         <outlet property="backButton" destination="EHa-xK-a3h" id="Sbx-Ja-gFA"/>
                         <outlet property="bgImageView" destination="35x-79-BW9" id="LSG-Rl-MkC"/>
-                        <outlet property="canvasView" destination="U91-o0-l26" id="zyI-Ng-8KB"/>
-                        <outlet property="myImageView" destination="NjT-bs-c1v" id="euO-tW-Gsn"/>
-                        <outlet property="panGesture" destination="6ZI-MQ-7o8" id="vcU-bJ-aSL"/>
+                        <outlet property="canvasView" destination="5Az-JN-uhI" id="Lsg-aW-7Qz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQD-l7-pSn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="6ZI-MQ-7o8"/>
             </objects>
-            <point key="canvasLocation" x="3038" y="-1040"/>
+            <point key="canvasLocation" x="3037.5999999999999" y="-1040.3298350824589"/>
         </scene>
         <!--Profile-->
         <scene sceneID="wg7-f3-ORb">
