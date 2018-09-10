@@ -54,7 +54,8 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        UIApplication.shared.isStatusBarHidden = true
+//        UIApplication.shared.isStatusBarHidden = true
+        self.navigationController?.makeTransparent()
         self.myTableView.backgroundColor = UIColor.clear
         self.myTableView.separatorStyle = .none
         UITabBar.appearance().barTintColor = self.view.backgroundColor

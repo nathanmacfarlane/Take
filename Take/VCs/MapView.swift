@@ -43,7 +43,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         locationManager.startUpdatingLocation()
 
         if let location = self.locationManager.location {
-            self.myMapView.centerMapOn(location, withRadius: 3000)
+            self.myMapView.centerMapOn(location)
         }
 
         //        queryFromFirebase()
