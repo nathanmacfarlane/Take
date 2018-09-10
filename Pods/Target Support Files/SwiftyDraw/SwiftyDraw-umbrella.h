@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double PBImageViewVersionNumber;
-FOUNDATION_EXPORT const unsigned char PBImageViewVersionString[];
+FOUNDATION_EXPORT double SwiftyDrawVersionNumber;
+FOUNDATION_EXPORT const unsigned char SwiftyDrawVersionString[];
 
