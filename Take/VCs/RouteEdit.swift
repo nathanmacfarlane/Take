@@ -28,10 +28,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var ARDiagramsLabel: UILabel!
     @IBOutlet private weak var photosLabel: UILabel!
     @IBOutlet private weak var starsSlider: UISlider!
-    @IBOutlet private weak var keywordTextField: UITextField!
+    @IBOutlet private weak var nameTextField: UITextField!
     @IBOutlet private weak var pitchStepper: UIStepper!
     @IBOutlet private weak var pitchLabel: UILabel!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
+    @IBOutlet private weak var locationButton: UIButton!
 
     // MARK: - variables
     var theRoute: Route!
@@ -59,13 +60,10 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.keywordTextField.underlined()
-        self.keywordTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.nameTextField.underlined()
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
 
-        if let keyword = self.theRoute.keyword {
-            self.keywordTextField.text = keyword
-        }
-
+        self.nameTextField.text = self.theRoute.name
         self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.pitchStepper.value = Double(self.theRoute.pitches)
 
@@ -102,6 +100,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         photoCV.backgroundColor = .clear
         ARCV.backgroundColor = .clear
+        locationButton.roundButton(portion: 2)
 
         addBlur()
     }
@@ -300,12 +299,8 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
                 self.theRoute.stars[userId] = starValue
             }
         }
-        if let keyword = self.keywordTextField.text {
-            if keyword.isEmpty {
-                theRoute.keyword = nil
-            } else {
-                theRoute.keyword = keyword
-            }
+        if let name = self.nameTextField.text {
+            theRoute.name = name
         }
         theRoute.pitches = Int(self.pitchStepper.value)
         theRoute.info = self.newDescription
@@ -365,9 +360,25 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return theImages
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
             if let theImage = sender as? UIImage { dct.theImage = theImage }
             dct.theRoute = self.theRoute
+        }
+
+        switch segue.identifier {
+        case "presentEditARPhoto":
+            guard let dct: EditARPhoto = segue.destination as? EditARPhoto else { return }
+            if let theImage = sender as? UIImage {
+                dct.theImage = theImage
+            }
+            dct.theRoute = self.theRoute
+        case "pushToMap":
+            guard let dct: DetailMapView = segue.destination as? DetailMapView else { return }
+            dct.editMode = true
+            dct.theRoute = self.theRoute
+        default:
+            fatalError("segue with unaccounted for identifier")
         }
     }
 }

@@ -29,9 +29,10 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     @IBOutlet private weak var routeDescriptionTV: UITextView!
     @IBOutlet private weak var starsLabel: UILabel!
     @IBOutlet private weak var actualRatingLabel: UILabel!
-    @IBOutlet private weak var imageSegControl: UISegmentedControl!
+    @IBOutlet private weak var mySegController: UISegmentedControl!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
     @IBOutlet private weak var pitchesSubLabel: UILabel!
+    @IBOutlet private weak var myMapView: MKMapView!
 
     // MARK: - Variables
     var theRoute: Route!
@@ -53,7 +54,8 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestAlwaysAuthorization()
         locationManager.startUpdatingLocation()
-        self.myCV.backgroundColor = UIColor.clear
+        myCV.backgroundColor = UIColor.clear
+        myMapView.isHidden = true
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
@@ -105,6 +107,12 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
         self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
 
+        if let routeLocal = theRoute.location {
+            myMapView.removeAllAnnotations()
+            myMapView.centerMapOn(routeLocal)
+            myMapView.addPin(from: theRoute)
+        }
+
         setupButtons()
 
     }
@@ -153,7 +161,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if imageSegControl.selectedSegmentIndex == 0 {
+        if mySegController.selectedSegmentIndex == 0 {
             return self.imageKeys.count
         } else {
             return self.diagramKeys.count
@@ -162,7 +170,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let tempCell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath)
         guard let cell = tempCell as? DetailImagesCell else { return tempCell }
-        if imageSegControl.selectedSegmentIndex == 0 {
+        if mySegController.selectedSegmentIndex == 0 {
             guard let cellImage = self.images[self.imageKeys[indexPath.row]] else { return tempCell }
             cell.setImage(with: cellImage)
             cell.clearDgImage()
@@ -179,9 +187,19 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
         self.performSegue(withIdentifier: "presentAllImages", sender: indexPath.row)
     }
 
+    // MARK: - Gesture Recognizer
+    @IBAction func tappedMap(_ sender: UITapGestureRecognizer) {
+        self.performSegue(withIdentifier: "showMap", sender: nil)
+    }
+
     // MARK: - Seg Control
     @IBAction private func imageSegChanged(_ sender: UISegmentedControl) {
-        self.myCV.reloadData()
+        if sender.selectedSegmentIndex < 2 {
+            self.myCV.reloadData()
+            self.myMapView.isHidden = true
+        } else {
+            self.myMapView.isHidden = false
+        }
     }
 
     // MARK: - Navigation
@@ -219,6 +237,9 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
         switch segue.identifier {
+        case "showMap":
+            guard let dct: DetailMapView = segue.destination as? DetailMapView else { return }
+            dct.theRoute = self.theRoute
         case "pushToComments":
             guard let dct: Comments = segue.destination as? Comments else { return }
             dct.theRoute = self.theRoute
@@ -230,7 +251,7 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
             dct.theRoute = self.theRoute
         case "presentAllImages":
             guard let dct: ImageSlideshow = segue.destination as? ImageSlideshow else { return }
-            if self.imageSegControl.selectedSegmentIndex == 0 {
+            if self.mySegController.selectedSegmentIndex == 0 {
                 // images
                 var images: [[UIImage]] = []
                 for image in self.images.values {
