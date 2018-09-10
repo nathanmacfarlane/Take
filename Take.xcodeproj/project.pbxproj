@@ -77,6 +77,8 @@
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
 		2222133E213D1B280042AFC9 /* RoutesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133D213D1B280042AFC9 /* RoutesList.swift */; };
 		22221340213D2C800042AFC9 /* DifficultyChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133F213D2C800042AFC9 /* DifficultyChart.swift */; };
+		224002762146203F008E81B0 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224002752146203F008E81B0 /* UINavigationController.swift */; };
+		22400278214625D1008E81B0 /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22400277214625D1008E81B0 /* DetailMapView.swift */; };
 		22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22468EAC20FA666F003C1B5A /* MapMainView.swift */; };
 		22546BC621192B9600F92025 /* BadRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC521192B9600F92025 /* BadRoute.swift */; };
 		22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC721193A5B00F92025 /* RouteProtection.swift */; };
@@ -189,6 +191,8 @@
 		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
 		2222133D213D1B280042AFC9 /* RoutesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesList.swift; sourceTree = "<group>"; };
 		2222133F213D2C800042AFC9 /* DifficultyChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyChart.swift; sourceTree = "<group>"; };
+		224002752146203F008E81B0 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
+		22400277214625D1008E81B0 /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		22468EAC20FA666F003C1B5A /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
 		22546BC521192B9600F92025 /* BadRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadRoute.swift; sourceTree = "<group>"; };
 		22546BC721193A5B00F92025 /* RouteProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProtection.swift; sourceTree = "<group>"; };
@@ -269,6 +273,7 @@
 				22C0EE3D211E533B002F06C5 /* PieChartView.swift */,
 				22F5DE1021308320001ECC73 /* Firestore.swift */,
 				22A089212133CB4D005D22D1 /* UITextField.swift */,
+				224002752146203F008E81B0 /* UINavigationController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -347,6 +352,7 @@
 				046E3E5D20BBF6E2009E63D8 /* Login.swift */,
 				046ED55320BE6A080055B35A /* MapView.swift */,
 				22468EAC20FA666F003C1B5A /* MapMainView.swift */,
+				22400277214625D1008E81B0 /* DetailMapView.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -697,6 +703,7 @@
 				043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */,
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
 				04C83B1120B54ED6008D842D /* Tick.swift in Sources */,
+				22400278214625D1008E81B0 /* DetailMapView.swift in Sources */,
 				04C83B0720B52B68008D842D /* ARView.swift in Sources */,
 				220725AB213A6CE7005448E8 /* RouteFirestoreExtension.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
@@ -746,6 +753,7 @@
 				22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */,
 				045255632091B6D600A4A384 /* SearchRoutes.swift in Sources */,
 				043F789720B2B1880043C08A /* SlideshowImageCell.swift in Sources */,
+				224002762146203F008E81B0 /* UINavigationController.swift in Sources */,
 				043F788220AEA3E00043C08A /* Double.swift in Sources */,
 				043F788720AEA4120043C08A /* UIButton.swift in Sources */,
 				04C83B4420BB6520008D842D /* AreaView.swift in Sources */,

@@ -23,7 +23,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     // MARK: - properties
     var name: String
-    var keyword: String?
     var id: Int
     var pitches: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
@@ -45,7 +44,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     enum CodingKeys: String, CodingKey {
         case name
-        case keyword
         case id
         case types
         case latitude

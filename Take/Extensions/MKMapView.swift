@@ -40,7 +40,7 @@ extension MKMapView {
         let metersInLongitude = loc3.distance(from: loc4)
         return metersInLatitude < metersInLongitude ? metersInLatitude : metersInLongitude
     }
-    func centerMapOn(_ location: CLLocation, withRadius radius: Double) {
+    func centerMapOn(_ location: CLLocation, withRadius radius: Double = 3000) {
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate, radius, radius)
         self.setRegion(coordinateRegion, animated: true)
     }
