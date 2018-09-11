@@ -71,6 +71,16 @@
 		220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725A8213A6C01005448E8 /* RouteFirestore.swift */; };
 		220725AB213A6CE7005448E8 /* RouteFirestoreExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725AA213A6CE7005448E8 /* RouteFirestoreExtension.swift */; };
 		220725AD213D05C0005448E8 /* placeholderUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 220725AC213D05BF005448E8 /* placeholderUser.png */; };
+		2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B22147254B00E79E99 /* closeMenuIcon.png */; };
+		2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B62147284400E79E99 /* hamburgerMenuIcon.png */; };
+		2211F3BA214742DF00E79E99 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B8214742DD00E79E99 /* undo.png */; };
+		2211F3BB214742DF00E79E99 /* redo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B9214742DE00E79E99 /* redo.png */; };
+		2211F3BD2147431800E79E99 /* done.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3BC2147431700E79E99 /* done.png */; };
+		2211F3BF2147436100E79E99 /* close.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3BE2147436100E79E99 /* close.png */; };
+		2211F3C1214743E900E79E99 /* clear.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3C0214743E800E79E99 /* clear.png */; };
+		2211F3C32147492E00E79E99 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F3C22147492E00E79E99 /* Int.swift */; };
+		2211F3C62147539900E79E99 /* eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3C42147539800E79E99 /* eraser.png */; };
+		2211F3C72147539900E79E99 /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3C52147539900E79E99 /* brush.png */; };
 		2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2214BC30211FE9900076E777 /* AreaExpandableCell.swift */; };
 		2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70B20C8D50D00F525EC /* GeoFire.swift */; };
 		2220E70E20C8D78600F525EC /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70D20C8D78600F525EC /* String.swift */; };
@@ -185,6 +195,16 @@
 		220725A8213A6C01005448E8 /* RouteFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestore.swift; sourceTree = "<group>"; };
 		220725AA213A6CE7005448E8 /* RouteFirestoreExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestoreExtension.swift; sourceTree = "<group>"; };
 		220725AC213D05BF005448E8 /* placeholderUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderUser.png; sourceTree = "<group>"; };
+		2211F3B22147254B00E79E99 /* closeMenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeMenuIcon.png; sourceTree = "<group>"; };
+		2211F3B62147284400E79E99 /* hamburgerMenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hamburgerMenuIcon.png; sourceTree = "<group>"; };
+		2211F3B8214742DD00E79E99 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
+		2211F3B9214742DE00E79E99 /* redo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = redo.png; sourceTree = "<group>"; };
+		2211F3BC2147431700E79E99 /* done.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = done.png; sourceTree = "<group>"; };
+		2211F3BE2147436100E79E99 /* close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = close.png; path = ../../../../../Downloads/close.png; sourceTree = "<group>"; };
+		2211F3C0214743E800E79E99 /* clear.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clear.png; sourceTree = "<group>"; };
+		2211F3C22147492E00E79E99 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
+		2211F3C42147539800E79E99 /* eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraser.png; sourceTree = "<group>"; };
+		2211F3C52147539900E79E99 /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
 		2214BC30211FE9900076E777 /* AreaExpandableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaExpandableCell.swift; sourceTree = "<group>"; };
 		2220E70B20C8D50D00F525EC /* GeoFire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoFire.swift; sourceTree = "<group>"; };
 		2220E70D20C8D78600F525EC /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
@@ -274,6 +294,7 @@
 				22F5DE1021308320001ECC73 /* Firestore.swift */,
 				22A089212133CB4D005D22D1 /* UITextField.swift */,
 				224002752146203F008E81B0 /* UINavigationController.swift */,
+				2211F3C22147492E00E79E99 /* Int.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -381,6 +402,15 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2211F3C52147539900E79E99 /* brush.png */,
+				2211F3C42147539800E79E99 /* eraser.png */,
+				2211F3C0214743E800E79E99 /* clear.png */,
+				2211F3BE2147436100E79E99 /* close.png */,
+				2211F3BC2147431700E79E99 /* done.png */,
+				2211F3B9214742DE00E79E99 /* redo.png */,
+				2211F3B8214742DD00E79E99 /* undo.png */,
+				2211F3B62147284400E79E99 /* hamburgerMenuIcon.png */,
+				2211F3B22147254B00E79E99 /* closeMenuIcon.png */,
 				220725AC213D05BF005448E8 /* placeholderUser.png */,
 				229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */,
 				229C93EA20DB410800FAA320 /* Anno-Circle-Red.png */,
@@ -558,10 +588,13 @@
 			files = (
 				04C83B4620BB68A1008D842D /* SLO.jpg in Resources */,
 				0452556D2091B6DE00A4A384 /* LaunchScreen.storyboard in Resources */,
+				2211F3C1214743E900E79E99 /* clear.png in Resources */,
 				225FE8B120C63DF000C98E1A /* noImages.png in Resources */,
 				0451454220941E1E00FE72BB /* filter.png in Resources */,
 				228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */,
+				2211F3BB214742DF00E79E99 /* redo.png in Resources */,
 				229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */,
+				2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */,
 				225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */,
 				0451454B209449E100FE72BB /* minus.png in Resources */,
 				04514549209432FE00FE72BB /* unchecked.png in Resources */,
@@ -569,20 +602,26 @@
 				0451454020941BB900FE72BB /* wbg.png in Resources */,
 				0452556A2091B6DE00A4A384 /* Assets.xcassets in Resources */,
 				22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */,
+				2211F3C72147539900E79E99 /* brush.png in Resources */,
 				04514547209432E100FE72BB /* checked.png in Resources */,
 				229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */,
 				04C83B4820BB6D6B008D842D /* close-white.png in Resources */,
 				2259C47520CEDAF70000065E /* user.png in Resources */,
 				229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */,
+				2211F3BD2147431800E79E99 /* done.png in Resources */,
+				2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */,
 				04C83B0B20B548EF008D842D /* profile.jpg in Resources */,
 				229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */,
 				220725AD213D05C0005448E8 /* placeholderUser.png in Resources */,
+				2211F3BA214742DF00E79E99 /* undo.png in Resources */,
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
 				0452557C2091C02300A4A384 /* bg.jpg in Resources */,
+				2211F3C62147539900E79E99 /* eraser.png in Resources */,
 				2259C47320CEDAA90000065E /* map.png in Resources */,
 				045255682091B6D600A4A384 /* Main.storyboard in Resources */,
+				2211F3BF2147436100E79E99 /* close.png in Resources */,
 				04C83B4A20BBEB8A008D842D /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -650,6 +689,7 @@
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
 				"${BUILT_PRODUCTS_DIR}/ChartsRealm/ChartsRealm.framework",
+				"${BUILT_PRODUCTS_DIR}/CircleMenu/CircleMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
@@ -671,6 +711,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChartsRealm.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
@@ -736,6 +777,7 @@
 				045145452094273200FE72BB /* SearchContainerView.swift in Sources */,
 				22A2C986211AB75500743AC4 /* RouteArea.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
+				2211F3C32147492E00E79E99 /* Int.swift in Sources */,
 				04BA11FD20AD344400D24C4F /* Comment.swift in Sources */,
 				2259C46F20CDDEAC0000065E /* UITableView.swift in Sources */,
 				22546BC621192B9600F92025 /* BadRoute.swift in Sources */,

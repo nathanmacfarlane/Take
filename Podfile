@@ -17,5 +17,6 @@ target 'Take' do
   pod 'CodableFirebase'
   pod 'Firebase/Firestore'
   pod 'SwiftyDraw'
+  pod 'CircleMenu'
 
 end
