@@ -1779,59 +1779,54 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="35x-79-BW9">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="35x-79-BW9">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0tq-pm-wtO">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lch-5B-fiv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="hlO-Gy-H6u">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tGQ-Eu-PTl">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <imageView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NjT-bs-c1v">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CoG-pv-cLf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="6ZI-MQ-7o8" appends="YES" id="r4x-br-dg0"/>
-                                </connections>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U91-o0-l26">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-JN-uhI" customClass="SwiftyDrawView" customModule="SwiftyDraw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
-                            <button opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EHa-xK-a3h">
-                                <rect key="frame" x="121" y="596" width="133" height="45"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.34899400684931509" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" name="Avenir-Black" family="Avenir" pointSize="22"/>
-                                <state key="normal" title="SAVE">
-                                    <color key="titleColor" red="0.16078431369999999" green="0.23529411759999999" blue="0.28235294119999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="goBack:" destination="gB9-ws-bse" eventType="touchUpInside" id="08I-vL-zQK"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="0dh-qQ-vnQ"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="Drg-2E-0Cq"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="Hag-JO-yai"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="Hrl-ry-lzb"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="O3p-oO-eN5"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="OlT-iO-fmG"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="QFr-ZC-8x9"/>
+                            <constraint firstItem="YV3-kj-kOJ" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="RTQ-oF-xoy"/>
+                            <constraint firstItem="YV3-kj-kOJ" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="SmE-EG-lL0"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="URG-0E-XPU"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="W7M-m7-NzM"/>
+                            <constraint firstItem="35x-79-BW9" firstAttribute="leading" secondItem="YV3-kj-kOJ" secondAttribute="leading" id="Zcl-Oi-LpO"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="lCf-J6-fpH"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="ltg-zn-Suv"/>
+                            <constraint firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="ofV-sZ-F4a"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="uDr-LW-fUI"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YV3-kj-kOJ"/>
                     </view>
                     <connections>
-                        <outlet property="backButton" destination="EHa-xK-a3h" id="Sbx-Ja-gFA"/>
                         <outlet property="bgImageView" destination="35x-79-BW9" id="LSG-Rl-MkC"/>
-                        <outlet property="canvasView" destination="U91-o0-l26" id="zyI-Ng-8KB"/>
-                        <outlet property="myImageView" destination="NjT-bs-c1v" id="euO-tW-Gsn"/>
-                        <outlet property="panGesture" destination="6ZI-MQ-7o8" id="vcU-bJ-aSL"/>
+                        <outlet property="canvasView" destination="5Az-JN-uhI" id="Lsg-aW-7Qz"/>
+                        <outlet property="mainImageView" destination="CoG-pv-cLf" id="qGC-Zm-mm0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AQD-l7-pSn" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="6ZI-MQ-7o8"/>
             </objects>
-            <point key="canvasLocation" x="3038" y="-1040"/>
+            <point key="canvasLocation" x="3037.5999999999999" y="-1040.3298350824589"/>
         </scene>
         <!--Profile-->
         <scene sceneID="wg7-f3-ORb">

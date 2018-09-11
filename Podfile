@@ -16,6 +16,7 @@ target 'Take' do
   pod 'SwiftLint'
   pod 'CodableFirebase'
   pod 'Firebase/Firestore'
-  pod "PBImageView"
+  pod 'SwiftyDraw'
+  pod 'CircleMenu'
 
 end
