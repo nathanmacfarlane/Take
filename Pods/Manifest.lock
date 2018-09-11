@@ -11,6 +11,7 @@ PODS:
   - ChartsRealm (3.1.1):
     - Charts (~> 3.1.1)
     - RealmSwift (~> 3.7.1)
+  - CircleMenu (3.1.0)
   - CodableFirebase (0.2.0)
   - Firebase/Auth (5.5.0):
     - Firebase/CoreOnly
@@ -141,7 +142,6 @@ PODS:
     - nanopb/encode (= 0.3.8)
   - nanopb/decode (0.3.8)
   - nanopb/encode (0.3.8)
-  - PBImageView (1.0.3)
   - Protobuf (3.6.1)
   - Realm (3.7.6):
     - Realm/Headers (= 3.7.6)
@@ -149,10 +149,12 @@ PODS:
   - RealmSwift (3.7.6):
     - Realm (= 3.7.6)
   - SwiftLint (0.27.0)
+  - SwiftyDraw (1.0.1)
 
 DEPENDENCIES:
   - Charts
   - ChartsRealm
+  - CircleMenu
   - CodableFirebase
   - Firebase/Auth
   - Firebase/Core
@@ -161,14 +163,15 @@ DEPENDENCIES:
   - Firebase/Storage
   - GeoFire
   - GoogleSignIn
-  - PBImageView
   - SwiftLint
+  - SwiftyDraw
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BoringSSL
     - Charts
     - ChartsRealm
+    - CircleMenu
     - CodableFirebase
     - Firebase
     - FirebaseAnalytics
@@ -192,16 +195,17 @@ SPEC REPOS:
     - GTMSessionFetcher
     - leveldb-library
     - nanopb
-    - PBImageView
     - Protobuf
     - Realm
     - RealmSwift
     - SwiftLint
+    - SwiftyDraw
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   ChartsRealm: 35728e98e8d365a45c54fa7a1fa47663d2539887
+  CircleMenu: 68e85ad9ea8e22aa5cb00b204abb176c5edec587
   CodableFirebase: 4b865f58c583a6c0ef8c81c6b12c6bf15ebd9181
   Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
   FirebaseAnalytics: d4a260c114aec0d765ab5b9c404ac63de1d29381
@@ -225,12 +229,12 @@ SPEC CHECKSUMS:
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
-  PBImageView: 15d12320ce9b484808dee8caacc456c2dbef8a84
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
+  SwiftyDraw: d62a11b3558dc83f2c8803ea9850d8b2c72b0f48
 
-PODFILE CHECKSUM: b0c4ae543bbf8da971d70b4fa3199e3ce8e4590d
+PODFILE CHECKSUM: a57c1d27f254889e162123e70603a60a84f62bfd
 
 COCOAPODS: 1.5.3

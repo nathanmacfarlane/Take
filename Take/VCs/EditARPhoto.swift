@@ -6,83 +6,122 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
+import CircleMenu
+import SwiftyDraw
 import UIKit
 
-class EditARPhoto: UIViewController {
+class EditARPhoto: UIViewController, CircleMenuDelegate, SwiftyDrawViewDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var bgImageView: UIImageView!
-    @IBOutlet private weak var myImageView: UIImageView!
-    @IBOutlet private weak var backButton: UIButton!
-    @IBOutlet private var panGesture: UIPanGestureRecognizer!
-    @IBOutlet private weak var canvasView: UIView!
+    @IBOutlet private weak var canvasView: SwiftyDrawView!
+    @IBOutlet weak var mainImageView: UIImageView!
 
     // MARK: - variables
     var theRoute: Route!
-    var theImage: UIImage = UIImage()
-    var path: UIBezierPath = UIBezierPath()
-    var startPoint: CGPoint = CGPoint()
-    var touchPoint: CGPoint = CGPoint()
+    var theImage: UIImage!
+    var path: UIBezierPath!
+    var startPoint: CGPoint!
+    var touchPoint: CGPoint!
     let paintColor: UIColor = UIColor(hexString: "A6D7FF")
+    var dragHamburger: UIPanGestureRecognizer!
+    var hamburgerButton: CircleMenu!
+    var hamButtonTitles: [String] = []
+    var hamButtons: [(icon: String, color: UIColor, selector: Selector)] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        canvasView.clipsToBounds = true
-        canvasView.isMultipleTouchEnabled = false
+        setupButtons()
 
-        self.myImageView.image = theImage
-        self.bgImageView.image = theImage
-        self.backButton.roundButton(portion: 4)
+        canvasView.delegate = self
+        let randomInt = Int(top: hamButtons.count, bottom: 0)
+        canvasView.lineColor = hamButtons[randomInt].color
 
-    }
+        dragHamburger = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
 
-    // MARK: - Touches
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: self.canvasView) {
-            startPoint = point
-        }
-    }
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        let touch = touches.first
-        if let point = touch?.location(in: self.canvasView) {
-            touchPoint = point
-        }
+        hamburgerButton = CircleMenu(
+            frame: CGRect(x: 0, y: 0, width: 50, height: 50),
+            normalIcon: "hamburgerMenuIcon",
+            selectedIcon: "closeMenuIcon",
+            buttonsCount: hamButtons.count,
+            duration: 0.3,
+            distance: 100)
+        hamburgerButton.center = self.view.center
+        hamburgerButton.delegate = self
+        hamburgerButton.roundView(portion: 2)
+        hamburgerButton.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+        hamburgerButton.addGestureRecognizer(dragHamburger)
+        view.addSubview(hamburgerButton)
 
-        path.move(to: startPoint)
-        path.addLine(to: touchPoint)
-        startPoint = touchPoint
-        draw()
-    }
-    func draw() {
-        let strokeLayer = CAShapeLayer()
-        strokeLayer.fillColor = nil
-        strokeLayer.lineWidth = 5
-        strokeLayer.strokeColor = paintColor.cgColor
-        strokeLayer.path = path.cgPath
-        self.canvasView.layer.addSublayer(strokeLayer)
-        self.canvasView.setNeedsDisplay()
-    }
-    func removeLines() {
-        path.removeAllPoints()
-        canvasView.layer.sublayers = nil
-        canvasView.setNeedsDisplay()
+        bgImageView.image = theImage
+        mainImageView.image = theImage
+
     }
 
-    // MARK: - Navigation
-    @IBAction private func goBackWithoutSave(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+    func setupButtons() {
+        hamButtons = [("undo", UIColor(red: 0.19, green: 0.57, blue: 1, alpha: 1), #selector(undo)),
+        ("close", UIColor(red: 0.96, green: 0.23, blue: 0.21, alpha: 1), #selector(cancel)),
+        ("done", UIColor(red: 0.23, green: 0.60, blue: 0.29, alpha: 1), #selector(save)),
+        ("eraser", UIColor(red: 1, green: 0.39, blue: 0, alpha: 1), #selector(clear))]
     }
-    @IBAction private func goBack(_ sender: Any) {
+
+    // MARK: - CircleMenu
+    func circleMenu(_ circleMenu: CircleMenu, willDisplay button: UIButton, atIndex: Int) {
+        guard let buttonImage = UIImage(named: hamButtons[atIndex].icon) else { return }
+        button.set(image: buttonImage, with: .white)
+        button.backgroundColor = hamButtons[atIndex].color
+        button.addTarget(self, action: hamButtons[atIndex].selector, for: .touchUpInside)
+        button.contentEdgeInsets = UIEdgeInsets(top: 15, left: 15, bottom: 15, right: 15)
+    }
+
+    // MARK: - Menu Buttons
+    @objc
+    func undo() {
+        canvasView.removeLastLine()
+    }
+    @objc
+    func save() {
         if let presenter = presentingViewController as? RouteEdit {
             let imageId = UUID().uuidString
             presenter.newArKeys.append(imageId)
             presenter.arKeys.append(imageId)
             presenter.selectedAr.updateValue([theImage, self.canvasView.asImage()], forKey: imageId)
         }
-        self.removeLines()
         self.dismiss(animated: true, completion: nil)
+    }
+    @objc
+    func cancel() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    @objc
+    func clear() {
+        canvasView.clearCanvas()
+    }
+
+    // MARK: - SwiftyDraw
+    func SwiftyDrawDidBeginDrawing(view: SwiftyDrawView) {
+        hamburgerButton.hideButtons(0.0)
+    }
+    func SwiftyDrawIsDrawing(view: SwiftyDrawView) {
+
+    }
+
+    func SwiftyDrawDidFinishDrawing(view: SwiftyDrawView) {
+
+    }
+
+    func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
+
+    }
+
+    // MARK: - PanGesture
+    @objc
+    func handleDrag(sender: UIPanGestureRecognizer? = nil) {
+        if sender?.state == .began {
+            hamburgerButton.hideButtons(0.0)
+        }
+        hamburgerButton.center = sender?.location(in: self.view) ?? hamburgerButton.center
     }
 
 }
