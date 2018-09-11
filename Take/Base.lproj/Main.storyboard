@@ -1779,29 +1779,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="35x-79-BW9">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="35x-79-BW9">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <visualEffectView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lch-5B-fiv">
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Lch-5B-fiv">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" ambiguous="YES" insetsLayoutMarginsFromSafeArea="NO" id="tGQ-Eu-PTl">
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="tGQ-Eu-PTl">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CoG-pv-cLf">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="CoG-pv-cLf">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-JN-uhI" customClass="SwiftyDrawView" customModule="SwiftyDraw">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5Az-JN-uhI" customClass="SwiftyDrawView" customModule="SwiftyDraw">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="0dh-qQ-vnQ"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="Drg-2E-0Cq"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="Hag-JO-yai"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="Hrl-ry-lzb"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="O3p-oO-eN5"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="OlT-iO-fmG"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="QFr-ZC-8x9"/>
+                            <constraint firstItem="YV3-kj-kOJ" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="RTQ-oF-xoy"/>
+                            <constraint firstItem="YV3-kj-kOJ" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="SmE-EG-lL0"/>
+                            <constraint firstItem="5Az-JN-uhI" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="URG-0E-XPU"/>
+                            <constraint firstItem="Lch-5B-fiv" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="W7M-m7-NzM"/>
+                            <constraint firstItem="35x-79-BW9" firstAttribute="leading" secondItem="YV3-kj-kOJ" secondAttribute="leading" id="Zcl-Oi-LpO"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="leading" secondItem="35x-79-BW9" secondAttribute="leading" id="lCf-J6-fpH"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="bottom" secondItem="35x-79-BW9" secondAttribute="bottom" id="ltg-zn-Suv"/>
+                            <constraint firstAttribute="top" secondItem="35x-79-BW9" secondAttribute="top" id="ofV-sZ-F4a"/>
+                            <constraint firstItem="CoG-pv-cLf" firstAttribute="trailing" secondItem="35x-79-BW9" secondAttribute="trailing" id="uDr-LW-fUI"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="YV3-kj-kOJ"/>
                     </view>
                     <connections>
