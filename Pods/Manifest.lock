@@ -11,6 +11,7 @@ PODS:
   - ChartsRealm (3.1.1):
     - Charts (~> 3.1.1)
     - RealmSwift (~> 3.7.1)
+  - CircleMenu (3.1.0)
   - CodableFirebase (0.2.0)
   - Firebase/Auth (5.5.0):
     - Firebase/CoreOnly
@@ -153,6 +154,7 @@ PODS:
 DEPENDENCIES:
   - Charts
   - ChartsRealm
+  - CircleMenu
   - CodableFirebase
   - Firebase/Auth
   - Firebase/Core
@@ -169,6 +171,7 @@ SPEC REPOS:
     - BoringSSL
     - Charts
     - ChartsRealm
+    - CircleMenu
     - CodableFirebase
     - Firebase
     - FirebaseAnalytics
@@ -202,6 +205,7 @@ SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   ChartsRealm: 35728e98e8d365a45c54fa7a1fa47663d2539887
+  CircleMenu: 68e85ad9ea8e22aa5cb00b204abb176c5edec587
   CodableFirebase: 4b865f58c583a6c0ef8c81c6b12c6bf15ebd9181
   Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
   FirebaseAnalytics: d4a260c114aec0d765ab5b9c404ac63de1d29381
@@ -231,6 +235,6 @@ SPEC CHECKSUMS:
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyDraw: d62a11b3558dc83f2c8803ea9850d8b2c72b0f48
 
-PODFILE CHECKSUM: 5678fc11fd8076b60d52f52fdf498463d2f12764
+PODFILE CHECKSUM: a57c1d27f254889e162123e70603a60a84f62bfd
 
 COCOAPODS: 1.5.3
