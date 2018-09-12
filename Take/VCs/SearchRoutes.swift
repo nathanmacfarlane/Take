@@ -296,16 +296,24 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 
-        if let vcntrl = segue.destination as? SearchContainerView, segue.identifier == "theCV" {
-            self.myCV = vcntrl
-        }
-        if segue.identifier == "goToDetail", let dct = segue.destination as? RouteDetail, let theRoute = sender as? Route {
+        switch segue.identifier {
+        case "theCV":
+            guard let dct = segue.destination as? SearchContainerView else { return }
+            self.myCV = dct
+        case "pushToNew":
+            guard let dct: RouteEdit = segue.destination as? RouteEdit else { return }
+            dct.selectedImages = [:]
+            dct.selectedAr = [:]
+        case "goToDetail":
+            guard let dct = segue.destination as? RouteDetail, let theRoute = sender as? Route else { return }
             dct.bgImage = selectedImage
             dct.theRoute = theRoute
-        }
-        if segue.identifier == "goToArea", let dct = segue.destination as? AreaView, let theRouteArea = sender as? Area {
+        case "goToArea":
+            guard let dct = segue.destination as? AreaView, let theRouteArea = sender as? Area else { return }
             dct.areaImage = selectedImage
             dct.theArea = theRouteArea
+        default:
+            fatalError("segue not recognized")
         }
 
     }

@@ -268,20 +268,6 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
                 guard let selectedImage = sender as? Int else { return }
                 dct.selectedImage = selectedImage
             }
-        case "presentAllIDiagrams":
-            guard let dct: ImageSlideshow = segue.destination as? ImageSlideshow else { return }
-            var images: [UIImage] = []
-            for key in diagramKeys {
-                guard let ar = diagrams[key] else { continue }
-                let bgImage = ar[0]
-                let diagram = ar[1]
-//                let arImage = bgImage.overlayWith(image: diagram, posX: 0, posY: 0)
-                let arImage = self.combineImages(image1: bgImage, image2: diagram)
-                images.append(arImage)
-            }
-//            dct.images = images
-            guard let selectedImage = sender as? Int else { return }
-            dct.selectedImage = selectedImage
         case "goToArea":
 //            let dc: AreaView = segue.destination as! AreaView
 //            dc.areaName = sender as! String
