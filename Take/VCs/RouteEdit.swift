@@ -342,6 +342,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         self.dismiss(animated: true, completion: nil)
     }
+
     func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double?, Int?) {
         var total = avg * Double(count)
         total += Double(new)
@@ -372,11 +373,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return theImages
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
-            if let theImage = sender as? UIImage { dct.theImage = theImage }
-            dct.theRoute = self.theRoute
-        }
-
         switch segue.identifier {
         case "presentEditARPhoto":
             guard let dct: EditARPhoto = segue.destination as? EditARPhoto else { return }

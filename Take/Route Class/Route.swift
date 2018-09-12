@@ -11,7 +11,7 @@ import FirebaseDatabase
 import FirebaseFirestore
 import FirebaseStorage
 import Foundation
-import GeoFire
+import Geofirestore
 import MapKit
 import UIKit
 
@@ -118,20 +118,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return CLLocation(latitude: -1, longitude: -1)
     }
 
-    // MARK: - GeoFire
-    func saveToGeoFire() {
-        guard let theLat = self.latitude, let theLong = self.longitude else { return }
-        let DBRef = Database.database().reference().child("GeoFireRouteKeys")
-        let geoFire = GeoFire(firebaseRef: DBRef)
-        geoFire.setLocation(CLLocation(latitude: theLat, longitude: theLong), forKey: "\(self.id)") { error in
-            if error != nil {
-                print("An error occured: \(String(describing: error))")
-            } else {
-                print("Saved location successfully!")
-            }
-        }
-    }
-
     // MARK: - equatable
     override func isEqual(_ object: Any?) -> Bool {
         guard let rhs = object as? Route else {
@@ -170,7 +156,11 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     func fsSave() {
         guard let data = try! FirebaseEncoder().encode(self) as? [String: Any] else { return }
-        Firestore.firestore().collection("routes").document("\(self.id)").setData(data)
+        let collection = Firestore.firestore().collection("routes")
+        collection.document("\(self.id)").setData(data)
+        guard let routeLocation = self.location else { return }
+        let geoFirestore = GeoFirestore(collectionRef: collection)
+        geoFirestore.setLocation(location: routeLocation, forDocumentWithID: self.id)
     }
 
     func getArea(completion: @escaping (_ area: Area?) -> Void) {
