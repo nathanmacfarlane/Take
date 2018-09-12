@@ -60,6 +60,10 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if theRoute == nil {
+            theRoute = Route()
+        }
+
         self.nameTextField.underlined()
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
 
@@ -106,6 +110,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+
         self.photoCV.reloadData()
         self.ARCV.reloadData()
     }
@@ -360,7 +365,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return theImages
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
             if let theImage = sender as? UIImage { dct.theImage = theImage }
             dct.theRoute = self.theRoute
