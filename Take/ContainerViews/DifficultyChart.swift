@@ -94,6 +94,7 @@ class DifficultyChart: UIViewController {
                 maxVal = val
             }
         }
+        if maxVal == 0 { return }
         ratio = barHeight / maxVal
     }
 

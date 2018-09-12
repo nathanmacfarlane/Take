@@ -10,7 +10,7 @@ target 'Take' do
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
   pod 'GoogleSignIn'
-  pod 'GeoFire'
+  pod 'Geofirestore'
   pod 'Charts'
   pod 'ChartsRealm'
   pod 'SwiftLint'

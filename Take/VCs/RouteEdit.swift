@@ -29,6 +29,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var photosLabel: UILabel!
     @IBOutlet private weak var starsSlider: UISlider!
     @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var ratingTextField: UITextField!
     @IBOutlet private weak var pitchStepper: UIStepper!
     @IBOutlet private weak var pitchLabel: UILabel!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
@@ -65,9 +66,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
 
         self.nameTextField.underlined()
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.ratingTextField.underlined()
+        self.ratingTextField.attributedPlaceholder = NSAttributedString(string: "Rating", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
 
         self.nameTextField.text = self.theRoute.name
+        self.ratingTextField.text = self.theRoute.rating
         self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.pitchStepper.value = Double(self.theRoute.pitches)
 
@@ -307,6 +311,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         if let name = self.nameTextField.text {
             theRoute.name = name
         }
+        if let rating = self.ratingTextField.text {
+            theRoute.rating = rating
+        }
         theRoute.pitches = Int(self.pitchStepper.value)
         theRoute.info = self.newDescription
         theRoute.protection = self.newProtection
@@ -335,6 +342,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
         self.dismiss(animated: true, completion: nil)
     }
+
     func calculateNewAvg(count: Int, avg: Double, new: Int) -> (Double?, Int?) {
         var total = avg * Double(count)
         total += Double(new)
@@ -365,11 +373,6 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         return theImages
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "presentEditARPhoto", let dct: EditARPhoto = segue.destination as? EditARPhoto {
-            if let theImage = sender as? UIImage { dct.theImage = theImage }
-            dct.theRoute = self.theRoute
-        }
-
         switch segue.identifier {
         case "presentEditARPhoto":
             guard let dct: EditARPhoto = segue.destination as? EditARPhoto else { return }

@@ -13,6 +13,8 @@ PODS:
     - RealmSwift (~> 3.7.1)
   - CircleMenu (3.1.0)
   - CodableFirebase (0.2.0)
+  - Firebase (5.5.0):
+    - Firebase/Core (= 5.5.0)
   - Firebase/Auth (5.5.0):
     - Firebase/CoreOnly
     - FirebaseAuth (= 5.0.3)
@@ -73,6 +75,11 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - GeoFire (3.0.0):
     - Firebase/Database (~> 5.0)
+  - Geofirestore (1.2.0):
+    - Firebase (~> 5.4)
+    - FirebaseCore (~> 5.0)
+    - FirebaseFirestore (~> 0.12)
+    - GeoFire (~> 3.0)
   - GoogleAppMeasurement (5.1.0):
     - GoogleUtilities/AppDelegateSwizzler (~> 5.2.0)
     - GoogleUtilities/MethodSwizzler (~> 5.2.0)
@@ -161,7 +168,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Firestore
   - Firebase/Storage
-  - GeoFire
+  - Geofirestore
   - GoogleSignIn
   - SwiftLint
   - SwiftyDraw
@@ -183,6 +190,7 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseStorage
     - GeoFire
+    - Geofirestore
     - GoogleAppMeasurement
     - GoogleSignIn
     - GoogleToolboxForMac
@@ -217,6 +225,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: 8cd2c6cfe7b9ab65ce7e248f6da7f26f6775b9be
   FirebaseStorage: 7ca4bb7b58a25fa647b04f524033fc7cb7eb272b
   GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
+  Geofirestore: ad548ea5e3c1ae595c746c7b796df5534d8202f3
   GoogleAppMeasurement: e785bdb86d3d280abc778156cec323a975f11d1d
   GoogleSignIn: d9ef55b10f0aa401a5de2747f59b725e4b9732ac
   GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
@@ -235,6 +244,6 @@ SPEC CHECKSUMS:
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyDraw: d62a11b3558dc83f2c8803ea9850d8b2c72b0f48
 
-PODFILE CHECKSUM: a57c1d27f254889e162123e70603a60a84f62bfd
+PODFILE CHECKSUM: c315e452e1df89350fe9466c84d539c10bb7affa
 
 COCOAPODS: 1.5.3
