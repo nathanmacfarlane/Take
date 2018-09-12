@@ -32,3 +32,6 @@
 - [ ] Add support for Alpine and Aid routes
 - [ ] Consider adding functionality to drag and drop stickers onto AR images
 - [ ] Change blurred background image on image slideshow when user swipes through (smooth fade)
+- [ ] Remove pitches from boulder routes
+- [ ] Disable all other options in edit view when Boulder is route type
+- [ ] Add other route types (alpine, aid, others?)
