@@ -29,6 +29,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     @IBOutlet private weak var photosLabel: UILabel!
     @IBOutlet private weak var starsSlider: UISlider!
     @IBOutlet private weak var nameTextField: UITextField!
+    @IBOutlet private weak var ratingTextField: UITextField!
     @IBOutlet private weak var pitchStepper: UIStepper!
     @IBOutlet private weak var pitchLabel: UILabel!
     @IBOutlet private weak var informationSegControl: UISegmentedControl!
@@ -65,9 +66,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
 
         self.nameTextField.underlined()
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Alternative Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.ratingTextField.underlined()
+        self.ratingTextField.attributedPlaceholder = NSAttributedString(string: "Rating", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
 
         self.nameTextField.text = self.theRoute.name
+        self.ratingTextField.text = self.theRoute.rating
         self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
         self.pitchStepper.value = Double(self.theRoute.pitches)
 
@@ -306,6 +310,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
         if let name = self.nameTextField.text {
             theRoute.name = name
+        }
+        if let rating = self.ratingTextField.text {
+            theRoute.rating = rating
         }
         theRoute.pitches = Int(self.pitchStepper.value)
         theRoute.info = self.newDescription
