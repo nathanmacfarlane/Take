@@ -452,6 +452,9 @@
                                 <state key="normal" title="+">
                                     <color key="titleColor" red="0.75294117647058822" green="0.47843137254901963" blue="0.52549019607843139" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <connections>
+                                    <segue destination="4Zz-Du-SCf" kind="presentation" identifier="pushToNew" id="yst-Ba-UJ0"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.16587274754381889" green="0.1934039101435362" blue="0.22957645939086291" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -2744,7 +2747,8 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="3qR-NR-tkt"/>
-        <segue reference="Fwn-ga-FRF"/>
+        <segue reference="A6d-0w-45h"/>
+        <segue reference="nV1-oS-Dwd"/>
         <segue reference="Jij-Sr-DMQ"/>
     </inferredMetricsTieBreakers>
 </document>

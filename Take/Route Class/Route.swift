@@ -23,7 +23,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     // MARK: - properties
     var name: String
-    var id: Int
+    var id: String
     var pitches: Int
     var types: [String] = [] // TR (Top Rope), Sport, and Trad, Boulder
     var stars: [String: Int] = [:]
@@ -84,12 +84,17 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
 
     // MARK: - Inits
-    init(name: String, id: Int, lat: Double, long: Double, pitches: Int) {
+    init(name: String, id: String, lat: Double, long: Double, pitches: Int) {
         self.name = name
         self.id = id
         self.latitude = lat
         self.longitude = long
         self.pitches = pitches
+    }
+    override init() {
+        self.name = ""
+        self.id = UUID().uuidString
+        self.pitches = 1
     }
 
     // MARK: - MKAnnotation
