@@ -19,4 +19,13 @@ extension UITextField {
         self.layer.addSublayer(border)
         self.layer.masksToBounds = true
     }
+    func setBottomBorder(withColor color: UIColor) {
+        self.borderStyle = UITextBorderStyle.none
+        self.backgroundColor = UIColor.clear
+        let width: CGFloat = 1.0
+
+        let borderLine = UIView(frame: CGRect(x: 0, y: self.frame.height - width, width: self.frame.width, height: width))
+        borderLine.backgroundColor = color
+        self.addSubview(borderLine)
+    }
 }

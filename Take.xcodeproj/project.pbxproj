@@ -90,6 +90,12 @@
 		224002762146203F008E81B0 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224002752146203F008E81B0 /* UINavigationController.swift */; };
 		22400278214625D1008E81B0 /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22400277214625D1008E81B0 /* DetailMapView.swift */; };
 		22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22468EAC20FA666F003C1B5A /* MapMainView.swift */; };
+		2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180121712CE3000F575A /* SearchRoutesVC.swift */; };
+		225418062171BF02000F575A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225418052171BF02000F575A /* LoginVC.swift */; };
+		225418082171BFE0000F575A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 225418072171BFE0000F575A /* Colors.xcassets */; };
+		2254180C2171D99E000F575A /* RouteCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180B2171D99E000F575A /* RouteCellTV.swift */; };
+		2254180E21727A75000F575A /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2254180D21727A75000F575A /* heart.png */; };
+		2254181021727CF3000F575A /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2254180F21727CF2000F575A /* checkmark.png */; };
 		22546BC621192B9600F92025 /* BadRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC521192B9600F92025 /* BadRoute.swift */; };
 		22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC721193A5B00F92025 /* RouteProtection.swift */; };
 		22546BCA21193CCC00F92025 /* RouteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC921193CCC00F92025 /* RouteBuffer.swift */; };
@@ -214,6 +220,12 @@
 		224002752146203F008E81B0 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		22400277214625D1008E81B0 /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		22468EAC20FA666F003C1B5A /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
+		2254180121712CE3000F575A /* SearchRoutesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoutesVC.swift; sourceTree = "<group>"; };
+		225418052171BF02000F575A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		225418072171BFE0000F575A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
+		2254180B2171D99E000F575A /* RouteCellTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCellTV.swift; sourceTree = "<group>"; };
+		2254180D21727A75000F575A /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
+		2254180F21727CF2000F575A /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		22546BC521192B9600F92025 /* BadRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadRoute.swift; sourceTree = "<group>"; };
 		22546BC721193A5B00F92025 /* RouteProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProtection.swift; sourceTree = "<group>"; };
 		22546BC921193CCC00F92025 /* RouteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBuffer.swift; sourceTree = "<group>"; };
@@ -335,6 +347,7 @@
 				04C83B3820B93269008D842D /* Custom IBOutlets */,
 				045255602091B6D600A4A384 /* AppDelegate.swift */,
 				045255662091B6D600A4A384 /* Main.storyboard */,
+				225418072171BFE0000F575A /* Colors.xcassets */,
 				045255692091B6DE00A4A384 /* Assets.xcassets */,
 				0452556B2091B6DE00A4A384 /* LaunchScreen.storyboard */,
 				0452556E2091B6DE00A4A384 /* Info.plist */,
@@ -374,6 +387,8 @@
 				046ED55320BE6A080055B35A /* MapView.swift */,
 				22468EAC20FA666F003C1B5A /* MapMainView.swift */,
 				22400277214625D1008E81B0 /* DetailMapView.swift */,
+				2254180121712CE3000F575A /* SearchRoutesVC.swift */,
+				225418052171BF02000F575A /* LoginVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -395,6 +410,7 @@
 				22A2C98B211C015E00743AC4 /* CityCell.swift */,
 				22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */,
 				2214BC30211FE9900076E777 /* AreaExpandableCell.swift */,
+				2254180B2171D99E000F575A /* RouteCellTV.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -402,6 +418,8 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				2254180D21727A75000F575A /* heart.png */,
+				2254180F21727CF2000F575A /* checkmark.png */,
 				2211F3C52147539900E79E99 /* brush.png */,
 				2211F3C42147539800E79E99 /* eraser.png */,
 				2211F3C0214743E800E79E99 /* clear.png */,
@@ -587,12 +605,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				04C83B4620BB68A1008D842D /* SLO.jpg in Resources */,
+				2254181021727CF3000F575A /* checkmark.png in Resources */,
 				0452556D2091B6DE00A4A384 /* LaunchScreen.storyboard in Resources */,
 				2211F3C1214743E900E79E99 /* clear.png in Resources */,
 				225FE8B120C63DF000C98E1A /* noImages.png in Resources */,
 				0451454220941E1E00FE72BB /* filter.png in Resources */,
 				228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */,
 				2211F3BB214742DF00E79E99 /* redo.png in Resources */,
+				2254180E21727A75000F575A /* heart.png in Resources */,
 				229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */,
 				2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */,
 				225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */,
@@ -617,6 +637,7 @@
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
+				225418082171BFE0000F575A /* Colors.xcassets in Resources */,
 				0452557C2091C02300A4A384 /* bg.jpg in Resources */,
 				2211F3C62147539900E79E99 /* eraser.png in Resources */,
 				2259C47320CEDAA90000065E /* map.png in Resources */,
@@ -740,6 +761,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */,
 				043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */,
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
@@ -752,6 +774,7 @@
 				043F788B20AEA44E0043C08A /* UITextView.swift in Sources */,
 				045255652091B6D600A4A384 /* ProfileView.swift in Sources */,
 				229C93ED20DB41EE00FAA320 /* Array.swift in Sources */,
+				2254180C2171D99E000F575A /* RouteCellTV.swift in Sources */,
 				04C83B3C20B93AD7008D842D /* ChartData.swift in Sources */,
 				22A2C988211BE67900743AC4 /* City.swift in Sources */,
 				04BA11FB20AD343600D24C4F /* Rating.swift in Sources */,
@@ -762,6 +785,7 @@
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
 				2259C46D20CDD6F40000065E /* ViewNextPageCell.swift in Sources */,
 				2220E70E20C8D78600F525EC /* String.swift in Sources */,
+				225418062171BF02000F575A /* LoginVC.swift in Sources */,
 				0440620420A3646B005C06C3 /* RouteEdit.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
 				04C83B4220BB6025008D842D /* UILabel.swift in Sources */,
@@ -976,7 +1000,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -998,7 +1022,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
