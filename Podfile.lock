@@ -157,6 +157,7 @@ PODS:
     - Realm (= 3.7.6)
   - SwiftLint (0.27.0)
   - SwiftyDraw (1.0.1)
+  - TwicketSegmentedControl (0.1.2)
 
 DEPENDENCIES:
   - Charts
@@ -172,6 +173,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - SwiftLint
   - SwiftyDraw
+  - TwicketSegmentedControl
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -208,6 +210,7 @@ SPEC REPOS:
     - RealmSwift
     - SwiftLint
     - SwiftyDraw
+    - TwicketSegmentedControl
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
@@ -243,7 +246,8 @@ SPEC CHECKSUMS:
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyDraw: d62a11b3558dc83f2c8803ea9850d8b2c72b0f48
+  TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
 
-PODFILE CHECKSUM: c315e452e1df89350fe9466c84d539c10bb7affa
+PODFILE CHECKSUM: d2e68dd4e9973ce1f324e5031c6e6902da4ae930
 
 COCOAPODS: 1.5.3

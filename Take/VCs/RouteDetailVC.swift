@@ -1,6 +1,7 @@
+import TwicketSegmentedControl
 import UIKit
 
-class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
+class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate {
 
     var route: Route!
     var imageKeys: [String] = []
@@ -12,6 +13,7 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     var myDiagramsCV: UICollectionView!
     var imagesCVConst: NSLayoutConstraint!
     var bgImageView: UIImageView!
+    var infoLabel: UILabel!
 
     let cvHeight: CGFloat = 75
 
@@ -60,6 +62,11 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     @objc
     func goEdit(sender: UIButton!) {
         print("going to edit")
+    }
+
+    // MARK: - Twicket Seg Control
+    func didSelect(_ segmentIndex: Int) {
+        self.infoLabel.text = segmentIndex == 0 ? route.info : route.protection
     }
 
     // MARK: - CollectionView
@@ -129,11 +136,27 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         self.myDiagramsCV.backgroundColor = .clear
         self.myDiagramsCV.showsHorizontalScrollIndicator = false
 
+        // segment control
+        let segControl = TwicketSegmentedControl()
+        segControl.setSegmentItems(["Description", "Protection"])
+        segControl.isSliderShadowHidden = true
+        segControl.sliderBackgroundColor = UIColor(named: "BlueDark") ?? .lightGray
+        segControl.delegate = self
+
+        // info label
+        self.infoLabel = UILabel()
+        self.infoLabel.text = route.info
+        self.infoLabel.numberOfLines = 0
+        self.infoLabel.textColor = .white
+        self.infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
+
         // add to subview
         self.view.addSubview(bgImageView)
         self.view.addSubview(gradientView)
         self.view.addSubview(myImagesCV)
         self.view.addSubview(myDiagramsCV)
+        self.view.addSubview(segControl)
+        self.view.addSubview(infoLabel)
 
         // constraints
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
@@ -148,6 +171,16 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: myDiagramsCV, attribute: .top, relatedBy: .equal, toItem: self.myImagesCV, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: myDiagramsCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: cvHeight).isActive = true
 
+        segControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -40).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: myDiagramsCV, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
     }
 
 }

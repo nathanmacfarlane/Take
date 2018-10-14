@@ -6,6 +6,10 @@ class RouteCellTV: UITableViewCell {
 
     func initFields() {
 
+        self.subviews.forEach {
+            $0.removeFromSuperview()
+        }
+
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = UIColor(named: "BluePrimaryDark")
@@ -37,13 +41,11 @@ class RouteCellTV: UITableViewCell {
         DispatchQueue.global(qos: .background).async {
             self.route.fsLoadFirstImage { _, image in
                 DispatchQueue.main.async {
-                    if let image = image {
-                        imageView.image = image
-                        imageView.contentMode = .scaleAspectFill
-                        indicator.stopAnimating()
-                        indicator.removeFromSuperview()
-                        imageView.addBorder(toSide: .right, withColor: UIColor(hexString: "FFFFFF").cgColor, andThickness: 1.0)
-                    }
+                    indicator.stopAnimating()
+                    indicator.removeFromSuperview()
+                    imageView.image = image ?? UIImage(named: "noImages.png")
+                    imageView.contentMode = .scaleAspectFill
+                    imageView.addBorder(toSide: .right, withColor: UIColor(hexString: "FFFFFF").cgColor, andThickness: 1.0)
                 }
             }
         }

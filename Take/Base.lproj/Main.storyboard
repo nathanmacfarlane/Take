@@ -562,6 +562,7 @@
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LEAPING LIZARDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uCL-c8-0gN">
                                 <rect key="frame" x="16" y="52" width="343" height="29"/>
+                                <color key="tintColor" red="0.38431372549019605" green="0.52156862745098043" blue="0.60392156862745094" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="21"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -2752,9 +2753,9 @@
         <image name="user.png" width="29" height="29"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="tWy-FW-nzT"/>
-        <segue reference="yst-Ba-UJ0"/>
-        <segue reference="nV1-oS-Dwd"/>
+        <segue reference="3qR-NR-tkt"/>
+        <segue reference="A6d-0w-45h"/>
+        <segue reference="Fwn-ga-FRF"/>
         <segue reference="Jij-Sr-DMQ"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -18,5 +18,6 @@ target 'Take' do
   pod 'Firebase/Firestore'
   pod 'SwiftyDraw'
   pod 'CircleMenu'
+  pod 'TwicketSegmentedControl'
 
 end
