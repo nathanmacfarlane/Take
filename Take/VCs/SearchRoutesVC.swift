@@ -34,6 +34,11 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
         self.initViews()
 
+        self.resultsMashed = []
+        self.results.clear()
+        self.myTableView.reloadData()
+        self.mySearchBar.text = ""
+
         if Auth.auth().currentUser == nil {
             DispatchQueue.main.async {
                 self.present(LoginVC(), animated: true, completion: nil)
@@ -46,10 +51,6 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.resultsMashed = []
-        self.results.clear()
-        self.myTableView.reloadData()
-        self.mySearchBar.text = ""
     }
 
     // MARK: - Functions
@@ -121,6 +122,20 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
         toDoAction.backgroundColor = self.view.backgroundColor
         return UISwipeActionsConfiguration(actions: [toDoAction, favoriteAction])
     }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        let anyItem = self.resultsMashed[indexPath.row]
+        switch anyItem {
+        case is Route:
+            guard let theRoute = anyItem as? Route else { return }
+            let routeDetailVC = RouteDetailVC()
+            routeDetailVC.route = theRoute
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+            self.navigationController?.pushViewController(routeDetailVC, animated: true)
+        default:
+            print("not accounted for")
+        }
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultsMashed.count
     }
@@ -152,21 +167,28 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
         self.present(LoginVC(), animated: true, completion: nil)
     }
 
+    @objc
+    private func goAddNew(sender: UIButton!) {
+        print("adding new")
+    }
+
     private func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
 
-        // add new button button
-        let myAddNewButton = UIButton()
-        myAddNewButton.setTitle("+", for: .normal)
-        myAddNewButton.titleLabel?.font = UIFont(name: "Avenir", size: 40)
-        myAddNewButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
+        self.title = "Search Routes"
+        self.navigationController?.navigationBar.titleTextAttributes =
+            [.foregroundColor: UIColor(named: "Placeholder") ?? .white,
+             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)]
 
-        // logout button
-        let myLogoutButton = UIButton()
-        myLogoutButton.setTitle("Logout", for: .normal)
-        myLogoutButton.titleLabel?.font = UIFont(name: "Avenir", size: 20)
-        myLogoutButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
-        myLogoutButton.addTarget(self, action: #selector(goLogout), for: .touchUpInside)
+        // nav logout button
+        let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
+        myNavLogoutButton.tintColor = UIColor(named: "PinkAccent")
+        self.navigationItem.leftBarButtonItem = myNavLogoutButton
+
+        // nav add new button
+        let myNavAddNewButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goAddNew))
+        myNavAddNewButton.tintColor = UIColor(named: "PinkAccent")
+        self.navigationItem.rightBarButtonItem = myNavAddNewButton
 
         // search bars
         self.mySearchBar = UISearchBar()
@@ -184,27 +206,11 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
         myTableView.dataSource = self
         myTableView.delegate = self
 
-        // add subviews
-        self.view.addSubview(myLogoutButton)
-        self.view.addSubview(myAddNewButton)
         self.view.addSubview(mySearchBar)
         self.view.addSubview(myTableView)
 
-        // add constraints
-        myAddNewButton.translatesAutoresizingMaskIntoConstraints = false
-        let addNewTopConst = NSLayoutConstraint(item: myAddNewButton, attribute: .top, relatedBy: .equal, toItem: myLogoutButton, attribute: .top, multiplier: 1, constant: 0)
-        let addNewBottomConst = NSLayoutConstraint(item: myAddNewButton, attribute: .bottom, relatedBy: .equal, toItem: myLogoutButton, attribute: .bottom, multiplier: 1, constant: 0)
-        let addNewTrailingConst = NSLayoutConstraint(item: myAddNewButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20)
-        NSLayoutConstraint.activate([addNewTopConst, addNewBottomConst, addNewTrailingConst])
-
-        myLogoutButton.translatesAutoresizingMaskIntoConstraints = false
-        let logoutTopConst = NSLayoutConstraint(item: myLogoutButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10)
-        let logoutLeadingConst = NSLayoutConstraint(item: myLogoutButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20)
-        let logoutRatioConst = NSLayoutConstraint(item: myLogoutButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .height, multiplier: 71 / 667, constant: 0)
-        NSLayoutConstraint.activate([logoutTopConst, logoutLeadingConst, logoutRatioConst])
-
         mySearchBar.translatesAutoresizingMaskIntoConstraints = false
-        let searchBarTopConst = NSLayoutConstraint(item: mySearchBar, attribute: .top, relatedBy: .equal, toItem: myLogoutButton, attribute: .top, multiplier: 1, constant: 50)
+        let searchBarTopConst = NSLayoutConstraint(item: mySearchBar, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 15)
         let searchBarLeadingConst = NSLayoutConstraint(item: mySearchBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
         let searchBarTrialingConst = NSLayoutConstraint(item: mySearchBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
         NSLayoutConstraint.activate([searchBarTopConst, searchBarLeadingConst, searchBarTrialingConst])

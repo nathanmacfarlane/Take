@@ -96,6 +96,10 @@
 		2254180C2171D99E000F575A /* RouteCellTV.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180B2171D99E000F575A /* RouteCellTV.swift */; };
 		2254180E21727A75000F575A /* heart.png in Resources */ = {isa = PBXBuildFile; fileRef = 2254180D21727A75000F575A /* heart.png */; };
 		2254181021727CF3000F575A /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2254180F21727CF2000F575A /* checkmark.png */; };
+		22541812217284C8000F575A /* RouteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22541811217284C8000F575A /* RouteDetailVC.swift */; };
+		225418182172A258000F575A /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 225418172172A258000F575A /* edit.png */; };
+		2254181A2172A3CF000F575A /* RouteDetailCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225418192172A3CF000F575A /* RouteDetailCVCell.swift */; };
+		2254181C21730152000F575A /* RouteDetailDiagramCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254181B21730152000F575A /* RouteDetailDiagramCVCell.swift */; };
 		22546BC621192B9600F92025 /* BadRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC521192B9600F92025 /* BadRoute.swift */; };
 		22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC721193A5B00F92025 /* RouteProtection.swift */; };
 		22546BCA21193CCC00F92025 /* RouteBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22546BC921193CCC00F92025 /* RouteBuffer.swift */; };
@@ -226,6 +230,10 @@
 		2254180B2171D99E000F575A /* RouteCellTV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCellTV.swift; sourceTree = "<group>"; };
 		2254180D21727A75000F575A /* heart.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = heart.png; sourceTree = "<group>"; };
 		2254180F21727CF2000F575A /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
+		22541811217284C8000F575A /* RouteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailVC.swift; sourceTree = "<group>"; };
+		225418172172A258000F575A /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		225418192172A3CF000F575A /* RouteDetailCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailCVCell.swift; sourceTree = "<group>"; };
+		2254181B21730152000F575A /* RouteDetailDiagramCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailDiagramCVCell.swift; sourceTree = "<group>"; };
 		22546BC521192B9600F92025 /* BadRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadRoute.swift; sourceTree = "<group>"; };
 		22546BC721193A5B00F92025 /* RouteProtection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteProtection.swift; sourceTree = "<group>"; };
 		22546BC921193CCC00F92025 /* RouteBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteBuffer.swift; sourceTree = "<group>"; };
@@ -389,6 +397,7 @@
 				22400277214625D1008E81B0 /* DetailMapView.swift */,
 				2254180121712CE3000F575A /* SearchRoutesVC.swift */,
 				225418052171BF02000F575A /* LoginVC.swift */,
+				22541811217284C8000F575A /* RouteDetailVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -411,6 +420,8 @@
 				22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */,
 				2214BC30211FE9900076E777 /* AreaExpandableCell.swift */,
 				2254180B2171D99E000F575A /* RouteCellTV.swift */,
+				225418192172A3CF000F575A /* RouteDetailCVCell.swift */,
+				2254181B21730152000F575A /* RouteDetailDiagramCVCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -418,6 +429,7 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				225418172172A258000F575A /* edit.png */,
 				2254180D21727A75000F575A /* heart.png */,
 				2254180F21727CF2000F575A /* checkmark.png */,
 				2211F3C52147539900E79E99 /* brush.png */,
@@ -637,6 +649,7 @@
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
+				225418182172A258000F575A /* edit.png in Resources */,
 				225418082171BFE0000F575A /* Colors.xcassets in Resources */,
 				0452557C2091C02300A4A384 /* bg.jpg in Resources */,
 				2211F3C62147539900E79E99 /* eraser.png in Resources */,
@@ -793,6 +806,7 @@
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
 				22762CE8212BD730004B41F9 /* SegueFromRight.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
+				22541812217284C8000F575A /* RouteDetailVC.swift in Sources */,
 				2214BC31211FE9900076E777 /* AreaExpandableCell.swift in Sources */,
 				2222133E213D1B280042AFC9 /* RoutesList.swift in Sources */,
 				22ECE97320C91FD600DCF44E /* Area.swift in Sources */,
@@ -801,6 +815,8 @@
 				045145452094273200FE72BB /* SearchContainerView.swift in Sources */,
 				22A2C986211AB75500743AC4 /* RouteArea.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
+				2254181A2172A3CF000F575A /* RouteDetailCVCell.swift in Sources */,
+				2254181C21730152000F575A /* RouteDetailDiagramCVCell.swift in Sources */,
 				2211F3C32147492E00E79E99 /* Int.swift in Sources */,
 				04BA11FD20AD344400D24C4F /* Comment.swift in Sources */,
 				2259C46F20CDDEAC0000065E /* UITableView.swift in Sources */,
