@@ -19,5 +19,8 @@ target 'Take' do
   pod 'SwiftyDraw'
   pod 'CircleMenu'
   pod 'TwicketSegmentedControl'
+  pod 'Mapbox-iOS-SDK'
+  pod 'CardParts'
+  pod 'ReactiveCocoa'
 
 end

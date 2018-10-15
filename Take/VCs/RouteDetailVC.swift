@@ -1,7 +1,9 @@
+import CardParts
+import Mapbox
 import TwicketSegmentedControl
 import UIKit
 
-class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate {
+class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate, MGLMapViewDelegate {
 
     var route: Route!
     var imageKeys: [String] = []
@@ -66,7 +68,20 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
     // MARK: - Twicket Seg Control
     func didSelect(_ segmentIndex: Int) {
-        self.infoLabel.text = segmentIndex == 0 ? route.info : route.protection
+        UIView.animate(withDuration: 0.1,
+                       animations: {
+            self.infoLabel.alpha = 0.0
+        }, completion: { _ in
+            self.infoLabel.text = segmentIndex == 0 ? self.route.info : self.route.protection
+            UIView.animate(withDuration: 0.3,
+                           animations: {
+                self.view.layoutIfNeeded()
+            }, completion: { _ in
+                UIView.animate(withDuration: 0.1) {
+                    self.infoLabel.alpha = 1.0
+                }
+            })
+        })
     }
 
     // MARK: - CollectionView
@@ -86,6 +101,14 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
             return cell
         }
         return UICollectionViewCell()
+    }
+
+    // MARK: - mapbox
+    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
+        return nil
+    }
+    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
+        return true
     }
 
     func initViews() {
@@ -144,43 +167,70 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         segControl.delegate = self
 
         // info label
-        self.infoLabel = UILabel()
-        self.infoLabel.text = route.info
-        self.infoLabel.numberOfLines = 0
-        self.infoLabel.textColor = .white
-        self.infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
+        infoLabel = UILabel()
+        infoLabel.text = route.info
+        infoLabel.numberOfLines = 0
+        infoLabel.textColor = .white
+        infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
+
+        let cards: [CardController] = [TestCardController()]
+        loadCards(cards: cards)
+
+//        // mapbox map
+//        let url = URL(string: "mapbox://styles/mapbox/dark-v9")
+//        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
+//        mapView.delegate = self
+//        mapView.setCenter(CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0), zoomLevel: 15, animated: false)
+//        mapView.layer.cornerRadius = 5
+//        mapView.clipsToBounds = true
+//        mapView.logoView.isHidden = true
+//        mapView.attributionButton.isHidden = true
+//        mapView.showsUserLocation = true
+//        let routeMarker = MGLPointAnnotation()
+//        routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
+//        routeMarker.title = route.name
+//        routeMarker.subtitle = "\(route.rating ?? "") \(route.typesString)"
+//        mapView.addAnnotation(routeMarker)
 
         // add to subview
-        self.view.addSubview(bgImageView)
-        self.view.addSubview(gradientView)
-        self.view.addSubview(myImagesCV)
-        self.view.addSubview(myDiagramsCV)
-        self.view.addSubview(segControl)
-        self.view.addSubview(infoLabel)
+        view.addSubview(bgImageView)
+        view.addSubview(gradientView)
+        view.addSubview(myImagesCV)
+        view.addSubview(myDiagramsCV)
+        view.addSubview(segControl)
+        view.addSubview(infoLabel)
+//        view.addSubview(mapView)
 
         // constraints
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myImagesCV, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: self.view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: myImagesCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: cvHeight).isActive = true
 
         myDiagramsCV.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myDiagramsCV, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myDiagramsCV, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myDiagramsCV, attribute: .top, relatedBy: .equal, toItem: self.myImagesCV, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myDiagramsCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: myDiagramsCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: myDiagramsCV, attribute: .top, relatedBy: .equal, toItem: myImagesCV, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: myDiagramsCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: cvHeight).isActive = true
 
         segControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: segControl, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -40).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -40).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: myDiagramsCV, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
 
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: infoLabel, attribute: .leading, relatedBy: .equal, toItem: self.view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
-        NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: self.view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
         NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+
+//        mapView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 5).isActive = true
+//        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
+//        NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+//        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+
     }
 
 }

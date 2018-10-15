@@ -74,7 +74,11 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>MGLMapboxAccessToken</key>
+	<string>pk.eyJ1IjoibmF0ZW1hYyIsImEiOiJjamZxNXJsM3MxcGF1MnFtZGhzdmpxeWV4In0.NJfa-KNIglphXo5eXwqCPw</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>MGLMapboxMetricsEnabledSettingShownInApp</key>
+	<string>YES</string>
 </dict>
 </plist>

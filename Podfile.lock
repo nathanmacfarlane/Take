@@ -5,6 +5,11 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
+  - CardParts (2.6.0):
+    - RxCocoa (~> 4.0)
+    - RxDataSources (~> 3.0)
+    - RxGesture (~> 1.2)
+    - RxSwift (~> 4.0)
   - Charts (3.1.1):
     - Charts/Core (= 3.1.1)
   - Charts/Core (3.1.1)
@@ -13,6 +18,7 @@ PODS:
     - RealmSwift (~> 3.7.1)
   - CircleMenu (3.1.0)
   - CodableFirebase (0.2.0)
+  - Differentiator (3.1.0)
   - Firebase (5.5.0):
     - Firebase/Core (= 5.5.0)
   - Firebase/Auth (5.5.0):
@@ -144,6 +150,7 @@ PODS:
   - GTMSessionFetcher/Full (1.2.0):
     - GTMSessionFetcher/Core (= 1.2.0)
   - leveldb-library (1.20)
+  - Mapbox-iOS-SDK (4.4.1)
   - nanopb (0.3.8):
     - nanopb/decode (= 0.3.8)
     - nanopb/encode (= 0.3.8)
@@ -155,11 +162,22 @@ PODS:
   - Realm/Headers (3.7.6)
   - RealmSwift (3.7.6):
     - Realm (= 3.7.6)
+  - RxCocoa (4.3.1):
+    - RxSwift (~> 4.0)
+  - RxDataSources (3.1.0):
+    - Differentiator (~> 3.0)
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxGesture (1.2.1):
+    - RxCocoa (~> 4.0)
+    - RxSwift (~> 4.0)
+  - RxSwift (4.3.1)
   - SwiftLint (0.27.0)
   - SwiftyDraw (1.0.1)
   - TwicketSegmentedControl (0.1.2)
 
 DEPENDENCIES:
+  - CardParts
   - Charts
   - ChartsRealm
   - CircleMenu
@@ -171,6 +189,7 @@ DEPENDENCIES:
   - Firebase/Storage
   - Geofirestore
   - GoogleSignIn
+  - Mapbox-iOS-SDK
   - SwiftLint
   - SwiftyDraw
   - TwicketSegmentedControl
@@ -178,10 +197,12 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - BoringSSL
+    - CardParts
     - Charts
     - ChartsRealm
     - CircleMenu
     - CodableFirebase
+    - Differentiator
     - Firebase
     - FirebaseAnalytics
     - FirebaseAuth
@@ -204,20 +225,27 @@ SPEC REPOS:
     - GTMOAuth2
     - GTMSessionFetcher
     - leveldb-library
+    - Mapbox-iOS-SDK
     - nanopb
     - Protobuf
     - Realm
     - RealmSwift
+    - RxCocoa
+    - RxDataSources
+    - RxGesture
+    - RxSwift
     - SwiftLint
     - SwiftyDraw
     - TwicketSegmentedControl
 
 SPEC CHECKSUMS:
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
+  CardParts: e6c3f5c6cedffa78453f57d893efffc336292708
   Charts: 90a4d61da0f6e06684c591e3bcab11940fe61736
   ChartsRealm: 35728e98e8d365a45c54fa7a1fa47663d2539887
   CircleMenu: 68e85ad9ea8e22aa5cb00b204abb176c5edec587
   CodableFirebase: 4b865f58c583a6c0ef8c81c6b12c6bf15ebd9181
+  Differentiator: be49ca3408f0ecfc761e4c7763d20c62be01b9ad
   Firebase: 8c957f9cb3852b519180fb378801b7eeeba4d288
   FirebaseAnalytics: d4a260c114aec0d765ab5b9c404ac63de1d29381
   FirebaseAuth: 657a25e4be044d2d333663ebf515a861c5a59cd7
@@ -240,14 +268,19 @@ SPEC CHECKSUMS:
   GTMOAuth2: c77fe325e4acd453837e72d91e3b5f13116857b2
   GTMSessionFetcher: 0c4baf0a73acd0041bf9f71ea018deedab5ea84e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Mapbox-iOS-SDK: e6a4f236c77f914ca2e19b929c6cc6b077ba1c4c
   nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   Realm: 9eaecad54712d6246d08ba34c10f354e4715d7d3
   RealmSwift: 1fe08b4ebaeeaacf17f9ba0343f7b25c9fc31fa6
+  RxCocoa: 78763c7b07d02455598d9fc3c1ad091a28b73635
+  RxDataSources: a843bad90c29817f5923ec8163f4af2de084ceb3
+  RxGesture: c278eb05b187abd47e11e65464ae4de53ab71d95
+  RxSwift: fe0fd770a43acdb7d0a53da411c9b892e69bb6e4
   SwiftLint: 3207c1faa2240bf8973b191820a116113cd11073
   SwiftyDraw: d62a11b3558dc83f2c8803ea9850d8b2c72b0f48
   TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
 
-PODFILE CHECKSUM: d2e68dd4e9973ce1f324e5031c6e6902da4ae930
+PODFILE CHECKSUM: f5f620dbd8ac38954bb9d9c84488e5ba8da7d8e2
 
 COCOAPODS: 1.5.3
