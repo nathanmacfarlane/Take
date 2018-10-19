@@ -1,4 +1,3 @@
-import CardParts
 import Mapbox
 import TwicketSegmentedControl
 import UIKit
@@ -173,24 +172,21 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         infoLabel.textColor = .white
         infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
 
-        let cards: [CardController] = [TestCardController()]
-        loadCards(cards: cards)
-
-//        // mapbox map
-//        let url = URL(string: "mapbox://styles/mapbox/dark-v9")
-//        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
-//        mapView.delegate = self
-//        mapView.setCenter(CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0), zoomLevel: 15, animated: false)
-//        mapView.layer.cornerRadius = 5
-//        mapView.clipsToBounds = true
-//        mapView.logoView.isHidden = true
-//        mapView.attributionButton.isHidden = true
-//        mapView.showsUserLocation = true
-//        let routeMarker = MGLPointAnnotation()
-//        routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
-//        routeMarker.title = route.name
-//        routeMarker.subtitle = "\(route.rating ?? "") \(route.typesString)"
-//        mapView.addAnnotation(routeMarker)
+        // mapbox map
+        let url = URL(string: "mapbox://styles/mapbox/dark-v9")
+        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
+        mapView.delegate = self
+        mapView.setCenter(CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0), zoomLevel: 15, animated: false)
+        mapView.layer.cornerRadius = 5
+        mapView.clipsToBounds = true
+        mapView.logoView.isHidden = true
+        mapView.attributionButton.isHidden = true
+        mapView.showsUserLocation = true
+        let routeMarker = MGLPointAnnotation()
+        routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
+        routeMarker.title = route.name
+        routeMarker.subtitle = "\(route.rating ?? "") \(route.typesString)"
+        mapView.addAnnotation(routeMarker)
 
         // add to subview
         view.addSubview(bgImageView)
@@ -199,7 +195,7 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         view.addSubview(myDiagramsCV)
         view.addSubview(segControl)
         view.addSubview(infoLabel)
-//        view.addSubview(mapView)
+        view.addSubview(mapView)
 
         // constraints
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
@@ -225,11 +221,11 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
         NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
 
-//        mapView.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 5).isActive = true
-//        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
-//        NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-//        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 5).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
 
     }
 
