@@ -131,9 +131,9 @@
 		22A2C98A211BFEFD00743AC4 /* AreaCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2C989211BFEFD00743AC4 /* AreaCell.swift */; };
 		22A2C98C211C015E00743AC4 /* CityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A2C98B211C015E00743AC4 /* CityCell.swift */; };
 		22BACAF221992FCB00D9C189 /* RouteEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BACAF121992FCB00D9C189 /* RouteEditVC.swift */; };
-		22C0EE3E211E533B002F06C5 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0EE3D211E533B002F06C5 /* PieChartView.swift */; };
 		22C0EE40211E55A0002F06C5 /* ChartTypesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */; };
-		22E35FFB211FE3A100E95723 /* DonutChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E35FFA211FE3A100E95723 /* DonutChart.swift */; };
+		22E480E921A69EA000A962C8 /* VerticalDetailCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 22E480E821A69EA000A962C8 /* VerticalDetailCell.xib */; };
+		22E480EB21A6A1DB00A962C8 /* RouteMainInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E480EA21A6A1DB00A962C8 /* RouteMainInfo.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22ECE97320C91FD600DCF44E /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22ECE97220C91FD600DCF44E /* Area.swift */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
@@ -269,9 +269,9 @@
 		22A2C989211BFEFD00743AC4 /* AreaCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaCell.swift; sourceTree = "<group>"; };
 		22A2C98B211C015E00743AC4 /* CityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityCell.swift; sourceTree = "<group>"; };
 		22BACAF121992FCB00D9C189 /* RouteEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteEditVC.swift; sourceTree = "<group>"; };
-		22C0EE3D211E533B002F06C5 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartTypesCell.swift; sourceTree = "<group>"; };
-		22E35FFA211FE3A100E95723 /* DonutChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonutChart.swift; sourceTree = "<group>"; };
+		22E480E821A69EA000A962C8 /* VerticalDetailCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VerticalDetailCell.xib; sourceTree = "<group>"; };
+		22E480EA21A6A1DB00A962C8 /* RouteMainInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteMainInfo.swift; sourceTree = "<group>"; };
 		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
 		22ECE97220C91FD600DCF44E /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
@@ -318,7 +318,6 @@
 				2220E70F20C8E32400F525EC /* MKMapView.swift */,
 				2259C46E20CDDEAC0000065E /* UITableView.swift */,
 				229C93EC20DB41EE00FAA320 /* Array.swift */,
-				22C0EE3D211E533B002F06C5 /* PieChartView.swift */,
 				22F5DE1021308320001ECC73 /* Firestore.swift */,
 				22A089212133CB4D005D22D1 /* UITextField.swift */,
 				224002752146203F008E81B0 /* UINavigationController.swift */,
@@ -349,6 +348,7 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				22E480E721A69E7E00A962C8 /* Xibs */,
 				22963F4E212F9216008D26C9 /* Protocols */,
 				22E35FF9211FE2EC00E95723 /* ContainerViews */,
 				2294D9B120E47FCE003A422B /* Route Class */,
@@ -537,11 +537,19 @@
 		22E35FF9211FE2EC00E95723 /* ContainerViews */ = {
 			isa = PBXGroup;
 			children = (
-				22E35FFA211FE3A100E95723 /* DonutChart.swift */,
 				2222133D213D1B280042AFC9 /* RoutesList.swift */,
 				2222133F213D2C800042AFC9 /* DifficultyChart.swift */,
 			);
 			path = ContainerViews;
+			sourceTree = "<group>";
+		};
+		22E480E721A69E7E00A962C8 /* Xibs */ = {
+			isa = PBXGroup;
+			children = (
+				22E480E821A69EA000A962C8 /* VerticalDetailCell.xib */,
+				22E480EA21A6A1DB00A962C8 /* RouteMainInfo.swift */,
+			);
+			path = Xibs;
 			sourceTree = "<group>";
 		};
 		811A414256C4F3EA9BE8B610 /* Pods */ = {
@@ -574,7 +582,7 @@
 				0452555A2091B6D600A4A384 /* Frameworks */,
 				0452555B2091B6D600A4A384 /* Resources */,
 				D1B141EE6A4049E2615BB2C0 /* [CP] Embed Pods Frameworks */,
-				67D17519BC25D1F33606DE81 /* [CP] Copy Pods Resources */,
+				8128AAF649A0B84EF6E61B63 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -632,6 +640,7 @@
 				2254181021727CF3000F575A /* checkmark.png in Resources */,
 				0452556D2091B6DE00A4A384 /* LaunchScreen.storyboard in Resources */,
 				2211F3C1214743E900E79E99 /* clear.png in Resources */,
+				22E480E921A69EA000A962C8 /* VerticalDetailCell.xib in Resources */,
 				225FE8B120C63DF000C98E1A /* noImages.png in Resources */,
 				0451454220941E1E00FE72BB /* filter.png in Resources */,
 				228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */,
@@ -709,18 +718,18 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		67D17519BC25D1F33606DE81 /* [CP] Copy Pods Resources */ = {
+		8128AAF649A0B84EF6E61B63 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Take/Pods-Take-resources.sh",
-				"${PODS_ROOT}/GoogleSignIn/Resources/GoogleSignIn.bundle",
+				"${PODS_CONFIGURATION_BUILD_DIR}/FirebaseFirestore/gRPCCertificates.bundle",
 			);
 			name = "[CP] Copy Pods Resources";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleSignIn.bundle",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/gRPCCertificates.bundle",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -735,62 +744,42 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Take/Pods-Take-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
-				"${BUILT_PRODUCTS_DIR}/CardParts/CardParts.framework",
-				"${BUILT_PRODUCTS_DIR}/Charts/Charts.framework",
-				"${BUILT_PRODUCTS_DIR}/ChartsRealm/ChartsRealm.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleMenu/CircleMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
-				"${BUILT_PRODUCTS_DIR}/Differentiator/Differentiator.framework",
-				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
-				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
-				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
-				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
-				"${BUILT_PRODUCTS_DIR}/RxDataSources/RxDataSources.framework",
-				"${BUILT_PRODUCTS_DIR}/RxGesture/RxGesture.framework",
-				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
+				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
+				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyDraw/SwiftyDraw.framework",
 				"${BUILT_PRODUCTS_DIR}/TwicketSegmentedControl/TwicketSegmentedControl.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC/GRPCClient.framework",
+				"${BUILT_PRODUCTS_DIR}/VerticalCardSwiper/VerticalCardSwiper.framework",
+				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-ProtoRPC/ProtoRPC.framework",
-				"${BUILT_PRODUCTS_DIR}/gRPC-RxLibrary/RxLibrary.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CardParts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Charts.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChartsRealm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Differentiator.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxDataSources.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxGesture.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDraw.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwicketSegmentedControl.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GRPCClient.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VerticalCardSwiper.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ProtoRPC.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxLibrary.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -863,7 +852,6 @@
 				044061FA209D7DCD005C06C3 /* SegueFromLeft.swift in Sources */,
 				22546BCA21193CCC00F92025 /* RouteBuffer.swift in Sources */,
 				22A2C98C211C015E00743AC4 /* CityCell.swift in Sources */,
-				22E35FFB211FE3A100E95723 /* DonutChart.swift in Sources */,
 				22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */,
 				045255632091B6D600A4A384 /* SearchRoutes.swift in Sources */,
 				043F789720B2B1880043C08A /* SlideshowImageCell.swift in Sources */,
@@ -881,6 +869,7 @@
 				041AAB01209C3D8700263E61 /* RouteDetail.swift in Sources */,
 				044061FC209D83F2005C06C3 /* DetailImagesCell.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
+				22E480EB21A6A1DB00A962C8 /* RouteMainInfo.swift in Sources */,
 				22A089222133CB4D005D22D1 /* UITextField.swift in Sources */,
 				04C83B0520B3F996008D842D /* SlideshowDiagramCell.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
@@ -888,7 +877,6 @@
 				04C83B0F20B54DDF008D842D /* User.swift in Sources */,
 				04C83B0920B52D06008D842D /* DeepPressGesture.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
-				22C0EE3E211E533B002F06C5 /* PieChartView.swift in Sources */,
 				0440620820A36A97005C06C3 /* AddARImageCell.swift in Sources */,
 				22C0EE40211E55A0002F06C5 /* ChartTypesCell.swift in Sources */,
 				22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */,

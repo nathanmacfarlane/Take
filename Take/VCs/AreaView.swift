@@ -6,7 +6,6 @@
 //  Copyright © 2018 N8. All rights reserved.
 //
 
-import Charts
 import FirebaseFirestore
 import UIKit
 
@@ -28,8 +27,6 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var imageKeys: [String] = []
     var selectedImage: UIImage?
     var routesCV: RoutesList?
-    var difficultyCV: DifficultyChart?
-    var typesCV: DonutChart?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,14 +40,6 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
                 if let routesCV = self.routesCV {
                     routesCV.routes = routes
                     routesCV.reloadTV()
-                }
-                if let difficultyCV = self.difficultyCV {
-                    difficultyCV.routes = routes
-                    difficultyCV.setupChart()
-                }
-                if let typesCV = self.typesCV {
-                    typesCV.routes = routes
-                    typesCV.setupChart()
                 }
             }
             self.routes = routes
@@ -89,12 +78,12 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             self.difficultyContainer.isHidden = false
             self.routesContainer.isHidden = true
             self.typesContainer.isHidden = true
-            if let difficultyCV = self.difficultyCV { difficultyCV.reload() }
+//            if let difficultyCV = self.difficultyCV { difficultyCV.reload() }
         case 2:
             self.difficultyContainer.isHidden = true
             self.routesContainer.isHidden = true
             self.typesContainer.isHidden = false
-            if let typesCV = self.typesCV { typesCV.animateChart() }
+//            if let typesCV = self.typesCV { typesCV.animateChart() }
         default:
             print("un-accounted for seg stuff")
         }
@@ -136,12 +125,12 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             dct.bgImage = selectedImage
         } else if segue.identifier == "difficultyChart" {
             guard let dct = segue.destination as? DifficultyChart else { return }
-            difficultyCV = dct
+//            difficultyCV = dct
             dct.routes = self.routes
         } else if segue.identifier == "donutChart" {
-            guard let dct = segue.destination as? DonutChart else { return }
-            typesCV = dct
-            dct.routes = self.routes
+//            guard let dct = segue.destination as? DonutChart else { return }
+//            typesCV = dct
+//            dct.routes = self.routes
         }
     }
 

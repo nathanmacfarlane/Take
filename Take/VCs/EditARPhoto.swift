@@ -36,7 +36,7 @@ class EditARPhoto: UIViewController, CircleMenuDelegate, SwiftyDrawViewDelegate 
 
         canvasView.delegate = self
         let randomInt = Int(top: hamButtons.count, bottom: 0)
-        canvasView.lineColor = hamButtons[randomInt].color
+//        canvasView.lineColor = hamButtons[randomInt].color
 
         dragHamburger = UIPanGestureRecognizer(target: self, action: #selector(handleDrag))
 
@@ -78,7 +78,7 @@ class EditARPhoto: UIViewController, CircleMenuDelegate, SwiftyDrawViewDelegate 
     // MARK: - Menu Buttons
     @objc
     func undo() {
-        canvasView.removeLastLine()
+//        canvasView.removeLastLine()
     }
     @objc
     func save() {
@@ -96,7 +96,7 @@ class EditARPhoto: UIViewController, CircleMenuDelegate, SwiftyDrawViewDelegate 
     }
     @objc
     func clear() {
-        canvasView.clearCanvas()
+//        canvasView.clearCanvas()
     }
 
     // MARK: - SwiftyDraw
@@ -113,6 +113,26 @@ class EditARPhoto: UIViewController, CircleMenuDelegate, SwiftyDrawViewDelegate 
 
     func SwiftyDrawDidCancelDrawing(view: SwiftyDrawView) {
 
+    }
+
+    func swiftyDraw(shouldBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) -> Bool {
+        return true
+    }
+
+    func swiftyDraw(didBeginDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+
+    }
+
+    func swiftyDraw(isDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+
+    }
+
+    func swiftyDraw(didFinishDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+
+    }
+
+    func swiftyDraw(didCancelDrawingIn drawingView: SwiftyDrawView, using touch: UITouch) {
+        
     }
 
     // MARK: - PanGesture

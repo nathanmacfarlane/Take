@@ -7,10 +7,9 @@
 //
 
 import FirebaseAuth
-import GoogleSignIn
 import UIKit
 
-class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
+class Login: UIViewController, UITextFieldDelegate {
 
     // MARK: - IBOutlets
     @IBOutlet private weak var loginWithGoogleButton: UIButton!
@@ -100,9 +99,5 @@ class Login: UIViewController, UITextFieldDelegate, GIDSignInUIDelegate {
                 self.dismiss(animated: true, completion: nil)
             }
         }
-    }
-    @IBAction private func loginWithGoogle(_ sender: UIButton) {
-        GIDSignIn.sharedInstance().uiDelegate = self
-        GIDSignIn.sharedInstance().signIn()
     }
 }

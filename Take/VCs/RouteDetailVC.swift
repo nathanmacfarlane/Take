@@ -1,8 +1,9 @@
 import Mapbox
 import TwicketSegmentedControl
 import UIKit
+//import VerticalCardSwiper
 
-class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate, MGLMapViewDelegate {
+class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate, MGLMapViewDelegate/*, VerticalCardSwiperDatasource, VerticalCardSwiperDelegate*/ {
 
     var route: Route!
     var imageKeys: [String] = []
@@ -17,6 +18,8 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     var infoLabel: UILabel!
 
     let cvHeight: CGFloat = 75
+
+    //private var cardSwiper: VerticalCardSwiper!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +124,28 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         })
     }
 
+//    // vertical swiper
+//    func numberOfCards(verticalCardSwiperView: VerticalCardSwiperView) -> Int {
+//        return 3
+//    }
+//    func cardForItemAt(verticalCardSwiperView: VerticalCardSwiperView, cardForItemAt index: Int) -> CardCell {
+//        let cell = verticalCardSwiperView.dequeueReusableCell(withReuseIdentifier: "MainInfoCell", for: index) as? RouteMainInfo
+//        cell?.infoLabel.text = route.info
+//        cell?.infoLabel.textColor = .white
+//        cell?.infoLabel.numberOfLines = 0
+//        cell?.segControl.setSegmentItems(["Description", "Protection"])
+//        cell?.info = route.info ?? ""
+//        cell?.protection = route.protection ?? ""
+//        cell?.segControl.isSliderShadowHidden = true
+//        cell?.segControl.sliderBackgroundColor = UIColor(named: "BlueDark") ?? .lightGray
+//        cell?.segControl.backgroundColor = .clear
+//        cell?.backgroundColor = UIColor(hexString: "#ff9999")
+//        return cell ?? CardCell()
+//    }
+//    func sizeForItem(verticalCardSwiperView: VerticalCardSwiperView, index: Int) -> CGSize {
+//        return CGSize(width: verticalCardSwiperView.frame.width, height: verticalCardSwiperView.frame.height * 0.75)
+//    }
+
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionView == myImagesCV ? imageKeys.count : diagramKeys.count
@@ -170,6 +195,12 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
         gradientView.layer.insertSublayer(gradient, at: 0)
 
+//        // vertical swiper
+//        cardSwiper = VerticalCardSwiper(frame: self.view.bounds)
+//        cardSwiper.datasource = self
+//        cardSwiper.delegate = self
+//        cardSwiper.register(nib: UINib(nibName: "VerticalDetailCell", bundle: nil), forCellWithReuseIdentifier: "MainInfoCell")
+
         // image collectionview
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
@@ -203,6 +234,7 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         segControl.setSegmentItems(["Description", "Protection"])
         segControl.isSliderShadowHidden = true
         segControl.sliderBackgroundColor = UIColor(named: "BlueDark") ?? .lightGray
+        segControl.backgroundColor = .clear
         segControl.delegate = self
 
         // info label
@@ -232,6 +264,7 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         // add to subview
         view.addSubview(bgImageView)
         view.addSubview(gradientView)
+//        view.addSubview(cardSwiper)
         view.addSubview(myImagesCV)
         view.addSubview(myDiagramsCV)
         view.addSubview(segControl)

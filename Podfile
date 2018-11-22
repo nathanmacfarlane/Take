@@ -9,10 +9,7 @@ target 'Take' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
-  pod 'GoogleSignIn'
   pod 'Geofirestore'
-  pod 'Charts'
-  pod 'ChartsRealm'
   pod 'SwiftLint'
   pod 'CodableFirebase'
   pod 'Firebase/Firestore'
@@ -20,7 +17,7 @@ target 'Take' do
   pod 'CircleMenu'
   pod 'TwicketSegmentedControl'
   pod 'Mapbox-iOS-SDK'
-  pod 'CardParts'
   pod 'ReactiveCocoa'
+  pod 'VerticalCardSwiper', '0.1.0-beta6'
 
 end
