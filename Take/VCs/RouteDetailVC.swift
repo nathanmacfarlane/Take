@@ -52,17 +52,55 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
     @objc
     func goFavorite(sender: UIButton!) {
-        print("add to favorites")
+        // TODO: add to favorites
     }
 
     @objc
     func goToDo(sender: UIButton!) {
-        print("add to do")
+        // TODO: add to do
     }
 
     @objc
     func goEdit(sender: UIButton!) {
-        print("going to edit")
+        let editVC = RouteEditVC()
+        editVC.bgImage = self.bgImageView.image
+        self.present(editVC, animated: true, completion: nil)
+    }
+
+    @objc
+    func goDownload(sender: UIButton!) {
+        let downloadActionSheet: UIAlertController = UIAlertController(title: "Select an Option", message: nil, preferredStyle: .actionSheet)
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            print("Cancel")
+        }
+        let photosAndInformationButton = UIAlertAction(title: "Photos and Information", style: .default) { _ in
+            // TODO: Downloading Photos and Information
+        }
+        let justInformationButton = UIAlertAction(title: "Just Information", style: .default) { _ in
+            // TODO: Downloading Just Information
+        }
+        downloadActionSheet.addAction(cancelActionButton)
+        downloadActionSheet.addAction(justInformationButton)
+        downloadActionSheet.addAction(photosAndInformationButton)
+        self.present(downloadActionSheet, animated: true, completion: nil)
+    }
+
+    @objc
+    func goShare(sender: UIButton!) {
+        let shareActionSheet: UIAlertController = UIAlertController(title: "Select an Option", message: nil, preferredStyle: .actionSheet)
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            print("Cancel")
+        }
+        let deleteActionButton = UIAlertAction(title: "Send to Friend", style: .default) { _ in
+            // TODO: Sending to Friend
+        }
+        let saveActionButton = UIAlertAction(title: "Add To Do", style: .default) { _ in
+            // TODO: Adding to do
+        }
+        shareActionSheet.addAction(cancelActionButton)
+        shareActionSheet.addAction(saveActionButton)
+        shareActionSheet.addAction(deleteActionButton)
+        self.present(shareActionSheet, animated: true, completion: nil)
     }
 
     // MARK: - Twicket Seg Control
@@ -114,7 +152,9 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         self.view.backgroundColor = UIColor(named: "BluePrimary")
         self.title = route.name
         let editButton = UIBarButtonItem(image: UIImage(named: "edit.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goEdit))
-        navigationItem.rightBarButtonItem = editButton
+        let shareButton = UIBarButtonItem(image: UIImage(named: "share.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goShare))
+        let downloadButton = UIBarButtonItem(image: UIImage(named: "download.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goDownload))
+        navigationItem.rightBarButtonItems = [shareButton, editButton, downloadButton]
 
         // bg image
         self.bgImageView = UIImageView(frame: self.view.frame)
@@ -182,6 +222,7 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         mapView.logoView.isHidden = true
         mapView.attributionButton.isHidden = true
         mapView.showsUserLocation = true
+        mapView.isUserInteractionEnabled = false
         let routeMarker = MGLPointAnnotation()
         routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
         routeMarker.title = route.name
@@ -199,16 +240,18 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
         // constraints
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
+        let imageCVHeight: CGFloat = route.imageUrls.isEmpty ? 0.0 : 75.0
+        let diagramCVHeight: CGFloat = route.routeArUrls.isEmpty ? 0.0 : 75.0
         NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myImagesCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: myImagesCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: cvHeight).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: imageCVHeight).isActive = true
 
         myDiagramsCV.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: myDiagramsCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myDiagramsCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myDiagramsCV, attribute: .top, relatedBy: .equal, toItem: myImagesCV, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: myDiagramsCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: cvHeight).isActive = true
+        NSLayoutConstraint(item: myDiagramsCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: diagramCVHeight).isActive = true
 
         segControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
@@ -226,7 +269,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
         NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
-
     }
 
 }
