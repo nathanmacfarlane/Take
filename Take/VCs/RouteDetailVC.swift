@@ -3,7 +3,7 @@ import TwicketSegmentedControl
 import UIKit
 //import VerticalCardSwiper
 
-class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate, MGLMapViewDelegate/*, VerticalCardSwiperDatasource, VerticalCardSwiperDelegate*/ {
+class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, TwicketSegmentedControlDelegate, MGLMapViewDelegate {
 
     var route: Route!
     var imageKeys: [String] = []
@@ -18,8 +18,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     var infoLabel: UILabel!
 
     let cvHeight: CGFloat = 75
-
-    //private var cardSwiper: VerticalCardSwiper!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,28 +122,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         })
     }
 
-//    // vertical swiper
-//    func numberOfCards(verticalCardSwiperView: VerticalCardSwiperView) -> Int {
-//        return 3
-//    }
-//    func cardForItemAt(verticalCardSwiperView: VerticalCardSwiperView, cardForItemAt index: Int) -> CardCell {
-//        let cell = verticalCardSwiperView.dequeueReusableCell(withReuseIdentifier: "MainInfoCell", for: index) as? RouteMainInfo
-//        cell?.infoLabel.text = route.info
-//        cell?.infoLabel.textColor = .white
-//        cell?.infoLabel.numberOfLines = 0
-//        cell?.segControl.setSegmentItems(["Description", "Protection"])
-//        cell?.info = route.info ?? ""
-//        cell?.protection = route.protection ?? ""
-//        cell?.segControl.isSliderShadowHidden = true
-//        cell?.segControl.sliderBackgroundColor = UIColor(named: "BlueDark") ?? .lightGray
-//        cell?.segControl.backgroundColor = .clear
-//        cell?.backgroundColor = UIColor(hexString: "#ff9999")
-//        return cell ?? CardCell()
-//    }
-//    func sizeForItem(verticalCardSwiperView: VerticalCardSwiperView, index: Int) -> CGSize {
-//        return CGSize(width: verticalCardSwiperView.frame.width, height: verticalCardSwiperView.frame.height * 0.75)
-//    }
-
     // MARK: - CollectionView
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return collectionView == myImagesCV ? imageKeys.count : diagramKeys.count
@@ -194,12 +170,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         gradient.frame = gradientView.frame
         gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
         gradientView.layer.insertSublayer(gradient, at: 0)
-
-//        // vertical swiper
-//        cardSwiper = VerticalCardSwiper(frame: self.view.bounds)
-//        cardSwiper.datasource = self
-//        cardSwiper.delegate = self
-//        cardSwiper.register(nib: UINib(nibName: "VerticalDetailCell", bundle: nil), forCellWithReuseIdentifier: "MainInfoCell")
 
         // image collectionview
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
@@ -254,7 +224,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         mapView.logoView.isHidden = true
         mapView.attributionButton.isHidden = true
         mapView.showsUserLocation = true
-        mapView.isUserInteractionEnabled = false
         let routeMarker = MGLPointAnnotation()
         routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
         routeMarker.title = route.name
@@ -264,7 +233,6 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         // add to subview
         view.addSubview(bgImageView)
         view.addSubview(gradientView)
-//        view.addSubview(cardSwiper)
         view.addSubview(myImagesCV)
         view.addSubview(myDiagramsCV)
         view.addSubview(segControl)
@@ -298,10 +266,11 @@ class RouteDetailVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
 
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 5).isActive = true
-        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
+//        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
     }
 
 }
