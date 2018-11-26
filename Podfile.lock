@@ -1,5 +1,6 @@
 PODS:
   - AutoInsetter (1.3.0)
+  - Blueprints (0.8.3)
   - BoringSSL (10.0.6):
     - BoringSSL/Implementation (= 10.0.6)
     - BoringSSL/Interface (= 10.0.6)
@@ -141,6 +142,7 @@ PODS:
   - VerticalCardSwiper (0.1.0-beta6)
 
 DEPENDENCIES:
+  - Blueprints
   - CircleMenu
   - CodableFirebase
   - Firebase/Auth
@@ -160,6 +162,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AutoInsetter
+    - Blueprints
     - BoringSSL
     - CircleMenu
     - CodableFirebase
@@ -195,6 +198,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  Blueprints: da16684d7116d948844dc5430d316ffa80323783
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   CircleMenu: d846569acbe805b75cef5793056707224240db64
   CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
@@ -228,6 +232,6 @@ SPEC CHECKSUMS:
   TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
   VerticalCardSwiper: abf970a63426e6fb77bcc55d3ca589ff54d0ef00
 
-PODFILE CHECKSUM: 8ba56574dd3efe45ded2aff94aebec8480b1a3d0
+PODFILE CHECKSUM: 1da5083f9e4f6fe131660f7a738b0e4de441f08f
 
 COCOAPODS: 1.5.3

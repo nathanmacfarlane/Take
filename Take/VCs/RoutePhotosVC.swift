@@ -1,3 +1,4 @@
+import Blueprints
 import UIKit
 
 class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -77,14 +78,14 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
         gradientView.layer.insertSublayer(gradient, at: 0)
 
-        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        layout.itemSize = CGSize(width: 100, height: 100)
-        layout.minimumInteritemSpacing = 0
-        layout.minimumLineSpacing = 0
-        layout.scrollDirection = .vertical
+        let waterfallLayout = VerticalWaterfallBlueprintLayout(
+            itemsPerRow: 2,
+            itemSize: CGSize(width: view.frame.width / 3, height: view.frame.width / 4),
+            minimumInteritemSpacing: 10,
+            minimumLineSpacing: 10,
+            sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
 
-        myImagesCV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
+        myImagesCV = UICollectionView(frame: .zero, collectionViewLayout: waterfallLayout)
         myImagesCV.register(RoutePhotoCVCell.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         myImagesCV.delegate = self
         myImagesCV.dataSource = self

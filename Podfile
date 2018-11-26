@@ -20,5 +20,6 @@ target 'Take' do
   pod 'ReactiveCocoa'
   pod 'VerticalCardSwiper', '0.1.0-beta6'
   pod 'Tabman', '~> 1.10'
+  pod 'Blueprints'
 
 end
