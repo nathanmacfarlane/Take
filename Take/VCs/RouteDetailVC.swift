@@ -23,32 +23,6 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         super.viewDidLoad()
 
         initViews()
-
-//        DispatchQueue.global(qos: .background).async {
-//            self.route.fsLoadAR { diagrams in
-//                self.diagrams = diagrams
-//                for diagram in self.diagrams {
-//                    self.diagramKeys.append(diagram.key)
-//                }
-//                DispatchQueue.main.async {
-//                    self.myDiagramsCV.reloadData()
-//                }
-//            }
-//
-//            self.route.fsLoadImages { images in
-//                self.images = images
-//                for image in self.images {
-//                    self.imageKeys.append(image.key)
-//                }
-//                DispatchQueue.main.async {
-//                    if let firstImage = images.first {
-//                        self.bgImageView.image = firstImage.value
-//                    }
-//                    self.myImagesCV.reloadData()
-//                }
-//            }
-//        }
-
     }
 
     @objc
