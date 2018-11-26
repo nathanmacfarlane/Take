@@ -131,10 +131,10 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         self.sportButton.addBorder(width: 2)
         self.tradButton.addBorder(width: 2)
         self.boulderButton.addBorder(width: 2)
-        self.topRopeButton.roundButton()
-        self.sportButton.roundButton()
-        self.tradButton.roundButton()
-        self.boulderButton.roundButton()
+//        self.topRopeButton.roundButton()
+//        self.sportButton.roundButton()
+//        self.tradButton.roundButton()
+//        self.boulderButton.roundButton()
     }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .dark)

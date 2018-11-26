@@ -87,6 +87,11 @@
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
 		2222133E213D1B280042AFC9 /* RoutesList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133D213D1B280042AFC9 /* RoutesList.swift */; };
 		22221340213D2C800042AFC9 /* DifficultyChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222133F213D2C800042AFC9 /* DifficultyChart.swift */; };
+		2222745921ABAE170039E486 /* RoutePhotoCVCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222745821ABAE170039E486 /* RoutePhotoCVCell.swift */; };
+		223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B538C21A92A5B006E1824 /* RouteHypeVC.swift */; };
+		223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B538E21A92C06006E1824 /* RoutePhotosVC.swift */; };
+		223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B539021A92EED006E1824 /* RouteNowVC.swift */; };
+		223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223BB23021A7E93600130070 /* RouteManagerVC.swift */; };
 		224002762146203F008E81B0 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 224002752146203F008E81B0 /* UINavigationController.swift */; };
 		22400278214625D1008E81B0 /* DetailMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22400277214625D1008E81B0 /* DetailMapView.swift */; };
 		22468EAD20FA666F003C1B5A /* MapMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22468EAC20FA666F003C1B5A /* MapMainView.swift */; };
@@ -225,6 +230,11 @@
 		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
 		2222133D213D1B280042AFC9 /* RoutesList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutesList.swift; sourceTree = "<group>"; };
 		2222133F213D2C800042AFC9 /* DifficultyChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DifficultyChart.swift; sourceTree = "<group>"; };
+		2222745821ABAE170039E486 /* RoutePhotoCVCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotoCVCell.swift; sourceTree = "<group>"; };
+		223B538C21A92A5B006E1824 /* RouteHypeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteHypeVC.swift; sourceTree = "<group>"; };
+		223B538E21A92C06006E1824 /* RoutePhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotosVC.swift; sourceTree = "<group>"; };
+		223B539021A92EED006E1824 /* RouteNowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNowVC.swift; sourceTree = "<group>"; };
+		223BB23021A7E93600130070 /* RouteManagerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteManagerVC.swift; sourceTree = "<group>"; };
 		224002752146203F008E81B0 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		22400277214625D1008E81B0 /* DetailMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailMapView.swift; sourceTree = "<group>"; };
 		22468EAC20FA666F003C1B5A /* MapMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapMainView.swift; sourceTree = "<group>"; };
@@ -348,6 +358,8 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				2222745721ABAD4F0039E486 /* Old Cells */,
+				223B538B21A929A8006E1824 /* Old VCs */,
 				22E480E721A69E7E00A962C8 /* Xibs */,
 				22963F4E212F9216008D26C9 /* Protocols */,
 				22E35FF9211FE2EC00E95723 /* ContainerViews */,
@@ -389,24 +401,14 @@
 		045255772091BA1900A4A384 /* VCs */ = {
 			isa = PBXGroup;
 			children = (
-				045255642091B6D600A4A384 /* ProfileView.swift */,
-				045255622091B6D600A4A384 /* SearchRoutes.swift */,
-				045145442094273200FE72BB /* SearchContainerView.swift */,
-				041AAB00209C3D8700263E61 /* RouteDetail.swift */,
-				0440620320A3646B005C06C3 /* RouteEdit.swift */,
-				044061FF20A0F31A005C06C3 /* Comments.swift */,
-				043F788C20AEACF00043C08A /* EditARPhoto.swift */,
-				043F789420B2AAA00043C08A /* ImageSlideshow.swift */,
-				04C83B0620B52B68008D842D /* ARView.swift */,
-				04C83B4320BB6520008D842D /* AreaView.swift */,
-				046E3E5D20BBF6E2009E63D8 /* Login.swift */,
-				046ED55320BE6A080055B35A /* MapView.swift */,
-				22468EAC20FA666F003C1B5A /* MapMainView.swift */,
-				22400277214625D1008E81B0 /* DetailMapView.swift */,
 				2254180121712CE3000F575A /* SearchRoutesVC.swift */,
 				225418052171BF02000F575A /* LoginVC.swift */,
 				22541811217284C8000F575A /* RouteDetailVC.swift */,
 				22BACAF121992FCB00D9C189 /* RouteEditVC.swift */,
+				223BB23021A7E93600130070 /* RouteManagerVC.swift */,
+				223B538C21A92A5B006E1824 /* RouteHypeVC.swift */,
+				223B538E21A92C06006E1824 /* RoutePhotosVC.swift */,
+				223B539021A92EED006E1824 /* RouteNowVC.swift */,
 			);
 			path = VCs;
 			sourceTree = "<group>";
@@ -414,24 +416,11 @@
 		045255782091BC9100A4A384 /* Custom Cells */ = {
 			isa = PBXGroup;
 			children = (
-				045255792091BCAD00A4A384 /* RouteCell.swift */,
-				044061FB209D83F2005C06C3 /* DetailImagesCell.swift */,
-				0440620120A1795E005C06C3 /* CommentCell.swift */,
-				0440620520A3679A005C06C3 /* AddImageCell.swift */,
-				0440620720A36A97005C06C3 /* AddARImageCell.swift */,
-				043F789620B2B1880043C08A /* SlideshowImageCell.swift */,
-				04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */,
-				04C83B0C20B54C49008D842D /* ProfileTableViewCell.swift */,
-				2259C46C20CDD6F40000065E /* ViewNextPageCell.swift */,
-				22A2C981211A796C00743AC4 /* WallCell.swift */,
-				22A2C989211BFEFD00743AC4 /* AreaCell.swift */,
-				22A2C98B211C015E00743AC4 /* CityCell.swift */,
-				22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */,
-				2214BC30211FE9900076E777 /* AreaExpandableCell.swift */,
 				2254180B2171D99E000F575A /* RouteCellTV.swift */,
 				225418192172A3CF000F575A /* RouteDetailCVCell.swift */,
 				2254181B21730152000F575A /* RouteDetailDiagramCVCell.swift */,
 				22640A3021A22F550033C006 /* CommentTVCell.swift */,
+				2222745821ABAE170039E486 /* RoutePhotoCVCell.swift */,
 			);
 			path = "Custom Cells";
 			sourceTree = "<group>";
@@ -514,6 +503,48 @@
 				04C83B3D20B93E0F008D842D /* UIChartView.swift */,
 			);
 			path = "Custom IBOutlets";
+			sourceTree = "<group>";
+		};
+		2222745721ABAD4F0039E486 /* Old Cells */ = {
+			isa = PBXGroup;
+			children = (
+				045255792091BCAD00A4A384 /* RouteCell.swift */,
+				044061FB209D83F2005C06C3 /* DetailImagesCell.swift */,
+				0440620120A1795E005C06C3 /* CommentCell.swift */,
+				0440620520A3679A005C06C3 /* AddImageCell.swift */,
+				0440620720A36A97005C06C3 /* AddARImageCell.swift */,
+				043F789620B2B1880043C08A /* SlideshowImageCell.swift */,
+				04C83B0420B3F996008D842D /* SlideshowDiagramCell.swift */,
+				04C83B0C20B54C49008D842D /* ProfileTableViewCell.swift */,
+				2259C46C20CDD6F40000065E /* ViewNextPageCell.swift */,
+				22A2C981211A796C00743AC4 /* WallCell.swift */,
+				22A2C989211BFEFD00743AC4 /* AreaCell.swift */,
+				22A2C98B211C015E00743AC4 /* CityCell.swift */,
+				22C0EE3F211E55A0002F06C5 /* ChartTypesCell.swift */,
+				2214BC30211FE9900076E777 /* AreaExpandableCell.swift */,
+			);
+			path = "Old Cells";
+			sourceTree = "<group>";
+		};
+		223B538B21A929A8006E1824 /* Old VCs */ = {
+			isa = PBXGroup;
+			children = (
+				045255642091B6D600A4A384 /* ProfileView.swift */,
+				045255622091B6D600A4A384 /* SearchRoutes.swift */,
+				045145442094273200FE72BB /* SearchContainerView.swift */,
+				041AAB00209C3D8700263E61 /* RouteDetail.swift */,
+				0440620320A3646B005C06C3 /* RouteEdit.swift */,
+				044061FF20A0F31A005C06C3 /* Comments.swift */,
+				043F788C20AEACF00043C08A /* EditARPhoto.swift */,
+				043F789420B2AAA00043C08A /* ImageSlideshow.swift */,
+				04C83B0620B52B68008D842D /* ARView.swift */,
+				04C83B4320BB6520008D842D /* AreaView.swift */,
+				046E3E5D20BBF6E2009E63D8 /* Login.swift */,
+				046ED55320BE6A080055B35A /* MapView.swift */,
+				22468EAC20FA666F003C1B5A /* MapMainView.swift */,
+				22400277214625D1008E81B0 /* DetailMapView.swift */,
+			);
+			path = "Old VCs";
 			sourceTree = "<group>";
 		};
 		2294D9B120E47FCE003A422B /* Route Class */ = {
@@ -743,6 +774,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Take/Pods-Take-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/CircleMenu/CircleMenu.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
@@ -750,11 +782,13 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
+				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveCocoa/ReactiveCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveSwift/ReactiveSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/Result/Result.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyDraw/SwiftyDraw.framework",
+				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/TwicketSegmentedControl/TwicketSegmentedControl.framework",
 				"${BUILT_PRODUCTS_DIR}/VerticalCardSwiper/VerticalCardSwiper.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
@@ -764,6 +798,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CircleMenu.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
@@ -771,11 +806,13 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Result.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDraw.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TwicketSegmentedControl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VerticalCardSwiper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
@@ -797,6 +834,7 @@
 			files = (
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				2220E70C20C8D50D00F525EC /* GeoFire.swift in Sources */,
+				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
 				043F789520B2AAA00043C08A /* ImageSlideshow.swift in Sources */,
 				0440620220A1795E005C06C3 /* CommentCell.swift in Sources */,
 				04C83B1120B54ED6008D842D /* Tick.swift in Sources */,
@@ -846,12 +884,14 @@
 				228ED47920CA6DEF00A4DBA4 /* AreaOverlay.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				046ED55920C12A120055B35A /* FBFunctions.swift in Sources */,
+				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				22A2C984211AAE5300743AC4 /* Wall.swift in Sources */,
 				22A2C98A211BFEFD00743AC4 /* AreaCell.swift in Sources */,
 				043F789320B28D800043C08A /* ARDiagram.swift in Sources */,
 				044061FA209D7DCD005C06C3 /* SegueFromLeft.swift in Sources */,
 				22546BCA21193CCC00F92025 /* RouteBuffer.swift in Sources */,
 				22A2C98C211C015E00743AC4 /* CityCell.swift in Sources */,
+				223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */,
 				22546BC821193A5B00F92025 /* RouteProtection.swift in Sources */,
 				045255632091B6D600A4A384 /* SearchRoutes.swift in Sources */,
 				043F789720B2B1880043C08A /* SlideshowImageCell.swift in Sources */,
@@ -868,9 +908,11 @@
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
 				041AAB01209C3D8700263E61 /* RouteDetail.swift in Sources */,
 				044061FC209D83F2005C06C3 /* DetailImagesCell.swift in Sources */,
+				2222745921ABAE170039E486 /* RoutePhotoCVCell.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				22E480EB21A6A1DB00A962C8 /* RouteMainInfo.swift in Sources */,
 				22A089222133CB4D005D22D1 /* UITextField.swift in Sources */,
+				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				04C83B0520B3F996008D842D /* SlideshowDiagramCell.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				22640A3121A22F550033C006 /* CommentTVCell.swift in Sources */,

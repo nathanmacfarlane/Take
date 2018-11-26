@@ -19,5 +19,6 @@ target 'Take' do
   pod 'Mapbox-iOS-SDK'
   pod 'ReactiveCocoa'
   pod 'VerticalCardSwiper', '0.1.0-beta6'
+  pod 'Tabman', '~> 1.10'
 
 end

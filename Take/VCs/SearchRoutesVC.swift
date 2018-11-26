@@ -128,10 +128,12 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
         switch anyItem {
         case is Route:
             guard let theRoute = anyItem as? Route else { return }
-            let routeDetailVC = RouteDetailVC()
-            routeDetailVC.route = theRoute
+            let routeManager = RouteManagerVC()
+            routeManager.route = theRoute
+//            let routeDetailVC = RouteDetailVC()
+//            routeDetailVC.route = theRoute
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-            self.navigationController?.pushViewController(routeDetailVC, animated: true)
+            self.navigationController?.pushViewController(routeManager, animated: true)
         default:
             print("not accounted for")
         }

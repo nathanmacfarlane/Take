@@ -68,6 +68,10 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return sum / Double(stars.count)
     }
 
+    var averageStarString: String {
+        return averageStar != nil ? "\(averageStar ?? 0) Stars" : "N/A"
+    }
+
     var difficulty: Rating? {
         if let tempRating = self.rating {
             return Rating(desc: tempRating)
@@ -146,6 +150,9 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     }
     func isTrad() -> Bool {
         return self.types.contains("Trad")
+    }
+    func isAid() -> Bool {
+        return self.types.contains("Aid")
     }
     func isBoulder() -> Bool {
         return self.types.contains("Boulder")
