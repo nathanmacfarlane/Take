@@ -1,12 +1,15 @@
 import Blueprints
+import FirebaseFirestore
 import UIKit
 
 class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
 
     var bgImageView: UIImageView!
     var route: Route!
-    var imageKeys: [String] = []
-    var images: [String: UIImage] = [:]
+//    var imageKeys: [String] = []
+//    var images: [String: UIImage] = [:]
+    var images: [UIImage] = []
+    var comments: [String: Comment] = [:]
 //    var diagramKeys: [String] = []
 //    var diagrams: [String: [UIImage]] = [:]
 
@@ -20,26 +23,25 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         self.initViews()
 
         DispatchQueue.global(qos: .background).async {
-//            self.route.fsLoadAR { diagrams in
-//                self.diagrams = diagrams
-//                for diagram in self.diagrams {
-//                    self.diagramKeys.append(diagram.key)
-//                }
-//                DispatchQueue.main.async {
-//                    self.myDiagramsCV.reloadData()
-//                }
-//            }
+            for commentId in self.route.comments {
+                let db = Firestore.firestore()
+                db.query(type: Comment.self, by: "id", with: commentId) { comments in
+                    print("comment: \(comments.first?.message ?? "N/A/")")
+                    if let comment = comments.first {
+                        self.comments[commentId] = comment
 
-            self.route.fsLoadImages { images in
-                self.images = images
-                for image in self.images {
-                    self.imageKeys.append(image.key)
-                }
-                DispatchQueue.main.async {
-                    if let firstImage = images.first {
-                        self.bgImageView.image = firstImage.value
+                        for imageUrl in comment.imageUrls {
+                            guard let theURL = URL(string: imageUrl.value) else { continue }
+                            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+                                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+                                self.images.append(theImage)
+                                DispatchQueue.main.async {
+                                    self.myImagesCV.reloadData()
+                                }
+                            }
+                            .resume()
+                        }
                     }
-                    self.myImagesCV.reloadData()
                 }
             }
         }
@@ -48,13 +50,16 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return imageKeys.count
+//        return imageKeys.count
+        return images.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == myImagesCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RoutePhotoCVCell", for: indexPath) as? RoutePhotoCVCell {
-            if let cellImage = self.images[self.imageKeys[indexPath.row]] {
-                cell.initImage(image: cellImage)
-            }
+//            if let cellImage = self.images[self.imageKeys[indexPath.row]] {
+//                cell.initImage(image: cellImage)
+//            }
+            cell.initImage(image: self.images[indexPath.row])
+            cell.initUserNameLabel(username: "test: \(indexPath.row)")
             return cell
         }
         return UICollectionViewCell()
@@ -80,7 +85,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
         let waterfallLayout = VerticalWaterfallBlueprintLayout(
             itemsPerRow: 2,
-            itemSize: CGSize(width: view.frame.width / 3, height: view.frame.width / 4),
+            itemSize: CGSize(width: view.frame.width / 3, height: view.frame.width / 1.5),
             minimumInteritemSpacing: 10,
             minimumLineSpacing: 10,
             sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))

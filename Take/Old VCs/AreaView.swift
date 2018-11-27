@@ -123,14 +123,6 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
             guard let theRoute = sender as? Route else { return }
             dct.theRoute = theRoute
             dct.bgImage = selectedImage
-        } else if segue.identifier == "difficultyChart" {
-            guard let dct = segue.destination as? DifficultyChart else { return }
-//            difficultyCV = dct
-            dct.routes = self.routes
-        } else if segue.identifier == "donutChart" {
-//            guard let dct = segue.destination as? DonutChart else { return }
-//            typesCV = dct
-//            dct.routes = self.routes
         }
     }
 

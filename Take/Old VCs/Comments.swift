@@ -27,7 +27,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     let dateFormatterPrint: DateFormatter = DateFormatter()
     let forFsSave: DateFormatter = DateFormatter()
     var userId: String = ""
-    var comments: [Comment] = []
+    var comments: [OldComment] = []
 
     // MARK: - View load/unlaod
     override func viewDidLoad() {
@@ -104,7 +104,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
     @IBAction private func goPostComment(_ sender: Any) {
         guard let commentText = self.userCommentField.text else { return }
         let commentId = UUID().uuidString
-        let newComment = Comment(id: commentId, userId: self.userId, text: commentText, dateString: forFsSave.string(from: Date()))
+        let newComment = OldComment(id: commentId, userId: self.userId, text: commentText, dateString: forFsSave.string(from: Date()))
         self.userCommentField.resignFirstResponder()
         self.userCommentField.text = ""
         self.comments.insert(newComment, at: 0)

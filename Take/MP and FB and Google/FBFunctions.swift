@@ -49,6 +49,19 @@ func searchFBRouteAreas(byProperty property: String, withValue value: Any, compl
     }
 }
 
+//func searchFBRouteWalls(byProperty property: String, withValue value: Any, completion: @escaping (_ routeLocals: [Comment]) -> Void) {
+//    var routeComments: [Comment] = []
+//    let commentsRoot = Database.database().reference(withPath: "comments")
+//    let namequery = commentsRoot.queryOrdered(byChild: property).queryEqual(toValue: value)
+//    namequery.observeSingleEvent(of: .value) { snapshot in
+//        for item in snapshot.children {
+//            guard let item = item as? DataSnapshot, let newWall = Comment(snapshot: item) else { continue }
+//            routeComments.append(newWall)
+//        }
+//        completion(routeComments)
+//    }
+//}
+
 func searchFBRoute(byProperty property: String, withValue value: Any, completion: @escaping (_ routes: [Route]) -> Void) {
 //    var routeResults: [Route] = []
 //    let routesRoot = Database.database().reference(withPath: "routes")

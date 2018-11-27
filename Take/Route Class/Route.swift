@@ -36,11 +36,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
     var commentIds: [String] = []
     var latitude: Double?
     var longitude: Double?
-
-    // not really implemented on the new model
-    var localDesc: [String] = []
-    var wall: String?
-    var city: String?
+    var comments: [String] = []
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -57,6 +53,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         case rating
         case routeArUrls
         case commentIds
+        case comments
     }
 
     var averageStar: Double? {
@@ -70,13 +67,6 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
 
     var averageStarString: String {
         return averageStar != nil ? "\(averageStar ?? 0) Stars" : "N/A"
-    }
-
-    var difficulty: Rating? {
-        if let tempRating = self.rating {
-            return Rating(desc: tempRating)
-        }
-        return nil
     }
 
     var typesString: String {
@@ -112,7 +102,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return self.name
     }
     var subtitle: String? {
-        return self.difficulty?.description
+        return self.rating
     }
 
     var location: CLLocation? {
@@ -158,7 +148,7 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         return self.types.contains("Boulder")
     }
     func toString() -> String {
-        return "'\(name)' - Difficulty: '\(difficulty?.description ?? "N/A")'"
+        return "'\(name)' - Difficulty: '\(self.rating ?? "N/A")'"
     }
 
     func fsSave() {
@@ -178,8 +168,8 @@ class Route: NSObject, Comparable, Codable, MKAnnotation {
         }
     }
 
-    func getComments(completion: @escaping (_ comments: [Comment]) -> Void) {
-        var comments: [Comment] = []
+    func getComments(completion: @escaping (_ comments: [OldComment]) -> Void) {
+        var comments: [OldComment] = []
         var count = 0
         for commentId in self.commentIds {
             Firestore.firestore().getComment(id: commentId) { comment in

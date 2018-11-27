@@ -46,11 +46,11 @@ extension Firestore {
         }
     }
 
-    func getComment(id: String, completion: @escaping (_ comment: Comment) -> Void) {
+    func getComment(id: String, completion: @escaping (_ comment: OldComment) -> Void) {
         let docRef = Firestore.firestore().collection("comments").document(id)
         docRef.getDocument { document, _ in
             if let document = document, document.exists {
-                guard let comment = try? FirebaseDecoder().decode(Comment.self, from: document.data() as Any) else {
+                guard let comment = try? FirebaseDecoder().decode(OldComment.self, from: document.data() as Any) else {
                     print("couldn't get comment")
                     return
                 }
@@ -78,6 +78,28 @@ extension Firestore {
                 }
                 completion(areas)
             }
+        } else if type == Comment.self {
+            queryComments(by: field, with: value) { comments in
+                guard let comments = comments as? [T] else {
+                    completion([])
+                    return
+                }
+                completion(comments)
+            }
+        }
+    }
+
+    func queryComments(by field: String, with value: Any, completion: @escaping (_ comments: [Comment]) -> Void) {
+        var comments: [Comment] = []
+        self.query(collection: "comments", by: field, with: value) { documents in
+            for doc in documents {
+                guard let comment = try? FirebaseDecoder().decode(Comment.self, from: doc.data() as Any) else {
+                    print("couldn't get comment")
+                    continue
+                }
+                comments.append(comment)
+            }
+            completion(comments)
         }
     }
 
