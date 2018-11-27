@@ -133,6 +133,9 @@ PODS:
   - ReactiveSwift (4.0.0):
     - Result (~> 4.0)
   - Result (4.0.0)
+  - SDWebImage (4.4.2):
+    - SDWebImage/Core (= 4.4.2)
+  - SDWebImage/Core (4.4.2)
   - SwiftLint (0.28.1)
   - SwiftyDraw (2.1.1)
   - Tabman (1.10.2):
@@ -153,6 +156,7 @@ DEPENDENCIES:
   - Geofirestore
   - Mapbox-iOS-SDK
   - ReactiveCocoa
+  - SDWebImage (~> 4.0)
   - SwiftLint
   - SwiftyDraw
   - Tabman (~> 1.10)
@@ -190,6 +194,7 @@ SPEC REPOS:
     - ReactiveCocoa
     - ReactiveSwift
     - Result
+    - SDWebImage
     - SwiftLint
     - SwiftyDraw
     - Tabman
@@ -226,12 +231,13 @@ SPEC CHECKSUMS:
   ReactiveCocoa: fbd26e9ba60e98417ee47433e59465a98ed9da0f
   ReactiveSwift: a2bb9ace428a109e9c0209615645d9d286c8c433
   Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
+  SDWebImage: 624d6e296c69b244bcede364c72ae0430ac14681
   SwiftLint: 7f5f7de0da74a649b16616cb5246ae323489656e
   SwiftyDraw: e6e873314a0440a042c624906303043a55fe76cf
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
   VerticalCardSwiper: abf970a63426e6fb77bcc55d3ca589ff54d0ef00
 
-PODFILE CHECKSUM: 1da5083f9e4f6fe131660f7a738b0e4de441f08f
+PODFILE CHECKSUM: a50a8c04a560976c7b3b72b5070c671312d4592a
 
 COCOAPODS: 1.5.3

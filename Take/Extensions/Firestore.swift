@@ -86,6 +86,28 @@ extension Firestore {
                 }
                 completion(comments)
             }
+        } else if type == User.self {
+            queryUsers(by: field, with: value) { users in
+                guard let users = users as? [T] else {
+                    completion([])
+                    return
+                }
+                completion(users)
+            }
+        }
+    }
+
+    func queryUsers(by field: String, with value: Any, completion: @escaping (_ users: [User]) -> Void) {
+        var users: [User] = []
+        self.query(collection: "users", by: field, with: value) { documents in
+            for doc in documents {
+                guard let comment = try? FirebaseDecoder().decode(User.self, from: doc.data() as Any) else {
+                    print("couldn't get user")
+                    continue
+                }
+                users.append(comment)
+            }
+            completion(users)
         }
     }
 

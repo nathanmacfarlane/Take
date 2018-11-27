@@ -12,6 +12,7 @@ import UIKit
 
 class User: Codable {
     var name: String
+    var username: String
     var id: String
     var profilePhotoUrl: String?
 
@@ -24,8 +25,9 @@ class User: Codable {
         .resume()
     }
 
-    init(name: String) {
+    init(name: String, username: String) {
         self.name = name
         self.id = UUID().uuidString
+        self.username = username
     }
 }

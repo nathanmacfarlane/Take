@@ -1,5 +1,6 @@
 import Blueprints
 import FirebaseFirestore
+import SDWebImage
 import UIKit
 
 class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -10,6 +11,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 //    var images: [String: UIImage] = [:]
     var images: [UIImage] = []
     var comments: [String: Comment] = [:]
+    var commentKeys: [String] = []
 //    var diagramKeys: [String] = []
 //    var diagrams: [String: [UIImage]] = [:]
 
@@ -26,21 +28,27 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
             for commentId in self.route.comments {
                 let db = Firestore.firestore()
                 db.query(type: Comment.self, by: "id", with: commentId) { comments in
-                    print("comment: \(comments.first?.message ?? "N/A/")")
                     if let comment = comments.first {
-                        self.comments[commentId] = comment
-
-                        for imageUrl in comment.imageUrls {
-                            guard let theURL = URL(string: imageUrl.value) else { continue }
-                            URLSession.shared.dataTask(with: theURL) { data, _, _ in
-                                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                                self.images.append(theImage)
-                                DispatchQueue.main.async {
-                                    self.myImagesCV.reloadData()
-                                }
+                        if !comment.imageUrls.isEmpty {
+                            self.comments[commentId] = comment
+                            self.commentKeys.append(commentId)
+                            DispatchQueue.main.async {
+                                self.myImagesCV.reloadData()
                             }
-                            .resume()
                         }
+
+//                        for imageUrl in comment.imageUrls {
+//                            guard let theURL = URL(string: imageUrl.value) else { continue }
+//                            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+//                                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+//                                self.images.append(theImage)
+//                                DispatchQueue.main.async {
+//                                    self.myImagesCV.reloadData()
+//                                }
+//                            }
+//                            .resume()
+//                        }
+
                     }
                 }
             }
@@ -51,15 +59,29 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     // MARK: - Collection View
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        return imageKeys.count
-        return images.count
+        return commentKeys.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == myImagesCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RoutePhotoCVCell", for: indexPath) as? RoutePhotoCVCell {
+        if collectionView == myImagesCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RoutePhotoCVCell", for: indexPath) as? RoutePhotoCVCell,
+            let comment = comments[commentKeys[indexPath.row]] {
 //            if let cellImage = self.images[self.imageKeys[indexPath.row]] {
 //                cell.initImage(image: cellImage)
 //            }
-            cell.initImage(image: self.images[indexPath.row])
-            cell.initUserNameLabel(username: "test: \(indexPath.row)")
+//            cell.initImage(image: self.images[indexPath.row])
+            cell.initImage()
+            if let imageUrl = comment.imageUrls.first?.value {
+                cell.imageView.sd_setImage(with: URL(string: imageUrl), placeholderImage: UIImage(named: "SLO.jpg"))
+            }
+            Firestore.firestore().query(type: User.self, by: "id", with: comment.userId) { users in
+                if let user = users.first {
+                    DispatchQueue.main.async {
+                        cell.initUserNameLabel(username: "@\(user.username)")
+                    }
+                }
+            }
+            if let message = comment.message {
+                cell.initMessageLabel(message: message)
+            }
             return cell
         }
         return UICollectionViewCell()
