@@ -1,6 +1,7 @@
+import Lightbox
 import UIKit
 
-class RouteNowVC: UIViewController {
+class RouteNowVC: UIViewController, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
 
     var bgImageView: UIImageView!
     var route: Route!
@@ -10,6 +11,36 @@ class RouteNowVC: UIViewController {
 
         self.initViews()
 
+        let button = UIButton(frame: view.frame)
+        button.setTitle("start", for: .normal)
+        button.addTarget(self, action: #selector(startStuff), for: .touchUpInside)
+        view.addSubview(button)
+
+    }
+
+    @objc
+    func startStuff() {
+        let images = [
+            LightboxImage(imageURL: URL(string: "https://cdn.arstechnica.net/2011/10/05/iphone4s_sample_apple-4e8c706-intro.jpg")!),
+            LightboxImage(
+                image: UIImage(named: "profile.jpg") ?? UIImage(),
+                text: "This is an example of a remote image loaded from URL"
+            ),
+            LightboxImage(
+                image: UIImage(named: "SLO.jpg") ?? UIImage(),
+                text: "",
+                videoURL: URL(string: "https://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4")
+            ),
+            LightboxImage(
+                image: UIImage(named: "bg.jpg") ?? UIImage(),
+                text: "This is an example of a local image."
+            )
+        ]
+        let controller = LightboxController(images: images)
+        controller.pageDelegate = self
+        controller.dismissalDelegate = self
+        controller.dynamicBackground = true
+        present(controller, animated: true, completion: nil)
     }
 
     func initViews() {
@@ -33,6 +64,14 @@ class RouteNowVC: UIViewController {
         // add to subview
         view.addSubview(bgImageView)
         view.addSubview(gradientView)
+    }
+
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {
+        print(page)
+    }
+
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {
+        // ...
     }
 
 }

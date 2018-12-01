@@ -21,6 +21,6 @@ target 'Take' do
   pod 'VerticalCardSwiper', '0.1.0-beta6'
   pod 'Tabman', '~> 1.10'
   pod 'Blueprints'
-  pod 'SDWebImage', '~> 4.0'
+  pod 'Lightbox'
 
 end

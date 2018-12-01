@@ -1,9 +1,9 @@
 import Blueprints
 import FirebaseFirestore
-import SDWebImage
+import Lightbox
 import UIKit
 
-class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CommentDelegate, UIScrollViewDelegate {
+class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CommentDelegate, UIScrollViewDelegate, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
 
     // MARK: - Injections
     var route: Route!
@@ -20,6 +20,14 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     var imagesCVConst: NSLayoutConstraint!
     var heightConstraint: NSLayoutConstraint!
     var isAddingComment: Bool = false
+    var lightboxImages: [LightboxImage] {
+        var temp: [LightboxImage] = []
+        for commentkey in commentKeys {
+            let lbImage = LightboxImage(image: self.images[commentkey] ?? UIImage(), text: self.comments[commentkey]?.message ?? "")
+            temp.append(lbImage)
+        }
+        return temp
+    }
 
     // MARK: - Protocols
     weak var delegate: CommentDelegate?
@@ -46,7 +54,6 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
                                 }
                             }
                             .resume()
-
                             self.commentKeys.append(commentId)
                             DispatchQueue.main.async {
                                 self.myImagesCV.reloadData()
@@ -75,6 +82,13 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         if scrollView == myImagesCV && isAddingComment {
             toggleCommentView()
         }
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let lightboxController = LightboxController(images: lightboxImages, startIndex: indexPath.row)
+        lightboxController.pageDelegate = self
+        lightboxController.dismissalDelegate = self
+        lightboxController.dynamicBackground = true
+        present(lightboxController, animated: true, completion: nil)
     }
 
     func initViews() {
@@ -137,6 +151,10 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: myImagesCV, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
     }
+
+    // MARK: - Lightbox
+    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {}
+    func lightboxControllerWillDismiss(_ controller: LightboxController) {}
 
     // MARK: - Comment Delegate
     func toggleCommentView() {
