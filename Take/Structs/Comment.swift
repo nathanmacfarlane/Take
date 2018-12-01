@@ -9,19 +9,7 @@ struct Comment: Codable {
     var userId: String
     var dateString: String
     var message: String?
-    var imageUrls: [String: String] = [:]
-
-//    init?(snapshot: DataSnapshot) {
-//        guard let snapval = snapshot.value as? [String: AnyObject] else { return nil }
-//        guard let tempUserId = snapval["userId"] as? Int, let tempId = snapval["id"] as? Int, let tempDateString = snapval["dateString"] as? String else { return nil }
-//        guard let message = snapval["message"] as? String, let tempImageUrls = snapval["coverPhoto"] as? String, let tempDesc = snapval["description"] as? String else { return nil }
-////        self.city = tempCity
-////        self.id = tempId
-////        self.name = tempName
-////        self.keyword = tempKeyword
-////        self.coverPhoto = tempCoverPhoto
-////        self.description = tempDesc
-//    }
+    var imageUrl: String?
 
     func fsSave() {
         guard let data = try! FirebaseEncoder().encode(self) as? [String: Any] else { return }

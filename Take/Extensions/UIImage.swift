@@ -135,4 +135,19 @@ extension UIImage {
         }
     }
 
+    func saveToFb(route: Route, completion: @escaping (_ url: URL?) -> Void) {
+        guard let data = UIImageJPEGRepresentation(self, 0.1) else { return }
+        let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
+        let imageId = UUID().uuidString
+        _ = imageRef.child(imageId).putData(data, metadata: nil) { metadata, _ in
+            guard metadata != nil else {
+                return
+            }
+            imageRef.child(imageId).downloadURL { url, _ in
+                completion(url)
+            }
+
+        }
+    }
+
 }

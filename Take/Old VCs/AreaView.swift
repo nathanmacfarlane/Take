@@ -26,7 +26,6 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     var images: [String: UIImage] = [:]
     var imageKeys: [String] = []
     var selectedImage: UIImage?
-    var routesCV: RoutesList?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,12 +35,6 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         self.typesContainer.isHidden = true
 
         Firestore.firestore().query(type: Route.self, by: "areaId", with: theArea.id) { routes in
-            DispatchQueue.main.async {
-                if let routesCV = self.routesCV {
-                    routesCV.routes = routes
-                    routesCV.reloadTV()
-                }
-            }
             self.routes = routes
             var count = 0
             for route in self.routes {
@@ -112,13 +105,7 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         self.dismiss(animated: true, completion: nil)
     }
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "routesList" {
-            guard let dct = segue.destination as? RoutesList else { return }
-            routesCV = dct
-            dct.routes = self.routes
-            dct.areaImage = self.areaImage
-            dct.theArea = self.theArea
-        } else if segue.identifier == "goToDetail" {
+        if segue.identifier == "goToDetail" {
             guard let dct = segue.destination as? RouteDetail else { return }
             guard let theRoute = sender as? Route else { return }
             dct.theRoute = theRoute

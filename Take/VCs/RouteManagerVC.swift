@@ -6,6 +6,9 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
 
     var route: Route!
     var vcs: [UIViewController] = []
+    var add: UIBarButtonItem!
+
+    var photos: RoutePhotosVC!
 
     var bgImageView: UIImageView!
 
@@ -22,6 +25,13 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
             appearance.layout.itemDistribution = .centered
         }
         self.title = route.name
+
+        add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
+    }
+
+    @objc
+    func addNewPhoto() {
+        photos.toggleCommentView()
     }
 
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
@@ -32,7 +42,7 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
         let hype = RouteHypeVC()
         hype.route = route
 
-        let photos = RoutePhotosVC()
+        photos = RoutePhotosVC()
         photos.route = route
 
         let now = RouteNowVC()
@@ -45,6 +55,13 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
 
     func viewController(for pageboyViewController: PageboyViewController, at index: PageboyViewController.PageIndex) -> UIViewController? {
         return vcs[index]
+    }
+
+    override func pageboyViewController(_ pageboyViewController: PageboyViewController, didScrollToPageAt index: Int, direction: NavigationDirection, animated: Bool) {
+        switch index {
+        case 1: navigationItem.setRightBarButton(add, animated: true)
+        default: break
+        }
     }
 
     func defaultPage(for pageboyViewController: PageboyViewController) -> PageboyViewController.Page? {
