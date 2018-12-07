@@ -48,8 +48,8 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
         let now = RouteNowVC()
         now.route = route
 
-        vcs = [detail, photos, hype, now]
-        self.bar.items = [Item(title: "Overview"), Item(title: "Photos"), Item(title: "Hype"), Item(title: "Now")]
+        vcs = [detail, hype, now, photos]
+        self.bar.items = [Item(title: "Overview"), Item(title: "Hype"), Item(title: "Now"), Item(title: "Photos")]
         return vcs.count
     }
 
@@ -59,8 +59,8 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
 
     override func pageboyViewController(_ pageboyViewController: PageboyViewController, didScrollToPageAt index: Int, direction: NavigationDirection, animated: Bool) {
         switch index {
-        case 1: navigationItem.setRightBarButton(add, animated: true)
-        default: break
+        case 3: navigationItem.setRightBarButton(add, animated: true)
+        default: navigationItem.setRightBarButton(nil, animated: true)
         }
     }
 

@@ -22,5 +22,6 @@ target 'Take' do
   pod 'Tabman', '~> 1.10'
   pod 'Blueprints'
   pod 'Lightbox'
+  pod "Fuse"
 
 end
