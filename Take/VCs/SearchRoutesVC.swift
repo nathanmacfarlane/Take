@@ -1,6 +1,7 @@
 import CoreLocation
 import FirebaseAuth
 import FirebaseFirestore
+import Fuse
 import UIKit
 
 class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
@@ -74,28 +75,9 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
         guard let searchText = searchBar.text else { return }
         let db = Firestore.firestore()
-        db.query(type: Route.self, by: "name", with: searchText) { routes in
+        db.query(collection: "routes", by: "name", with: searchText, of: Route.self) { routes in
             self.resultsMashed.append(contentsOf: routes)
             self.results.routes.append(contentsOf: routes)
-            self.myTableView.reloadData()
-        }
-        db.query(type: Route.self, by: "keyword", with: searchText) { routes in
-            self.resultsMashed.append(contentsOf: routes)
-            self.results.routes.append(contentsOf: routes)
-            self.myTableView.reloadData()
-        }
-        db.query(type: Area.self, by: "name", with: searchText) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            for area in areas {
-                self.results.areas.append(area.name)
-            }
-            self.myTableView.reloadData()
-        }
-        db.query(type: Area.self, by: "keyword", with: searchText) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            for area in areas {
-                self.results.areas.append(area.name)
-            }
             self.myTableView.reloadData()
         }
     }
@@ -109,13 +91,13 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
     // MARK: - TableView
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let favoriteAction = UIContextualAction(style: .normal, title: "") { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            print("add \((self.resultsMashed[indexPath.row] as? Route)?.name ?? "") to favorites")
+            print("add \((self.resultsMashed[indexPath.row] as? Route)?.getName() ?? "") to favorites")
             success(true)
         }
         favoriteAction.image = UIImage(named: "heart.png")
         favoriteAction.backgroundColor = self.view.backgroundColor
         let toDoAction = UIContextualAction(style: .normal, title: "") { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            print("add \((self.resultsMashed[indexPath.row] as? Route)?.name ?? "") to to do list")
+            print("add \((self.resultsMashed[indexPath.row] as? Route)?.getName() ?? "") to to do list")
             success(true)
         }
         toDoAction.image = UIImage(named: "checkmark.png")
@@ -129,9 +111,7 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
         case is Route:
             guard let theRoute = anyItem as? Route else { return }
             let routeManager = RouteManagerVC()
-            routeManager.route = theRoute
-//            let routeDetailVC = RouteDetailVC()
-//            routeDetailVC.route = theRoute
+            routeManager.routeViewModel = RouteViewModel(route: theRoute)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(routeManager, animated: true)
         default:
@@ -158,7 +138,7 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
     }
     func getRouteCell(route: Route) -> RouteCellTV {
         guard let cell: RouteCellTV = self.myTableView?.dequeueReusableCell(withIdentifier: "RouteCellTV") as? RouteCellTV else { return RouteCellTV() }
-        cell.route = route
+        cell.routeViewModel = RouteViewModel(route: route)
         cell.initFields()
         return cell
     }

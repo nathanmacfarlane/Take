@@ -23,7 +23,7 @@ class ARView: UIViewController, ARSCNViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        closeButton.roundButton(portion: 4)
+        closeButton.roundView(portion: 4)
 
         var refImageArr: [ARReferenceImage] = []
 

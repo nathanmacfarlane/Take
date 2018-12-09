@@ -46,6 +46,7 @@ disabled_rules:
 
 opt_in_rules:
 - array_init
+- unused_import
 - attributes
 - block_based_kvo
 - class_delegate_protocol

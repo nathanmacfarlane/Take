@@ -22,20 +22,6 @@ extension UIImage {
         self.init(cgImage: theImage)
     }
 
-    func overlayWith(image: UIImage, posX: CGFloat, posY: CGFloat) -> UIImage {
-        let newWidth = size.width < posX + image.size.width ? posX + image.size.width : size.width
-        let newHeight = size.height < posY + image.size.height ? posY + image.size.height : size.height
-        let newSize = CGSize(width: newWidth, height: newHeight)
-
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0)
-        draw(in: CGRect(origin: CGPoint.zero, size: size))
-        image.draw(in: CGRect(origin: CGPoint(x: posX, y: posY), size: image.size))
-        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-        UIGraphicsEndImageContext()
-
-        return newImage
-    }
-
     func resized(withPercentage percentage: CGFloat) -> UIImage? {
         let canvasSize = CGSize(width: size.width * percentage, height: size.height * percentage)
         UIGraphicsBeginImageContextWithOptions(canvasSize, false, scale)
@@ -44,100 +30,9 @@ extension UIImage {
         return UIGraphicsGetImageFromCurrentImageContext()
     }
 
-    func resizedToKB(numKB: Double) -> UIImage? {
-        guard let imageData = UIImagePNGRepresentation(self) else { return nil }
-
-        var resizingImage = self
-        var imageSizeKB = Double(imageData.count) / numKB // ! Or devide for 1024 if you need KB but not kB
-
-        while imageSizeKB > numKB { // ! Or use 1024 if you need KB but not kB
-            guard let resizedImage = resizingImage.resized(withPercentage: 0.9),
-                let imageData = UIImagePNGRepresentation(resizedImage)
-                else { return nil }
-
-            resizingImage = resizedImage
-            imageSizeKB = Double(imageData.count) / numKB // ! Or devide for 1024 if you need KB but not kB
-        }
-
-        return resizingImage
-    }
-
-    func addTextToImage(drawText: String, atPoint: CGPoint) -> UIImage {
-
-        // Setup the font specific variables
-        let textColor = UIColor.white
-        guard let textFont = UIFont(name: "Helvetica Bold", size: 200) else { return UIImage() }
-
-        // Setup the image context using the passed image
-        let scale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
-
-        // Setup the font attributes that will be later used to dictate how the text should be drawn
-        let textFontAttributes = [
-            kCTFontAttributeName: textFont,
-            kCTForegroundColorAttributeName: textColor
-        ]
-
-        // Put the image into a rectangle as large as the original image
-        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
-
-        // Create a point within the space that is as bit as the image
-        let rect = CGRect(x: atPoint.x, y: atPoint.y, width: self.size.width, height: self.size.height)
-
-        // Draw the text into an image
-        drawText.draw(in: rect, withAttributes: textFontAttributes as [NSAttributedStringKey: Any])
-
-        // Create a new image out of the images we have created
-        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-
-        // End the context now that we have the image we need
-        UIGraphicsEndImageContext()
-        return newImage
-    }
-
-    func textToImage(drawText text: String, atPoint point: CGPoint) -> UIImage {
-        let textColor = UIColor.white
-        guard let textFont = UIFont(name: "Helvetica Bold", size: 50) else { return UIImage() }
-
-        let scale = UIScreen.main.scale
-        UIGraphicsBeginImageContextWithOptions(self.size, false, scale)
-
-        let textFontAttributes = [
-            NSAttributedStringKey.font: textFont,
-            NSAttributedStringKey.foregroundColor: textColor
-        ] as [NSAttributedStringKey: Any]
-        self.draw(in: CGRect(origin: CGPoint.zero, size: self.size))
-
-        let rect = CGRect(origin: point, size: self.size)
-        text.draw(in: rect, withAttributes: textFontAttributes)
-
-        guard let newImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-        UIGraphicsEndImageContext()
-
-        return newImage
-    }
-
-    func saveToFb(route: Route) {
-        let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
-        guard let theImage = self.resizedToKB(numKB: 1024) else { return }
-        let imageId = UUID().uuidString
-        guard let data = UIImagePNGRepresentation(theImage) as NSData? else { return }
-        _ = imageRef.child("\(imageId)-large.png").putData(data as Data, metadata: nil) { metadata, _ in
-            guard metadata != nil else {
-                return
-            }
-            imageRef.child("\(imageId)-large.png").downloadURL { url, _ in
-                guard let downloadURL = url else { return }
-                route.imageUrls[imageId] = "\(downloadURL)"
-                Firestore.firestore().collection("routes").document("\(route.id)").setData(["imageUrls": route.imageUrls], merge: true)
-            }
-
-        }
-    }
-
     func saveToFb(route: Route, completion: @escaping (_ url: URL?) -> Void) {
         guard let data = UIImageJPEGRepresentation(self, 0.1) else { return }
-        let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
+        let imageRef = Storage.storage().reference().child("Routes/\(route.getId())")
         let imageId = UUID().uuidString
         _ = imageRef.child(imageId).putData(data, metadata: nil) { metadata, _ in
             guard metadata != nil else {

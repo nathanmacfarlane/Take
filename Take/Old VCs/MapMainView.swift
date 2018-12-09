@@ -17,7 +17,7 @@ class MapMainView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.browseButton.roundButton(portion: 2)
+        self.browseButton.roundView(portion: 2)
 
     }
 

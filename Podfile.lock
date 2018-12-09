@@ -72,6 +72,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GTMSessionFetcher/Core (~> 1.1)
+  - Fuse (1.2.0)
   - GeoFire (3.0.0):
     - Firebase/Database (~> 5.0)
   - Geofirestore (1.2.0):
@@ -155,6 +156,7 @@ DEPENDENCIES:
   - Firebase/Database
   - Firebase/Firestore
   - Firebase/Storage
+  - Fuse
   - Geofirestore
   - Lightbox
   - Mapbox-iOS-SDK
@@ -182,6 +184,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseInstanceID
     - FirebaseStorage
+    - Fuse
     - GeoFire
     - Geofirestore
     - GoogleAppMeasurement
@@ -221,6 +224,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: 9e9411f13a0aba72d4f631899611d09e43734c48
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
+  Fuse: 287bd95a5c8dbfe6c41af519eaf48856aa1a28f6
   GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
   Geofirestore: ad548ea5e3c1ae595c746c7b796df5534d8202f3
   GoogleAppMeasurement: 5029d78f2b438bd30ffb44e6c558b57c21622727
@@ -244,6 +248,6 @@ SPEC CHECKSUMS:
   TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
   VerticalCardSwiper: abf970a63426e6fb77bcc55d3ca589ff54d0ef00
 
-PODFILE CHECKSUM: 5c658f00e7c433efef0eba741f06332dda882ccc
+PODFILE CHECKSUM: 02a0c27454fda4999a2d44abbd9a368b375d45ff
 
 COCOAPODS: 1.5.3

@@ -55,7 +55,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
         super.viewDidLoad()
 
 //        UIApplication.shared.isStatusBarHidden = true
-        self.navigationController?.makeTransparent()
+//        self.navigationController?.makeTransparent()
         self.myTableView.backgroundColor = UIColor.clear
         self.myTableView.separatorStyle = .none
         UITabBar.appearance().barTintColor = self.view.backgroundColor
@@ -114,35 +114,35 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
 
         guard let searchText = searchBar.text else { return }
 
-        let db = Firestore.firestore()
-        db.query(type: Route.self, by: "name", with: searchText) { routes in
-            self.resultsMashed.append(contentsOf: routes)
-            self.results.routes.append(contentsOf: routes)
-            self.myTableView.reloadData()
-            self.myActivityIndicator.stopAnimating()
-        }
-        db.query(type: Route.self, by: "keyword", with: searchText) { routes in
-            self.resultsMashed.append(contentsOf: routes)
-            self.results.routes.append(contentsOf: routes)
-            self.myTableView.reloadData()
-            self.myActivityIndicator.stopAnimating()
-        }
-        db.query(type: Area.self, by: "name", with: searchText) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            for area in areas {
-                self.results.areas.append(area.name)
-            }
-            self.myTableView.reloadData()
-            self.myActivityIndicator.stopAnimating()
-        }
-        db.query(type: Area.self, by: "keyword", with: searchText) { areas in
-            self.resultsMashed.append(contentsOf: areas)
-            for area in areas {
-                self.results.areas.append(area.name)
-            }
-            self.myTableView.reloadData()
-            self.myActivityIndicator.stopAnimating()
-        }
+//        let db = Firestore.firestore()
+//        db.query(type: Route.self, by: "name", with: searchText) { routes in
+//            self.resultsMashed.append(contentsOf: routes)
+//            self.results.routes.append(contentsOf: routes)
+//            self.myTableView.reloadData()
+//            self.myActivityIndicator.stopAnimating()
+//        }
+//        db.query(type: Route.self, by: "keyword", with: searchText) { routes in
+//            self.resultsMashed.append(contentsOf: routes)
+//            self.results.routes.append(contentsOf: routes)
+//            self.myTableView.reloadData()
+//            self.myActivityIndicator.stopAnimating()
+//        }
+//        db.query(type: Area.self, by: "name", with: searchText) { areas in
+//            self.resultsMashed.append(contentsOf: areas)
+//            for area in areas {
+//                self.results.areas.append(area.name)
+//            }
+//            self.myTableView.reloadData()
+//            self.myActivityIndicator.stopAnimating()
+//        }
+//        db.query(type: Area.self, by: "keyword", with: searchText) { areas in
+//            self.resultsMashed.append(contentsOf: areas)
+//            for area in areas {
+//                self.results.areas.append(area.name)
+//            }
+//            self.myTableView.reloadData()
+//            self.myActivityIndicator.stopAnimating()
+//        }
     }
     func manageSpinner(count: Int) -> Int {
         if count == 7 {
@@ -252,7 +252,7 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
     func getRouteCell(route: Route) -> RouteCell {
         guard let cell = self.myTableView.dequeueReusableCell(withIdentifier: "Cell") as? RouteCell else { return RouteCell() }
 
-        cell.setLabels(name: route.name, types: route.typesString, difficulty: route.rating ?? "N/A")
+//        cell.setLabels(name: route.name, types: route.typesString, difficulty: route.rating ?? "N/A")
         cell.clearImage()
 
         DispatchQueue.global(qos: .background).async {
@@ -263,17 +263,17 @@ class SearchRoutes: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                 }
             }
-            route.getArea { area in
-                if let area = area {
-                    area.getCoverPhoto { image in
-                        DispatchQueue.main.async {
-                            if let image = image {
-                                cell.setLocationImage(with: image)
-                            }
-                        }
-                    }
-                }
-            }
+//            route.getArea { area in
+//                if let area = area {
+//                    area.getCoverPhoto { image in
+//                        DispatchQueue.main.async {
+//                            if let image = image {
+//                                cell.setLocationImage(with: image)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
         }
 
         if let area = route.area {

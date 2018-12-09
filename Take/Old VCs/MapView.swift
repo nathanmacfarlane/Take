@@ -140,35 +140,35 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     }
     func queryFromFirebase() {
         //        self.myMapView.removeAllAnnotations()
-        getIdsFromGeoFire(for: "GeoFireRouteKeys", from: self.myMapView.region) { routeIDs in
-            var allRoutes: [Route] = []
-            var count = 0
-            for id in routeIDs {
-                guard let theKey = Int(id.key) else { continue }
-                searchFBRoute(byProperty: "id", withValue: theKey) { fbRoutes in
-                    allRoutes.append(contentsOf: fbRoutes)
-                    for route in fbRoutes {
-                        if !allRoutes.contains(route) {
-                            allRoutes.append(route)
-                        }
-                    }
-                    count += 1
-                    if count == routeIDs.count {
-                        routesByArea(coord: self.myMapView.centerCoordinate, maxDistance: 1, maxResults: 500) { mpRoutes in
-                            for route in mpRoutes {
-                                if !allRoutes.contains(route) {
-                                    allRoutes.append(route)
-                                }
-                            }
-                            DispatchQueue.main.async {
-                                self.myMapView.removeAllAnnotations()
-                                self.myMapView.addAnnotations(allRoutes)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+//        getIdsFromGeoFire(for: "GeoFireRouteKeys", from: self.myMapView.region) { routeIDs in
+//            var allRoutes: [Route] = []
+//            var count = 0
+//            for id in routeIDs {
+//                guard let theKey = Int(id.key) else { continue }
+//                searchFBRoute(byProperty: "id", withValue: theKey) { fbRoutes in
+//                    allRoutes.append(contentsOf: fbRoutes)
+//                    for route in fbRoutes {
+//                        if !allRoutes.contains(route) {
+//                            allRoutes.append(route)
+//                        }
+//                    }
+//                    count += 1
+//                    if count == routeIDs.count {
+//                        routesByArea(coord: self.myMapView.centerCoordinate, maxDistance: 1, maxResults: 500) { mpRoutes in
+//                            for route in mpRoutes {
+//                                if !allRoutes.contains(route) {
+//                                    allRoutes.append(route)
+//                                }
+//                            }
+//                            DispatchQueue.main.async {
+//                                self.myMapView.removeAllAnnotations()
+//                                self.myMapView.addAnnotations(allRoutes)
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let selectedRoute = view.annotation as? Route {

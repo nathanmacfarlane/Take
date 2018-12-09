@@ -11,7 +11,7 @@ class CommentTVCell: UITableViewCell {
         userImage.contentMode = .scaleAspectFill
         userImage.clipsToBounds = true
         userImage.image = image
-        userImage.roundImage(portion: 2)
+        userImage.roundView(portion: 2)
         userImage.addBorder(color: UIColor(hexString: "#2A313B"), width: 2)
         self.addSubview(userImage)
     }

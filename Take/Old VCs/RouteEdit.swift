@@ -61,26 +61,26 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if theRoute == nil {
-            theRoute = Route()
-        }
+//        if theRoute == nil {
+//            theRoute = Route()
+//        }
 
-        self.nameTextField.underlined()
+//        self.nameTextField.underlined()
         self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
-        self.ratingTextField.underlined()
+//        self.ratingTextField.underlined()
         self.ratingTextField.attributedPlaceholder = NSAttributedString(string: "Rating", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
 
-        self.nameTextField.text = self.theRoute.name
-        self.ratingTextField.text = self.theRoute.rating
-        self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
-        self.pitchStepper.value = Double(self.theRoute.pitches)
+//        self.nameTextField.text = self.theRoute.name
+//        self.ratingTextField.text = self.theRoute.rating
+//        self.pitchLabel.text = "\(Int(self.theRoute.pitches)) Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
+//        self.pitchStepper.value = Double(self.theRoute.pitches)
 
         if let bgImage = self.bgImage {
             self.bgimageView.image = bgImage
         }
 
-        self.newDescription = self.theRoute.info
-        self.newProtection = self.theRoute.protection
+//        self.newDescription = self.theRoute.info
+//        self.newProtection = self.theRoute.protection
 
         imageKeys = Array(selectedImages.keys)
         arKeys = Array(selectedAr.keys)
@@ -104,11 +104,11 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         imagePicker.sourceType = .photoLibrary
 
         self.setupButtons()
-        self.descriptionTextView.text = theRoute.info ?? ""
+//        self.descriptionTextView.text = theRoute.info ?? ""
 
         photoCV.backgroundColor = .clear
         ARCV.backgroundColor = .clear
-        locationButton.roundButton(portion: 2)
+        locationButton.roundView(portion: 2)
 
         addBlur()
     }
@@ -121,12 +121,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     // MARK: - initial functions
     func setupButtons() {
-        self.addPhotoButton.roundButton(portion: 2)
-        self.addARPhotoButton.roundButton(portion: 2)
-        self.topRopeButton.setType(isType: theRoute.isTR())
-        self.sportButton.setType(isType: theRoute.isSport())
-        self.tradButton.setType(isType: theRoute.isTrad())
-        self.boulderButton.setType(isType: theRoute.isBoulder())
+        self.addPhotoButton.roundView(portion: 2)
+        self.addARPhotoButton.roundView(portion: 2)
+//        self.topRopeButton.setType(isType: theRoute.isTR)
+//        self.sportButton.setType(isType: theRoute.isSport)
+//        self.tradButton.setType(isType: theRoute.isTrad)
+//        self.boulderButton.setType(isType: theRoute.isBoulder)
         self.topRopeButton.addBorder(width: 2)
         self.sportButton.addBorder(width: 2)
         self.tradButton.addBorder(width: 2)
@@ -309,20 +309,20 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             }
         }
         if let name = self.nameTextField.text {
-            theRoute.name = name
+//            theRoute.name = name
         }
         if let rating = self.ratingTextField.text {
-            theRoute.rating = rating
+//            theRoute.rating = rating
         }
-        theRoute.pitches = Int(self.pitchStepper.value)
-        theRoute.info = self.newDescription
-        theRoute.protection = self.newProtection
-        theRoute.types = populateTypes()
+//        theRoute.pitches = Int(self.pitchStepper.value)
+//        theRoute.info = self.newDescription
+//        theRoute.protection = self.newProtection
+//        theRoute.types = populateTypes()
 
         //save images
         for imageKey in self.newImageKeys {
             guard let newImage = self.selectedImages[imageKey] else { continue }
-            newImage.saveToFb(route: self.theRoute)
+//            newImage.saveToFb(route: self.theRoute)
         }
         for arKey in self.newArKeys {
             guard let newAr = self.selectedAr[arKey] else { continue }
@@ -330,7 +330,7 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
         }
 
         DispatchQueue.global(qos: .background).async {
-            self.theRoute.fsSave()
+//            self.theRoute.fsSave()
         }
 
         if let presenter = presentingViewController as? RouteDetail {

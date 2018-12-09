@@ -26,16 +26,16 @@ class DetailMapView: UIViewController, MKMapViewDelegate {
         super.viewDidLoad()
 
         saveButton.isHidden = !editMode
-        routeNameLabel.text = theRoute.name
+//        routeNameLabel.text = theRoute.name
 
         if !editMode {
             self.cancelButton.setTitle("Back", for: .normal)
         }
 
-        if let routeLocation = theRoute.location {
-            myMapView.centerMapOn(routeLocation)
-            myMapView.addPin(from: theRoute)
-        }
+//        if let routeLocation = theRoute.location {
+//            myMapView.centerMapOn(routeLocation)
+//            myMapView.addPin(from: theRoute)
+//        }
 
     }
 
@@ -45,7 +45,7 @@ class DetailMapView: UIViewController, MKMapViewDelegate {
             self.myMapView.removeAllAnnotations()
             let annotation = MKPointAnnotation()
             annotation.coordinate = mapView.centerCoordinate
-            annotation.title = theRoute.name
+//            annotation.title = theRoute.name
             self.myMapView.addAnnotation(annotation)
         }
     }
@@ -55,8 +55,8 @@ class DetailMapView: UIViewController, MKMapViewDelegate {
         self.dismiss(animated: true, completion: nil)
     }
     @IBAction private func hitSave(_ sender: Any) {
-        self.theRoute.latitude = self.myMapView.centerCoordinate.latitude
-        self.theRoute.longitude = self.myMapView.centerCoordinate.longitude
-        self.dismiss(animated: true, completion: nil)
+//        self.theRoute.latitude = self.myMapView.centerCoordinate.latitude
+//        self.theRoute.longitude = self.myMapView.centerCoordinate.longitude
+//        self.dismiss(animated: true, completion: nil)
     }
 }

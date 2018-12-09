@@ -23,9 +23,9 @@ class RouteCell: UITableViewCell {
         self.nameLabel.textColor = .white
         self.difficultyLabel.textColor = .white
         self.typesLabel.textColor = .white
-        self.theImageView.roundImage(portion: 2)
+        self.theImageView.roundView(portion: 2)
         self.theImageView.addBorder(color: .white, width: 1)
-        self.locationImageView.roundImage(portion: 2)
+        self.locationImageView.roundView(portion: 2)
         self.locationImageView.addBorder(color: .white, width: 1)
         // background
         self.backgroundColor = UIColor.clear
@@ -37,9 +37,8 @@ class RouteCell: UITableViewCell {
     }
 
     func setAreaAbrev(with newText: String) {
-        self.areaButton.addAbrevText(text: newText)
+//        self.areaButton.addAbrevText(text: newText)
     }
-    
     func setAreaButtonTitle() {
         self.areaButton.setTitle("", for: .normal)
     }

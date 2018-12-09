@@ -38,33 +38,33 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         userCommentField.becomeFirstResponder()
         userCommentField.selectedTextRange = userCommentField.textRange(from: userCommentField.beginningOfDocument, to: userCommentField.beginningOfDocument)
         userCommentField.resignFirstResponder()
-
-        theRoute.getComments { comments in
-            self.comments = comments.sorted { $0.date > $1.date }
-            self.myTableView.reloadData()
-        }
+//
+//        theRoute.getComments { comments in
+//            self.comments = comments.sorted { $0.date > $1.date }
+//            self.myTableView.reloadData()
+//        }
 
         if let userId = Auth.auth().currentUser?.uid {
             self.userId = userId
-            Firestore.firestore().getUser(id: userId) { user in
-                DispatchQueue.main.async {
-                    self.userCommentNameLabel.text = user.name
-                }
-                user.getProfilePhoto { image in
-                    DispatchQueue.main.async {
-                        self.userCommentImageView.image = image
-                    }
-                }
-            }
+//            Firestore.firestore().getUser(id: userId) { user in
+//                DispatchQueue.main.async {
+//                    self.userCommentNameLabel.text = user.name
+//                }
+//                user.getProfilePhoto { image in
+//                    DispatchQueue.main.async {
+//                        self.userCommentImageView.image = image
+//                    }
+//                }
+//            }
         }
 
         forFsSave.dateFormat = "yyyy-MM-dd HH:mm:ss"
         dateFormatterPrint.dateFormat = "M/dd/yy"
         self.userCommentDatelabel.text = dateFormatterPrint.string(from: Date())
-        self.userCommentImageView.roundImage(portion: 2)
+        self.userCommentImageView.roundView(portion: 2)
         self.userCommentImageView.addBorder(color: .white, width: 2)
         self.userCommentView.roundView(portion: 10)
-        self.userCommentField.roundField(portion: 10)
+        self.userCommentField.roundView(portion: 10)
     }
 
     // MARK: - TableView
@@ -76,14 +76,14 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         cell.backgroundColor = UIColor.clear
         cell.setNameLabel(with: "")
         let db = Firestore.firestore()
-        db.getUser(id: self.comments[indexPath.row].userId) { user in
-            cell.setNameLabel(with: user.name)
-            user.getProfilePhoto { profileImage in
-                DispatchQueue.main.async {
-                    cell.setUserImage(with: profileImage)
-                }
-            }
-        }
+//        db.getUser(id: self.comments[indexPath.row].userId) { user in
+//            cell.setNameLabel(with: user.name)
+//            user.getProfilePhoto { profileImage in
+//                DispatchQueue.main.async {
+//                    cell.setUserImage(with: profileImage)
+//                }
+//            }
+//        }
         cell.setCommentLabel(with: self.comments[indexPath.row].text)
         cell.setDateLabel(with: dateFormatterPrint.string(from: self.comments[indexPath.row].date))
         return cell
@@ -114,7 +114,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         guard let data = try! FirebaseEncoder().encode(newComment) as? [String: Any] else { return }
         DispatchQueue.global(qos: .background).async {
             Firestore.firestore().collection("comments").document(commentId).setData(data)
-            self.theRoute.fsSave()
+//            self.theRoute.fsSave()
         }
     }
 

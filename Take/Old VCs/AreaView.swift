@@ -34,24 +34,24 @@ class AreaView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         self.difficultyContainer.isHidden = true
         self.typesContainer.isHidden = true
 
-        Firestore.firestore().query(type: Route.self, by: "areaId", with: theArea.id) { routes in
-            self.routes = routes
-            var count = 0
-            for route in self.routes {
-                route.fsLoadImages { images in
-                    for image in images {
-                        self.images[image.key] = image.value
-                        self.imageKeys.append(image.key)
-                    }
-                    count += 1
-                    if count == self.routes.count {
-                        DispatchQueue.main.async {
-                            self.photosCV.reloadData()
-                        }
-                    }
-                }
-            }
-        }
+//        Firestore.firestore().query(type: Route.self, by: "areaId", with: theArea.id) { routes in
+//            self.routes = routes
+//            var count = 0
+//            for route in self.routes {
+//                route.fsLoadImages { images in
+//                    for image in images {
+//                        self.images[image.key] = image.value
+//                        self.imageKeys.append(image.key)
+//                    }
+//                    count += 1
+//                    if count == self.routes.count {
+//                        DispatchQueue.main.async {
+//                            self.photosCV.reloadData()
+//                        }
+//                    }
+//                }
+//            }
+//        }
 
         informationTextView.text = theArea.description
         routeNameLabel.text = theArea.name

@@ -9,7 +9,7 @@ class RouteDetailCVCell: UICollectionViewCell {
         imageView.contentMode = .scaleAspectFill
         imageView.clipsToBounds = true
         imageView.image = image
-        imageView.roundImage(portion: 2)
+        imageView.roundView(portion: 2)
         imageView.addBorder(color: .white, width: 1.0)
         self.addSubview(imageView)
     }

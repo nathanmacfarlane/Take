@@ -20,14 +20,6 @@ extension MKMapView {
     func removeAllOverlays() {
         self.removeOverlays(self.overlays)
     }
-
-    func addPin(from route: Route) {
-        let annotation = MKPointAnnotation()
-        guard let local = route.location else { return }
-        annotation.coordinate = local.coordinate
-        annotation.title = route.name
-        self.addAnnotation(annotation)
-    }
     func visibleDistance() -> Double {
         let span = self.region.span
         let center = self.region.center
@@ -47,7 +39,6 @@ extension MKMapView {
     func addCircle(name: String, coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) -> AreaOverlay {
         let circle = AreaOverlay(center: coordinate, radius: radius)
         circle.area = Area(name: name, radius: radius, latitude: coordinate.latitude, longitude: coordinate.longitude)
-//        circle.area = Area(name: name, location: CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude), radius: radius)
         self.add(circle)
         return circle
     }

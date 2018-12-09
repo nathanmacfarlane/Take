@@ -94,26 +94,26 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
 
-        self.myCV.reloadData()
-
-        self.pitchesLabel.text = "\(theRoute.pitches)"
-        self.pitchesSubLabel.text = "Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
-        self.routeNameLabel.text = theRoute.name
-        self.commentsButton.setTitle("\(theRoute.commentIds.count) \(theRoute.commentIds.count != 1 ? "Comments" : "Comment")", for: .normal)
-        self.actualRatingLabel.text = theRoute.rating ?? "N/A"
-        self.routeDescriptionTV.text = theRoute.info ?? "N/A"
-        if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
-            self.starsLabel.text = "\(averageStar) ★"
-        }
-        self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
-
-        if let routeLocal = theRoute.location {
-            myMapView.removeAllAnnotations()
-            myMapView.centerMapOn(routeLocal)
-            myMapView.addPin(from: theRoute)
-        }
-
-        setupButtons()
+//        self.myCV.reloadData()
+//
+//        self.pitchesLabel.text = "\(theRoute.pitches)"
+//        self.pitchesSubLabel.text = "Pitch\(Int(self.theRoute.pitches) > 1 ? "es" : "")"
+//        self.routeNameLabel.text = theRoute.name
+//        self.commentsButton.setTitle("\(theRoute.commentIds.count) \(theRoute.commentIds.count != 1 ? "Comments" : "Comment")", for: .normal)
+//        self.actualRatingLabel.text = theRoute.rating ?? "N/A"
+//        self.routeDescriptionTV.text = theRoute.info ?? "N/A"
+//        if let averageStar = theRoute.averageStar?.rounded(toPlaces: 1) {
+//            self.starsLabel.text = "\(averageStar) ★"
+//        }
+//        self.starVotersLabel.text = "\(theRoute.stars.count) Reviews"
+//
+//        if let routeLocal = theRoute.location {
+//            myMapView.removeAllAnnotations()
+//            myMapView.centerMapOn(routeLocal)
+//            myMapView.addPin(from: theRoute)
+//        }
+//
+//        setupButtons()
 
     }
     override func viewWillDisappear(_ animated: Bool) {
@@ -123,22 +123,22 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - initial functions
     func setupButtons() {
-        self.topRopeButton.setType(isType: theRoute.isTR())
-        self.sportButton.setType(isType: theRoute.isSport())
-        self.tradButton.setType(isType: theRoute.isTrad())
-        self.boulderButton.setType(isType: theRoute.isBoulder())
-        self.topRopeButton.addBorder(width: 2)
-        self.sportButton.addBorder(width: 2)
-        self.tradButton.addBorder(width: 2)
-        self.boulderButton.addBorder(width: 2)
-        self.topRopeButton.roundView(portion: 2)
-        self.sportButton.roundView(portion: 2)
-        self.tradButton.roundView(portion: 2)
-        self.boulderButton.roundView(portion: 2)
-
-        self.commentsButton.roundButton(portion: 4)
-        self.directionsButton.roundButton(portion: 4)
-        self.augmentedButton.roundButton(portion: 4)
+//        self.topRopeButton.setType(isType: theRoute.isTR)
+//        self.sportButton.setType(isType: theRoute.isSport)
+//        self.tradButton.setType(isType: theRoute.isTrad)
+//        self.boulderButton.setType(isType: theRoute.isBoulder)
+//        self.topRopeButton.addBorder(width: 2)
+//        self.sportButton.addBorder(width: 2)
+//        self.tradButton.addBorder(width: 2)
+//        self.boulderButton.addBorder(width: 2)
+//        self.topRopeButton.roundView(portion: 2)
+//        self.sportButton.roundView(portion: 2)
+//        self.tradButton.roundView(portion: 2)
+//        self.boulderButton.roundView(portion: 2)
+//
+//        self.commentsButton.roundButton(portion: 4)
+//        self.directionsButton.roundButton(portion: 4)
+//        self.augmentedButton.roundButton(portion: 4)
     }
     func addBlur() {
         let blurEffect = UIBlurEffect(style: .light)
@@ -150,9 +150,9 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
     // MARK: - IBActions
     @IBAction private func informationSegChange(_ sender: UISegmentedControl) {
         if sender.selectedSegmentIndex == 0 {
-            self.routeDescriptionTV.text = self.theRoute.info
+//            self.routeDescriptionTV.text = self.theRoute.info
         } else if sender.selectedSegmentIndex == 1 {
-            self.routeDescriptionTV.text = self.theRoute.protection
+//            self.routeDescriptionTV.text = self.theRoute.protection
         }
     }
     @IBAction private func hitEditButton(_ sender: Any) {
@@ -204,28 +204,28 @@ class RouteDetail: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     // MARK: - Navigation
     @IBAction private func goToARView(_ sender: UIButton) {
-        if let localMngLcl = locationManager.location, let routeLocation = theRoute.location, localMngLcl.distance(from: routeLocation) < 100.0 {
-            self.performSegue(withIdentifier: "presentARView", sender: nil)
-        } else {
-            let alertController = UIAlertController(title: "Oh no...", message: "You're too far from the route to view it in AR. Would you like to get directions to the crag?", preferredStyle: .actionSheet)
-            let cancel = UIAlertAction(title: "No", style: .cancel)
-            let getDirections = UIAlertAction(title: "Yes", style: .default) { _ in
-                self.goToDirections()
-            }
-            let overwriteForTesting = UIAlertAction(title: "I AM TESTING", style: .default) { _ in
-                self.performSegue(withIdentifier: "presentARView", sender: nil)
-            }
-            alertController.addAction(cancel)
-            alertController.addAction(getDirections)
-            alertController.addAction(overwriteForTesting)
-            self.present(alertController, animated: true)
-        }
+//        if let localMngLcl = locationManager.location, let routeLocation = theRoute.location, localMngLcl.distance(from: routeLocation) < 100.0 {
+//            self.performSegue(withIdentifier: "presentARView", sender: nil)
+//        } else {
+//            let alertController = UIAlertController(title: "Oh no...", message: "You're too far from the route to view it in AR. Would you like to get directions to the crag?", preferredStyle: .actionSheet)
+//            let cancel = UIAlertAction(title: "No", style: .cancel)
+//            let getDirections = UIAlertAction(title: "Yes", style: .default) { _ in
+//                self.goToDirections()
+//            }
+//            let overwriteForTesting = UIAlertAction(title: "I AM TESTING", style: .default) { _ in
+//                self.performSegue(withIdentifier: "presentARView", sender: nil)
+//            }
+//            alertController.addAction(cancel)
+//            alertController.addAction(getDirections)
+//            alertController.addAction(overwriteForTesting)
+//            self.present(alertController, animated: true)
+//        }
     }
     func goToDirections() {
-        guard let routeLocal = theRoute.location else { return }
-        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: routeLocal.coordinate.latitude, longitude: routeLocal.coordinate.longitude), addressDictionary: nil))
-        mapItem.name = theRoute.name
-        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
+//        guard let routeLocal = theRoute.location else { return }
+//        let mapItem = MKMapItem(placemark: MKPlacemark(coordinate: CLLocationCoordinate2D(latitude: routeLocal.coordinate.latitude, longitude: routeLocal.coordinate.longitude), addressDictionary: nil))
+//        mapItem.name = theRoute.name
+//        mapItem.openInMaps(launchOptions: [MKLaunchOptionsDirectionsModeKey: MKLaunchOptionsDirectionsModeDriving])
     }
 
     @IBAction private func goGetDirections(_ sender: UIButton) {

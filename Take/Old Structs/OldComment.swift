@@ -28,9 +28,9 @@ struct OldComment: Codable {
     }
 
     func delete(route: Route) {
-        guard let index = route.commentIds.index(of: self.id) else { return }
-        route.commentIds.remove(at: index)
-        route.fsSave()
-        Firestore.firestore().collection("comments").document(self.id).delete()
+//        guard let index = route.commentIds.index(of: self.id) else { return }
+//        route.commentIds.remove(at: index)
+//        route.fsSave()
+//        Firestore.firestore().collection("comments").document(self.id).delete()
     }
 }

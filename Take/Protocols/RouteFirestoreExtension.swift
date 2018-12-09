@@ -1,11 +1,3 @@
-//
-//  RouteFirestoreExtension.swift
-//  Take
-//
-//  Created by Nathan Macfarlane on 8/31/18.
-//  Copyright © 2018 N8. All rights reserved.
-//
-
 import FirebaseFirestore
 import FirebaseStorage
 import Foundation
@@ -88,7 +80,7 @@ extension Route: RouteFirestore {
     }
 
     func fsSaveAr(imageId: String, bgImage: UIImage, dgImage: UIImage) {
-        let imageRef = Storage.storage().reference().child("Routes/\(self.id)")
+        let imageRef = Storage.storage().reference().child("Routes/\(self.getId())")
         guard let bgData = UIImageJPEGRepresentation(bgImage, 0.25) as NSData?, let dgData = UIImagePNGRepresentation(dgImage) as NSData? else { return }
 
         var bgUrl: String = ""
@@ -102,7 +94,7 @@ extension Route: RouteFirestore {
                 print("bgUrl: \(bgUrl)")
                 if !dgUrl.isEmpty {
                     self.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    Firestore.firestore().collection("routes").document("\(self.id)").setData(["routeArUrls": self.routeArUrls], merge: true)
+                    Firestore.firestore().collection("routes").document("\(self.getId())").setData(["routeArUrls": self.routeArUrls], merge: true)
                 }
             }
         }
@@ -115,7 +107,7 @@ extension Route: RouteFirestore {
                 print("dgUrl: \(dgUrl)")
                 if !bgUrl.isEmpty {
                     self.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    Firestore.firestore().collection("routes").document("\(self.id)").setData(["routeArUrls": self.routeArUrls], merge: true)
+                    Firestore.firestore().collection("routes").document("\(self.getId())").setData(["routeArUrls": self.routeArUrls], merge: true)
                 }
             }
         }

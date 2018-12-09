@@ -30,7 +30,7 @@ class CommentCell: UITableViewCell {
     }
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.userImage.roundImage(portion: 2)
+        self.userImage.roundView(portion: 2)
         self.userImage.addBorder(color: UIColor(hexString: "#2A313B"), width: 2)
         self.bgView.layer.cornerRadius = 10
     }

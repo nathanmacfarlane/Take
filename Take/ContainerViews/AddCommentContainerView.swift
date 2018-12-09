@@ -1,10 +1,12 @@
+import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import UIKit
 
 class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     // MARK: - Injections
-    var route: Route!
+    var routeViewModel: RouteViewModel!
 
     // MARK: - Outlets
     var imageView: UIImageView!
@@ -101,11 +103,12 @@ class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate
         guard let image = imageView.image else { return }
         self.delegate?.toggleCommentView()
         self.delegate?.addNewComment(comment: comment, photo: image)
-        imageView.image?.saveToFb(route: route) { url in
-            comment.imageUrl = url?.absoluteString
-            comment.fsSave()
-            self.route.comments.append(comment.id)
-            self.route.fsSave()
+        imageView.image?.saveToFb(route: routeViewModel.route) { url in
+            comment.setImageUrl(imageUrl: url?.absoluteString)
+            Firestore.firestore().save(object: comment, to: "comments", with: comment.getId(), completion: nil)
+//            comment.fsSave()
+            self.routeViewModel.route.comments.append(comment.getId())
+            self.routeViewModel.fsSave()
             self.imageView.image = UIImage()
             self.messageView.text = ""
         }

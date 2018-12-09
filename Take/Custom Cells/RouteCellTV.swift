@@ -2,7 +2,7 @@ import UIKit
 
 class RouteCellTV: UITableViewCell {
 
-    var route: Route!
+    var routeViewModel: RouteViewModel!
 
     func initFields() {
 
@@ -18,19 +18,19 @@ class RouteCellTV: UITableViewCell {
         let nameLabel = UILabel()
         nameLabel.textColor = .white
         nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        nameLabel.text = route.name
+        nameLabel.text = routeViewModel.name
 
         // difficulty label
         let difficultyLabel = UILabel()
         difficultyLabel.textColor = .white
         difficultyLabel.font = UIFont(name: "Avenir", size: 17)
-        difficultyLabel.text = route.rating
+        difficultyLabel.text = routeViewModel.rating
 
         // types label
         let typesLabel = UILabel()
         typesLabel.textColor = .white
         typesLabel.font = UIFont(name: "Avenir", size: 17)
-        typesLabel.text = route.typesString
+        typesLabel.text = routeViewModel.typesString
 
         // activity indicator
         let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
@@ -39,7 +39,7 @@ class RouteCellTV: UITableViewCell {
         // image view
         let imageView = UIImageView()
         DispatchQueue.global(qos: .background).async {
-            self.route.fsLoadFirstImage { _, image in
+            self.routeViewModel.route.fsLoadFirstImage { _, image in
                 DispatchQueue.main.async {
                     indicator.stopAnimating()
                     indicator.removeFromSuperview()

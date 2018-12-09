@@ -4,7 +4,7 @@ import UIKit
 
 class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
 
-    var route: Route!
+    var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
     var add: UIBarButtonItem!
 
@@ -24,7 +24,7 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
             appearance.state.color = .gray
             appearance.layout.itemDistribution = .centered
         }
-        self.title = route.name
+        self.title = routeViewModel.name
 
         add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
     }
@@ -37,16 +37,16 @@ class RouteManagerVC: TabmanViewController, PageboyViewControllerDataSource {
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
 
         let detail = RouteDetailVC()
-        detail.route = route
+        detail.routeViewModel = routeViewModel
 
         let hype = RouteHypeVC()
-        hype.route = route
+        hype.routeViewModel = routeViewModel
 
         photos = RoutePhotosVC()
-        photos.route = route
+        photos.routeViewModel = routeViewModel
 
         let now = RouteNowVC()
-        now.route = route
+        now.routeViewModel = routeViewModel
 
         vcs = [detail, hype, now, photos]
         self.bar.items = [Item(title: "Overview"), Item(title: "Hype"), Item(title: "Now"), Item(title: "Photos")]

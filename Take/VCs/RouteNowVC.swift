@@ -4,7 +4,7 @@ import UIKit
 class RouteNowVC: UIViewController {
 
     var bgImageView: UIImageView!
-    var route: Route!
+    var routeViewModel: RouteViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -14,7 +14,6 @@ class RouteNowVC: UIViewController {
 
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
-        self.title = route.name
 
         // bg image
         self.bgImageView = UIImageView(frame: self.view.frame)

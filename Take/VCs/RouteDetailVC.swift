@@ -5,7 +5,7 @@ import UIKit
 
 class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionViewDataSource,*/ TwicketSegmentedControlDelegate, MGLMapViewDelegate {
 
-    var route: Route!
+    var routeViewModel: RouteViewModel!
 //    var imageKeys: [String] = []
 //    var images: [String: UIImage] = [:]
 //    var diagramKeys: [String] = []
@@ -84,7 +84,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
                        animations: {
             self.infoLabel.alpha = 0.0
         }, completion: { _ in
-            self.infoLabel.text = segmentIndex == 0 ? self.route.info : self.route.protection
+            self.infoLabel.text = segmentIndex == 0 ? self.routeViewModel.info : self.routeViewModel.protection
             UIView.animate(withDuration: 0.3,
                            animations: {
                 self.view.layoutIfNeeded()
@@ -125,7 +125,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
 
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
-        self.title = route.name
+        self.title = routeViewModel.name
         let editButton = UIBarButtonItem(image: UIImage(named: "edit.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goEdit))
         let shareButton = UIBarButtonItem(image: UIImage(named: "share.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goShare))
         let downloadButton = UIBarButtonItem(image: UIImage(named: "download.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goDownload))
@@ -182,7 +182,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
 
         // rating value
         let ratingValue = UILabel()
-        ratingValue.text = route.rating ?? "N/A"
+        ratingValue.text = routeViewModel.rating
         ratingValue.textColor = .white
         ratingValue.textAlignment = .center
         ratingValue.font = UIFont(name: "Avenir", size: 24)
@@ -196,7 +196,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
 
         // stars value
         let starsValue = UILabel()
-        starsValue.text = route.averageStarString
+        starsValue.text = routeViewModel.averageStarString
         starsValue.textColor = .white
         starsValue.textAlignment = .center
         starsValue.font = UIFont(name: "Avenir", size: 24)
@@ -210,7 +210,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
 
         // pitches value
         let pitchesValue = UILabel()
-        pitchesValue.text = "\(route.pitches)"
+        pitchesValue.text = routeViewModel.pitchesString
         pitchesValue.textColor = .white
         pitchesValue.textAlignment = .center
         pitchesValue.font = UIFont(name: "Avenir", size: 24)
@@ -218,23 +218,23 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         // type buttons
         let sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
-        sportButton.setType(isType: route.isSport())
+        sportButton.setType(isType: routeViewModel.isSport)
         sportButton.addBorder(width: 1)
         let boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
-        boulderButton.setType(isType: route.isBoulder())
+        boulderButton.setType(isType: routeViewModel.isBoulder)
         boulderButton.addBorder(width: 1)
         let trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
-        trButton.setType(isType: route.isTR())
+        trButton.setType(isType: routeViewModel.isTR)
         trButton.addBorder(width: 1)
         let tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
-        tradButton.setType(isType: route.isTrad())
+        tradButton.setType(isType: routeViewModel.isTrad)
         tradButton.addBorder(width: 1)
         let aidButton = TypeButton()
         aidButton.setTitle("A", for: .normal)
-        aidButton.setType(isType: route.isAid())
+        aidButton.setType(isType: routeViewModel.isAid)
         aidButton.addBorder(width: 1)
 
         // segment control
@@ -247,7 +247,7 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
 
         // info label
         infoLabel = UILabel()
-        infoLabel.text = route.info
+        infoLabel.text = routeViewModel.info
         infoLabel.numberOfLines = 0
         infoLabel.textColor = .white
         infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
@@ -256,16 +256,16 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         let url = URL(string: "mapbox://styles/mapbox/dark-v9")
         let mapView = MGLMapView(frame: view.bounds, styleURL: url)
         mapView.delegate = self
-        mapView.setCenter(CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0), zoomLevel: 15, animated: false)
+        mapView.setCenter(routeViewModel.location.coordinate, zoomLevel: 15, animated: false)
         mapView.layer.cornerRadius = 5
         mapView.clipsToBounds = true
         mapView.logoView.isHidden = true
         mapView.attributionButton.isHidden = true
         mapView.showsUserLocation = true
         let routeMarker = MGLPointAnnotation()
-        routeMarker.coordinate = CLLocationCoordinate2D(latitude: route.latitude ?? 0, longitude: route.longitude ?? 0)
-        routeMarker.title = route.name
-        routeMarker.subtitle = "\(route.rating ?? "") \(route.typesString)"
+        routeMarker.coordinate = routeViewModel.location.coordinate
+        routeMarker.title = routeViewModel.name
+        routeMarker.subtitle = "\(routeViewModel.rating) \(routeViewModel.typesString)"
         mapView.addAnnotation(routeMarker)
 
         // add to subview

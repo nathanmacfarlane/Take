@@ -11,23 +11,6 @@ import UIKit
 
 extension UIButton {
 
-    func roundButton(portion: CGFloat) {
-        self.layer.cornerRadius = self.frame.height < self.frame.width ? self.frame.height / portion : self.frame.width / portion
-        self.clipsToBounds = true
-    }
-
-    func addAbrevText(text: String) {
-        var newText = text
-        if newText.count > 3 {
-            let arr = newText.split(separator: " ")
-            newText = ""
-            for c in arr {
-                newText += "\(Array(c)[0])"
-            }
-        }
-        self.setTitle(newText, for: .normal)
-    }
-
     func set(image: UIImage, with color: UIColor) {
         let tintedImage = image.withRenderingMode(.alwaysTemplate)
         self.setImage(tintedImage, for: .normal)

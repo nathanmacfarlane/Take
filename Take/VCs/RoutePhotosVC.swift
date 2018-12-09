@@ -6,7 +6,7 @@ import UIKit
 class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CommentDelegate, UIScrollViewDelegate, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
 
     // MARK: - Injections
-    var route: Route!
+    var routeViewModel: RouteViewModel!
 
     // MARK: - Outlets
     var bgImageView: UIImageView!
@@ -14,7 +14,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     var commentCV: AddCommentContainerView!
 
     // MARK: - Variables
-    var comments: [String: Comment] = [:]
+    var comments: [String: CommentModelView] = [:]
     var commentKeys: [String] = []
     var images: [String: UIImage] = [:]
     var imagesCVConst: NSLayoutConstraint!
@@ -38,12 +38,13 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         self.initViews()
 
         DispatchQueue.global(qos: .background).async {
-            for commentId in self.route.comments {
-                let db = Firestore.firestore()
-                db.query(type: Comment.self, by: "id", with: commentId) { comments in
+            let db = Firestore.firestore()
+            for commentId in self.routeViewModel.route.comments {
+                db.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comments in
                     if let comment = comments.first {
-                        if let imgUrl = comment.imageUrl, let theUrl = URL(string: imgUrl) {
-                            self.comments[commentId] = comment
+                        let commentViewModel = CommentModelView(comment: comment)
+                        if let imgUrl = commentViewModel.imageUrl, let theUrl = URL(string: imgUrl) {
+                            self.comments[commentId] = commentViewModel
                             self.images[commentId] = UIImage()
 
                             URLSession.shared.dataTask(with: theUrl) { data, _, _ in
@@ -93,7 +94,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
-        self.title = route.name
+        self.title = routeViewModel.name
 
         // bg image
         self.bgImageView = UIImageView(frame: self.view.frame)
@@ -111,7 +112,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
         // add comment view
         commentCV = AddCommentContainerView()
-        commentCV.route = route
+        commentCV.routeViewModel = routeViewModel
         commentCV.delegate = self
 
         let waterfallLayout = VerticalBlueprintLayout(
@@ -165,9 +166,10 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         }
     }
     func addNewComment(comment: Comment, photo: UIImage) {
-        comments[comment.id] = comment
-        images[comment.id] = photo
-        commentKeys.insert(comment.id, at: 0)
+        let commentViewModel = CommentModelView(comment: comment)
+        comments[commentViewModel.id] = commentViewModel
+        images[commentViewModel.id] = photo
+        commentKeys.insert(commentViewModel.id, at: 0)
         myImagesCV.reloadData()
     }
 
