@@ -81,7 +81,7 @@ extension Route: RouteFirestore {
 
     func fsSaveAr(imageId: String, bgImage: UIImage, dgImage: UIImage) {
         let imageRef = Storage.storage().reference().child("Routes/\(self.getId())")
-        guard let bgData = UIImageJPEGRepresentation(bgImage, 0.25) as NSData?, let dgData = UIImagePNGRepresentation(dgImage) as NSData? else { return }
+        guard let bgData = bgImage.jpegData(compressionQuality: 0.25) as NSData?, let dgData = dgImage.pngData() as NSData? else { return }
 
         var bgUrl: String = ""
         var dgUrl: String = ""

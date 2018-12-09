@@ -1,0 +1,5 @@
+github "hyperoslo/Cache" "5.2.0"
+github "hyperoslo/Imaginary" "4.2.0"
+github "nathanmacfarlane/Blueprints" "0.8.4"
+github "nathanmacfarlane/Lightbox" "2.3.0"
+github "nathanmacfarlane/TwicketSegmentedControl" "0.1.2"

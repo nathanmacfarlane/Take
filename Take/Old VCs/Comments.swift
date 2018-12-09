@@ -94,7 +94,7 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
         }
         return false
     }
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         comments[indexPath.row].delete(route: theRoute)
         comments.remove(at: indexPath.row)
         self.myTableView.deleteRows(at: [indexPath], with: .fade)
@@ -147,9 +147,9 @@ class Comments: UIViewController, UITableViewDelegate, UITableViewDataSource, UI
 
         let transition: CATransition = CATransition()
         transition.duration = 0.5
-        transition.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-        transition.type = kCATransitionReveal
-        transition.subtype = kCATransitionFromLeft
+        transition.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        transition.type = CATransitionType.reveal
+        transition.subtype = CATransitionSubtype.fromLeft
         guard let theWindow = self.view.window else { return }
         theWindow.layer.add(transition, forKey: nil)
         self.dismiss(animated: false, completion: nil)

@@ -135,7 +135,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         view.addSubview(commentCV.view)
         view.addSubview(myImagesCV)
 
-        addChildViewController(commentCV)
+        addChild(commentCV)
 
         commentCV.view.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: commentCV.view, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
@@ -143,7 +143,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: commentCV.view, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
         heightConstraint = NSLayoutConstraint(item: commentCV.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
         heightConstraint.isActive = true
-        commentCV.didMove(toParentViewController: self)
+        commentCV.didMove(toParent: self)
 
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true

@@ -66,9 +66,9 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 //        }
 
 //        self.nameTextField.underlined()
-        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.nameTextField.attributedPlaceholder = NSAttributedString(string: "Name", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
 //        self.ratingTextField.underlined()
-        self.ratingTextField.attributedPlaceholder = NSAttributedString(string: "Rating", attributes: [NSAttributedStringKey.foregroundColor: UIColor.gray])
+        self.ratingTextField.attributedPlaceholder = NSAttributedString(string: "Rating", attributes: [NSAttributedString.Key.foregroundColor: UIColor.gray])
 
 //        self.nameTextField.text = self.theRoute.name
 //        self.ratingTextField.text = self.theRoute.rating
@@ -271,9 +271,12 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
 
     // MARK: - Image Picker
     @objc
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
+    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+// Local variable inserted by Swift 4.2 migrator.
+let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
 
-        let pickedImage: UIImage = info[UIImagePickerControllerOriginalImage] as? UIImage ?? UIImage()
+
+        let pickedImage: UIImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage ?? UIImage()
         if selectedCV == photoCV {
             let imageId = UUID().uuidString
             self.selectedImages[imageId] = pickedImage
@@ -388,4 +391,14 @@ class RouteEdit: UIViewController, UICollectionViewDelegate, UICollectionViewDat
             fatalError("segue with unaccounted for identifier")
         }
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
+	return input.rawValue
 }

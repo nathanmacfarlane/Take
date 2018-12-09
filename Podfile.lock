@@ -1,14 +1,11 @@
 PODS:
   - AutoInsetter (1.3.0)
-  - Blueprints (0.8.3)
   - BoringSSL (10.0.6):
     - BoringSSL/Implementation (= 10.0.6)
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
-  - Cache (5.2.0)
-  - CircleMenu (4.0.1)
   - CodableFirebase (0.2.1)
   - Firebase (5.13.0):
     - Firebase/Core (= 5.13.0)
@@ -121,11 +118,7 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.14.0)
   - GTMSessionFetcher/Core (1.2.1)
-  - Imaginary (4.2.0):
-    - Cache (~> 5.0)
   - leveldb-library (1.20)
-  - Lightbox (2.3.0):
-    - Imaginary (~> 4.0)
   - Mapbox-iOS-SDK (4.6.0)
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
@@ -134,22 +127,13 @@ PODS:
   - nanopb/encode (0.3.901)
   - Pageboy (2.6.1)
   - Protobuf (3.6.1)
-  - ReactiveCocoa (8.0.2):
-    - ReactiveSwift (~> 4.0)
-  - ReactiveSwift (4.0.0):
-    - Result (~> 4.0)
-  - Result (4.0.0)
   - SwiftLint (0.28.1)
   - SwiftyDraw (2.1.1)
   - Tabman (1.10.2):
     - AutoInsetter (~> 1.3.0)
     - Pageboy (~> 2.6.0)
-  - TwicketSegmentedControl (0.1.2)
-  - VerticalCardSwiper (0.1.0-beta6)
 
 DEPENDENCIES:
-  - Blueprints
-  - CircleMenu
   - CodableFirebase
   - Firebase/Auth
   - Firebase/Core
@@ -158,22 +142,15 @@ DEPENDENCIES:
   - Firebase/Storage
   - Fuse
   - Geofirestore
-  - Lightbox
   - Mapbox-iOS-SDK
-  - ReactiveCocoa
   - SwiftLint
   - SwiftyDraw
   - Tabman (~> 1.10)
-  - TwicketSegmentedControl
-  - VerticalCardSwiper (= 0.1.0-beta6)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AutoInsetter
-    - Blueprints
     - BoringSSL
-    - Cache
-    - CircleMenu
     - CodableFirebase
     - Firebase
     - FirebaseAnalytics
@@ -192,28 +169,18 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
-    - Imaginary
     - leveldb-library
-    - Lightbox
     - Mapbox-iOS-SDK
     - nanopb
     - Pageboy
     - Protobuf
-    - ReactiveCocoa
-    - ReactiveSwift
-    - Result
     - SwiftLint
     - SwiftyDraw
     - Tabman
-    - TwicketSegmentedControl
-    - VerticalCardSwiper
 
 SPEC CHECKSUMS:
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
-  Blueprints: da16684d7116d948844dc5430d316ffa80323783
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
-  Cache: 807c5d86d01a177f06ede9865add3aea269bbfd4
-  CircleMenu: d846569acbe805b75cef5793056707224240db64
   CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
   Firebase: 6df9a6114bc9f106a98fe83d5438d4d9833c2019
   FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
@@ -232,22 +199,15 @@ SPEC CHECKSUMS:
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
-  Imaginary: dae33d06dbc2ada22f98afef5eb45cc061311a2c
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
-  Lightbox: d317750e4132bfb871a5307cfe0a2c7d6a583c65
   Mapbox-iOS-SDK: 204c04713477cf2a88c52c5a8eed1790eb75a02a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
-  ReactiveCocoa: fbd26e9ba60e98417ee47433e59465a98ed9da0f
-  ReactiveSwift: a2bb9ace428a109e9c0209615645d9d286c8c433
-  Result: 7645bb3f50c2ce726dd0ff2fa7b6f42bbe6c3713
   SwiftLint: 7f5f7de0da74a649b16616cb5246ae323489656e
   SwiftyDraw: e6e873314a0440a042c624906303043a55fe76cf
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
-  TwicketSegmentedControl: 6d7a4cf243657e0ac3f00d06d873a25334c04042
-  VerticalCardSwiper: abf970a63426e6fb77bcc55d3ca589ff54d0ef00
 
-PODFILE CHECKSUM: 02a0c27454fda4999a2d44abbd9a368b375d45ff
+PODFILE CHECKSUM: f5ceb8b64aa5fb1ed7444cb7006a3d9ad7544301
 
 COCOAPODS: 1.5.3

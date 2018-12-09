@@ -71,7 +71,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         var myTextField = UITextField()
         let alertController = UIAlertController(title: nil, message: "New Area Name: ", preferredStyle: .alert)
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            self.myMapView.remove(areaOverlay)
+            self.myMapView.removeOverlay(areaOverlay)
         }
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
             let latitude = self.myMapView.centerCoordinate.latitude
@@ -206,7 +206,7 @@ class MapView: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
         let tappedMapView = tapGesture.view
         let tappedPoint = tapGesture.location(in: tappedMapView)
         let tappedCoordinates = mapView.convert(tappedPoint, toCoordinateFrom: tappedMapView)
-        let point: MKMapPoint = MKMapPointForCoordinate(tappedCoordinates)
+        let point: MKMapPoint = MKMapPoint.init(tappedCoordinates)
         let overlays = mapView.overlays.filter { overlay in
             overlay is AreaOverlay
         }

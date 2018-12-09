@@ -60,7 +60,7 @@ class DeepPressGesture: UIGestureRecognizer {
         let currentTime = NSDate.timeIntervalSinceReferenceDate
 
         if !deepPressed && forcePercentage >= threshold {
-            state = UIGestureRecognizerState.began
+            state = UIGestureRecognizer.State.began
 
             if vibrateOnDeepPress {
                 AudioServicesPlaySystemSound(kPeakSoundID)
@@ -87,7 +87,7 @@ class DeepPressGesture: UIGestureRecognizer {
     }
 
     func endGesture() {
-        state = UIGestureRecognizerState.ended
+        state = UIGestureRecognizer.State.ended
         deepPressed = false
     }
 }

@@ -31,7 +31,7 @@ extension UIImage {
     }
 
     func saveToFb(route: Route, completion: @escaping (_ url: URL?) -> Void) {
-        guard let data = UIImageJPEGRepresentation(self, 0.1) else { return }
+        guard let data = self.jpegData(compressionQuality: 0.1) else { return }
         let imageRef = Storage.storage().reference().child("Routes/\(route.getId())")
         let imageId = UUID().uuidString
         _ = imageRef.child(imageId).putData(data, metadata: nil) { metadata, _ in

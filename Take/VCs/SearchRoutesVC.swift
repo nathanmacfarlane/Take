@@ -64,7 +64,6 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
             locationManager.startUpdatingLocation()
         }
     }
-
     // MARK: - SearchBar
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.results.clear()

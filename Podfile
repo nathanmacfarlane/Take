@@ -14,14 +14,8 @@ target 'Take' do
   pod 'CodableFirebase'
   pod 'Firebase/Firestore'
   pod 'SwiftyDraw'
-  pod 'CircleMenu'
-  pod 'TwicketSegmentedControl'
   pod 'Mapbox-iOS-SDK'
-  pod 'ReactiveCocoa'
-  pod 'VerticalCardSwiper', '0.1.0-beta6'
   pod 'Tabman', '~> 1.10'
-  pod 'Blueprints'
-  pod 'Lightbox'
   pod "Fuse"
 
 end

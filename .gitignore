@@ -218,3 +218,5 @@ xcuserdata/
 
 Take.xcodeproj/xcuserdata/*
 Take.xcodeproj/project.xcworkspace/xcuserdata/*
+Pods/
+Carthage/

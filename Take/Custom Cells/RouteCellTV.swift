@@ -33,7 +33,7 @@ class RouteCellTV: UITableViewCell {
         typesLabel.text = routeViewModel.typesString
 
         // activity indicator
-        let indicator = UIActivityIndicatorView(activityIndicatorStyle: .white)
+        let indicator = UIActivityIndicatorView(style: .white)
         indicator.startAnimating()
 
         // image view
