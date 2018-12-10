@@ -15,6 +15,9 @@ class RouteViewModel {
     }
 
     // MARK: - Computed Properties
+    var id: String {
+        return route.getId()
+    }
     var name: String {
         return route.getName()
     }
@@ -92,37 +95,12 @@ class RouteViewModel {
         return types.joined(separator: ", ")
     }
 
-    // MARK: - Functions
-    func fsSave() {
-        guard let data = try! FirebaseEncoder().encode(route) as? [String: Any] else { return }
-        let collection = Firestore.firestore().collection("routes")
-        collection.document("\(route.getId())").setData(data)
-        let geoFirestore = GeoFirestore(collectionRef: collection)
-        geoFirestore.setLocation(location: self.location, forDocumentWithID: route.getId())
-    }
-
-    func getArea(completion: @escaping (_ area: Area?) -> Void) {
-        guard let areaName = route.area else { return }
-        Firestore.firestore().query(collection: "areas", by: "name", with: areaName, of: Area.self) { areas in
-            guard let theArea = areas.first else { return }
-            completion(theArea)
-        }
-    }
-
-    func getComments(completion: @escaping (_ comments: [OldComment]) -> Void) {
-        var comments: [OldComment] = []
-        var count = 0
-        let db = Firestore.firestore()
-        for commentId in route.commentIds {
-            db.query(collection: "comments", by: "id", with: commentId, of: OldComment.self) { cmts in
-                if let comment = cmts.first {
-                    comments.append(comment)
-                    count += 1
-                    if count == self.route.commentIds.count {
-                        completion(comments)
-                    }
-                }
-            }
-        }
-    }
+//    // MARK: - Functions
+//    func fsSave() {
+//        guard let data = try! FirebaseEncoder().encode(route) as? [String: Any] else { return }
+//        let collection = Firestore.firestore().collection("routes")
+//        collection.document("\(route.getId())").setData(data)
+////        let geoFirestore = GeoFirestore(collectionRef: collection)
+////        geoFirestore.setLocation(location: self.location, forDocumentWithID: route.getId())
+//    }
 }

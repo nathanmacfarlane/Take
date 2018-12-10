@@ -33,13 +33,7 @@ extension MKMapView {
         return metersInLatitude < metersInLongitude ? metersInLatitude : metersInLongitude
     }
     func centerMapOn(_ location: CLLocation, withRadius radius: Double = 3000) {
-        let coordinateRegion = MKCoordinateRegion.init(center: location.coordinate, latitudinalMeters: radius, longitudinalMeters: radius)
+        let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: radius, longitudinalMeters: radius)
         self.setRegion(coordinateRegion, animated: true)
-    }
-    func addCircle(name: String, coordinate: CLLocationCoordinate2D, radius: CLLocationDistance) -> AreaOverlay {
-        let circle = AreaOverlay(center: coordinate, radius: radius)
-        circle.area = Area(name: name, radius: radius, latitude: coordinate.latitude, longitude: coordinate.longitude)
-        self.addOverlay(circle)
-        return circle
     }
 }

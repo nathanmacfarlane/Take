@@ -16,7 +16,7 @@ class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate
     var imagePicker: UIImagePickerController!
 
     // MARK: - Delegates
-    var delegate: CommentDelegate?
+    weak var delegate: CommentDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -86,12 +86,9 @@ class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate
 
     // MARK: - Image Picker
     @objc
-    internal func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-// Local variable inserted by Swift 4.2 migrator.
-let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
-
-        if let pickedImage: UIImage = info[convertFromUIImagePickerControllerInfoKey(UIImagePickerController.InfoKey.originalImage)] as? UIImage {
-            self.imageView.image = pickedImage
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let selectedImage = info[.originalImage] as? UIImage {
+            self.imageView.image = selectedImage
         }
         dismiss(animated: true, completion: nil)
     }
@@ -109,9 +106,8 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
         imageView.image?.saveToFb(route: routeViewModel.route) { url in
             comment.setImageUrl(imageUrl: url?.absoluteString)
             Firestore.firestore().save(object: comment, to: "comments", with: comment.getId(), completion: nil)
-//            comment.fsSave()
             self.routeViewModel.route.comments.append(comment.getId())
-            self.routeViewModel.fsSave()
+            Firestore.firestore().save(object: self.routeViewModel.route, to: "routes", with: self.routeViewModel.id, completion: nil)
             self.imageView.image = UIImage()
             self.messageView.text = ""
         }
@@ -121,14 +117,4 @@ let info = convertFromUIImagePickerControllerInfoKeyDictionary(info)
     func addImage() {
         present(imagePicker, animated: true, completion: nil)
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKeyDictionary(_ input: [UIImagePickerController.InfoKey: Any]) -> [String: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromUIImagePickerControllerInfoKey(_ input: UIImagePickerController.InfoKey) -> String {
-	return input.rawValue
 }

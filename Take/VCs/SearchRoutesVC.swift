@@ -130,9 +130,7 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
             guard let theRoute = anyItem as? Route else { return UITableViewCell() }
             return getRouteCell(route: theRoute)
         default:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "WallCell") as? WallCell else { return UITableViewCell() }
-            cell.setWallLabel(with: "NOT IMPLEMENTED YET")
-            return cell
+            return UITableViewCell()
         }
     }
     func getRouteCell(route: Route) -> RouteCellTV {
