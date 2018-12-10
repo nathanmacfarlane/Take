@@ -4,7 +4,7 @@ import FirebaseFirestore
 import Fuse
 import UIKit
 
-class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, CLLocationManagerDelegate {
+class SearchRoutesViewController: UIViewController {
 
     var myTableView: UITableView!
     var mySearchBar: UISearchBar!
@@ -64,85 +64,10 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
             locationManager.startUpdatingLocation()
         }
     }
-    // MARK: - SearchBar
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        self.results.clear()
-        self.resultsMashed.removeAll()
-        self.myTableView.reloadData()
-
-        self.mySearchBar.resignFirstResponder()
-
-        guard let searchText = searchBar.text else { return }
-        let db = Firestore.firestore()
-        db.query(collection: "routes", by: "name", with: searchText, of: Route.self) { routes in
-            self.resultsMashed.append(contentsOf: routes)
-            self.results.routes.append(contentsOf: routes)
-            self.myTableView.reloadData()
-        }
-    }
-
-    // MARK: - LocationManager
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
-        userCurrentLocation = CLLocation(latitude: locValue.latitude, longitude: locValue.longitude)
-    }
-
-    // MARK: - TableView
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let favoriteAction = UIContextualAction(style: .normal, title: "") { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            print("add \((self.resultsMashed[indexPath.row] as? Route)?.getName() ?? "") to favorites")
-            success(true)
-        }
-        favoriteAction.image = UIImage(named: "heart.png")
-        favoriteAction.backgroundColor = self.view.backgroundColor
-        let toDoAction = UIContextualAction(style: .normal, title: "") { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
-            print("add \((self.resultsMashed[indexPath.row] as? Route)?.getName() ?? "") to to do list")
-            success(true)
-        }
-        toDoAction.image = UIImage(named: "checkmark.png")
-        toDoAction.backgroundColor = self.view.backgroundColor
-        return UISwipeActionsConfiguration(actions: [toDoAction, favoriteAction])
-    }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let anyItem = self.resultsMashed[indexPath.row]
-        switch anyItem {
-        case is Route:
-            guard let theRoute = anyItem as? Route else { return }
-            let routeManager = RouteManagerVC()
-            routeManager.routeViewModel = RouteViewModel(route: theRoute)
-            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-            self.navigationController?.pushViewController(routeManager, animated: true)
-        default:
-            print("not accounted for")
-        }
-    }
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.resultsMashed.count
-    }
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    }
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let anyItem = self.resultsMashed[indexPath.row]
-        switch self.resultsMashed[indexPath.row] {
-        case is Route:
-            guard let theRoute = anyItem as? Route else { return UITableViewCell() }
-            return getRouteCell(route: theRoute)
-        default:
-            return UITableViewCell()
-        }
-    }
-    func getRouteCell(route: Route) -> RouteCellTV {
-        guard let cell: RouteCellTV = self.myTableView?.dequeueReusableCell(withIdentifier: "RouteCellTV") as? RouteCellTV else { return RouteCellTV() }
-        cell.routeViewModel = RouteViewModel(route: route)
-        cell.initFields()
-        return cell
-    }
 
     @objc
     private func goLogout(sender: UIButton!) {
-        try! Auth.auth().signOut()
+        try? Auth.auth().signOut()
         self.present(LoginVC(), animated: true, completion: nil)
     }
 
@@ -179,7 +104,7 @@ class SearchRoutesVC: UIViewController, UITableViewDataSource, UITableViewDelega
 
         // table view
         self.myTableView = UITableView()
-        myTableView.register(RouteCellTV.self, forCellReuseIdentifier: "RouteCellTV")
+        myTableView.register(RouteTableViewCell.self, forCellReuseIdentifier: "RouteCellTV")
         myTableView.backgroundColor = .clear
         myTableView.separatorStyle = .none
         myTableView.dataSource = self

@@ -3,7 +3,7 @@ import FirebaseAuth
 import FirebaseFirestore
 import UIKit
 
-class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class AddCommentViewController: UIViewController {
 
     // MARK: - Injections
     var routeViewModel: RouteViewModel!
@@ -82,18 +82,6 @@ class AddCommentContainerView: UIViewController, UIImagePickerControllerDelegate
 
         saveButton.layer.cornerRadius = 5
         saveButton.clipsToBounds = true
-    }
-
-    // MARK: - Image Picker
-    @objc
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let selectedImage = info[.originalImage] as? UIImage {
-            self.imageView.image = selectedImage
-        }
-        dismiss(animated: true, completion: nil)
-    }
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
     }
 
     @objc

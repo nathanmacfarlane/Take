@@ -1,6 +1,6 @@
 import UIKit
 
-class RouteCellTV: UITableViewCell {
+class RouteTableViewCell: UITableViewCell {
 
     var routeViewModel: RouteViewModel!
 

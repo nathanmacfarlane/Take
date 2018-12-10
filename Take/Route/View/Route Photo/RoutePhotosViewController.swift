@@ -3,7 +3,7 @@ import FirebaseFirestore
 import Lightbox
 import UIKit
 
-class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, CommentDelegate, UIScrollViewDelegate, LightboxControllerPageDelegate, LightboxControllerDismissalDelegate {
+class RoutePhotosViewController: UIViewController {
 
     // MARK: - Injections
     var routeViewModel: RouteViewModel!
@@ -11,7 +11,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
     // MARK: - Outlets
     var bgImageView: UIImageView!
     var myImagesCV: UICollectionView!
-    var commentCV: AddCommentContainerView!
+    var commentCV: AddCommentViewController!
 
     // MARK: - Variables
     var comments: [String: CommentModelView] = [:]
@@ -67,31 +67,6 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
 
     }
 
-    // MARK: - Collection View
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return commentKeys.count
-    }
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == myImagesCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RoutePhotoCVCell", for: indexPath) as? RoutePhotoCVCell,
-            let comment = comments[commentKeys[indexPath.row]] {
-            cell.imageView.image = images[comment.id]
-            return cell
-        }
-        return UICollectionViewCell()
-    }
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView == myImagesCV && isAddingComment {
-            toggleCommentView()
-        }
-    }
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let lightboxController = LightboxController(images: lightboxImages, startIndex: indexPath.row)
-        lightboxController.pageDelegate = self
-        lightboxController.dismissalDelegate = self
-        lightboxController.dynamicBackground = true
-        present(lightboxController, animated: true, completion: nil)
-    }
-
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
         self.title = routeViewModel.name
@@ -111,7 +86,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         gradientView.layer.insertSublayer(gradient, at: 0)
 
         // add comment view
-        commentCV = AddCommentContainerView()
+        commentCV = AddCommentViewController()
         commentCV.routeViewModel = routeViewModel
         commentCV.delegate = self
 
@@ -123,7 +98,7 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
             sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
 
         myImagesCV = UICollectionView(frame: .zero, collectionViewLayout: waterfallLayout)
-        myImagesCV.register(RoutePhotoCVCell.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
+        myImagesCV.register(RoutePhotosCollectionViewCell.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         myImagesCV.delegate = self
         myImagesCV.dataSource = self
         myImagesCV.backgroundColor = .clear
@@ -151,26 +126,6 @@ class RoutePhotosVC: UIViewController, UICollectionViewDelegate, UICollectionVie
         NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: commentCV.view, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: myImagesCV, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
-    }
-
-    // MARK: - Lightbox
-    func lightboxController(_ controller: LightboxController, didMoveToPage page: Int) {}
-    func lightboxControllerWillDismiss(_ controller: LightboxController) {}
-
-    // MARK: - Comment Delegate
-    func toggleCommentView() {
-        isAddingComment = !isAddingComment
-        self.heightConstraint.constant = isAddingComment ? 140 : 0
-        UIView.animate(withDuration: 0.2) {
-            self.view.layoutIfNeeded()
-        }
-    }
-    func addNewComment(comment: Comment, photo: UIImage) {
-        let commentViewModel = CommentModelView(comment: comment)
-        comments[commentViewModel.id] = commentViewModel
-        images[commentViewModel.id] = photo
-        commentKeys.insert(commentViewModel.id, at: 0)
-        myImagesCV.reloadData()
     }
 
 }

@@ -1,6 +1,6 @@
 import UIKit
 
-class CommentTVCell: UITableViewCell {
+class CommentTableViewCell: UITableViewCell {
     var userImage: UIImageView!
     var nameLabel: UILabel!
     var commentLabel: UILabel!

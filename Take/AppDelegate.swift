@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate/*, GIDSignInDelegate*/ {
         nav1.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
         nav1.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav1.navigationBar.isTranslucent = false
-        let mainView = SearchRoutesVC()
+        let mainView = SearchRoutesViewController()
         nav1.viewControllers = [mainView]
         self.window?.rootViewController = nav1
         self.window?.makeKeyAndVisible()

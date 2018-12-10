@@ -1,19 +1,10 @@
 import Mapbox
 import TwicketSegmentedControl
 import UIKit
-//import VerticalCardSwiper
 
-class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionViewDataSource,*/ TwicketSegmentedControlDelegate, MGLMapViewDelegate {
+class RouteDetailViewController: UIViewController {
 
     var routeViewModel: RouteViewModel!
-//    var imageKeys: [String] = []
-//    var images: [String: UIImage] = [:]
-//    var diagramKeys: [String] = []
-//    var diagrams: [String: [UIImage]] = [:]
-//
-//    var myImagesCV: UICollectionView!
-//    var myDiagramsCV: UICollectionView!
-//    var imagesCVConst: NSLayoutConstraint!
     var bgImageView: UIImageView!
     var infoLabel: UILabel!
 
@@ -33,13 +24,6 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
     @objc
     func goToDo(sender: UIButton!) {
         // TODO: add to do
-    }
-
-    @objc
-    func goEdit(sender: UIButton!) {
-        let editVC = RouteEditVC()
-        editVC.bgImage = self.bgImageView.image
-        self.present(editVC, animated: true, completion: nil)
     }
 
     @objc
@@ -78,58 +62,12 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         self.present(shareActionSheet, animated: true, completion: nil)
     }
 
-    // MARK: - Twicket Seg Control
-    func didSelect(_ segmentIndex: Int) {
-        UIView.animate(withDuration: 0.1,
-                       animations: {
-            self.infoLabel.alpha = 0.0
-        }, completion: { _ in
-            self.infoLabel.text = segmentIndex == 0 ? self.routeViewModel.info : self.routeViewModel.protection
-            UIView.animate(withDuration: 0.3,
-                           animations: {
-                self.view.layoutIfNeeded()
-            }, completion: { _ in
-                UIView.animate(withDuration: 0.1) {
-                    self.infoLabel.alpha = 1.0
-                }
-            })
-        })
-    }
-
-//    // MARK: - CollectionView
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return collectionView == myImagesCV ? imageKeys.count : diagramKeys.count
-//    }
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if collectionView == myImagesCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RouteDetailCVCell", for: indexPath) as? RouteDetailCVCell {
-//            if let cellImage = self.images[self.imageKeys[indexPath.row]] {
-//                cell.initImage(image: cellImage)
-//            }
-//            return cell
-//        } else if collectionView == myDiagramsCV, let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RouteDetailDiagramCVCell", for: indexPath) as? RouteDetailDiagramCVCell {
-//            if let theImage = self.diagrams[diagramKeys[indexPath.row]] {
-//                cell.initImage(bgImage: theImage[0], diagramImage: theImage[1])
-//            }
-//            return cell
-//        }
-//        return UICollectionViewCell()
-//    }
-
-    // MARK: - mapbox
-    func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
-        return nil
-    }
-    func mapView(_ mapView: MGLMapView, annotationCanShowCallout annotation: MGLAnnotation) -> Bool {
-        return true
-    }
-
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
         self.title = routeViewModel.name
-        let editButton = UIBarButtonItem(image: UIImage(named: "edit.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goEdit))
         let shareButton = UIBarButtonItem(image: UIImage(named: "share.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goShare))
         let downloadButton = UIBarButtonItem(image: UIImage(named: "download.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goDownload))
-        navigationItem.rightBarButtonItems = [shareButton, editButton, downloadButton]
+        navigationItem.rightBarButtonItems = [shareButton, downloadButton]
 
         // bg image
         self.bgImageView = UIImageView(frame: self.view.frame)
@@ -144,34 +82,6 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         gradient.frame = gradientView.frame
         gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
         gradientView.layer.insertSublayer(gradient, at: 0)
-
-//        // image collectionview
-//        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        layout.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-//        layout.itemSize = CGSize(width: cvHeight, height: cvHeight)
-//        layout.minimumInteritemSpacing = 0
-//        layout.minimumLineSpacing = 5
-//        layout.scrollDirection = .horizontal
-//        self.myImagesCV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout)
-//        self.myImagesCV.register(RouteDetailCVCell.self, forCellWithReuseIdentifier: "RouteDetailCVCell")
-//        self.myImagesCV.delegate = self
-//        self.myImagesCV.dataSource = self
-//        self.myImagesCV.backgroundColor = .clear
-//        self.myImagesCV.showsHorizontalScrollIndicator = false
-//
-//        // diagram collectionview
-//        let layout2: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-//        layout2.sectionInset = UIEdgeInsets(top: 0, left: 5, bottom: 0, right: 5)
-//        layout2.itemSize = CGSize(width: cvHeight, height: cvHeight)
-//        layout2.minimumInteritemSpacing = 0
-//        layout2.minimumLineSpacing = 5
-//        layout2.scrollDirection = .horizontal
-//        self.myDiagramsCV = UICollectionView(frame: self.view.frame, collectionViewLayout: layout2)
-//        self.myDiagramsCV.register(RouteDetailDiagramCVCell.self, forCellWithReuseIdentifier: "RouteDetailDiagramCVCell")
-//        self.myDiagramsCV.delegate = self
-//        self.myDiagramsCV.dataSource = self
-//        self.myDiagramsCV.backgroundColor = .clear
-//        self.myDiagramsCV.showsHorizontalScrollIndicator = false
 
         // rating header
         let ratingLabel = UILabel()
@@ -282,26 +192,9 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         view.addSubview(trButton)
         view.addSubview(tradButton)
         view.addSubview(aidButton)
-//        view.addSubview(myImagesCV)
-//        view.addSubview(myDiagramsCV)
         view.addSubview(segControl)
         view.addSubview(infoLabel)
         view.addSubview(mapView)
-
-//        // constraints
-//        myImagesCV.translatesAutoresizingMaskIntoConstraints = false
-//        let imageCVHeight: CGFloat = route.imageUrls.isEmpty ? 0.0 : 75.0
-//        let diagramCVHeight: CGFloat = route.routeArUrls.isEmpty ? 0.0 : 75.0
-//        NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: myImagesCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
-//        NSLayoutConstraint(item: myImagesCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: imageCVHeight).isActive = true
-//
-//        myDiagramsCV.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint(item: myDiagramsCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: myDiagramsCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: myDiagramsCV, attribute: .top, relatedBy: .equal, toItem: myImagesCV, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-//        NSLayoutConstraint(item: myDiagramsCV, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: diagramCVHeight).isActive = true
 
         ratingLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: ratingLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -391,7 +284,6 @@ class RouteDetailVC: UIViewController, /*UICollectionViewDelegate, UICollectionV
         NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: infoLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
-//        NSLayoutConstraint(item: mapView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
     }
 
 }
