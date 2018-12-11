@@ -22,10 +22,22 @@ extension SearchRoutesViewController: UITableViewDataSource {
         }
     }
 
-    func getRouteCell(route: Route) -> RouteTableViewCell {
-        guard let cell: RouteTableViewCell = self.myTableView?.dequeueReusableCell(withIdentifier: "RouteCellTV") as? RouteTableViewCell else { return RouteTableViewCell() }
-        cell.routeViewModel = RouteViewModel(route: route)
-        cell.initFields()
+    func getRouteCell(route: Route) -> RouteTVC {
+        guard let cell: RouteTVC = self.myTableView?.dequeueReusableCell(withIdentifier: "RouteCellTV") as? RouteTVC else { return RouteTVC() }
+        let rvm = RouteViewModel(route: route)
+        cell.routeViewModel = rvm
+        cell.nameLabel.text = rvm.name
+        cell.difficultyLabel.text = rvm.rating
+        cell.typesLabel.text = rvm.typesString
+        DispatchQueue.global(qos: .background).async {
+            rvm.fsLoadFirstImage { _, image in
+                DispatchQueue.main.async {
+                    cell.indicator.stopAnimating()
+                    cell.indicator.removeFromSuperview()
+                    cell.firstImageView.image = image ?? UIImage(named: "noImages.png")
+                }
+            }
+        }
         return cell
     }
 }

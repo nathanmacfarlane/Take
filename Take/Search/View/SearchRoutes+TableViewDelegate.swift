@@ -25,7 +25,7 @@ extension SearchRoutesViewController: UITableViewDelegate {
         switch anyItem {
         case is Route:
             guard let theRoute = anyItem as? Route else { return }
-            let routeManager = RouteManagerViewController()
+            let routeManager = RouteManagerVC()
             routeManager.routeViewModel = RouteViewModel(route: theRoute)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(routeManager, animated: true)

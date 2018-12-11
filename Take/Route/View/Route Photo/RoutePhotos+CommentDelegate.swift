@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension RoutePhotosViewController: CommentDelegate {
+extension RoutePhotosVC: CommentDelegate {
 
     func toggleCommentView() {
         isAddingComment = !isAddingComment

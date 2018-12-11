@@ -13,10 +13,10 @@ class Route: Codable {
     private var protection: String?
     private var latitude: Double?
     private var longitude: Double?
+    private var imageUrls: [String: String] = [:]
+    private var routeArUrls: [String: [String]] = [:]
     var stars: [String: Int] = [:]
     var area: String?
-    var imageUrls: [String: String] = [:]
-    var routeArUrls: [String: [String]] = [:]
     var commentIds: [String] = []
     var comments: [String] = []
 
@@ -42,30 +42,36 @@ class Route: Codable {
 
     // MARK: - Getters
     func getName() -> String {
-        return self.name
+        return name
     }
     func getId() -> String {
-        return self.id
+        return id
     }
     func getPitches() -> Int {
-        return self.pitches
+        return pitches
     }
     func getTypes() -> [String] {
-        return self.types
+        return types
     }
     func getInfo() -> String? {
-        return self.info
+        return info
     }
     func getProtection() -> String? {
-        return self.protection
+        return protection
     }
     func getRating() -> String? {
-        return self.rating
+        return rating
     }
     func getLatitude() -> Double? {
-        return self.latitude
+        return latitude
     }
     func getLongitude() -> Double? {
-        return self.longitude
+        return longitude
+    }
+    func getImageUrls() -> [String: String] {
+        return imageUrls
+    }
+    func getArUrls() -> [String: [String]] {
+        return routeArUrls
     }
 }

@@ -104,7 +104,7 @@ class SearchRoutesViewController: UIViewController {
 
         // table view
         self.myTableView = UITableView()
-        myTableView.register(RouteTableViewCell.self, forCellReuseIdentifier: "RouteCellTV")
+        myTableView.register(RouteTVC.self, forCellReuseIdentifier: "RouteCellTV")
         myTableView.backgroundColor = .clear
         myTableView.separatorStyle = .none
         myTableView.dataSource = self

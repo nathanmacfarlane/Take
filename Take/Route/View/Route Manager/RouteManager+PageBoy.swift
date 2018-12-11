@@ -1,20 +1,20 @@
 import Foundation
 import Pageboy
 
-extension RouteManagerViewController: PageboyViewControllerDataSource {
+extension RouteManagerVC: PageboyViewControllerDataSource {
 
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
 
-        let detail = RouteDetailViewController()
+        let detail = RouteDetailVC()
         detail.routeViewModel = routeViewModel
 
-        let hype = RouteHypeViewController()
+        let hype = RouteHypeVC()
         hype.routeViewModel = routeViewModel
 
-        photos = RoutePhotosViewController()
+        photos = RoutePhotosVC()
         photos.routeViewModel = routeViewModel
 
-        let now = RouteNowViewController()
+        let now = RouteNowVC()
         now.routeViewModel = routeViewModel
 
         vcs = [detail, hype, now, photos]

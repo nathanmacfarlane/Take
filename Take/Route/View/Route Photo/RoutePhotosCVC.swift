@@ -1,6 +1,6 @@
 import UIKit
 
-class RoutePhotosCollectionViewCell: UICollectionViewCell {
+class RoutePhotosCVC: UICollectionViewCell {
     var imageView: UIImageView!
 
     override init(frame: CGRect) {

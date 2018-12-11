@@ -2,7 +2,7 @@ import Foundation
 import TwicketSegmentedControl
 import UIKit
 
-extension RouteDetailViewController: TwicketSegmentedControlDelegate {
+extension RouteDetailVC: TwicketSegmentedControlDelegate {
 
     func didSelect(_ segmentIndex: Int) {
         UIView.animate(withDuration: 0.1,

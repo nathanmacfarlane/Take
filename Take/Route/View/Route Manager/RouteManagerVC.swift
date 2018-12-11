@@ -2,13 +2,13 @@ import Pageboy
 import Tabman
 import UIKit
 
-class RouteManagerViewController: TabmanViewController {
+class RouteManagerVC: TabmanViewController {
 
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
     var add: UIBarButtonItem!
 
-    var photos: RoutePhotosViewController!
+    var photos: RoutePhotosVC!
 
     var bgImageView: UIImageView!
 

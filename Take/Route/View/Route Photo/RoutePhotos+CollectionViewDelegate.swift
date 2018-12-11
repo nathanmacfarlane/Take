@@ -2,7 +2,7 @@ import Foundation
 import Lightbox
 import UIKit
 
-extension RoutePhotosViewController: UICollectionViewDelegate {
+extension RoutePhotosVC: UICollectionViewDelegate {
 
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         if scrollView == myImagesCV && isAddingComment {

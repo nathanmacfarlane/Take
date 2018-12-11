@@ -2,7 +2,7 @@ import Mapbox
 import TwicketSegmentedControl
 import UIKit
 
-class RouteDetailViewController: UIViewController {
+class RouteDetailVC: UIViewController {
 
     var routeViewModel: RouteViewModel!
     var bgImageView: UIImageView!
@@ -16,58 +16,8 @@ class RouteDetailViewController: UIViewController {
         initViews()
     }
 
-    @objc
-    func goFavorite(sender: UIButton!) {
-        // TODO: add to favorites
-    }
-
-    @objc
-    func goToDo(sender: UIButton!) {
-        // TODO: add to do
-    }
-
-    @objc
-    func goDownload(sender: UIButton!) {
-        let downloadActionSheet: UIAlertController = UIAlertController(title: "Select an Option", message: nil, preferredStyle: .actionSheet)
-        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            print("Cancel")
-        }
-        let photosAndInformationButton = UIAlertAction(title: "Photos and Information", style: .default) { _ in
-            // TODO: Downloading Photos and Information
-        }
-        let justInformationButton = UIAlertAction(title: "Just Information", style: .default) { _ in
-            // TODO: Downloading Just Information
-        }
-        downloadActionSheet.addAction(cancelActionButton)
-        downloadActionSheet.addAction(justInformationButton)
-        downloadActionSheet.addAction(photosAndInformationButton)
-        self.present(downloadActionSheet, animated: true, completion: nil)
-    }
-
-    @objc
-    func goShare(sender: UIButton!) {
-        let shareActionSheet: UIAlertController = UIAlertController(title: "Select an Option", message: nil, preferredStyle: .actionSheet)
-        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
-            print("Cancel")
-        }
-        let deleteActionButton = UIAlertAction(title: "Send to Friend", style: .default) { _ in
-            // TODO: Sending to Friend
-        }
-        let saveActionButton = UIAlertAction(title: "Add To Do", style: .default) { _ in
-            // TODO: Adding to do
-        }
-        shareActionSheet.addAction(cancelActionButton)
-        shareActionSheet.addAction(saveActionButton)
-        shareActionSheet.addAction(deleteActionButton)
-        self.present(shareActionSheet, animated: true, completion: nil)
-    }
-
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
-        self.title = routeViewModel.name
-        let shareButton = UIBarButtonItem(image: UIImage(named: "share.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goShare))
-        let downloadButton = UIBarButtonItem(image: UIImage(named: "download.png")?.resized(withPercentage: 0.5), style: .plain, target: self, action: #selector(goDownload))
-        navigationItem.rightBarButtonItems = [shareButton, downloadButton]
 
         // bg image
         self.bgImageView = UIImageView(frame: self.view.frame)

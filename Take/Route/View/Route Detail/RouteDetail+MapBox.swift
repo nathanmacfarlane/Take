@@ -1,7 +1,7 @@
 import Foundation
 import Mapbox
 
-extension RouteDetailViewController: MGLMapViewDelegate {
+extension RouteDetailVC: MGLMapViewDelegate {
 
     func mapView(_ mapView: MGLMapView, viewFor annotation: MGLAnnotation) -> MGLAnnotationView? {
         return nil

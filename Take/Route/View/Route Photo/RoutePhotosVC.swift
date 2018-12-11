@@ -3,7 +3,7 @@ import FirebaseFirestore
 import Lightbox
 import UIKit
 
-class RoutePhotosViewController: UIViewController {
+class RoutePhotosVC: UIViewController {
 
     // MARK: - Injections
     var routeViewModel: RouteViewModel!
@@ -98,7 +98,7 @@ class RoutePhotosViewController: UIViewController {
             sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
 
         myImagesCV = UICollectionView(frame: .zero, collectionViewLayout: waterfallLayout)
-        myImagesCV.register(RoutePhotosCollectionViewCell.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
+        myImagesCV.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         myImagesCV.delegate = self
         myImagesCV.dataSource = self
         myImagesCV.backgroundColor = .clear

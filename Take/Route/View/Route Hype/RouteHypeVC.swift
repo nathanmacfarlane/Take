@@ -1,6 +1,6 @@
 import UIKit
 
-class RouteHypeViewController: UIViewController {
+class RouteHypeVC: UIViewController {
 
     var bgImageView: UIImageView!
     var routeViewModel: RouteViewModel!

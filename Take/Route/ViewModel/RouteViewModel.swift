@@ -95,12 +95,35 @@ class RouteViewModel {
         return types.joined(separator: ", ")
     }
 
-//    // MARK: - Functions
-//    func fsSave() {
-//        guard let data = try! FirebaseEncoder().encode(route) as? [String: Any] else { return }
-//        let collection = Firestore.firestore().collection("routes")
-//        collection.document("\(route.getId())").setData(data)
-////        let geoFirestore = GeoFirestore(collectionRef: collection)
-////        geoFirestore.setLocation(location: self.location, forDocumentWithID: route.getId())
-//    }
+    func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
+        var images: [String: UIImage] = [:]
+        var count = 0
+        for routeImage in route.getImageUrls() {
+            guard let theURL = URL(string: routeImage.value) else { continue }
+            URLSession.shared.dataTask(with: theURL) { data, _, _ in
+                guard let theData = data, let theImage = UIImage(data: theData) else { return }
+                images[routeImage.key] = theImage
+                count += 1
+                if count == self.route.getImageUrls().count {
+                    completion(images)
+                }
+            }
+            .resume()
+        }
+    }
+
+    func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
+        guard let routeImage = route.getImageUrls().first, let theURL = URL(string: routeImage.value) else {
+            completion(nil, nil)
+            return
+        }
+        URLSession.shared.dataTask(with: theURL) { data, _, _ in
+            guard let theData = data, let theImage = UIImage(data: theData) else {
+                completion(nil, nil)
+                return
+            }
+            completion(routeImage.key, theImage)
+        }
+        .resume()
+    }
 }

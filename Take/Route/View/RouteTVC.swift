@@ -1,63 +1,46 @@
 import UIKit
 
-class RouteTableViewCell: UITableViewCell {
+class RouteTVC: UITableViewCell {
 
     var routeViewModel: RouteViewModel!
 
-    func initFields() {
+    var nameLabel: UILabel!
+    var difficultyLabel: UILabel!
+    var typesLabel: UILabel!
+    var indicator: UIActivityIndicatorView!
+    var firstImageView: UIImageView!
 
-        self.subviews.forEach {
-            $0.removeFromSuperview()
-        }
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
 
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = UIColor(named: "BluePrimaryDark")
 
-        // name label
-        let nameLabel = UILabel()
+        nameLabel = UILabel()
         nameLabel.textColor = .white
         nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        nameLabel.text = routeViewModel.name
 
-        // difficulty label
-        let difficultyLabel = UILabel()
+        difficultyLabel = UILabel()
         difficultyLabel.textColor = .white
         difficultyLabel.font = UIFont(name: "Avenir", size: 17)
-        difficultyLabel.text = routeViewModel.rating
 
-        // types label
-        let typesLabel = UILabel()
+        typesLabel = UILabel()
         typesLabel.textColor = .white
         typesLabel.font = UIFont(name: "Avenir", size: 17)
-        typesLabel.text = routeViewModel.typesString
 
-        // activity indicator
-        let indicator = UIActivityIndicatorView(style: .white)
+        indicator = UIActivityIndicatorView(style: .white)
         indicator.startAnimating()
 
-        // image view
-        let imageView = UIImageView()
-        DispatchQueue.global(qos: .background).async {
-            self.routeViewModel.route.fsLoadFirstImage { _, image in
-                DispatchQueue.main.async {
-                    indicator.stopAnimating()
-                    indicator.removeFromSuperview()
-                    imageView.image = image ?? UIImage(named: "noImages.png")
-                    imageView.contentMode = .scaleAspectFill
-                    imageView.addBorder(toSide: .right, withColor: UIColor(hexString: "FFFFFF").cgColor, andThickness: 1.0)
-                }
-            }
-        }
+        firstImageView = UIImageView()
+        self.firstImageView.contentMode = .scaleAspectFill
 
-        // add sub views
         self.addSubview(nameLabel)
         self.addSubview(difficultyLabel)
         self.addSubview(typesLabel)
-        self.addSubview(imageView)
+        self.addSubview(firstImageView)
         self.addSubview(indicator)
 
-        // add constraints
         difficultyLabel.translatesAutoresizingMaskIntoConstraints = false
         let difficultyLabelWidthConst = NSLayoutConstraint(item: difficultyLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0)
         let difficultyLabelCenterXConst = NSLayoutConstraint(item: difficultyLabel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
@@ -81,12 +64,16 @@ class RouteTableViewCell: UITableViewCell {
         let indicatorCenterY = NSLayoutConstraint(item: indicator, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
         NSLayoutConstraint.activate([indicatorCenterX, indicatorCenterY])
 
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        let imageLeftConst = NSLayoutConstraint(item: imageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0)
-        let imageRightConst = NSLayoutConstraint(item: imageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: -10)
-        let imageTopConst = NSLayoutConstraint(item: imageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-        let imageBottomConst = NSLayoutConstraint(item: imageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
+        firstImageView.translatesAutoresizingMaskIntoConstraints = false
+        let imageLeftConst = NSLayoutConstraint(item: firstImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0)
+        let imageRightConst = NSLayoutConstraint(item: firstImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: -10)
+        let imageTopConst = NSLayoutConstraint(item: firstImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
+        let imageBottomConst = NSLayoutConstraint(item: firstImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
         NSLayoutConstraint.activate([imageLeftConst, imageRightConst, imageTopConst, imageBottomConst])
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
 
 }

@@ -1,7 +1,7 @@
 import Lightbox
 import UIKit
 
-class RouteNowViewController: UIViewController {
+class RouteNowVC: UIViewController {
 
     var bgImageView: UIImageView!
     var routeViewModel: RouteViewModel!
