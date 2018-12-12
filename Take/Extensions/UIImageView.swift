@@ -1,11 +1,3 @@
-//
-//  UIImageView.swift
-//  Take
-//
-//  Created by Family on 5/17/18.
-//  Copyright © 2018 N8. All rights reserved.
-//
-
 import Foundation
 import UIKit
 
@@ -28,5 +20,9 @@ extension UIImageView {
         label.textColor = color
         label.frame = self.frame
         self.addSubview(label)
+    }
+    func addTint(to color: UIColor) {
+        self.image = self.image?.withRenderingMode(.alwaysTemplate)
+        self.tintColor = color
     }
 }

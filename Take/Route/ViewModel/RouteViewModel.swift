@@ -95,6 +95,34 @@ class RouteViewModel {
         return types.joined(separator: ", ")
     }
 
+    func getCurrentWeather(completion: @escaping (_ weather: WeatherViewModel) -> Void) {
+        let url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
+        print("url: \(url)")
+        guard let now = URL(string: url) else {
+            print("bad url")
+            return
+        }
+        URLSession.shared.dataTask(with: now) { data, _, _ in
+            guard let data = data else { return }
+            guard let weather = try? JSONDecoder().decode(Weather.self, from: data) else {
+                print("could not return weather")
+                return
+            }
+            completion(WeatherViewModel(weather: weather))
+        }
+        .resume()
+    }
+
+    func getForecastWeather(completion: @escaping (_ forecast: ForecastViewModel) -> Void) {
+        let url = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
+        guard let future = URL(string: url) else { return }
+        URLSession.shared.dataTask(with: future) { data, _, _ in
+            guard let data = data, let forecast = try? JSONDecoder().decode(Forecast.self, from: data) else { return }
+            completion(ForecastViewModel(forecast: forecast))
+        }
+        .resume()
+    }
+
     func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
         var images: [String: UIImage] = [:]
         var count = 0

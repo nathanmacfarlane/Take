@@ -83,6 +83,12 @@
 		229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */; };
 		229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93EA20DB410800FAA320 /* Anno-Circle-Red.png */; };
 		229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93EE20DB42F000FAA320 /* Anno-Circle-Pink.png */; };
+		22BD6D4521BF53160047FF8A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4421BF53160047FF8A /* Weather.swift */; };
+		22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4621BF53F80047FF8A /* Forecast.swift */; };
+		22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */; };
+		22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4A21BF66070047FF8A /* Constants.swift */; };
+		22BD6D4D21BF66AD0047FF8A /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4C21BF66AD0047FF8A /* ForecastViewModel.swift */; };
+		22BD6D4F21C0B7630047FF8A /* CurrentWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */; };
 		22BDB74021BE569D0064E7C1 /* RouteDetail+Twicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */; };
 		22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */; };
 		22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */; };
@@ -181,6 +187,12 @@
 		229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Blue.png"; sourceTree = "<group>"; };
 		229C93EA20DB410800FAA320 /* Anno-Circle-Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Red.png"; sourceTree = "<group>"; };
 		229C93EE20DB42F000FAA320 /* Anno-Circle-Pink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Pink.png"; sourceTree = "<group>"; };
+		22BD6D4421BF53160047FF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
+		22BD6D4621BF53F80047FF8A /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
+		22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
+		22BD6D4A21BF66070047FF8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		22BD6D4C21BF66AD0047FF8A /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
+		22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherVC.swift; sourceTree = "<group>"; };
 		22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteDetail+Twicket.swift"; sourceTree = "<group>"; };
 		22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteDetail+MapBox.swift"; sourceTree = "<group>"; };
 		22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+TableViewDelegate.swift"; sourceTree = "<group>"; };
@@ -270,6 +282,7 @@
 				0452556E2091B6DE00A4A384 /* Info.plist */,
 				04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */,
 				046ED55720BE6FA00055B35A /* Readme.md */,
+				22BD6D4A21BF66070047FF8A /* Constants.swift */,
 			);
 			path = Take;
 			sourceTree = "<group>";
@@ -335,6 +348,15 @@
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
 		};
+		22BD6D4221BF520E0047FF8A /* Now */ = {
+			isa = PBXGroup;
+			children = (
+				223B539021A92EED006E1824 /* RouteNowVC.swift */,
+				22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */,
+			);
+			path = Now;
+			sourceTree = "<group>";
+		};
 		22BDB73121BE4C660064E7C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -346,11 +368,11 @@
 		22BDB73421BE4DEE0064E7C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				22BDB74521BE58130064E7C1 /* Route Hype */,
-				22BDB74421BE58050064E7C1 /* Route Manager */,
-				22BDB74321BE57F50064E7C1 /* Route Photo */,
-				22BDB74221BE57ED0064E7C1 /* Route Now */,
-				22BDB74121BE57D80064E7C1 /* Route Detail */,
+				22BDB74121BE57D80064E7C1 /* Detail */,
+				22BDB74321BE57F50064E7C1 /* Photo */,
+				22BDB74421BE58050064E7C1 /* Manager */,
+				22BDB74521BE58130064E7C1 /* Hype */,
+				22BD6D4221BF520E0047FF8A /* Now */,
 				2254180B2171D99E000F575A /* RouteTVC.swift */,
 			);
 			path = View;
@@ -382,6 +404,8 @@
 			children = (
 				045255742091B9B900A4A384 /* Route.swift */,
 				043F787E20AD5B700043C08A /* RouteType.swift */,
+				22BD6D4421BF53160047FF8A /* Weather.swift */,
+				22BD6D4621BF53F80047FF8A /* Forecast.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -436,29 +460,23 @@
 			isa = PBXGroup;
 			children = (
 				2236A1E921BB691E00F12A57 /* RouteViewModel.swift */,
+				22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */,
+				22BD6D4C21BF66AD0047FF8A /* ForecastViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
-		22BDB74121BE57D80064E7C1 /* Route Detail */ = {
+		22BDB74121BE57D80064E7C1 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
 				22541811217284C8000F575A /* RouteDetailVC.swift */,
 				22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */,
 				22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */,
 			);
-			path = "Route Detail";
+			path = Detail;
 			sourceTree = "<group>";
 		};
-		22BDB74221BE57ED0064E7C1 /* Route Now */ = {
-			isa = PBXGroup;
-			children = (
-				223B539021A92EED006E1824 /* RouteNowVC.swift */,
-			);
-			path = "Route Now";
-			sourceTree = "<group>";
-		};
-		22BDB74321BE57F50064E7C1 /* Route Photo */ = {
+		22BDB74321BE57F50064E7C1 /* Photo */ = {
 			isa = PBXGroup;
 			children = (
 				2222745821ABAE170039E486 /* RoutePhotosCVC.swift */,
@@ -468,24 +486,24 @@
 				22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */,
 				22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */,
 			);
-			path = "Route Photo";
+			path = Photo;
 			sourceTree = "<group>";
 		};
-		22BDB74421BE58050064E7C1 /* Route Manager */ = {
+		22BDB74421BE58050064E7C1 /* Manager */ = {
 			isa = PBXGroup;
 			children = (
 				223BB23021A7E93600130070 /* RouteManagerVC.swift */,
 				22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */,
 			);
-			path = "Route Manager";
+			path = Manager;
 			sourceTree = "<group>";
 		};
-		22BDB74521BE58130064E7C1 /* Route Hype */ = {
+		22BDB74521BE58130064E7C1 /* Hype */ = {
 			isa = PBXGroup;
 			children = (
 				223B538C21A92A5B006E1824 /* RouteHypeVC.swift */,
 			);
-			path = "Route Hype";
+			path = Hype;
 			sourceTree = "<group>";
 		};
 		811A414256C4F3EA9BE8B610 /* Pods */ = {
@@ -754,6 +772,7 @@
 				22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */,
 				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
 				229499E321AD1005002C60C6 /* Comment.swift in Sources */,
+				22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */,
 				22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */,
 				22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
@@ -770,9 +789,12 @@
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
 				22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */,
+				22BD6D4D21BF66AD0047FF8A /* ForecastViewModel.swift in Sources */,
+				22BD6D4F21C0B7630047FF8A /* CurrentWeatherVC.swift in Sources */,
 				2211F3C32147492E00E79E99 /* Int.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
+				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */,
@@ -786,11 +808,13 @@
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
 				2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */,
 				22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */,
+				22BD6D4521BF53160047FF8A /* Weather.swift in Sources */,
 				2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */,
+				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
 			);
