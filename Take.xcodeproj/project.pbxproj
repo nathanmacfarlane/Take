@@ -57,7 +57,7 @@
 		223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B539021A92EED006E1824 /* RouteNowVC.swift */; };
 		223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223BB23021A7E93600130070 /* RouteManagerVC.swift */; };
 		224FD3BC21BD08CD00B54A3B /* TwicketSegmentedControl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 224FD3BB21BD08CD00B54A3B /* TwicketSegmentedControl.framework */; };
-		2254180321712CE3000F575A /* SearchRoutesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180121712CE3000F575A /* SearchRoutesViewController.swift */; };
+		2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180121712CE3000F575A /* SearchRoutesVC.swift */; };
 		225418062171BF02000F575A /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225418052171BF02000F575A /* LoginVC.swift */; };
 		225418082171BFE0000F575A /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 225418072171BFE0000F575A /* Colors.xcassets */; };
 		2254180C2171D99E000F575A /* RouteTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2254180B2171D99E000F575A /* RouteTVC.swift */; };
@@ -89,6 +89,9 @@
 		22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4A21BF66070047FF8A /* Constants.swift */; };
 		22BD6D4D21BF66AD0047FF8A /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4C21BF66AD0047FF8A /* ForecastViewModel.swift */; };
 		22BD6D4F21C0B7630047FF8A /* CurrentWeatherVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */; };
+		22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D5021C0DB630047FF8A /* InitialVC.swift */; };
+		22BD6D5521C0E56F0047FF8A /* UserProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D5421C0E56F0047FF8A /* UserProfileVC.swift */; };
+		22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D5721C0EF3F0047FF8A /* MapVC.swift */; };
 		22BDB74021BE569D0064E7C1 /* RouteDetail+Twicket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */; };
 		22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */; };
 		22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */; };
@@ -161,7 +164,7 @@
 		223B539021A92EED006E1824 /* RouteNowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNowVC.swift; sourceTree = "<group>"; };
 		223BB23021A7E93600130070 /* RouteManagerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteManagerVC.swift; sourceTree = "<group>"; };
 		224FD3BB21BD08CD00B54A3B /* TwicketSegmentedControl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TwicketSegmentedControl.framework; path = Carthage/Build/iOS/TwicketSegmentedControl.framework; sourceTree = "<group>"; };
-		2254180121712CE3000F575A /* SearchRoutesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoutesViewController.swift; sourceTree = "<group>"; };
+		2254180121712CE3000F575A /* SearchRoutesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchRoutesVC.swift; sourceTree = "<group>"; };
 		225418052171BF02000F575A /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		225418072171BFE0000F575A /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		2254180B2171D99E000F575A /* RouteTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTVC.swift; sourceTree = "<group>"; };
@@ -193,6 +196,9 @@
 		22BD6D4A21BF66070047FF8A /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		22BD6D4C21BF66AD0047FF8A /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherVC.swift; sourceTree = "<group>"; };
+		22BD6D5021C0DB630047FF8A /* InitialVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InitialVC.swift; sourceTree = "<group>"; };
+		22BD6D5421C0E56F0047FF8A /* UserProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileVC.swift; sourceTree = "<group>"; };
+		22BD6D5721C0EF3F0047FF8A /* MapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapVC.swift; sourceTree = "<group>"; };
 		22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteDetail+Twicket.swift"; sourceTree = "<group>"; };
 		22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteDetail+MapBox.swift"; sourceTree = "<group>"; };
 		22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+TableViewDelegate.swift"; sourceTree = "<group>"; };
@@ -267,6 +273,8 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				22BD6D5621C0EF300047FF8A /* Map */,
+				22BD6D5221C0E5550047FF8A /* User Profile */,
 				22BDB73C21BE51960064E7C1 /* Login */,
 				22BDB73A21BE51760064E7C1 /* Search */,
 				22BDB73721BE50B20064E7C1 /* Comment */,
@@ -283,6 +291,7 @@
 				04C83B4920BBEB8A008D842D /* GoogleService-Info.plist */,
 				046ED55720BE6FA00055B35A /* Readme.md */,
 				22BD6D4A21BF66070047FF8A /* Constants.swift */,
+				22BD6D5021C0DB630047FF8A /* InitialVC.swift */,
 			);
 			path = Take;
 			sourceTree = "<group>";
@@ -355,6 +364,30 @@
 				22BD6D4E21C0B7630047FF8A /* CurrentWeatherVC.swift */,
 			);
 			path = Now;
+			sourceTree = "<group>";
+		};
+		22BD6D5221C0E5550047FF8A /* User Profile */ = {
+			isa = PBXGroup;
+			children = (
+				22BD6D5321C0E55D0047FF8A /* View */,
+			);
+			path = "User Profile";
+			sourceTree = "<group>";
+		};
+		22BD6D5321C0E55D0047FF8A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				22BD6D5421C0E56F0047FF8A /* UserProfileVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		22BD6D5621C0EF300047FF8A /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				22BD6D5721C0EF3F0047FF8A /* MapVC.swift */,
+			);
+			path = Map;
 			sourceTree = "<group>";
 		};
 		22BDB73121BE4C660064E7C1 /* Model */ = {
@@ -431,7 +464,7 @@
 		22BDB73B21BE51860064E7C1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2254180121712CE3000F575A /* SearchRoutesViewController.swift */,
+				2254180121712CE3000F575A /* SearchRoutesVC.swift */,
 				22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */,
 				22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */,
 				22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */,
@@ -768,7 +801,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2254180321712CE3000F575A /* SearchRoutesViewController.swift in Sources */,
+				22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */,
+				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */,
 				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
 				229499E321AD1005002C60C6 /* Comment.swift in Sources */,
@@ -808,6 +842,7 @@
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
 				2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */,
 				22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */,
+				22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */,
 				22BD6D4521BF53160047FF8A /* Weather.swift in Sources */,
 				2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
@@ -817,6 +852,7 @@
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
+				22BD6D5521C0E56F0047FF8A /* UserProfileVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -20,13 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate/*, GIDSignInDelegate*/ {
         FirebaseApp.configure()
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
-        let nav1 = UINavigationController()
-        nav1.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav1.navigationBar.tintColor = UIColor(named: "PinkAccent")
-        nav1.navigationBar.isTranslucent = false
-        let mainView = SearchRoutesViewController()
-        nav1.viewControllers = [mainView]
-        self.window?.rootViewController = nav1
+        let mainView = InitialVC()
+        self.window?.rootViewController = mainView
         self.window?.makeKeyAndVisible()
 
         return true

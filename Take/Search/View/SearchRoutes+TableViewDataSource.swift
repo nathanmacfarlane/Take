@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension SearchRoutesViewController: UITableViewDataSource {
+extension SearchRoutesVC: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.resultsMashed.count

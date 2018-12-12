@@ -2,7 +2,7 @@ import FirebaseFirestore
 import Foundation
 import UIKit
 
-extension SearchRoutesViewController: UISearchBarDelegate {
+extension SearchRoutesVC: UISearchBarDelegate {
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         self.results.clear()

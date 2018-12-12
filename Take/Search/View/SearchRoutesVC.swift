@@ -1,10 +1,9 @@
 import CoreLocation
-import FirebaseAuth
 import FirebaseFirestore
 import Fuse
 import UIKit
 
-class SearchRoutesViewController: UIViewController {
+class SearchRoutesVC: UIViewController {
 
     var myTableView: UITableView!
     var mySearchBar: UISearchBar!
@@ -40,12 +39,6 @@ class SearchRoutesViewController: UIViewController {
         self.myTableView.reloadData()
         self.mySearchBar.text = ""
 
-        if Auth.auth().currentUser == nil {
-            DispatchQueue.main.async {
-                self.present(LoginVC(), animated: true, completion: nil)
-            }
-        }
-
         setupLocations()
 
     }
@@ -66,28 +59,12 @@ class SearchRoutesViewController: UIViewController {
     }
 
     @objc
-    private func goLogout(sender: UIButton!) {
-        try? Auth.auth().signOut()
-        self.present(LoginVC(), animated: true, completion: nil)
-    }
-
-    @objc
     private func goAddNew(sender: UIButton!) {
         print("adding new")
     }
 
     private func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimary")
-
-        self.title = "Search Routes"
-        self.navigationController?.navigationBar.titleTextAttributes =
-            [.foregroundColor: UIColor(named: "Placeholder") ?? .white,
-             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)]
-
-        // nav logout button
-        let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
-        myNavLogoutButton.tintColor = UIColor(named: "PinkAccent")
-        self.navigationItem.leftBarButtonItem = myNavLogoutButton
 
         // nav add new button
         let myNavAddNewButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goAddNew))

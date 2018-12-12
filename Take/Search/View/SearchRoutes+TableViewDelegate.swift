@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-extension SearchRoutesViewController: UITableViewDelegate {
+extension SearchRoutesVC: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let favoriteAction = UIContextualAction(style: .normal, title: "") { (_: UIContextualAction, _: UIView, success: (Bool) -> Void) in
