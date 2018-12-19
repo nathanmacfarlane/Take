@@ -1,17 +1,8 @@
-//
-//  AppDelegate.swift
-//  Take
-//
-//  Created by Family on 4/26/18.
-//  Copyright © 2018 N8. All rights reserved.
-//
-
 import Firebase
 import UIKit
-//import GoogleSignIn
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate/*, GIDSignInDelegate*/ {
+class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var initialViewController: UIViewController?

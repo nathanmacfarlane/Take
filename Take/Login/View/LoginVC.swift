@@ -1,7 +1,7 @@
 import FirebaseAuth
 import UIKit
 
-class LoginVC: UIViewController, UITextFieldDelegate {
+class LoginVC: UIViewController {
 
     var email: String = ""
     var password: String = ""
@@ -44,14 +44,11 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
     private func initViews() {
 
-        self.view.backgroundColor = UIColor(named: "BluePrimary")
-
-        // login label
-        let myLoginLabel = UILabel()
-        myLoginLabel.text = "Login"
-        myLoginLabel.textAlignment = .center
-        myLoginLabel.textColor = .white
-        myLoginLabel.font = UIFont(name: "Avenir-Black", size: 26)
+        // bg image view
+        let bgImageView = UIImageView(frame: view.frame)
+        bgImageView.contentMode = .scaleAspectFill
+        bgImageView.image = UIImage(named: "bg_mountain")
+        bgImageView.clipsToBounds = true
 
         // email label
         let myEmailLabel = UILabel()
@@ -79,7 +76,7 @@ class LoginVC: UIViewController, UITextFieldDelegate {
 
         // password field
         let myPassTF = UITextField()
-        myPassTF.placeholder = "email"
+        myPassTF.placeholder = "password"
         myPassTF.textColor = .white
         myPassTF.borderStyle = .none
         myPassTF.isSecureTextEntry = true
@@ -97,22 +94,15 @@ class LoginVC: UIViewController, UITextFieldDelegate {
         myLoginButton.addTarget(self, action: #selector(goLogin), for: .touchUpInside)
 
         // add to subview
-        self.view.addSubview(myLoginLabel)
-        self.view.addSubview(myEmailLabel)
-        self.view.addSubview(myEmailTF)
-        self.view.addSubview(myPassLabel)
-        self.view.addSubview(myPassTF)
-        self.view.addSubview(myLoginButton)
-
-        // add constraints
-        myLoginLabel.translatesAutoresizingMaskIntoConstraints = false
-        let loginLabelTopConst = NSLayoutConstraint(item: myLoginLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 30)
-        let loginLabelLeadingConst = NSLayoutConstraint(item: myLoginLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
-        let loginLabelTrailingConst = NSLayoutConstraint(item: myLoginLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([loginLabelTopConst, loginLabelLeadingConst, loginLabelTrailingConst])
+        view.addSubview(bgImageView)
+        view.addSubview(myEmailLabel)
+        view.addSubview(myEmailTF)
+        view.addSubview(myPassLabel)
+        view.addSubview(myPassTF)
+        view.addSubview(myLoginButton)
 
         myEmailLabel.translatesAutoresizingMaskIntoConstraints = false
-        let emailLabelTopConst = NSLayoutConstraint(item: myEmailLabel, attribute: .top, relatedBy: .equal, toItem: myLoginLabel, attribute: .bottom, multiplier: 1, constant: 50)
+        let emailLabelTopConst = NSLayoutConstraint(item: myEmailLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 100)
         let emailLabelLeadingConst = NSLayoutConstraint(item: myEmailLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20)
         let emailLabelTrailingConst = NSLayoutConstraint(item: myEmailLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20)
         NSLayoutConstraint.activate([emailLabelTopConst, emailLabelLeadingConst, emailLabelTrailingConst])

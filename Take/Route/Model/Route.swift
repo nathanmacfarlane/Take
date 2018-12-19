@@ -4,17 +4,17 @@ import UIKit
 class Route: Codable {
 
     // MARK: - properties
-    private var name: String
-    private var id: String
-    private var pitches: Int
-    private var types: [String] = [] // TR (Top Rope), Sport, Trad, Boulder
-    private var rating: String?
-    private var info: String?
-    private var protection: String?
-    private var latitude: Double?
-    private var longitude: Double?
-    private var imageUrls: [String: String] = [:]
-    private var routeArUrls: [String: [String]] = [:]
+    var name: String
+    var id: String
+    var pitches: Int
+    var types: [String] = [] // TR (Top Rope), Sport, Trad, Boulder
+    var rating: String?
+    var info: String?
+    var protection: String?
+    var latitude: Double?
+    var longitude: Double?
+    var imageUrls: [String: String] = [:]
+    var routeArUrls: [String: [String]] = [:]
     var stars: [String: Int] = [:]
     var area: String?
     var commentIds: [String] = []
@@ -38,40 +38,5 @@ class Route: Codable {
         case routeArUrls
         case commentIds
         case comments
-    }
-
-    // MARK: - Getters
-    func getName() -> String {
-        return name
-    }
-    func getId() -> String {
-        return id
-    }
-    func getPitches() -> Int {
-        return pitches
-    }
-    func getTypes() -> [String] {
-        return types
-    }
-    func getInfo() -> String? {
-        return info
-    }
-    func getProtection() -> String? {
-        return protection
-    }
-    func getRating() -> String? {
-        return rating
-    }
-    func getLatitude() -> Double? {
-        return latitude
-    }
-    func getLongitude() -> Double? {
-        return longitude
-    }
-    func getImageUrls() -> [String: String] {
-        return imageUrls
-    }
-    func getArUrls() -> [String: [String]] {
-        return routeArUrls
     }
 }

@@ -29,6 +29,7 @@ extension SearchRoutesVC: UITableViewDataSource {
         cell.nameLabel.text = rvm.name
         cell.difficultyLabel.text = rvm.rating
         cell.typesLabel.text = rvm.typesString
+        cell.selectionStyle = .none
         DispatchQueue.global(qos: .background).async {
             rvm.fsLoadFirstImage { _, image in
                 DispatchQueue.main.async {

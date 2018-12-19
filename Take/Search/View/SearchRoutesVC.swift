@@ -1,6 +1,5 @@
 import CoreLocation
 import FirebaseFirestore
-import Fuse
 import UIKit
 
 class SearchRoutesVC: UIViewController {
@@ -16,14 +15,14 @@ class SearchRoutesVC: UIViewController {
         var routes: [Route] = []
 
         mutating func clear() {
-            self.walls.removeAll()
-            self.areas.removeAll()
-            self.routes.removeAll()
+            walls.removeAll()
+            cities.removeAll()
+            areas.removeAll()
+            routes.removeAll()
         }
     }
 
     // MARK: - Variables
-    private let myArray: NSArray = ["First", "Second", "Third"]
     let locationManager: CLLocationManager = CLLocationManager()
     var userCurrentLocation: CLLocation?
     var results: SearchResults = SearchResults()
@@ -32,30 +31,21 @@ class SearchRoutesVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.initViews()
+        initViews()
 
-        self.resultsMashed = []
-        self.results.clear()
-        self.myTableView.reloadData()
-        self.mySearchBar.text = ""
+        resultsMashed = []
+        results.clear()
+        myTableView.reloadData()
+        mySearchBar.text = ""
 
-        setupLocations()
-
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
-    }
-
-    // MARK: - Functions
-    func setupLocations() {
-        self.locationManager.requestAlwaysAuthorization()
-        self.locationManager.requestWhenInUseAuthorization()
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.locationServicesEnabled() {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
         }
+
     }
 
     @objc

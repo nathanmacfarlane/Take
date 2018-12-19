@@ -16,22 +16,22 @@ class RouteViewModel {
 
     // MARK: - Computed Properties
     var id: String {
-        return route.getId()
+        return route.id
     }
     var name: String {
-        return route.getName()
+        return route.name
     }
     var pitchesString: String {
-        return "\(route.getPitches())"
+        return "\(route.pitches)"
     }
     var info: String {
-        return route.getInfo() ?? "N/A"
+        return route.info ?? "N/A"
     }
     var protection: String {
-        return route.getProtection() ?? "N/A"
+        return route.protection ?? "N/A"
     }
     var rating: String {
-        return route.getRating() ?? "N/A"
+        return route.rating ?? "N/A"
     }
 
     var averageStar: Double? {
@@ -51,14 +51,14 @@ class RouteViewModel {
     }
 
     var location: CLLocation {
-        if let lat = route.getLatitude(), let long = route.getLongitude() {
+        if let lat = route.latitude, let long = route.longitude {
             return CLLocation(latitude: lat, longitude: long)
         }
         return CLLocation(latitude: -1, longitude: -1)
     }
 
     var types: [RouteType] {
-        return route.getTypes().map { type -> RouteType in
+        return route.types.map { type -> RouteType in
             RouteType(rawValue: type) ?? .tr
         }
     }
@@ -84,12 +84,12 @@ class RouteViewModel {
     }
 
     var toString: String {
-        return "'\(route.getName())' - Difficulty: '\(route.getRating() ?? "N/A")'"
+        return "'\(route.name)' - Difficulty: '\(route.rating ?? "N/A")'"
     }
 
     var typesString: String {
         var types: [String] = []
-        for type in route.getTypes() {
+        for type in route.types {
             types.append("\(type)")
         }
         return types.joined(separator: ", ")
@@ -126,13 +126,13 @@ class RouteViewModel {
     func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
         var images: [String: UIImage] = [:]
         var count = 0
-        for routeImage in route.getImageUrls() {
+        for routeImage in route.imageUrls {
             guard let theURL = URL(string: routeImage.value) else { continue }
             URLSession.shared.dataTask(with: theURL) { data, _, _ in
                 guard let theData = data, let theImage = UIImage(data: theData) else { return }
                 images[routeImage.key] = theImage
                 count += 1
-                if count == self.route.getImageUrls().count {
+                if count == self.route.imageUrls.count {
                     completion(images)
                 }
             }
@@ -141,7 +141,7 @@ class RouteViewModel {
     }
 
     func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
-        guard let routeImage = route.getImageUrls().first, let theURL = URL(string: routeImage.value) else {
+        guard let routeImage = route.imageUrls.first, let theURL = URL(string: routeImage.value) else {
             completion(nil, nil)
             return
         }
