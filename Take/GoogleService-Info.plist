@@ -7,9 +7,9 @@
 	<key>AD_UNIT_ID_FOR_INTERSTITIAL_TEST</key>
 	<string>ca-app-pub-3940256099942544/4411468910</string>
 	<key>CLIENT_ID</key>
-	<string>849981425959-uji5pfhm0tivhlnj1ar3s2sf9pgo7ib1.apps.googleusercontent.com</string>
+	<string>849981425959-ms7fu11isc5n9f4m1ejv557e75jc8rb1.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.849981425959-uji5pfhm0tivhlnj1ar3s2sf9pgo7ib1</string>
+	<string>com.googleusercontent.apps.849981425959-ms7fu11isc5n9f4m1ejv557e75jc8rb1</string>
 	<key>API_KEY</key>
 	<string>AIzaSyCcxFjurM0E_VOCUDuteQI2bp8aUcHLRWE</string>
 	<key>GCM_SENDER_ID</key>
@@ -17,7 +17,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>n8.Take</string>
+	<string>nate.take</string>
 	<key>PROJECT_ID</key>
 	<string>take-93197</string>
 	<key>STORAGE_BUCKET</key>
@@ -33,7 +33,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:849981425959:ios:64186b456fc37bf6</string>
+	<string>1:849981425959:ios:b996cd0f14216202</string>
 	<key>DATABASE_URL</key>
 	<string>https://take-93197.firebaseio.com</string>
 </dict>

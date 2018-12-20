@@ -1,4 +1,5 @@
 import FirebaseAuth
+import FirebaseMessaging
 import UIKit
 
 class LoginVC: UIViewController {
@@ -14,10 +15,15 @@ class LoginVC: UIViewController {
 
     @objc
     private func goLogin(sender: UIButton!) {
-        Auth.auth().signIn(withEmail: email, password: password) { _, error in
+        Auth.auth().signIn(withEmail: email, password: password) { user, error in
             if error != nil {
                 self.showAlert(title: "Oops", message: "We were unable to log you in... Please try again.")
             } else {
+                if let user = Auth.auth().currentUser {
+                    Messaging.messaging().subscribe(toTopic: user.uid) { _ in
+                        print("Subscribed to '\(user.uid)' topic")
+                    }
+                }
                 self.dismiss(animated: true, completion: nil)
             }
         }
