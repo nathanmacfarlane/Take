@@ -126,6 +126,7 @@ PODS:
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
   - Pageboy (2.6.1)
+  - Presentr (1.9)
   - Protobuf (3.6.1)
   - SwiftLint (0.28.1)
   - SwiftyDraw (2.1.1)
@@ -143,6 +144,7 @@ DEPENDENCIES:
   - Fuse
   - Geofirestore
   - Mapbox-iOS-SDK
+  - Presentr
   - SwiftLint
   - SwiftyDraw
   - Tabman (~> 1.10)
@@ -173,6 +175,7 @@ SPEC REPOS:
     - Mapbox-iOS-SDK
     - nanopb
     - Pageboy
+    - Presentr
     - Protobuf
     - SwiftLint
     - SwiftyDraw
@@ -203,11 +206,12 @@ SPEC CHECKSUMS:
   Mapbox-iOS-SDK: 204c04713477cf2a88c52c5a8eed1790eb75a02a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
+  Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
   SwiftLint: 7f5f7de0da74a649b16616cb5246ae323489656e
   SwiftyDraw: e6e873314a0440a042c624906303043a55fe76cf
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
 
-PODFILE CHECKSUM: f5ceb8b64aa5fb1ed7444cb7006a3d9ad7544301
+PODFILE CHECKSUM: 4faebc75e591fba64e2a985d1e32eecda017c740
 
 COCOAPODS: 1.5.3

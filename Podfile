@@ -17,5 +17,6 @@ target 'Take' do
   pod 'Mapbox-iOS-SDK'
   pod 'Tabman', '~> 1.10'
   pod "Fuse"
+  pod 'Presentr'
 
 end

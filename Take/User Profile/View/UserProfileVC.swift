@@ -12,10 +12,15 @@ class UserProfileVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initViews()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        routeLists = []
         if let currentUser = Auth.auth().currentUser {
             getToDoLists(user: currentUser)
         }
-        initViews()
     }
 
     func getToDoLists(user: Firebase.User) {

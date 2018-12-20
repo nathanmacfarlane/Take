@@ -14,9 +14,13 @@ struct RouteListViewModel {
     }
 
     var detailText: String {
-        var str = "\(routeList.routes.count) Routes"
-        if !contributors.isEmpty {
-            str += ", \(contributors.count) Contributors"
+        var str = "\(routeList.routes.count) Route"
+        if routeList.routes.count > 1 {
+            str += "s"
+        }
+        str += ", \(contributors.count) Contributor"
+        if contributors.count > 1 {
+            str += "s"
         }
         return str
     }

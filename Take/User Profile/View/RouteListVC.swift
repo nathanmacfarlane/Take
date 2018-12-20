@@ -53,8 +53,15 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         }
     }
 
+    @objc
+    func addContributors() {
+        
+    }
+
     func initViews() {
         view.backgroundColor = UIColor(named: "BluePrimaryDark")
+
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContributors))
 
         self.title = routeListViewModel.name
 
