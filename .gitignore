@@ -219,4 +219,5 @@ xcuserdata/
 Take.xcodeproj/xcuserdata/*
 Take.xcodeproj/project.xcworkspace/xcuserdata/*
 Pods/
-Carthage/
+functions/node_modules/*
+node_modules/*

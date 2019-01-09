@@ -36,6 +36,16 @@ extension Firestore {
             completion?()
         }
     }
+    /// Generic firebase delete function
+    /// - Parameters:
+    ///   - document: Probably an Id for an object
+    ///   - collection: The collection that contains the document to be deleted
+    ///   - completion: Optional. Use for notification upon completion of deletion
+    func delete(document: String, from collection: String, completion: ((_ success: Bool) -> Void)? ) {
+        Firestore.firestore().collection(collection).document(document).delete { err in
+            completion?(err != nil)
+        }
+    }
     /// Generic private internal function used by previous function
     private func query(collection: String, by field: String, with value: Any, completion: @escaping (_ results: [QueryDocumentSnapshot]) -> Void) {
         let settings = self.settings

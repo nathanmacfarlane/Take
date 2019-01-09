@@ -2,6 +2,7 @@ import Blueprints
 import Firebase
 import FirebaseAuth
 import Foundation
+import Presentr
 import UIKit
 
 class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource {
@@ -11,10 +12,11 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
     var routes: [String: [Route]] = [:]
     var descriptionValueLabel: UILabel!
     var routeListViewModel: RouteListViewModel!
-
-    var contributors: [String] {
-        return Array(routes.keys)
-    }
+    var contributors: [User] = []
+    var inviteView: UIView!
+    var user: User!
+    var notification: NotificationCollaboration?
+    var inviteViewConstraint: NSLayoutConstraint!
 
     var cellRoutes: [OwnerRoute] {
         var temp: [OwnerRoute] = []
@@ -37,17 +39,20 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         initViews()
 
         tableView.reloadData()
-        if let currentUser = Auth.auth().currentUser {
-            getToDoLists(user: currentUser)
-        }
+        getToDoLists()
     }
 
-    func getToDoLists(user: Firebase.User) {
+    func getToDoLists() {
         self.descriptionValueLabel.text = routeListViewModel.description
         routeListViewModel.getRoutes { routes in
             self.routes = routes
             DispatchQueue.main.async {
                 self.tableView.reloadData()
+            }
+        }
+        routeListViewModel.getContributors { contributors in
+            self.contributors = contributors
+            DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
         }
@@ -55,7 +60,154 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     @objc
     func addContributors() {
-        
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .bottomHalf)
+            customPresenter.transitionType = .coverVertical
+            customPresenter.dismissTransitionType = .crossDissolve
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        Firestore.firestore().query(collection: "users", by: "id", with: userId, of: User.self) { user in
+            guard let user = user.first else { return }
+            let uspvc = UserListPresenterVC()
+            uspvc.currentUser = UserViewModel(user: user)
+            uspvc.routeList = self.routeListViewModel.routeList
+            self.customPresentViewController(presenter, viewController: uspvc, animated: true)
+        }
+    }
+
+    @objc
+    func accept() {
+        var invitees = routeListViewModel.routeList.invitees
+        invitees = removeUser(user: self.user, list: invitees)
+        routeListViewModel.routeList.invitees = invitees
+        routeListViewModel.routeList.contributors.append(user.id)
+        let db = Firestore.firestore()
+        db.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
+            self.inviteViewConstraint.constant = 0.0
+            if let noti = self.notification {
+                db.delete(document: noti.id, from: "notifications", completion: nil)
+            }
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+            self.routeListViewModel.getContributors { contributors in
+                self.contributors = contributors
+                DispatchQueue.main.async {
+                    self.collectionView.reloadData()
+                }
+            }
+        }
+        user.toDo.append(routeListViewModel.id)
+        db.save(object: user, to: "users", with: user.id, completion: nil)
+    }
+
+    @objc
+    func decline() {
+        var invitees = routeListViewModel.routeList.invitees
+        invitees = removeUser(user: self.user, list: invitees)
+        routeListViewModel.routeList.invitees = invitees
+        let db = Firestore.firestore()
+        db.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
+            self.inviteViewConstraint.constant = 0.0
+            if let noti = self.notification {
+                db.delete(document: noti.id, from: "notifications", completion: nil)
+            }
+            UIView.animate(withDuration: 0.2) {
+                self.view.layoutIfNeeded()
+            }
+        }
+    }
+
+    func removeUser(user: User, list: [String]) -> [String] {
+        var invitees = list
+        var index = 0
+        for invitee in invitees {
+            if invitee == user.id {
+                invitees.remove(at: index)
+                break
+            }
+            index += 1
+        }
+        return invitees
+    }
+
+    func initInviteView() {
+        inviteView = UIView()
+        inviteView.backgroundColor = .black
+        inviteView.clipsToBounds = true
+        view.addSubview(inviteView)
+
+        let inviteLabel = UILabel()
+        inviteLabel.text = "You've been invited by ..."
+        inviteLabel.font = UIFont(name: "Avenir-Black", size: 20)
+        inviteLabel.textColor = .gray
+        inviteLabel.textAlignment = .center
+
+        let db = Firestore.firestore()
+        if let noti = self.notification {
+            db.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
+                if let user = user.first {
+                    inviteLabel.text = "You've been invited by \(user.name)"
+                }
+            }
+        } else {
+            db.query(collection: "notifications", by: "toUser", with: self.user.id, of: NotificationCollaboration.self) { noti in
+                if let noti = noti.first {
+                    db.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
+                        if let user = user.first {
+                            inviteLabel.text = "You've been invited by \(user.name)"
+                        }
+                    }
+                }
+            }
+        }
+
+        let acceptButton = UIButton()
+        acceptButton.setTitle("Accept", for: .normal)
+        acceptButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
+        acceptButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
+        acceptButton.addTarget(self, action: #selector(accept), for: .touchUpInside)
+
+        let declineButton = UIButton()
+        declineButton.setTitle("Decline", for: .normal)
+        declineButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
+        declineButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
+        declineButton.addTarget(self, action: #selector(decline), for: .touchUpInside)
+
+        inviteView.addSubview(inviteLabel)
+        inviteView.addSubview(acceptButton)
+        inviteView.addSubview(declineButton)
+
+        inviteView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: inviteView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: inviteView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: inviteView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        inviteViewConstraint = NSLayoutConstraint(item: inviteView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 90)
+        inviteViewConstraint.isActive = true
+
+        inviteLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: inviteLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: inviteLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: inviteLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: inviteLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
+        acceptButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: acceptButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: acceptButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: acceptButton, attribute: .top, relatedBy: .equal, toItem: inviteLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: acceptButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
+        declineButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: declineButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: declineButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: declineButton, attribute: .top, relatedBy: .equal, toItem: inviteLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: declineButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
     }
 
     func initViews() {
@@ -64,6 +216,10 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addContributors))
 
         self.title = routeListViewModel.name
+
+        if routeListViewModel.routeList.invitees.contains(user.id) {
+            initInviteView()
+        }
 
         let contributorsLabel = UILabel()
         contributorsLabel.text = "Contributors"
@@ -118,7 +274,11 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         contributorsLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: contributorsLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: contributorsLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: contributorsLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        if routeListViewModel.routeList.invitees.contains(user.id) {
+            NSLayoutConstraint(item: contributorsLabel, attribute: .top, relatedBy: .equal, toItem: inviteView, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        } else {
+            NSLayoutConstraint(item: contributorsLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        }
         NSLayoutConstraint(item: contributorsLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -157,13 +317,9 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RouteListUserCVC", for: indexPath) as? RouteListUserCVC else { return UICollectionViewCell() }
-        Firestore.firestore().query(collection: "users", by: "id", with: contributors[indexPath.row], of: User.self) { user in
-            if let user = user.first {
-                UserViewModel(user: user).getProfilePhoto { image in
-                    DispatchQueue.main.async {
-                        cell.imageView.image = image
-                    }
-                }
+        UserViewModel(user: contributors[indexPath.row]).getProfilePhoto { image in
+            DispatchQueue.main.async {
+                cell.imageView.image = image
             }
         }
         return cell

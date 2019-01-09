@@ -8,4 +8,5 @@ struct User: Codable {
     var profilePhotoUrl: String?
     var username: String?
     var toDo: [String] // array of list ids
+    var friends: [String]
 }

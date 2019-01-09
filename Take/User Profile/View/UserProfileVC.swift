@@ -1,11 +1,13 @@
 import Firebase
 import FirebaseAuth
 import Foundation
+import Presentr
 import UIKit
-class UserProfileVC: UIViewController {
+class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
     var user: User?
     var routeLists: [RouteListViewModel] = []
+    var notifications: [Notification] = []
 
     var tableView: UITableView!
 
@@ -35,6 +37,43 @@ class UserProfileVC: UIViewController {
                     self.tableView.reloadData()
                 }
             }
+            let userViewModel = UserViewModel(user: user)
+            userViewModel.getNotifications { notifications in
+                self.notifications = notifications
+                if !notifications.isEmpty {
+                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
+                } else {
+                    self.navigationItem.rightBarButtonItem?.tintColor = .white
+                }
+            }
+        }
+    }
+
+    func clearedNotification(_ noti: Notification) {
+        var index = 0
+        for notification in notifications {
+            if notification.id == noti.id {
+                notifications.remove(at: index)
+                if notifications.isEmpty {
+                    self.navigationItem.rightBarButtonItem?.tintColor = .white
+                }
+                return
+            }
+            index += 1
+        }
+    }
+
+    func selectedNotification(_ noti: Notification) {
+        if let noti = noti as? NotificationCollaboration {
+            Firestore.firestore().query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
+                guard let routeList = routeList.first else { return }
+                let routeListVC = RouteListVC()
+                routeListVC.user = self.user
+                routeListVC.notification = noti
+                routeListVC.routeListViewModel = RouteListViewModel(routeList: routeList)
+                self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+                self.navigationController?.pushViewController(routeListVC, animated: true)
+            }
         }
     }
 
@@ -44,6 +83,26 @@ class UserProfileVC: UIViewController {
         self.present(LoginVC(), animated: true, completion: nil)
     }
 
+    @objc
+    func notiSelected() {
+        guard let user = self.user else { return }
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .topHalf)
+            customPresenter.transitionType = .coverVerticalFromTop
+            customPresenter.dismissTransitionType = .crossDissolve
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let npvc = NotificationPresenterVC()
+        npvc.delegate = self
+        npvc.user = user
+        npvc.notifications = self.notifications
+        self.customPresentViewController(presenter, viewController: npvc, animated: true)
+    }
+
     func initViews() {
         view.backgroundColor = UIColor(named: "BluePrimaryDark")
 
@@ -51,6 +110,13 @@ class UserProfileVC: UIViewController {
         let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
         myNavLogoutButton.tintColor = UIColor(named: "PinkAccent")
         self.navigationItem.leftBarButtonItem = myNavLogoutButton
+
+        // nav noti button
+        let notiIcon = UIImage(named: "notification")
+        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
+        notiIconButton.image = notiIcon
+        notiIconButton.tintColor = .white
+        self.navigationItem.rightBarButtonItem = notiIconButton
 
         tableView = UITableView()
         tableView.delegate = self

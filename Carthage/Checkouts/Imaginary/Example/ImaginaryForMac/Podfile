@@ -1,0 +1,9 @@
+platform :osx, '10.11'
+
+use_frameworks!
+inhibit_all_warnings!
+
+
+pod 'Imaginary', path: '../../'
+
+target 'ImaginaryForMac'

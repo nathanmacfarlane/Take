@@ -1,3 +1,4 @@
+import Firebase
 import Foundation
 import UIKit
 
@@ -22,5 +23,11 @@ struct UserViewModel {
             completion(image)
         }
         task.resume()
+    }
+
+    func getNotifications(completion: @escaping (_ notification: [NotificationCollaboration]) -> Void) {
+        Firestore.firestore().query(collection: "notifications", by: "toUser", with: id, of: NotificationCollaboration.self) { notifications in
+            completion(notifications)
+        }
     }
 }

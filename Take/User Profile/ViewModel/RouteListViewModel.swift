@@ -14,8 +14,8 @@ struct RouteListViewModel {
     }
 
     var detailText: String {
-        var str = "\(routeList.routes.count) Route"
-        if routeList.routes.count > 1 {
+        var str = "\(routeCount) Route"
+        if routeCount > 1 {
             str += "s"
         }
         str += ", \(contributors.count) Contributor"
@@ -26,7 +26,16 @@ struct RouteListViewModel {
     }
 
     var contributors: [String] {
-        return Array(routeList.routes.keys)
+        return routeList.contributors
+    }
+
+    var routeCount: Int {
+        var count = 0
+        let keys = Array(routeList.routes.keys)
+        keys.forEach { key in
+            count += routeList.routes[key]?.count ?? 0
+        }
+        return count
     }
 
     func getRoutes(completion: @escaping (_ results: [String: [Route]]) -> Void) {
@@ -58,10 +67,35 @@ struct RouteListViewModel {
         }
     }
 
+    func getContributors(completion: @escaping (_ contributors: [User]) -> Void) {
+        var users: [User] = []
+        for userId in routeList.contributors {
+            Firestore.firestore().query(collection: "users", by: "id", with: userId, of: User.self) { user in
+                guard let user = user.first else { return }
+                users.append(user)
+                if users.count == self.routeList.contributors.count {
+                    completion(users)
+                }
+            }
+        }
+    }
+
     func getOwner(completion: @escaping (_ owner: User) -> Void) {
         Firestore.firestore().query(collection: "users", by: "id", with: routeList.owner, of: User.self) { owner in
             guard let owner = owner.first else { return }
             completion(owner)
+        }
+    }
+
+    mutating func removeRoute(user: User, route: Route, completion: @escaping (_ success: Bool) -> Void) {
+        guard var userRoutes = routeList.routes[user.id] else {
+            completion(false)
+            return
+        }
+        userRoutes = userRoutes.filter { $0 != route.id }
+        routeList.routes[user.id] = userRoutes
+        Firestore.firestore().save(object: routeList, to: "routeLists", with: routeList.id) {
+            completion(true)
         }
     }
 }

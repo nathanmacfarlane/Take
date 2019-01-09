@@ -14,4 +14,8 @@ extension UserProfileVC: UITableViewDataSource {
         cell.selectionStyle = .none
         return cell
     }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return routeLists.count
+    }
 }
