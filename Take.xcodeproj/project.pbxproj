@@ -88,6 +88,8 @@
 		2269862221BD0ABB008F7697 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862121BD0ABB008F7697 /* Lightbox.framework */; };
 		2269862521BD0B74008F7697 /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862321BD0B74008F7697 /* Cache.framework */; };
 		2269862621BD0B74008F7697 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862421BD0B74008F7697 /* Imaginary.framework */; };
+		227C7F9021F1012F00115906 /* AddEditRouteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */; };
+		227C7F9221F105DD00115906 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F9121F105DD00115906 /* UITextField.swift */; };
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
 		229499E321AD1005002C60C6 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229499E221AD1005002C60C6 /* Comment.swift */; };
 		229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */; };
@@ -209,6 +211,8 @@
 		2269862121BD0ABB008F7697 /* Lightbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lightbox.framework; path = Carthage/Build/iOS/Lightbox.framework; sourceTree = "<group>"; };
 		2269862321BD0B74008F7697 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		2269862421BD0B74008F7697 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
+		227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRouteVC.swift; sourceTree = "<group>"; };
+		227C7F9121F105DD00115906 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
 		229499E221AD1005002C60C6 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Knot.png"; sourceTree = "<group>"; };
@@ -274,6 +278,7 @@
 				2220E70F20C8E32400F525EC /* MKMapView.swift */,
 				22F5DE1021308320001ECC73 /* Firestore.swift */,
 				2211F3C22147492E00E79E99 /* Int.swift */,
+				227C7F9121F105DD00115906 /* UITextField.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -300,6 +305,7 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				227C7F8E21F100EE00115906 /* New-Edit Route */,
 				22207DFC21CB423B004475AF /* Notifications */,
 				22207DFB21CB2F49004475AF /* Take.entitlements */,
 				22BD6D5621C0EF300047FF8A /* Map */,
@@ -426,6 +432,14 @@
 				2249F0AF21CA12C60032D58C /* UserViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		227C7F8E21F100EE00115906 /* New-Edit Route */ = {
+			isa = PBXGroup;
+			children = (
+				227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */,
+			);
+			path = "New-Edit Route";
 			sourceTree = "<group>";
 		};
 		22BD6D4221BF520E0047FF8A /* Now */ = {
@@ -838,7 +852,7 @@
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
-				"${BUILT_PRODUCTS_DIR}/Fuse/Fuse.framework",
+				"${BUILT_PRODUCTS_DIR}/GMStepper/GMStepper.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
@@ -848,6 +862,7 @@
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyDraw/SwiftyDraw.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
+				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
@@ -858,7 +873,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Fuse.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GMStepper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
@@ -868,6 +883,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDraw.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
@@ -903,9 +919,11 @@
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
 				22383AE721D0A8C20010E6CC /* NotificationPresenterVC.swift in Sources */,
 				2249F0B021CA12C60032D58C /* UserViewModel.swift in Sources */,
+				227C7F9021F1012F00115906 /* AddEditRouteVC.swift in Sources */,
 				225418062171BF02000F575A /* LoginVC.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
+				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */,
 				2249F0BC21CACEC80032D58C /* UserProfile+TableViewDataSource.swift in Sources */,
