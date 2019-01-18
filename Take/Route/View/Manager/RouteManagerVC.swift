@@ -7,8 +7,10 @@ class RouteManagerVC: TabmanViewController {
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
     var add: UIBarButtonItem!
+    var edit: UIBarButtonItem!
 
     var photos: RoutePhotosVC!
+    var detail: RouteDetailVC!
 
     var bgImageView: UIImageView!
 
@@ -27,6 +29,14 @@ class RouteManagerVC: TabmanViewController {
         self.title = routeViewModel.name
 
         add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
+        edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(goEditRoute))
+
+        navigationItem.setRightBarButton(edit, animated: true)
+    }
+
+    @objc
+    func goEditRoute() {
+        detail.goEditRoute()
     }
 
     @objc
@@ -36,6 +46,7 @@ class RouteManagerVC: TabmanViewController {
 
     override func pageboyViewController(_ pageboyViewController: PageboyViewController, didScrollToPageAt index: Int, direction: NavigationDirection, animated: Bool) {
         switch index {
+        case 0: navigationItem.setRightBarButton(edit, animated: true)
         case 3: navigationItem.setRightBarButton(add, animated: true)
         default: navigationItem.setRightBarButton(nil, animated: true)
         }

@@ -7,13 +7,49 @@ class RouteDetailVC: UIViewController {
     var routeViewModel: RouteViewModel!
     var bgImageView: UIImageView!
     var infoLabel: UILabel!
-
+    var ratingValue: UILabel!
+    var starsValue: UILabel!
+    var pitchesValue: UILabel!
+    var sportButton: TypeButton!
+    var boulderButton: TypeButton!
+    var trButton: TypeButton!
+    var tradButton: TypeButton!
+    var aidButton: TypeButton!
+    var mapView: MGLMapView!
     let cvHeight: CGFloat = 75
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         initViews()
+    }
+
+    func goEditRoute() {
+        let editRouteVC = AddEditRouteVC()
+        editRouteVC.route = routeViewModel.route
+        self.present(editRouteVC, animated: true, completion: nil)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+
+        ratingValue.text = routeViewModel.rating
+        starsValue.text = routeViewModel.averageStarString
+        pitchesValue.text = routeViewModel.pitchesString
+        sportButton.setType(isType: routeViewModel.isSport)
+        boulderButton.setType(isType: routeViewModel.isBoulder)
+        trButton.setType(isType: routeViewModel.isTR)
+        tradButton.setType(isType: routeViewModel.isTrad)
+        aidButton.setType(isType: routeViewModel.isAid)
+        infoLabel.text = routeViewModel.info
+        mapView.setCenter(routeViewModel.location.coordinate, zoomLevel: 15, animated: false)
+        mapView.annotations?.forEach { mapView.removeAnnotation($0) }
+        let routeMarker = MGLPointAnnotation()
+        routeMarker.coordinate = routeViewModel.location.coordinate
+        routeMarker.title = routeViewModel.name
+        routeMarker.subtitle = "\(routeViewModel.rating) \(routeViewModel.typesString)"
+        mapView.addAnnotation(routeMarker)
+
     }
 
     func initViews() {
@@ -41,7 +77,7 @@ class RouteDetailVC: UIViewController {
         ratingLabel.font = UIFont(name: "Avenir", size: 14)
 
         // rating value
-        let ratingValue = UILabel()
+        ratingValue = UILabel()
         ratingValue.text = routeViewModel.rating
         ratingValue.textColor = .white
         ratingValue.textAlignment = .center
@@ -55,7 +91,7 @@ class RouteDetailVC: UIViewController {
         starsLabel.font = UIFont(name: "Avenir", size: 14)
 
         // stars value
-        let starsValue = UILabel()
+        starsValue = UILabel()
         starsValue.text = routeViewModel.averageStarString
         starsValue.textColor = .white
         starsValue.textAlignment = .center
@@ -69,30 +105,30 @@ class RouteDetailVC: UIViewController {
         pitchesLabel.font = UIFont(name: "Avenir", size: 14)
 
         // pitches value
-        let pitchesValue = UILabel()
+        pitchesValue = UILabel()
         pitchesValue.text = routeViewModel.pitchesString
         pitchesValue.textColor = .white
         pitchesValue.textAlignment = .center
         pitchesValue.font = UIFont(name: "Avenir", size: 24)
 
         // type buttons
-        let sportButton = TypeButton()
+        sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
         sportButton.setType(isType: routeViewModel.isSport)
         sportButton.addBorder(width: 1)
-        let boulderButton = TypeButton()
+        boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
         boulderButton.setType(isType: routeViewModel.isBoulder)
         boulderButton.addBorder(width: 1)
-        let trButton = TypeButton()
+        trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
         trButton.setType(isType: routeViewModel.isTR)
         trButton.addBorder(width: 1)
-        let tradButton = TypeButton()
+        tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
         tradButton.setType(isType: routeViewModel.isTrad)
         tradButton.addBorder(width: 1)
-        let aidButton = TypeButton()
+        aidButton = TypeButton()
         aidButton.setTitle("A", for: .normal)
         aidButton.setType(isType: routeViewModel.isAid)
         aidButton.addBorder(width: 1)
@@ -114,7 +150,7 @@ class RouteDetailVC: UIViewController {
 
         // mapbox map
         let url = URL(string: "mapbox://styles/mapbox/dark-v9")
-        let mapView = MGLMapView(frame: view.bounds, styleURL: url)
+        mapView = MGLMapView(frame: view.bounds, styleURL: url)
         mapView.delegate = self
         mapView.setCenter(routeViewModel.location.coordinate, zoomLevel: 15, animated: false)
         mapView.layer.cornerRadius = 5

@@ -24,6 +24,9 @@ class RouteViewModel {
     var pitchesString: String {
         return "\(route.pitches)"
     }
+    var pitchesDouble: Double {
+        return Double(route.pitches)
+    }
     var info: String {
         return route.info ?? "N/A"
     }
@@ -31,7 +34,10 @@ class RouteViewModel {
         return route.protection ?? "N/A"
     }
     var rating: String {
-        return route.rating ?? "N/A"
+        if let rating = route.rating {
+            return "5.\(rating)"
+        }
+        return "N/A"
     }
 
     var averageStar: Double? {
@@ -83,8 +89,27 @@ class RouteViewModel {
         return types.contains(.boulder)
     }
 
+    var buffer: String? {
+        guard let buffer = route.buffer else { return nil }
+        switch buffer {
+        case 0: return "a"
+        case 1: return "b"
+        case 2: return "c"
+        case 3: return "d"
+        default:
+            return""
+        }
+    }
+
     var toString: String {
-        return "'\(route.name)' - Difficulty: '\(route.rating ?? "N/A")'"
+        var str = route.name
+        if let rating = route.rating {
+            str.append(" - Difficulty: 5.'\(rating)")
+            if let buffer = buffer {
+                str.append(buffer)
+            }
+        }
+        return str
     }
 
     var typesString: String {

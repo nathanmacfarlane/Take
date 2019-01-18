@@ -50,7 +50,8 @@ class SearchRoutesVC: UIViewController {
 
     @objc
     private func goAddNew(sender: UIButton!) {
-        print("adding new")
+        let addRouteVC = AddEditRouteVC()
+        self.present(addRouteVC, animated: true, completion: nil)
     }
 
     private func initViews() {
