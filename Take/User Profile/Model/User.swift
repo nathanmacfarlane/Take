@@ -9,4 +9,5 @@ struct User: Codable {
     var username: String?
     var toDo: [String] // array of list ids
     var friends: [String]
+    var types: [String] = [] // TR (Top Rope), Sport, Trad, Boulder
 }

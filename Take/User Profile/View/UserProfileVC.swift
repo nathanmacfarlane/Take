@@ -30,6 +30,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
             guard let user = user.first else { return }
             self.user = user
+            
             for routeListId in user.toDo {
                 db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
                     guard let routeList = routeList.first else { return }
@@ -117,20 +118,38 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         notiIconButton.image = notiIcon
         notiIconButton.tintColor = .white
         self.navigationItem.rightBarButtonItem = notiIconButton
+        let userNameLabel = UILabel()
+        
+        userNameLabel.text = self.user?.username
+        userNameLabel.textColor = .lightGray
+        userNameLabel.textAlignment = .center
+        userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
+        let userBio = UILabel()
+        userBio.textColor = .lightGray
+        userBio.textAlignment = .center
+        userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
+        userBio.text = "I am a climber"
+//        tableView = UITableView()
+//        tableView.delegate = self
+//        tableView.dataSource = self
+//        tableView.backgroundColor = .clear
+//        tableView.separatorStyle = .none
+//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
 
-        tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = .clear
-        tableView.separatorStyle = .none
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "UITableViewCell")
-
-        view.addSubview(tableView)
-
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: tableView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: tableView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: tableView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: tableView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 200).isActive = true
+//        view.addSubview(tableView)
+        view.addSubview(userNameLabel)
+        view.addSubview(userBio)
+        
+        userNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: userNameLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: userNameLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 100).isActive = true
+        NSLayoutConstraint(item: userNameLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
+        NSLayoutConstraint(item: userNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
+        
+        userBio.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: userBio, attribute: .leading, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: userBio, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: userBio, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: userBio, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
     }
 }
