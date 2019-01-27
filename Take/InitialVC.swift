@@ -22,7 +22,6 @@ class InitialVC: UIViewController {
         searchRoutes.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
 
         let userProfile = UserProfileVC()
-        userProfile.title = "User Profile"
         userProfile.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "TabBarUser.png"), tag: 1)
         userProfile.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
         if let userId = Auth.auth().currentUser?.uid {

@@ -121,6 +121,7 @@
 		22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
+		71EA98F021FD7933004DD264 /* rocki.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 71EA98EF21FD7933004DD264 /* rocki.jpeg */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -246,6 +247,7 @@
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71EA98EF21FD7933004DD264 /* rocki.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki.jpeg; path = ../../../../Desktop/rocki.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -333,6 +335,7 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				71EA98EF21FD7933004DD264 /* rocki.jpeg */,
 				22640A2C21A227010033C006 /* share.png */,
 				225418172172A258000F575A /* edit.png */,
 				22640A2E21A229EC0033C006 /* download.png */,
@@ -760,6 +763,7 @@
 				2211F3BA214742DF00E79E99 /* undo.png in Resources */,
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
 				22640A2D21A227010033C006 /* share.png in Resources */,
+				71EA98F021FD7933004DD264 /* rocki.jpeg in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
 				225418182172A258000F575A /* edit.png in Resources */,
@@ -1099,7 +1103,7 @@
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V49HA8576N;
+				DEVELOPMENT_TEAM = CV9835456Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1126,7 +1130,7 @@
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V49HA8576N;
+				DEVELOPMENT_TEAM = CV9835456Z;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
