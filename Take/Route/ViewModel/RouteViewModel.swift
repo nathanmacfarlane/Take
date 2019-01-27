@@ -30,6 +30,9 @@ class RouteViewModel {
     var info: String {
         return route.info ?? "N/A"
     }
+    var closureInfo: String? {
+        return route.closureInfo
+    }
     var protection: String {
         return route.protection ?? "N/A"
     }
@@ -61,6 +64,16 @@ class RouteViewModel {
             return CLLocation(latitude: lat, longitude: long)
         }
         return CLLocation(latitude: -1, longitude: -1)
+    }
+
+    var latAndLongString: String {
+        return "\(Double(location.coordinate.latitude).rounded(toPlaces: 4)) \(Double(location.coordinate.longitude).rounded(toPlaces: 4))"
+    }
+
+    func cityAndState(completion: @escaping (_ city: String, _ state: String) -> Void) {
+        self.location.cityAndState { c, s, _ in
+            completion(c ?? "", s ?? "")
+        }
     }
 
     var types: [RouteType] {
@@ -140,6 +153,7 @@ class RouteViewModel {
 
     func getForecastWeather(completion: @escaping (_ forecast: ForecastViewModel) -> Void) {
         let url = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
+        print("url: \(url)")
         guard let future = URL(string: url) else { return }
         URLSession.shared.dataTask(with: future) { data, _, _ in
             guard let data = data, let forecast = try? JSONDecoder().decode(Forecast.self, from: data) else { return }
