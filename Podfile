@@ -17,7 +17,8 @@ target 'Take' do
   pod 'SwiftyDraw'
   pod 'Mapbox-iOS-SDK'
   pod 'Tabman', '~> 1.10'
-  pod "Fuse"
   pod 'Presentr'
+  pod "GMStepper"
+  pod "WSTagsField"
 
 end

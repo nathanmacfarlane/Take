@@ -8,7 +8,8 @@ class Route: Codable {
     var id: String
     var pitches: Int
     var types: [String] = [] // TR (Top Rope), Sport, Trad, Boulder
-    var rating: String?
+    var rating: Int?
+    var buffer: Int?
     var info: String?
     var protection: String?
     var latitude: Double?
@@ -35,8 +36,21 @@ class Route: Codable {
         case stars
         case pitches
         case rating
+        case buffer
         case routeArUrls
         case commentIds
         case comments
+    }
+
+    init(name: String, id: String, pitches: Int) {
+        self.name = name
+        self.id = id
+        self.pitches = pitches
+        self.types = []
+        self.commentIds = []
+        self.comments = []
+        self.imageUrls = [:]
+        self.routeArUrls = [:]
+        self.stars = [:]
     }
 }

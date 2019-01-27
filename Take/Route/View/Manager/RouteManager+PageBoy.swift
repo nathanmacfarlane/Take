@@ -5,7 +5,7 @@ extension RouteManagerVC: PageboyViewControllerDataSource {
 
     func numberOfViewControllers(in pageboyViewController: PageboyViewController) -> Int {
 
-        let detail = RouteDetailVC()
+        detail = RouteDetailVC()
         detail.routeViewModel = routeViewModel
 
         let hype = RouteHypeVC()
