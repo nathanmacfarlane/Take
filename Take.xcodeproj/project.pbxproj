@@ -121,9 +121,14 @@
 		22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
+		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
+		714C1D0522015AA900D0DECB /* beer.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0122015AA800D0DECB /* beer.png */; };
+		714C1D0622015AA900D0DECB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0222015AA800D0DECB /* home.png */; };
+		714C1D0722015AA900D0DECB /* carabiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0322015AA800D0DECB /* carabiner.png */; };
+		714C1D0822015AA900D0DECB /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0422015AA900D0DECB /* mountain.png */; };
+		714C1D0A2201613000D0DECB /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D092201613000D0DECB /* octo.png */; };
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
-		71A02F7F21FF815000B13C2E /* dmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71A02F7E21FF815000B13C2E /* dmVC.swift */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -249,9 +254,14 @@
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		714C1CFF2201573C00D0DECB /* DirectMessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessVC.swift; sourceTree = "<group>"; };
+		714C1D0122015AA800D0DECB /* beer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beer.png; path = ../../../../Downloads/beer.png; sourceTree = "<group>"; };
+		714C1D0222015AA800D0DECB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../../../../Downloads/home.png; sourceTree = "<group>"; };
+		714C1D0322015AA800D0DECB /* carabiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carabiner.png; path = ../../../../Downloads/carabiner.png; sourceTree = "<group>"; };
+		714C1D0422015AA900D0DECB /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mountain.png; path = ../../../../Downloads/mountain.png; sourceTree = "<group>"; };
+		714C1D092201613000D0DECB /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/octo.png; sourceTree = "<group>"; };
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
-		71A02F7E21FF815000B13C2E /* dmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dmVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +349,11 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				714C1D092201613000D0DECB /* octo.png */,
+				714C1D0122015AA800D0DECB /* beer.png */,
+				714C1D0322015AA800D0DECB /* carabiner.png */,
+				714C1D0222015AA800D0DECB /* home.png */,
+				714C1D0422015AA900D0DECB /* mountain.png */,
 				719D1E4921FE669E0091A25A /* rocki2.jpeg */,
 				719D1E4721FE65A90091A25A /* rocki3.jpeg */,
 				22640A2C21A227010033C006 /* share.png */,
@@ -481,7 +496,7 @@
 				2249F0BB21CACEC80032D58C /* UserProfile+TableViewDataSource.swift */,
 				229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */,
 				225EFA9121CB8FBE00C3952D /* UserListPresenterVC.swift */,
-				71A02F7E21FF815000B13C2E /* dmVC.swift */,
+				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -756,10 +771,13 @@
 				0452556A2091B6DE00A4A384 /* Assets.xcassets in Resources */,
 				22640A2F21A229EC0033C006 /* download.png in Resources */,
 				22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */,
+				714C1D0522015AA900D0DECB /* beer.png in Resources */,
 				2211F3C72147539900E79E99 /* brush.png in Resources */,
 				04514547209432E100FE72BB /* checked.png in Resources */,
+				714C1D0822015AA900D0DECB /* mountain.png in Resources */,
 				229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */,
 				04C83B4820BB6D6B008D842D /* close-white.png in Resources */,
+				714C1D0622015AA900D0DECB /* home.png in Resources */,
 				2259C47520CEDAF70000065E /* user.png in Resources */,
 				229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */,
 				2211F3BD2147431800E79E99 /* done.png in Resources */,
@@ -770,8 +788,10 @@
 				220725AD213D05C0005448E8 /* placeholderUser.png in Resources */,
 				2211F3BA214742DF00E79E99 /* undo.png in Resources */,
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
+				714C1D0A2201613000D0DECB /* octo.png in Resources */,
 				22640A2D21A227010033C006 /* share.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
+				714C1D0722015AA900D0DECB /* carabiner.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
 				225418182172A258000F575A /* edit.png in Resources */,
 				225418082171BFE0000F575A /* Colors.xcassets in Resources */,
@@ -951,6 +971,7 @@
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
+				714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
@@ -965,7 +986,6 @@
 				043F789120AEBF270043C08A /* UIImage.swift in Sources */,
 				225EFA9221CB8FBE00C3952D /* UserListPresenterVC.swift in Sources */,
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
-				71A02F7F21FF815000B13C2E /* dmVC.swift in Sources */,
 				2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */,
 				229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */,
 				22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */,
