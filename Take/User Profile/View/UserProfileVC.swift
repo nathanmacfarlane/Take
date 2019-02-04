@@ -17,11 +17,22 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var beer: TypeButton!
     var whippers: TypeButton!
     var partnerMatchButton: TypeButton!
-    let profImage = UIImage(named: "rocki2.jpeg")
+    var profImage = UIImage(named: "rocki2.jpeg")
     let homeImage = UIImage(named: "home.png")
     let carabinerImage = UIImage(named: "carabiner.png")
     let beerImage = UIImage(named: "beer.png")
     let whipImage = UIImage(named: "octo.png")
+    let userNameLabel = UILabel()
+    let userBio = UILabel()
+    let homeLabel = UILabel()
+    let carabinerLabel = UILabel()
+    let beerLabel = UILabel()
+    let whipLabel = UILabel()
+    let tradGrade = UILabel()
+    let trGrade = UILabel()
+    let sportGrade = UILabel()
+    //let boulderGrade = UILabel()
+    //let aidGrade = UILabel()
 
     var tableView: UITableView!
 
@@ -32,20 +43,20 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     }
 
 // notification stuff
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(true)
-//        routeLists = []
-//        if let currentUser = Auth.auth().currentUser {
-//            getToDoLists(user: currentUser)
-//        }
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        routeLists = []
+        if let currentUser = Auth.auth().currentUser {
+            getToDoLists(user: currentUser)
+        }
+    }
 
-//    func getToDoLists(user: Firebase.User) {
-//        let db = Firestore.firestore()
-//        db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
-//            guard let user = user.first else { return }
-//            self.user = user
-//            self.user?.name = user.name
+    func getToDoLists(user: Firebase.User) {
+        let db = Firestore.firestore()
+        db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
+            guard let user = user.first else { return }
+            self.user = user
+            self.userNameLabel.text = user.name
 //            for routeListId in user.toDo {
 //                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
 //                    guard let routeList = routeList.first else { return }
@@ -62,8 +73,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 //                    self.navigationItem.rightBarButtonItem?.tintColor = .white
 //                }
 //            }
-//        }
-//    }
+        }
+    }
 
     func clearedNotification(_ noti: Notification) {
         var index = 0
@@ -127,18 +138,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     
     func initViews() {
         view.backgroundColor = UIColor(named: "BluePrimaryDark")
-        let userNameLabel = UILabel()
-        let userBio = UILabel()
-        let homeLabel = UILabel()
-        let carabinerLabel = UILabel()
-        let beerLabel = UILabel()
-        let whipLabel = UILabel()
-        let tradGrade = UILabel()
-        let trGrade = UILabel()
-        let sportGrade = UILabel()
-        //let boulderGrade = UILabel()
-        //let aidGrade = UILabel()
-        
 
         // nav logout button
         let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
@@ -151,9 +150,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         notiIconButton.image = notiIcon
         notiIconButton.tintColor = .white
         self.navigationItem.rightBarButtonItem = notiIconButton
-        // why is this not working?
-        //userNameLabel.text = self.user?.name
-        userNameLabel.text = "Rocki Bonilla"
+        
         userNameLabel.textColor = .white
         userNameLabel.textAlignment = .left
         userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
