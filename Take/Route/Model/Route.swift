@@ -12,6 +12,7 @@ class Route: Codable {
     var buffer: Int?
     var info: String?
     var protection: String?
+    var closureInfo: String?
     var latitude: Double?
     var longitude: Double?
     var imageUrls: [String: String] = [:]
@@ -40,6 +41,7 @@ class Route: Codable {
         case routeArUrls
         case commentIds
         case comments
+        case closureInfo
     }
 
     init(name: String, id: String, pitches: Int) {

@@ -13,6 +13,7 @@ struct Sys: Decodable {
     let type, id: Int
     let message: Double
     let country: String
+    let sunset: Double
 }
 
 struct Main: Decodable {
