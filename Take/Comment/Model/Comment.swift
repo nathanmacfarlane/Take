@@ -5,61 +5,64 @@ import Foundation
 import UIKit
 
 struct Comment: Codable {
-    private var id: String
-    private var userId: String
-    private var dateString: String
-    private var message: String?
-    private var imageUrl: String?
+    var id: String
+    var userId: String
+    var dateString: String
+    var message: String?
+    var imageUrl: String?
+    var routeId: String
 
-    init(id: String, userId: String, dateString: String, message: String?, imageUrl: String?) {
+    init(id: String, userId: String, dateString: String, message: String?, imageUrl: String?, routeId: String) {
         self.id = id
         self.userId = userId
         self.dateString = dateString
         self.message = message
         self.imageUrl = imageUrl
-    }
-
-    /* Getters */
-    func getId() -> String {
-        return id
-    }
-    func getUserId() -> String {
-        return userId
-    }
-    func getDateString() -> String {
-        return dateString
-    }
-    func getMessage() -> String? {
-        return message
-    }
-    func getImageUrl() -> String? {
-        return imageUrl
-    }
-
-    /* Setters */
-    mutating func setImageUrl(imageUrl: String?) {
-        self.imageUrl = imageUrl
+        self.routeId = routeId
     }
 }
 
-class CommentModelView {
+class CommentViewModel {
     var comment: Comment!
     var id: String {
-        return self.comment.getId()
+        return self.comment.id
     }
     var userId: String {
-        return self.comment.getUserId()
+        return self.comment.userId
     }
     var dateString: String {
-        return self.comment.getDateString()
+        guard let date = Double(self.comment.dateString) else { return "" }
+        return Date(timeIntervalSince1970: date).monthDayYear(style: "/")
     }
     var message: String {
-        return self.comment.getMessage() ?? "N/A"
+        return self.comment.message ?? "N/A"
     }
     var imageUrl: String? {
-        return self.comment.getImageUrl()
+        return self.comment.imageUrl
     }
-
+    func getUsername(completion: @escaping (_ username: String) -> Void) {
+        Firestore.firestore().query(collection: "users", by: "id", with: self.userId, of: User.self) { user in
+            guard let user = user.first else { return }
+            let userViewModel = UserViewModel(user: user)
+            completion(userViewModel.name)
+        }
+    }
+    func getImage(completion: @escaping (_ image: UIImage?) -> Void) {
+        guard let imageUrl = self.imageUrl, let theURL = URL(string: imageUrl) else {
+            completion(nil)
+            return
+        }
+        URLSession.shared.dataTask(with: theURL) { data, _, _ in
+            guard let theData = data, let theImage = UIImage(data: theData) else {
+                completion(nil)
+                return
+            }
+            DispatchQueue.main.async {
+                completion(theImage)
+            }
+        }
+        .resume()
+    }
     init(comment: Comment) {
         self.comment = comment
     }

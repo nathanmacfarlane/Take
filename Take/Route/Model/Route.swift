@@ -19,7 +19,6 @@ class Route: Codable {
     var routeArUrls: [String: [String]] = [:]
     var stars: [String: Int] = [:]
     var area: String?
-    var commentIds: [String] = []
     var comments: [String] = []
 
     // MARK: - Coding Keys
@@ -39,7 +38,6 @@ class Route: Codable {
         case rating
         case buffer
         case routeArUrls
-        case commentIds
         case comments
         case closureInfo
     }
@@ -49,7 +47,6 @@ class Route: Codable {
         self.id = id
         self.pitches = pitches
         self.types = []
-        self.commentIds = []
         self.comments = []
         self.imageUrls = [:]
         self.routeArUrls = [:]

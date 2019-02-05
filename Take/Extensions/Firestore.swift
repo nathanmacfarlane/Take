@@ -17,6 +17,7 @@ extension Firestore {
         let decoder = FirebaseDecoder()
         self.query(collection: collection, by: field, with: value) { documents in
             for doc in documents {
+                print("document: \(doc.data())")
                 guard let result = try? decoder.decode(T.self, from: doc.data() as Any) else { continue }
                 results.append(result)
             }

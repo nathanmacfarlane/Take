@@ -5,7 +5,6 @@ import UIKit
 class RouteDetailVC: UIViewController {
 
     var routeViewModel: RouteViewModel!
-    var bgImageView: UIImageView!
     var infoLabel: UILabel!
     var ratingValue: UILabel!
     var starsValue: UILabel!
@@ -53,21 +52,7 @@ class RouteDetailVC: UIViewController {
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimary")
-
-        // bg image
-        self.bgImageView = UIImageView(frame: self.view.frame)
-        self.bgImageView.contentMode = .scaleAspectFill
-        self.bgImageView.clipsToBounds = true
-        let effect = UIBlurEffect(style: .light)
-        let effectView = UIVisualEffectView(effect: effect)
-        effectView.frame = self.view.frame
-        self.bgImageView.addSubview(effectView)
-        let gradientView = UIView(frame: self.view.frame)
-        let gradient = CAGradientLayer()
-        gradient.frame = gradientView.frame
-        gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
-        gradientView.layer.insertSublayer(gradient, at: 0)
+        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
 
         // rating header
         let ratingLabel = UILabel()
@@ -165,8 +150,6 @@ class RouteDetailVC: UIViewController {
         mapView.addAnnotation(routeMarker)
 
         // add to subview
-        view.addSubview(bgImageView)
-        view.addSubview(gradientView)
         view.addSubview(ratingLabel)
         view.addSubview(ratingValue)
         view.addSubview(starsLabel)

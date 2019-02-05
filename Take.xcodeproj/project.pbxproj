@@ -119,6 +119,9 @@
 		22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */; };
 		22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */; };
 		22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */; };
+		22E60D382208FE220053C48E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22E60D372208FE220053C48E /* Storyboard.storyboard */; };
+		22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3922093FE00053C48E /* HypeTVC.swift */; };
+		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
@@ -242,6 +245,9 @@
 		22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+LightBox.swift"; sourceTree = "<group>"; };
 		22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CommentDelegate.swift"; sourceTree = "<group>"; };
+		22E60D372208FE220053C48E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
+		22E60D3922093FE00053C48E /* HypeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeTVC.swift; sourceTree = "<group>"; };
+		22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeCommentTVC.swift; sourceTree = "<group>"; };
 		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
@@ -327,6 +333,7 @@
 				046ED55720BE6FA00055B35A /* Readme.md */,
 				22BD6D4A21BF66070047FF8A /* Constants.swift */,
 				22BD6D5021C0DB630047FF8A /* InitialVC.swift */,
+				22E60D372208FE220053C48E /* Storyboard.storyboard */,
 			);
 			path = Take;
 			sourceTree = "<group>";
@@ -630,6 +637,8 @@
 			isa = PBXGroup;
 			children = (
 				223B538C21A92A5B006E1824 /* RouteHypeVC.swift */,
+				22E60D3922093FE00053C48E /* HypeTVC.swift */,
+				22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */,
 			);
 			path = Hype;
 			sourceTree = "<group>";
@@ -755,6 +764,7 @@
 				2211F3BD2147431800E79E99 /* done.png in Resources */,
 				2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */,
 				04C83B0B20B548EF008D842D /* profile.jpg in Resources */,
+				22E60D382208FE220053C48E /* Storyboard.storyboard in Resources */,
 				229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */,
 				220725AD213D05C0005448E8 /* placeholderUser.png in Resources */,
 				2211F3BA214742DF00E79E99 /* undo.png in Resources */,
@@ -901,6 +911,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */,
 				22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */,
 				2249F0B221CA26DF0032D58C /* RouteList+TableViewDelegate.swift in Sources */,
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
@@ -958,6 +969,7 @@
 				229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */,
 				22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */,
 				22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */,
+				22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */,
 				22BD6D4521BF53160047FF8A /* Weather.swift in Sources */,
 				2249F0BA21CACE8B0032D58C /* UserProfile+TableViewDelegate.swift in Sources */,
 				2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */,
