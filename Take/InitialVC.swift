@@ -1,5 +1,5 @@
-import FirebaseAuth
 import Firebase
+import FirebaseAuth
 import Foundation
 import UIKit
 

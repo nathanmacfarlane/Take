@@ -17,7 +17,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var beer: TypeButton!
     var whippers: TypeButton!
     var partnerMatchButton: TypeButton!
-    var profImage = UIImage(named: "rocki2.jpeg")
+    var profImage = UIImage(named: "rocki3.jpeg")
     let homeImage = UIImage(named: "home.png")
     let carabinerImage = UIImage(named: "carabiner.png")
     let beerImage = UIImage(named: "beer.png")
@@ -82,7 +82,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             if notification.id == noti.id {
                 notifications.remove(at: index)
                 if notifications.isEmpty {
-                    self.navigationItem.rightBarButtonItem?.tintColor = .white
+                    //self.navigationItem.rightBarButtonItem?.tintColor = .white
                 }
                 return
             }
@@ -133,7 +133,16 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     @objc
     func openNextView() {
         let dms = DirectMessVC()
-        present(dms, animated: true, completion: nil)
+        dms.user = user
+        let nav = UINavigationController(rootViewController: dms)
+        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+            present(nav, animated: true, completion: nil)
     }
     
     func initViews() {
@@ -144,12 +153,18 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         myNavLogoutButton.tintColor = UIColor(named: "PinkAccent")
         self.navigationItem.leftBarButtonItem = myNavLogoutButton
 
-        // nav noti button
-        let notiIcon = UIImage(named: "notification")
-        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
-        notiIconButton.image = notiIcon
-        notiIconButton.tintColor = .white
-        self.navigationItem.rightBarButtonItem = notiIconButton
+//        // nav noti button
+//        let notiIcon = UIImage(named: "notification")
+//        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
+//        notiIconButton.image = notiIcon
+//        notiIconButton.tintColor = .white
+//        self.navigationItem.rightBarButtonItem = notiIconButton
+        
+        let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openNextView))
+        let msgIcon = UIImage(named: "mail.png")
+        msgButton.image = msgIcon
+        msgButton.tintColor = .lightGray
+        self.navigationItem.rightBarButtonItem = msgButton
         
         userNameLabel.textColor = .white
         userNameLabel.textAlignment = .left
@@ -201,13 +216,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         profPic.setBackgroundImage(profImage, for: .normal)
         profPic.layer.cornerRadius = 8
         profPic.clipsToBounds = true
-        profPic.contentMode = .scaleAspectFill
-        
-        profPic = TypeButton()
-        profPic.setBackgroundImage(profImage, for: .normal)
-        profPic.layer.cornerRadius = 8
-        profPic.clipsToBounds = true
-        profPic.contentMode = .scaleAspectFill
+        profPic.contentMode = .scaleAspectFit
         
         home = TypeButton()
         home.setBackgroundImage(homeImage, for: .normal)
@@ -217,12 +226,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         beer.setBackgroundImage(beerImage, for: .normal)
         whippers = TypeButton()
         whippers.setBackgroundImage(whipImage, for: .normal)
-        
-        partnerMatchButton = TypeButton()
-        partnerMatchButton.setTitle("TEMPORARY", for: .normal)
-        partnerMatchButton.translatesAutoresizingMaskIntoConstraints = false
-        partnerMatchButton.backgroundColor = UIColor(hex: "#CB27BE")
-        partnerMatchButton.addTarget(self, action: #selector(openNextView), for: .touchUpInside)
         
         tradGrade.text = "5.7"
         tradGrade.font = UIFont(name: "Avenir", size: 16)
@@ -248,7 +251,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(trGrade)
         view.addSubview(tradGrade)
         view.addSubview(sportGrade)
-        view.addSubview(partnerMatchButton)
         view.addSubview(home)
         view.addSubview(carabiner)
         view.addSubview(beer)
@@ -314,12 +316,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: sportGrade, attribute: .top, relatedBy: .equal, toItem: sportButton, attribute: .bottom, multiplier: 1, constant: 5).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
-        
-        partnerMatchButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: partnerMatchButton, attribute: .leading, relatedBy: .equal, toItem: sportButton, attribute: .leading, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: partnerMatchButton, attribute: .top, relatedBy: .equal, toItem: sportButton, attribute: .bottom, multiplier: 1, constant: 90).isActive = true
-        NSLayoutConstraint(item: partnerMatchButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
-        NSLayoutConstraint(item: partnerMatchButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         home.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: home, attribute: .leading, relatedBy: .equal, toItem: profPic, attribute: .leading, multiplier: 1, constant: 15).isActive = true
