@@ -130,6 +130,7 @@
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
 		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
+		718449902209581F0029C023 /* DmTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498F2209581F0029C023 /* DmTVC.swift */; };
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
@@ -266,6 +267,7 @@
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
 		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
+		7184498F2209581F0029C023 /* DmTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmTVC.swift; sourceTree = "<group>"; };
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -489,6 +491,7 @@
 				2249F0AE21CA0F6B0032D58C /* ViewModel */,
 				2249F0A521C9E9C10032D58C /* Model */,
 				22BD6D5321C0E55D0047FF8A /* View */,
+				7184498F2209581F0029C023 /* DmTVC.swift */,
 			);
 			path = "User Profile";
 			sourceTree = "<group>";
@@ -947,6 +950,7 @@
 				2249F0B221CA26DF0032D58C /* RouteList+TableViewDelegate.swift in Sources */,
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */,
+				718449902209581F0029C023 /* DmTVC.swift in Sources */,
 				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
 				229499E321AD1005002C60C6 /* Comment.swift in Sources */,
 				22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */,
@@ -1141,9 +1145,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: raquelb.2014@gmail.com (9GM9AJLB8V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = CV9835456Z;
+				DEVELOPMENT_TEAM = V49HA8576N;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1155,7 +1159,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nate.take;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = RockiProfile;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -1168,9 +1172,9 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer: raquelb.2014@gmail.com (9GM9AJLB8V)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				DEVELOPMENT_TEAM = CV9835456Z;
+				DEVELOPMENT_TEAM = V49HA8576N;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Carthage/Build/iOS",
@@ -1182,7 +1186,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = nate.take;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = RockiProfile;
 				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

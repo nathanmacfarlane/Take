@@ -15,7 +15,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         initViews()
     }
     
-    func getDms() {
+    func getDms()   {
         let db = Firestore.firestore()
         print(self.user?.messageIds.first)
         db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you suck", of: DM.self) {
@@ -26,15 +26,20 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 75
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dms.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell") ?? UITableViewCell()
+        guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
         cell.textLabel?.text = dms[indexPath.row].Thread.first?.message
+        cell.textLabel?.textColor = .white
+//        cell.nameLabel.text = "rocki"
         return cell
-        
     }
     
     @objc
@@ -47,10 +52,10 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.navigationItem.title = "DMs"
         // table view
         self.dmTableView = UITableView()
-        dmTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        dmTableView.backgroundColor = .white
+        dmTableView.register(DmTVC.self, forCellReuseIdentifier: "DmCellTV")
         dmTableView.dataSource = self
         dmTableView.delegate = self
+        dmTableView.backgroundColor = UIColor(named: "BluePrimaryDark")
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         
@@ -59,8 +64,8 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         view.addSubview(dmTableView)
         
         dmTableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: dmTableView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: dmTableView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: dmTableView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: dmTableView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: dmTableView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: dmTableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
     }
