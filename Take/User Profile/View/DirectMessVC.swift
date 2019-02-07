@@ -36,9 +36,9 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
-        cell.textLabel?.text = dms[indexPath.row].Thread.first?.message
-        cell.textLabel?.textColor = .white
-//        cell.nameLabel.text = "rocki"
+//        cell.textLabel?.text = dms[indexPath.row].Thread.first?.message
+//        cell.textLabel?.textColor = .white
+        cell.nameLabel.text = "rocki"
         return cell
     }
     
