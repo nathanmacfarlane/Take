@@ -92,6 +92,10 @@
 		227C7F9021F1012F00115906 /* AddEditRouteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */; };
 		227C7F9221F105DD00115906 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F9121F105DD00115906 /* UITextField.swift */; };
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
+		2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */; };
+		2293C4C0220BC58E00D5DB4A /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4BF220BC58E00D5DB4A /* Area.swift */; };
+		2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4C1220BCDD100D5DB4A /* RouteAreaView.swift */; };
+		2293C4C5220BDE4F00D5DB4A /* AreaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4C4220BDE4F00D5DB4A /* AreaViewModel.swift */; };
 		229499E321AD1005002C60C6 /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229499E221AD1005002C60C6 /* Comment.swift */; };
 		229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */; };
 		229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */; };
@@ -218,6 +222,10 @@
 		227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRouteVC.swift; sourceTree = "<group>"; };
 		227C7F9121F105DD00115906 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
+		2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTypeLabel.swift; sourceTree = "<group>"; };
+		2293C4BF220BC58E00D5DB4A /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
+		2293C4C1220BCDD100D5DB4A /* RouteAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAreaView.swift; sourceTree = "<group>"; };
+		2293C4C4220BDE4F00D5DB4A /* AreaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaViewModel.swift; sourceTree = "<group>"; };
 		229499E221AD1005002C60C6 /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
 		229C93DA20D5DB9F00FAA320 /* Anno-Knot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Knot.png"; sourceTree = "<group>"; };
 		229C93DC20D5DBAB00FAA320 /* Anno-Fire.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Fire.png"; sourceTree = "<group>"; };
@@ -312,6 +320,7 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				2293C4BC220BC55B00D5DB4A /* Area */,
 				227C7F8E21F100EE00115906 /* New-Edit Route */,
 				22207DFC21CB423B004475AF /* Notifications */,
 				22207DFB21CB2F49004475AF /* Take.entitlements */,
@@ -448,6 +457,40 @@
 				227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */,
 			);
 			path = "New-Edit Route";
+			sourceTree = "<group>";
+		};
+		2293C4BC220BC55B00D5DB4A /* Area */ = {
+			isa = PBXGroup;
+			children = (
+				2293C4C3220BDE3F00D5DB4A /* View Model */,
+				2293C4BE220BC57300D5DB4A /* Model */,
+				2293C4BD220BC56800D5DB4A /* View */,
+			);
+			path = Area;
+			sourceTree = "<group>";
+		};
+		2293C4BD220BC56800D5DB4A /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2293C4C1220BCDD100D5DB4A /* RouteAreaView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2293C4BE220BC57300D5DB4A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2293C4BF220BC58E00D5DB4A /* Area.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2293C4C3220BDE3F00D5DB4A /* View Model */ = {
+			isa = PBXGroup;
+			children = (
+				2293C4C4220BDE4F00D5DB4A /* AreaViewModel.swift */,
+			);
+			path = "View Model";
 			sourceTree = "<group>";
 		};
 		22BD6D4221BF520E0047FF8A /* Now */ = {
@@ -607,6 +650,7 @@
 				22541811217284C8000F575A /* RouteDetailVC.swift */,
 				22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */,
 				22BDB74621BE58810064E7C1 /* RouteDetail+MapBox.swift */,
+				2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -862,6 +906,7 @@
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
 				"${BUILT_PRODUCTS_DIR}/CodableFirebase/CodableFirebase.framework",
+				"${BUILT_PRODUCTS_DIR}/Cosmos/Cosmos.framework",
 				"${BUILT_PRODUCTS_DIR}/GMStepper/GMStepper.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
@@ -883,6 +928,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CodableFirebase.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Cosmos.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GMStepper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
@@ -924,6 +970,7 @@
 				22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */,
 				22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
+				2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */,
 				2254180C2171D99E000F575A /* RouteTVC.swift in Sources */,
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
 				2215B92321B1002E00BDBA2F /* AddCommentViewController.swift in Sources */,
@@ -935,6 +982,7 @@
 				225418062171BF02000F575A /* LoginVC.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
+				2293C4C5220BDE4F00D5DB4A /* AreaViewModel.swift in Sources */,
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */,
@@ -951,6 +999,7 @@
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
+				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
@@ -965,6 +1014,7 @@
 				043F789120AEBF270043C08A /* UIImage.swift in Sources */,
 				225EFA9221CB8FBE00C3952D /* UserListPresenterVC.swift in Sources */,
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
+				2293C4C0220BC58E00D5DB4A /* Area.swift in Sources */,
 				2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */,
 				229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */,
 				22BDB74721BE58810064E7C1 /* RouteDetail+MapBox.swift in Sources */,

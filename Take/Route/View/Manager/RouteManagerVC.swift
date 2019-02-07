@@ -17,6 +17,8 @@ class RouteManagerVC: TabmanViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+
         self.dataSource = self
         bar.appearance = TabmanBar.Appearance { appearance in
             appearance.text.font = UIFont(name: "Avenir", size: 16)

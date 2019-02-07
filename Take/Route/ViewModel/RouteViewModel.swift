@@ -38,7 +38,7 @@ class RouteViewModel {
     }
     var rating: String {
         if let rating = route.rating {
-            return "5.\(rating)"
+            return "5.\(rating)\(buffer ?? "")"
         }
         return "N/A"
     }
@@ -131,6 +131,15 @@ class RouteViewModel {
             types.append("\(type)")
         }
         return types.joined(separator: ", ")
+    }
+
+    func getArea(completion: @escaping (_ area: Area) -> Void) {
+        if let routeId = self.route.area {
+            Firestore.firestore().query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
+                guard let area = area.first else { return }
+                completion(area)
+            }
+        }
     }
 
     func getCurrentWeather(completion: @escaping (_ weather: WeatherViewModel) -> Void) {
