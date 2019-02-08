@@ -17,7 +17,8 @@ class Route: Codable {
     var longitude: Double?
     var imageUrls: [String: String] = [:]
     var routeArUrls: [String: [String]] = [:]
-    var stars: [String: Int] = [:]
+    //var stars: [String: Double] = [:]
+    var stars: [String: Star] = [:]
     var area: String?
     var comments: [String] = []
 
@@ -50,6 +51,7 @@ class Route: Codable {
         self.comments = []
         self.imageUrls = [:]
         self.routeArUrls = [:]
+//        self.stars = [:]
         self.stars = [:]
     }
 }

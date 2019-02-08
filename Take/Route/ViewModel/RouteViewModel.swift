@@ -43,12 +43,17 @@ class RouteViewModel {
         return "N/A"
     }
 
+    var stars: [String: Star] {
+        return route.stars
+    }
+
+    var starsArray: [Star] {
+        return Array(route.stars.values)
+    }
+
     var averageStar: Double? {
         if route.stars.isEmpty { return nil }
-        var sum: Double = 0
-        for star in route.stars.values {
-            sum += Double(star)
-        }
+        let sum = route.stars.values.reduce(0) { $0 + $1.value }
         return sum / Double(route.stars.count)
     }
 
@@ -131,6 +136,14 @@ class RouteViewModel {
             types.append("\(type)")
         }
         return types.joined(separator: ", ")
+    }
+
+    func getStar(forUser: String) -> Double? {
+        return route.stars[forUser]?.value
+    }
+
+    func addStar(_ star: Double, forUserId userId: String) {
+        route.stars[userId] = Star(userId: userId, value: star, date: Date())
     }
 
     func getArea(completion: @escaping (_ area: Area) -> Void) {

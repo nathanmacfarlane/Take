@@ -72,7 +72,6 @@ class RouteAreaView: UIView {
 
     @objc
     func hitMapButton() {
-        // TODO: Impliment a segue to the map view
         delegate?.hitMapButton()
     }
 
@@ -89,6 +88,6 @@ class RouteAreaView: UIView {
     }
 }
 
-protocol RouteAreaViewDelegate {
-    func hitMapButton() -> Void
+protocol RouteAreaViewDelegate: class {
+    func hitMapButton()
 }

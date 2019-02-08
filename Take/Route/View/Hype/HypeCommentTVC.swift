@@ -38,6 +38,11 @@ class HypeCommentTVC: HypeTVC {
 
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        commentImageView.layer.cornerRadius = 8
+    }
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

@@ -1,10 +1,12 @@
 import Cosmos
+import FirebaseAuth
 import FirebaseFirestore
 import Mapbox
+import Presentr
 import TwicketSegmentedControl
 import UIKit
 
-class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
+class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
 
     var routeViewModel: RouteViewModel!
     var infoLabel: UILabel!
@@ -44,6 +46,31 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
         }
     }
 
+    func hitSave(stars: Double) {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
+        routeViewModel.addStar(stars, forUserId: userId)
+        cosmos.rating = routeViewModel.averageStar ?? 0.0
+        Firestore.firestore().save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
+    }
+
+    @objc
+    func hitStars() {
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .popup)
+            customPresenter.transitionType = .coverVertical
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let addStarVC = AddStarRatingVC()
+        addStarVC.delegate = self
+        addStarVC.routeViewModel = routeViewModel
+        addStarVC.userId = Auth.auth().currentUser?.uid
+        self.customPresentViewController(presenter, viewController: addStarVC, animated: true)
+    }
+
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
 
@@ -72,8 +99,6 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
         cosmos.rating = routeViewModel.averageStar ?? 0.0
         cosmos.settings.starSize = 25
         cosmos.settings.totalStars = 4
-        cosmos.settings.filledColor = .white
-        cosmos.settings.emptyColor = UIColor(hex: "#707473")
         cosmos.settings.emptyBorderColor = .clear
         cosmos.settings.emptyBorderWidth = 0
         cosmos.settings.filledBorderWidth = 0
@@ -83,6 +108,9 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
         cosmos.settings.filledImage = UIImage(named: "icon_star_selected")
         cosmos.settings.emptyImage = UIImage(named: "icon_star")
         cosmos.settings.fillMode = .precise
+
+        let starTap = UITapGestureRecognizer(target: self, action: #selector(hitStars))
+        cosmos.addGestureRecognizer(starTap)
 
         // pitches header
         let pitchesLabel = UILabel()
@@ -155,20 +183,8 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
         view.addSubview(segControl)
         view.addSubview(infoLabel)
 
-        ratingLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: ratingLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: ratingLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
-        NSLayoutConstraint(item: ratingLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
-        NSLayoutConstraint(item: ratingLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
-
-        ratingValue.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: ratingValue, attribute: .leading, relatedBy: .equal, toItem: ratingLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: ratingValue, attribute: .trailing, relatedBy: .equal, toItem: ratingLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: ratingValue, attribute: .top, relatedBy: .equal, toItem: ratingLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: ratingValue, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
-
         starsLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: starsLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: starsLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: starsLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
         NSLayoutConstraint(item: starsLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: starsLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
@@ -178,6 +194,18 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate {
         NSLayoutConstraint(item: cosmos, attribute: .centerX, relatedBy: .equal, toItem: starsLabel, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: cosmos, attribute: .top, relatedBy: .equal, toItem: starsLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: cosmos, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
+
+        ratingLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: ratingLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: ratingLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
+        NSLayoutConstraint(item: ratingLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
+        NSLayoutConstraint(item: ratingLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
+
+        ratingValue.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: ratingValue, attribute: .leading, relatedBy: .equal, toItem: ratingLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: ratingValue, attribute: .trailing, relatedBy: .equal, toItem: ratingLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: ratingValue, attribute: .top, relatedBy: .equal, toItem: ratingLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: ratingValue, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
 
         pitchesLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: pitchesLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
