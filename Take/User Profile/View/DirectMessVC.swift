@@ -6,6 +6,8 @@ import UIKit
 class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var user: User?
     var dms: [DM] = []
+    var profImage = UIImage(named: "rocki3.jpeg")
+    var sender: User?
     
     var dmTableView: UITableView!
     
@@ -15,19 +17,18 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         initViews()
     }
     
-    func getDms()   {
+    func getDms() {
         let db = Firestore.firestore()
-        print(self.user?.messageIds.first)
-        db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you suck", of: DM.self) {
+//        print(self.user?.name)
+        db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you shtink", of: DM.self) {
             dm in
             self.dms = dm
             self.dmTableView.reloadData()
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        return 90
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -36,9 +37,21 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
-//        cell.textLabel?.text = dms[indexPath.row].Thread.first?.message
 //        cell.textLabel?.textColor = .white
-        cell.nameLabel.text = "rocki"
+        let uid = dms[indexPath.row].Thread.first?.sender
+        let db = Firestore.firestore()
+        db.query(collection: "users", by: "id", with: uid ?? "lol sheet", of: User.self) { users in
+            guard let user = users.first else { print("noooo i suck"); return }
+            cell.nameLabel.text = user.username // placeholder for username
+            let userViewModel = UserViewModel(user: user)
+            userViewModel.getProfilePhoto { image in
+                DispatchQueue.main.async {
+                    cell.profPic.setBackgroundImage(image, for: .normal)
+                }
+            }
+        }
+        cell.messageLabel.text = dms[indexPath.row].Thread.first?.message
+        
         return cell
     }
     
@@ -55,6 +68,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         dmTableView.register(DmTVC.self, forCellReuseIdentifier: "DmCellTV")
         dmTableView.dataSource = self
         dmTableView.delegate = self
+        dmTableView.separatorStyle = .none 
         dmTableView.backgroundColor = UIColor(named: "BluePrimaryDark")
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))

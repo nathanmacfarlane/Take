@@ -57,6 +57,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             guard let user = user.first else { return }
             self.user = user
             self.userNameLabel.text = user.name
+                let userViewModel = UserViewModel(user: user)
+                userViewModel.getProfilePhoto { image in
+                    DispatchQueue.main.async {
+                        self.profPic.setBackgroundImage(image, for: .normal)
+                    }
+                }
+            
 //            for routeListId in user.toDo {
 //                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
 //                    guard let routeList = routeList.first else { return }
@@ -213,9 +220,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         
         profPic = TypeButton()
         profPic.addBorder(width: 2.5)
-        profPic.setBackgroundImage(profImage, for: .normal)
-        profPic.layer.cornerRadius = 8
         profPic.clipsToBounds = true
+        profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
         
         home = TypeButton()
