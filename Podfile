@@ -20,5 +20,6 @@ target 'Take' do
   pod 'Presentr'
   pod "GMStepper"
   pod "WSTagsField"
+  pod 'Cosmos'
 
 end

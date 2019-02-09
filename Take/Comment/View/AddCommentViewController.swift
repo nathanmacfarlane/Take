@@ -87,14 +87,14 @@ class AddCommentViewController: UIViewController {
     @objc
     func saveComment() {
         guard let userId = Auth.auth().currentUser?.uid else { return }
-        var comment = Comment(id: UUID().uuidString, userId: userId, dateString: Date().instanceString(), message: self.messageView.text, imageUrl: nil)
+        var comment = Comment(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.messageView.text, imageUrl: nil, routeId: routeViewModel.id)
         guard let image = imageView.image else { return }
         self.delegate?.toggleCommentView()
         self.delegate?.addNewComment(comment: comment, photo: image)
         imageView.image?.saveToFb(route: routeViewModel.route) { url in
-            comment.setImageUrl(imageUrl: url?.absoluteString)
-            Firestore.firestore().save(object: comment, to: "comments", with: comment.getId(), completion: nil)
-            self.routeViewModel.route.comments.append(comment.getId())
+            comment.imageUrl = url?.absoluteString
+            Firestore.firestore().save(object: comment, to: "comments", with: comment.id, completion: nil)
+            self.routeViewModel.route.comments.append(comment.id)
             Firestore.firestore().save(object: self.routeViewModel.route, to: "routes", with: self.routeViewModel.id, completion: nil)
             self.imageView.image = UIImage()
             self.messageView.text = ""

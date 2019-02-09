@@ -11,7 +11,7 @@ extension RoutePhotosVC: CommentDelegate {
         }
     }
     func addNewComment(comment: Comment, photo: UIImage) {
-        let commentViewModel = CommentModelView(comment: comment)
+        let commentViewModel = CommentViewModel(comment: comment)
         comments[commentViewModel.id] = commentViewModel
         images[commentViewModel.id] = photo
         commentKeys.insert(commentViewModel.id, at: 0)
