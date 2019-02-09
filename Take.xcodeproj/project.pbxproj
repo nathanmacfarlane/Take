@@ -130,7 +130,6 @@
 		22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */; };
 		22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */; };
 		22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */; };
-		22E60D382208FE220053C48E /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 22E60D372208FE220053C48E /* Storyboard.storyboard */; };
 		22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3922093FE00053C48E /* HypeTVC.swift */; };
 		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
@@ -279,7 +278,6 @@
 		22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+LightBox.swift"; sourceTree = "<group>"; };
 		22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CommentDelegate.swift"; sourceTree = "<group>"; };
-		22E60D372208FE220053C48E /* Storyboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		22E60D3922093FE00053C48E /* HypeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeTVC.swift; sourceTree = "<group>"; };
 		22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeCommentTVC.swift; sourceTree = "<group>"; };
 		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
@@ -380,7 +378,6 @@
 				046ED55720BE6FA00055B35A /* Readme.md */,
 				22BD6D4A21BF66070047FF8A /* Constants.swift */,
 				22BD6D5021C0DB630047FF8A /* InitialVC.swift */,
-				22E60D372208FE220053C48E /* Storyboard.storyboard */,
 			);
 			path = Take;
 			sourceTree = "<group>";
@@ -871,7 +868,6 @@
 				719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */,
 				2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */,
 				04C83B0B20B548EF008D842D /* profile.jpg in Resources */,
-				22E60D382208FE220053C48E /* Storyboard.storyboard in Resources */,
 				229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */,
 				7184498C220946E00029C023 /* msg.png in Resources */,
 				220725AD213D05C0005448E8 /* placeholderUser.png in Resources */,
@@ -1071,12 +1067,9 @@
 				2293C4CE220D2D2200D5DB4A /* CommentViewModel.swift in Sources */,
 				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
-<<<<<<< HEAD
 				714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */,
-=======
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
 				2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */,
->>>>>>> master
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
