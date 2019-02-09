@@ -9,12 +9,11 @@ class RoutePhotosVC: UIViewController {
     var routeViewModel: RouteViewModel!
 
     // MARK: - Outlets
-    var bgImageView: UIImageView!
     var myImagesCV: UICollectionView!
     var commentCV: AddCommentViewController!
 
     // MARK: - Variables
-    var comments: [String: CommentModelView] = [:]
+    var comments: [String: CommentViewModel] = [:]
     var commentKeys: [String] = []
     var images: [String: UIImage] = [:]
     var imagesCVConst: NSLayoutConstraint!
@@ -42,7 +41,7 @@ class RoutePhotosVC: UIViewController {
             for commentId in self.routeViewModel.route.comments {
                 db.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comments in
                     if let comment = comments.first {
-                        let commentViewModel = CommentModelView(comment: comment)
+                        let commentViewModel = CommentViewModel(comment: comment)
                         if let imgUrl = commentViewModel.imageUrl, let theUrl = URL(string: imgUrl) {
                             self.comments[commentId] = commentViewModel
                             self.images[commentId] = UIImage()
@@ -68,22 +67,8 @@ class RoutePhotosVC: UIViewController {
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimary")
+        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
         self.title = routeViewModel.name
-
-        // bg image
-        self.bgImageView = UIImageView(frame: self.view.frame)
-        self.bgImageView.contentMode = .scaleAspectFill
-        self.bgImageView.clipsToBounds = true
-        let effect = UIBlurEffect(style: .light)
-        let effectView = UIVisualEffectView(effect: effect)
-        effectView.frame = self.view.frame
-        self.bgImageView.addSubview(effectView)
-        let gradientView = UIView(frame: self.view.frame)
-        let gradient = CAGradientLayer()
-        gradient.frame = gradientView.frame
-        gradient.colors = [UIColor(named: "BluePrimaryDark")?.cgColor as Any, UIColor.clear.cgColor]
-        gradientView.layer.insertSublayer(gradient, at: 0)
 
         // add comment view
         commentCV = AddCommentViewController()
@@ -105,8 +90,6 @@ class RoutePhotosVC: UIViewController {
         myImagesCV.showsHorizontalScrollIndicator = false
 
         // add to subview
-        view.addSubview(bgImageView)
-        view.addSubview(gradientView)
         view.addSubview(commentCV.view)
         view.addSubview(myImagesCV)
 

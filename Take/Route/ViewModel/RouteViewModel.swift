@@ -38,17 +38,22 @@ class RouteViewModel {
     }
     var rating: String {
         if let rating = route.rating {
-            return "5.\(rating)"
+            return "5.\(rating)\(buffer ?? "")"
         }
         return "N/A"
     }
 
+    var stars: [String: Star] {
+        return route.stars
+    }
+
+    var starsArray: [Star] {
+        return Array(route.stars.values)
+    }
+
     var averageStar: Double? {
         if route.stars.isEmpty { return nil }
-        var sum: Double = 0
-        for star in route.stars.values {
-            sum += Double(star)
-        }
+        let sum = route.stars.values.reduce(0) { $0 + $1.value }
         return sum / Double(route.stars.count)
     }
 
@@ -131,6 +136,23 @@ class RouteViewModel {
             types.append("\(type)")
         }
         return types.joined(separator: ", ")
+    }
+
+    func getStar(forUser: String) -> Double? {
+        return route.stars[forUser]?.value
+    }
+
+    func addStar(_ star: Double, forUserId userId: String) {
+        route.stars[userId] = Star(userId: userId, value: star, date: Date())
+    }
+
+    func getArea(completion: @escaping (_ area: Area) -> Void) {
+        if let routeId = self.route.area {
+            Firestore.firestore().query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
+                guard let area = area.first else { return }
+                completion(area)
+            }
+        }
     }
 
     func getCurrentWeather(completion: @escaping (_ weather: WeatherViewModel) -> Void) {
