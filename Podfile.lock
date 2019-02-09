@@ -7,6 +7,7 @@ PODS:
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
   - CodableFirebase (0.2.1)
+  - Cosmos (17.0.0)
   - Firebase (5.13.0):
     - Firebase/Core (= 5.13.0)
   - Firebase/Auth (5.13.0):
@@ -148,6 +149,7 @@ PODS:
 
 DEPENDENCIES:
   - CodableFirebase
+  - Cosmos
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Database
@@ -168,6 +170,7 @@ SPEC REPOS:
     - AutoInsetter
     - BoringSSL
     - CodableFirebase
+    - Cosmos
     - Firebase
     - FirebaseAnalytics
     - FirebaseAnalyticsInterop
@@ -202,6 +205,7 @@ SPEC CHECKSUMS:
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
+  Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
   Firebase: 6df9a6114bc9f106a98fe83d5438d4d9833c2019
   FirebaseAnalytics: 63202d2665de4e6adcbdce189135255d8b5962ba
   FirebaseAnalyticsInterop: e5f21be9af6548372e2f0815834ff909bff395a2
@@ -232,6 +236,6 @@ SPEC CHECKSUMS:
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: 6d705ad755c1942611eacf61c44bc75c37bc107c
+PODFILE CHECKSUM: c87a73de550845a079cd8cfe98067ec11eb4d3e7
 
 COCOAPODS: 1.5.3

@@ -25,7 +25,7 @@ private_outlet:
 type_body_length: 400
 
 disabled_rules:
-- trailing_whitespace
+- weak_delegate
 - identifier_name
 - force_try
 - implicitly_unwrapped_optional

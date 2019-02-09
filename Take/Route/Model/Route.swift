@@ -12,13 +12,14 @@ class Route: Codable {
     var buffer: Int?
     var info: String?
     var protection: String?
+    var closureInfo: String?
     var latitude: Double?
     var longitude: Double?
     var imageUrls: [String: String] = [:]
     var routeArUrls: [String: [String]] = [:]
-    var stars: [String: Int] = [:]
+    //var stars: [String: Double] = [:]
+    var stars: [String: Star] = [:]
     var area: String?
-    var commentIds: [String] = []
     var comments: [String] = []
 
     // MARK: - Coding Keys
@@ -38,8 +39,8 @@ class Route: Codable {
         case rating
         case buffer
         case routeArUrls
-        case commentIds
         case comments
+        case closureInfo
     }
 
     init(name: String, id: String, pitches: Int) {
@@ -47,10 +48,10 @@ class Route: Codable {
         self.id = id
         self.pitches = pitches
         self.types = []
-        self.commentIds = []
         self.comments = []
         self.imageUrls = [:]
         self.routeArUrls = [:]
+//        self.stars = [:]
         self.stars = [:]
     }
 }

@@ -1,13 +1,22 @@
 import Pageboy
+import Presentr
 import Tabman
 import UIKit
+import FirebaseFirestore
 
 class RouteManagerVC: TabmanViewController {
 
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
-    var add: UIBarButtonItem!
-    var edit: UIBarButtonItem!
+    var add: UIBarButtonItem {
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
+    }
+    var edit: UIBarButtonItem {
+        return UIBarButtonItem(image: UIImage(named: "icon_edit"), style: .plain, target: self, action: #selector(goEditRoute))
+    }
+    var ar: UIBarButtonItem {
+        return UIBarButtonItem(image: UIImage(named: "icon_ar"), style: .plain, target: self, action: #selector(hitArButton))
+    }
 
     var photos: RoutePhotosVC!
     var detail: RouteDetailVC!
@@ -16,6 +25,8 @@ class RouteManagerVC: TabmanViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
 
         self.dataSource = self
         bar.appearance = TabmanBar.Appearance { appearance in
@@ -28,10 +39,26 @@ class RouteManagerVC: TabmanViewController {
         }
         self.title = routeViewModel.name
 
-        add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
-        edit = UIBarButtonItem(barButtonSystemItem: .edit, target: self, action: #selector(goEditRoute))
+        
 
-        navigationItem.setRightBarButton(edit, animated: true)
+
+    }
+
+    @objc
+    func hitArButton() {
+        let presenter: Presentr = {
+            let customType = PresentationType.custom(width: .full, height: ModalSize.custom(size: 150), center: .customOrigin(origin: CGPoint(x: 0, y: 0)))
+            let customPresenter = Presentr(presentationType: customType)
+            customPresenter.transitionType = .coverVerticalFromTop
+            customPresenter.dismissTransitionType = TransitionType.coverVertical
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let arVC = ARAddorViewVC()
+        self.customPresentViewController(presenter, viewController: arVC, animated: true)
     }
 
     @objc
@@ -46,9 +73,9 @@ class RouteManagerVC: TabmanViewController {
 
     override func pageboyViewController(_ pageboyViewController: PageboyViewController, didScrollToPageAt index: Int, direction: NavigationDirection, animated: Bool) {
         switch index {
-        case 0: navigationItem.setRightBarButton(edit, animated: true)
+        case 0: navigationItem.rightBarButtonItems = [ar, edit]
         case 3: navigationItem.setRightBarButton(add, animated: true)
-        default: navigationItem.setRightBarButton(nil, animated: true)
+        default: navigationItem.rightBarButtonItems = []
         }
     }
 
