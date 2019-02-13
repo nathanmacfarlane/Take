@@ -25,9 +25,7 @@ class AreaViewModel {
                 completion(nil)
                 return
             }
-            DispatchQueue.main.async {
-                completion(theImage)
-            }
+            completion(theImage)
         }
         .resume()
     }

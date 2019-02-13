@@ -1,7 +1,6 @@
 import Cosmos
 import FirebaseAuth
 import FirebaseFirestore
-import Mapbox
 import Presentr
 import TwicketSegmentedControl
 import UIKit
@@ -39,11 +38,19 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
     }
 
     func hitMapButton() {
-        if let navController = self.tabBarController?.viewControllers?[2] as? UINavigationController,
-            let mapVC = navController.viewControllers.first as? MapVC {
-            mapVC.initialRoutes = [routeViewModel.route]
-            self.tabBarController?.selectedIndex = 2
-        }
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .popup)
+            customPresenter.transitionType = .coverVertical
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let mapVC = MapVC()
+        mapVC.initialRoutes = [routeViewModel.route]
+        mapVC.animateMap = true
+        self.customPresentViewController(presenter, viewController: mapVC, animated: true)
     }
 
     func hitSave(stars: Double) {
@@ -143,7 +150,9 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
                     let areaViewModel = AreaViewModel(area: area)
                     areaView.titleButton.setTitle(areaViewModel.name, for: .normal)
                     areaViewModel.getImage { image in
-                        areaView.imageView.image = image
+                        DispatchQueue.main.async {
+                            areaView.imageView.image = image
+                        }
                     }
                 }
                 routeViewModel.cityAndState { city, state in

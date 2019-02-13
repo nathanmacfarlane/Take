@@ -6,6 +6,7 @@ class MapVC: UIViewController {
 
     var mapView: MKMapView!
     var initialRoutes: [Route] = []
+    var animateMap: Bool = true
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,8 +17,6 @@ class MapVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(true)
-
-        mapView.removeAllAnnotations()
 
         for route in initialRoutes {
             let routeMarker = MKPointAnnotation()
@@ -33,50 +32,26 @@ class MapVC: UIViewController {
         if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
             CLLocationManager.authorizationStatus() ==  .authorizedAlways {
             if initialRoutes.isEmpty, let coord = locManager.location {
-                mapView.centerMapOn(coord)
+                mapView.centerMapOn(coord, animated: animateMap)
             } else {
-                mapView.showAnnotations(mapView.annotations, animated: true)
+                mapView.showAnnotations(mapView.annotations, animated: animateMap)
             }
         }
     }
 
-    func getCenter(arr: [MKAnnotation]) -> CLLocationCoordinate2D {
-
-        if arr.count == 1 {
-            return arr[0].coordinate
-        }
-        var x: Double = 0.0
-        var y: Double = 0.0
-        var z: Double = 0.0
-
-        for anno in arr {
-            let lat = anno.coordinate.latitude * .pi / 180
-            let lon = anno.coordinate.longitude * .pi / 180
-
-            x += cos(lat) * cos(lon)
-            y += cos(lat) * sin(lon)
-            z += sin(lat)
-        }
-
-        let total = Double(arr.count)
-
-        x /= total
-        y /= total
-        z /= total
-
-        let centralLon = atan2(y, x)
-        let centralSqrt = sqrt(x * x + y * y)
-        let centralLat = atan2(z, centralSqrt)
-
-        return CLLocationCoordinate2D(latitude: centralLat * 180 / .pi, longitude: centralLon * 180 / .pi)
-    }
-
     func initViews() {
         view.backgroundColor = UIColor(named: "#202226")
+        view.clipsToBounds = true
 
-        mapView = MKMapView(frame: view.frame)
+        mapView = MKMapView()
         mapView.showsUserLocation = true
 
         view.addSubview(mapView)
+
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
     }
 }

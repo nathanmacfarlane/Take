@@ -49,7 +49,9 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
                 cell.nameLabel.text = username
             }
             commentViewModel.getImage { image in
-                cell.commentImageView.image = image
+                DispatchQueue.main.async {
+                    cell.commentImageView.image = image
+                }
             }
             cell.dateLabel.text = commentViewModel.dateString
             cell.eventLabel.text = commentViewModel.imageUrl != nil ? "Added a new photo" : "Added a new comment"
@@ -69,15 +71,15 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return UITableViewCell()
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        let hypeType = tableData[indexPath.row]
-        if hypeType as? Comment != nil {
-            return 200
-        } else if hypeType as? Star != nil {
-            return 125
-        }
-        return 75
-    }
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let hypeType = tableData[indexPath.row]
+//        if hypeType as? Comment != nil {
+//            return 200
+//        } else if hypeType as? Star != nil {
+//            return 125
+//        }
+//        return 75
+//    }
 
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
@@ -89,6 +91,9 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = .clear
+
+        tableView.estimatedRowHeight = 100.0
+        tableView.rowHeight = UITableView.automaticDimension
 
         view.addSubview(tableView)
 

@@ -1,13 +1,22 @@
+import FirebaseFirestore
+import FirebaseStorage
+import Presentr
 import UIKit
 
-class RouteAddArVC: UIViewController {
+class RouteAddArVC: UIViewController, RouteArEditProtocol {
+
+    // injections
+    var route: Route?
 
     var rockLabel: UILabel!
-    var centerArButton: UIButton!
-    var leftArButton: UIButton!
-    var rightArButton: UIButton!
+    var centerArButton: ArButton!
+    var leftArButton: ArButton!
+    var rightArButton: ArButton!
+
     var cancelButton: UIButton!
     var saveButton: UIButton!
+
+    var selectedButton: ArButton?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,16 +39,13 @@ class RouteAddArVC: UIViewController {
         rockLabel.font = UIFont(name: "Avenir-Black", size: 80)
         rockLabel.textColor = .black
 
-        centerArButton = UIButton()
-        centerArButton.setImage(UIImage(named: "icon_ar"), for: .normal)
+        centerArButton = ArButton()
         centerArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
 
-        leftArButton = UIButton()
-        leftArButton.setImage(UIImage(named: "icon_ar"), for: .normal)
+        leftArButton = ArButton()
         leftArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
 
-        rightArButton = UIButton()
-        rightArButton.setImage(UIImage(named: "icon_ar"), for: .normal)
+        rightArButton = ArButton()
         rightArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
 
         let promptLabel = UILabel()
@@ -114,6 +120,16 @@ class RouteAddArVC: UIViewController {
         NSLayoutConstraint(item: promptLabel2, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -80).isActive = true
     }
 
+    func finishedEditingAr(image: UIImage?, diagram: UIImage?) {
+        guard let selectedButton = self.selectedButton else { return }
+        selectedButton.setImages(image: image, diagramImage: diagram)
+        selectedButton.imageView?.layer.cornerRadius = 5
+    }
+
+    func canceledEditingAr() {
+
+    }
+
     @objc
     func goCancel() {
         dismiss(animated: true, completion: nil)
@@ -121,15 +137,70 @@ class RouteAddArVC: UIViewController {
 
     @objc
     func goSave() {
-        // TODO: - impliment firebase actions and then dismiss
+
+        if leftArButton.diagramImageView.image != nil {
+            saveDiagramToFB(arButton: leftArButton)
+        }
+
+        if centerArButton.diagramImageView.image != nil {
+            saveDiagramToFB(arButton: centerArButton)
+        }
+
+        if rightArButton.diagramImageView.image != nil {
+            saveDiagramToFB(arButton: rightArButton)
+        }
+
+        dismiss(animated: true, completion: nil)
+
+    }
+
+    func saveDiagramToFB(arButton: ArButton) {
+
+        guard let route = route else { return }
+        let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
+        guard let bgImage = centerArButton.imageView?.image,
+            let dgImage = arButton.diagramImageView.image,
+            let bgData = bgImage.pngData() as NSData?,
+            let dgData = dgImage.pngData() as NSData? else { return }
+
+        let imageId = UUID().uuidString
+
+        var bgUrl: String = ""
+        var dgUrl: String = ""
+
+        _ = imageRef.child("\(imageId)-bgImage.png").putData(bgData as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-bgImage.png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                bgUrl = "\(downloadURL)"
+                if !dgUrl.isEmpty {
+                    self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
+                    Firestore.firestore().save(object: route, to: "routes", with: route.id, completion: nil)
+                }
+            }
+        }
+
+        _ = imageRef.child("\(imageId)-dgImage.png").putData(dgData as Data, metadata: nil) { metadata, _ in
+            guard metadata != nil else { return }
+            imageRef.child("\(imageId)-dgImage.png").downloadURL { url, _ in
+                guard let downloadURL = url else { return }
+                dgUrl = "\(downloadURL)"
+                if !bgUrl.isEmpty {
+                    self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
+                    Firestore.firestore().save(object: route, to: "routes", with: route.id, completion: nil)
+                }
+            }
+        }
+
     }
 
     @objc
-    func selectImage(sender: UIButton) {
-        ImagePickerManager().pickImage(self) { image in
-            sender.setImage(image, for: .normal)
-            sender.imageView?.layer.cornerRadius = 5
-        }
+    func selectImage(sender: ArButton) {
+        selectedButton = sender
+        let presenter = Presentr(presentationType: .fullScreen)
+        let takeAPhoto = RouteArEditVC()
+        takeAPhoto.delegate = self
+        customPresentViewController(presenter, viewController: takeAPhoto, animated: true)
     }
 
     override func viewDidLayoutSubviews() {
@@ -144,73 +215,6 @@ class RouteAddArVC: UIViewController {
         view.bringSubviewToFront(leftArButton)
         view.bringSubviewToFront(centerArButton)
         view.bringSubviewToFront(rightArButton)
-    }
-
-}
-
-class ImagePickerManager: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-
-    var picker = UIImagePickerController();
-    var alert = UIAlertController(title: "Choose Image", message: nil, preferredStyle: .actionSheet)
-    var viewController: UIViewController?
-    var pickImageCallback : ((UIImage) -> ())?;
-
-    override init(){
-        super.init()
-    }
-
-    func pickImage(_ viewController: UIViewController, _ callback: @escaping ((UIImage) -> ())) {
-        pickImageCallback = callback;
-        self.viewController = viewController;
-
-        let cameraAction = UIAlertAction(title: "Camera", style: .default){
-            UIAlertAction in
-            self.openCamera()
-        }
-        let gallaryAction = UIAlertAction(title: "Gallary", style: .default){
-            UIAlertAction in
-            self.openGallery()
-        }
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel){
-            UIAlertAction in
-        }
-
-        // Add the actions
-        picker.delegate = self
-        alert.addAction(cameraAction)
-        alert.addAction(gallaryAction)
-        alert.addAction(cancelAction)
-        alert.popoverPresentationController?.sourceView = self.viewController!.view
-        viewController.present(alert, animated: true, completion: nil)
-    }
-    func openCamera(){
-        alert.dismiss(animated: true, completion: nil)
-        if(UIImagePickerController .isSourceTypeAvailable(.camera)){
-            picker.sourceType = .camera
-            self.viewController!.present(picker, animated: true, completion: nil)
-        }
-    }
-    func openGallery(){
-        alert.dismiss(animated: true, completion: nil)
-        picker.sourceType = .photoLibrary
-        self.viewController!.present(picker, animated: true, completion: nil)
-    }
-
-
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        picker.dismiss(animated: true, completion: nil)
-    }
-
-      // For Swift 4.2
-      func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-          picker.dismiss(animated: true, completion: nil)
-          guard let image = info[.originalImage] as? UIImage else {
-              fatalError("Expected a dictionary containing an image, but was provided the following: \(info)")
-          }
-          pickImageCallback?(image)
-      }
-
-    @objc func imagePickerController(_ picker: UIImagePickerController, pickedImage: UIImage?) {
     }
 
 }

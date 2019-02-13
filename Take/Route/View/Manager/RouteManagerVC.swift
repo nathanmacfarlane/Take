@@ -2,9 +2,8 @@ import Pageboy
 import Presentr
 import Tabman
 import UIKit
-import FirebaseFirestore
 
-class RouteManagerVC: TabmanViewController {
+class RouteManagerVC: TabmanViewController, ARAddorViewDelegate {
 
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
@@ -43,9 +42,9 @@ class RouteManagerVC: TabmanViewController {
     @objc
     func hitArButton() {
         let presenter: Presentr = {
-            let customType = PresentationType.custom(width: .full, height: ModalSize.custom(size: 150), center: .customOrigin(origin: CGPoint(x: 0, y: 0)))
+            let customType = PresentationType.custom(width: .full, height: .half, center: ModalCenterPosition.bottomCenter)
             let customPresenter = Presentr(presentationType: customType)
-            customPresenter.transitionType = .coverVerticalFromTop
+            customPresenter.transitionType = .coverVertical
             customPresenter.dismissTransitionType = TransitionType.coverVertical
             customPresenter.roundCorners = true
             customPresenter.cornerRadius = 15
@@ -54,7 +53,18 @@ class RouteManagerVC: TabmanViewController {
             return customPresenter
         }()
         let arVC = ARAddorViewVC()
+        arVC.delegate = self
         self.customPresentViewController(presenter, viewController: arVC, animated: true)
+    }
+
+    func hitAddAr() {
+        let routeAddArVC = RouteAddArVC()
+        routeAddArVC.route = routeViewModel.route
+        present(routeAddArVC, animated: true, completion: nil)
+    }
+
+    func hitViewAr() {
+        // TODO: - implement presentation of viewing AR diagrams
     }
 
     @objc

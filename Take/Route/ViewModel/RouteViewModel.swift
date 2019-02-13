@@ -175,7 +175,6 @@ class RouteViewModel {
 
     func getForecastWeather(completion: @escaping (_ forecast: ForecastViewModel) -> Void) {
         let url = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
-        print("url: \(url)")
         guard let future = URL(string: url) else { return }
         URLSession.shared.dataTask(with: future) { data, _, _ in
             guard let data = data, let forecast = try? JSONDecoder().decode(Forecast.self, from: data) else { return }

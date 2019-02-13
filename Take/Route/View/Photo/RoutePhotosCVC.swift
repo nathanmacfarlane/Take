@@ -9,7 +9,6 @@ class RoutePhotosCVC: UICollectionViewCell {
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
         imageView.backgroundColor = UIColor(hexString: "#111114")
-        imageView.clipsToBounds = true
         self.backgroundColor = .clear
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -24,6 +23,8 @@ class RoutePhotosCVC: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.layer.cornerRadius = 5.0
+        imageView.clipsToBounds = true
+        self.clipsToBounds = true
         self.addBorder(color: .white, width: 1)
     }
 }

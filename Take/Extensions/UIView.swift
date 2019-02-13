@@ -45,4 +45,16 @@ extension UIView {
 
         layer.addSublayer(border)
     }
+    func getOutsidePoint(side: ViewSide, padding: CGFloat) -> CGPoint {
+        switch side {
+        case .left:
+            return CGPoint(x: frame.minX - padding, y: center.y)
+        case .right:
+            return CGPoint(x: frame.maxX + padding, y: center.y)
+        case .top:
+            return CGPoint(x: center.x, y: frame.minY - padding)
+        case .bottom:
+            return CGPoint(x: center.x, y: frame.maxY + padding)
+        }
+    }
 }
