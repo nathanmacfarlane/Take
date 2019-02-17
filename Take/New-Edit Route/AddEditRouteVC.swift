@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 import GMStepper
 import TwicketSegmentedControl
 import UIKit

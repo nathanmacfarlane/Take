@@ -65,6 +65,9 @@ class RouteManagerVC: TabmanViewController, ARAddorViewDelegate {
 
     func hitViewAr() {
         // TODO: - implement presentation of viewing AR diagrams
+        let routeArViewVC = RouteArViewVC()
+        routeArViewVC.route = routeViewModel.route
+        present(routeArViewVC, animated: true, completion: nil)
     }
 
     @objc

@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 import Foundation
 
 struct RouteListViewModel {
