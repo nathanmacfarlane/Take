@@ -140,6 +140,7 @@
 		714C1D0722015AA900D0DECB /* carabiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0322015AA800D0DECB /* carabiner.png */; };
 		714C1D0822015AA900D0DECB /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0422015AA900D0DECB /* mountain.png */; };
 		714C1D0A2201613000D0DECB /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D092201613000D0DECB /* octo.png */; };
+		71624CE8221CCCC7009D0E5B /* MsgLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */; };
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
 		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
@@ -290,6 +291,7 @@
 		714C1D0322015AA800D0DECB /* carabiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carabiner.png; path = ../../../../Downloads/carabiner.png; sourceTree = "<group>"; };
 		714C1D0422015AA900D0DECB /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mountain.png; path = ../../../../Downloads/mountain.png; sourceTree = "<group>"; };
 		714C1D092201613000D0DECB /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/octo.png; sourceTree = "<group>"; };
+		71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogVC.swift; sourceTree = "<group>"; };
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
 		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
@@ -570,6 +572,7 @@
 				229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */,
 				225EFA9121CB8FBE00C3952D /* UserListPresenterVC.swift */,
 				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
+				71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1100,6 +1103,7 @@
 				22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,
+				71624CE8221CCCC7009D0E5B /* MsgLogVC.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
 				2203ADB6220D5363004EDBF2 /* ARAddorViewVC.swift in Sources */,
 				2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */,

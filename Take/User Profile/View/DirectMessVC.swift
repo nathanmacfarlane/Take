@@ -7,9 +7,9 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var user: User?
     var dms: [DM] = []
     var profImage = UIImage(named: "rocki3.jpeg")
-    var sender: User?
-    
     var dmTableView: UITableView!
+    var friend: User?
+    var friendId = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,18 +37,21 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
-//        cell.textLabel?.textColor = .white
-        let uid = dms[indexPath.row].Thread.first?.sender
+        for notMe in dms[indexPath.row].userIds where (notMe != self.user?.id) {
+            friendId = notMe
+            print(friendId)
+        }
         let db = Firestore.firestore()
-        db.query(collection: "users", by: "id", with: uid ?? "lol sheet", of: User.self) { users in
+        db.query(collection: "users", by: "id", with: friendId, of: User.self) { users in
             guard let user = users.first else { print("noooo i suck"); return }
-            cell.nameLabel.text = user.username // placeholder for username
-            let userViewModel = UserViewModel(user: user)
-            userViewModel.getProfilePhoto { image in
-                DispatchQueue.main.async {
-                    cell.profPic.setBackgroundImage(image, for: .normal)
+                cell.nameLabel.text = user.username // placeholder for username
+                let userViewModel = UserViewModel(user: user)
+                userViewModel.getProfilePhoto { image in
+                    DispatchQueue.main.async {
+                        cell.profPic.setBackgroundImage(image, for: .normal)
+                    }
                 }
-            }
+            
         }
         cell.messageLabel.text = dms[indexPath.row].Thread.first?.message
         
