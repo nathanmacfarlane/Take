@@ -1,21 +1,22 @@
+import ARKit
 import Pageboy
 import Presentr
 import Tabman
 import UIKit
 
-class RouteManagerVC: TabmanViewController, ARAddorViewDelegate {
+class RouteManagerVC: TabmanViewController, AddImagesDelegate, RoutePhotosAddDelegate {
 
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
     var add: UIBarButtonItem {
-        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPhoto))
+        return UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewImages))
     }
     var edit: UIBarButtonItem {
         return UIBarButtonItem(image: UIImage(named: "icon_edit"), style: .plain, target: self, action: #selector(goEditRoute))
     }
-    var ar: UIBarButtonItem {
-        return UIBarButtonItem(image: UIImage(named: "icon_ar"), style: .plain, target: self, action: #selector(hitArButton))
-    }
+//    var ar: UIBarButtonItem {
+//        return UIBarButtonItem(image: UIImage(named: "icon_ar"), style: .plain, target: self, action: #selector(hitArButton))
+//    }
 
     var photos: RoutePhotosVC!
     var detail: RouteDetailVC!
@@ -39,8 +40,31 @@ class RouteManagerVC: TabmanViewController, ARAddorViewDelegate {
         self.title = routeViewModel.name
     }
 
+    // add images delegate
+    func hitAddAr() {
+        let routeAddArVC = RouteAddArVC()
+        routeAddArVC.route = routeViewModel.route
+        present(routeAddArVC, animated: true, completion: nil)
+    }
+
+    func hitAddPhotos() {
+        let routeAddPhotosVC = RoutePhotosAddVC()
+        routeAddPhotosVC.delegate = self
+        let presenter = Presentr(presentationType: .fullScreen)
+        self.customPresentViewController(presenter, viewController: routeAddPhotosVC, animated: true)
+    }
+
+    func addedPhotos(message: String, images: [UIImage]) {
+        photos.updatedImages(message: message, images: images)
+    }
+
     @objc
-    func hitArButton() {
+    func goEditRoute() {
+        detail.goEditRoute()
+    }
+
+    @objc
+    func addNewImages() {
         let presenter: Presentr = {
             let customType = PresentationType.custom(width: .full, height: .half, center: ModalCenterPosition.bottomCenter)
             let customPresenter = Presentr(presentationType: customType)
@@ -52,38 +76,16 @@ class RouteManagerVC: TabmanViewController, ARAddorViewDelegate {
             customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
-        let arVC = ARAddorViewVC()
+        let arVC = RouteAddImagesPresentrVC()
         arVC.delegate = self
         self.customPresentViewController(presenter, viewController: arVC, animated: true)
-    }
 
-    func hitAddAr() {
-        let routeAddArVC = RouteAddArVC()
-        routeAddArVC.route = routeViewModel.route
-        present(routeAddArVC, animated: true, completion: nil)
-    }
-
-    func hitViewAr() {
-        // TODO: - implement presentation of viewing AR diagrams
-        let routeArViewVC = RouteArViewVC()
-        routeArViewVC.route = routeViewModel.route
-        present(routeArViewVC, animated: true, completion: nil)
-    }
-
-    @objc
-    func goEditRoute() {
-        detail.goEditRoute()
-    }
-
-    @objc
-    func addNewPhoto() {
-        photos.toggleCommentView()
     }
 
     override func pageboyViewController(_ pageboyViewController: PageboyViewController, didScrollToPageAt index: Int, direction: NavigationDirection, animated: Bool) {
         switch index {
-        case 0: navigationItem.rightBarButtonItems = [ar, edit]
-        case 3: navigationItem.setRightBarButton(add, animated: true)
+        case 0: navigationItem.setRightBarButton(edit, animated: true)
+        case 3:  navigationItem.setRightBarButton(add, animated: true)
         default: navigationItem.rightBarButtonItems = []
         }
     }

@@ -44,7 +44,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
             route?.longitude = -120.69601771685053
         }
         if let id = route?.id {
-            Firestore.firestore().save(object: route, to: "routes", with: id, completion: nil)
+            FirestoreService.shared.fs.save(object: route, to: "routes", with: id, completion: nil)
         }
         self.dismiss(animated: true, completion: nil)
     }

@@ -1,33 +1,33 @@
 import UIKit
 
-class ARAddorViewVC: UIViewController {
+class RouteAddImagesPresentrVC: UIViewController {
 
-    var delegate: ARAddorViewDelegate?
+    var delegate: AddImagesDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let viewDiagrams = UIButton()
-        viewDiagrams.setTitle("View Diagrams", for: .normal)
-        viewDiagrams.titleLabel?.font = UIFont(name: "Avenir-Black", size: 25)
-        viewDiagrams.setTitleColor(UIColor(named: "PinkAccentDark"), for: .normal)
-        viewDiagrams.addTarget(self, action: #selector(hitView), for: .touchUpInside)
+        let addPhotos = UIButton()
+        addPhotos.setTitle("Add Photos", for: .normal)
+        addPhotos.titleLabel?.font = UIFont(name: "Avenir-Black", size: 25)
+        addPhotos.setTitleColor(UIColor(named: "PinkAccentDark"), for: .normal)
+        addPhotos.addTarget(self, action: #selector(hitAddPhotos), for: .touchUpInside)
 
         let addDiagrams = UIButton()
         addDiagrams.setTitle("Add Diagrams", for: .normal)
         addDiagrams.titleLabel?.font = UIFont(name: "Avenir-Black", size: 25)
         addDiagrams.setTitleColor(UIColor(named: "PinkAccentDark"), for: .normal)
         addDiagrams.backgroundColor = UIColor(hex: "#F2F2F2")
-        addDiagrams.addTarget(self, action: #selector(hitAdd), for: .touchUpInside)
+        addDiagrams.addTarget(self, action: #selector(hitAddAr), for: .touchUpInside)
 
-        view.addSubview(viewDiagrams)
+        view.addSubview(addPhotos)
         view.addSubview(addDiagrams)
 
-        viewDiagrams.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: viewDiagrams, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: viewDiagrams, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: viewDiagrams, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: viewDiagrams, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        addPhotos.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: addPhotos, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: addPhotos, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: addPhotos, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: addPhotos, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
         addDiagrams.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: addDiagrams, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
@@ -40,21 +40,21 @@ class ARAddorViewVC: UIViewController {
     }
 
     @objc
-    func hitAdd() {
+    func hitAddAr() {
         dismiss(animated: true) {
             self.delegate?.hitAddAr()
         }
     }
 
     @objc
-    func hitView() {
+    func hitAddPhotos() {
         dismiss(animated: true) {
-            self.delegate?.hitViewAr()
+            self.delegate?.hitAddPhotos()
         }
     }
 }
 
-protocol ARAddorViewDelegate {
+protocol AddImagesDelegate {
     func hitAddAr()
-    func hitViewAr()
+    func hitAddPhotos()
 }

@@ -22,7 +22,7 @@ class CommentViewModel {
         return self.comment.imageUrl
     }
     func getUsername(completion: @escaping (_ username: String) -> Void) {
-        Firestore.firestore().query(collection: "users", by: "id", with: self.userId, of: User.self) { user in
+        FirestoreService.shared.fs.query(collection: "users", by: "id", with: self.userId, of: User.self) { user in
             guard let user = user.first else { return }
             let userViewModel = UserViewModel(user: user)
             completion(userViewModel.name)

@@ -57,7 +57,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         routeViewModel.addStar(stars, forUserId: userId)
         cosmos.rating = routeViewModel.averageStar ?? 0.0
-        Firestore.firestore().save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
+        FirestoreService.shared.fs.save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
     }
 
     @objc

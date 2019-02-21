@@ -160,7 +160,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
         guard let bgImage = centerArButton.imageView?.image,
             let dgImage = arButton.diagramImageView.image,
-            let bgData = bgImage.pngData() as NSData?,
+            let bgData = bgImage.jpegData(compressionQuality: 0.1) as NSData?,
             let dgData = dgImage.pngData() as NSData? else { return }
 
         let imageId = UUID().uuidString
@@ -175,7 +175,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
                 bgUrl = "\(downloadURL)"
                 if !dgUrl.isEmpty {
                     self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    Firestore.firestore().save(object: route, to: "routes", with: route.id, completion: nil)
+                    FirestoreService.shared.fs.save(object: route, to: "routes", with: route.id, completion: nil)
                 }
             }
         }
@@ -187,7 +187,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
                 dgUrl = "\(downloadURL)"
                 if !bgUrl.isEmpty {
                     self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    Firestore.firestore().save(object: route, to: "routes", with: route.id, completion: nil)
+                    FirestoreService.shared.fs.save(object: route, to: "routes", with: route.id, completion: nil)
                 }
             }
         }

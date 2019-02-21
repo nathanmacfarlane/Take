@@ -61,7 +61,7 @@ struct NotificationMessage: Codable, Notification {
     }
 
     func clear(completion: ((_ success: Bool) -> Void)? ) {
-        Firestore.firestore().delete(document: id, from: "notifications") { successful in
+        FirestoreService.shared.fs.delete(document: id, from: "notifications") { successful in
             completion?(successful)
         }
     }

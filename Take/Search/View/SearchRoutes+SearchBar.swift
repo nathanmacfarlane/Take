@@ -1,4 +1,3 @@
-import FirebaseFirestore
 import Foundation
 import UIKit
 
@@ -12,7 +11,7 @@ extension SearchRoutesVC: UISearchBarDelegate {
         self.mySearchBar.resignFirstResponder()
 
         guard let searchText = searchBar.text else { return }
-        Firestore.firestore().query(collection: "routes", by: "name", with: searchText, of: Route.self) { routes in
+        FirestoreService.shared.fs.query(collection: "routes", by: "name", with: searchText, of: Route.self) { routes in
             self.resultsMashed.append(contentsOf: routes)
             self.results.routes.append(contentsOf: routes)
             self.myTableView.reloadData()

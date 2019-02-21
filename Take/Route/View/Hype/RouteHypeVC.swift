@@ -24,7 +24,7 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
 
         hypeData = []
 
-        Firestore.firestore().query(collection: "comments", by: "routeId", with: routeViewModel.id, of: Comment.self) { comments in
+        FirestoreService.shared.fs.query(collection: "comments", by: "routeId", with: routeViewModel.id, of: Comment.self) { comments in
             self.hypeData.append(contentsOf: comments)
             self.tableView.reloadData()
         }
@@ -71,15 +71,15 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         return UITableViewCell()
     }
 
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let hypeType = tableData[indexPath.row]
-//        if hypeType as? Comment != nil {
-//            return 200
-//        } else if hypeType as? Star != nil {
-//            return 125
-//        }
-//        return 75
-//    }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        let hypeType = tableData[indexPath.row]
+        if hypeType as? Comment != nil {
+            return 200
+        } else if hypeType as? Star != nil {
+            return 125
+        }
+        return 75
+    }
 
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimaryDark")

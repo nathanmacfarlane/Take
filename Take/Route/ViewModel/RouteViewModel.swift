@@ -148,7 +148,7 @@ class RouteViewModel {
 
     func getArea(completion: @escaping (_ area: Area) -> Void) {
         if let routeId = self.route.area {
-            Firestore.firestore().query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
+            FirestoreService.shared.fs.query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
                 guard let area = area.first else { return }
                 completion(area)
             }
@@ -183,35 +183,16 @@ class RouteViewModel {
         .resume()
     }
 
-    func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
-        var images: [String: UIImage] = [:]
-        var count = 0
-        for routeImage in route.imageUrls {
-            guard let theURL = URL(string: routeImage.value) else { continue }
-            URLSession.shared.dataTask(with: theURL) { data, _, _ in
-                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                images[routeImage.key] = theImage
-                count += 1
-                if count == self.route.imageUrls.count {
-                    completion(images)
-                }
-            }
-            .resume()
-        }
-    }
-
     func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
-        guard let routeImage = route.imageUrls.first, let theURL = URL(string: routeImage.value) else {
+        guard let commentId = route.comments.first else {
             completion(nil, nil)
             return
         }
-        URLSession.shared.dataTask(with: theURL) { data, _, _ in
-            guard let theData = data, let theImage = UIImage(data: theData) else {
-                completion(nil, nil)
-                return
+        FirestoreService.shared.fs.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comment in
+            guard let comment = comment.first else { return }
+            comment.imageUrl?.getImage { image in
+                completion(commentId, image)
             }
-            completion(routeImage.key, theImage)
         }
-        .resume()
     }
 }

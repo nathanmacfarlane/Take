@@ -35,7 +35,7 @@ extension Firestore {
     ///   - completion: Optional. Use for notification upon completion of save
     func save<T>(object: T, to collection: String, with title: String, completion: (() -> Void)? ) where T: Encodable {
         guard let data = try? FirebaseEncoder().encode(object) as? [String: Any], let objectData = data else { return }
-        Firestore.firestore().collection(collection).document(title).setData(objectData) { _ in
+        FirestoreService.shared.fs.collection(collection).document(title).setData(objectData) { _ in
             completion?()
         }
     }
@@ -45,7 +45,7 @@ extension Firestore {
     ///   - collection: The collection that contains the document to be deleted
     ///   - completion: Optional. Use for notification upon completion of deletion
     func delete(document: String, from collection: String, completion: ((_ success: Bool) -> Void)? ) {
-        Firestore.firestore().collection(collection).document(document).delete { err in
+        FirestoreService.shared.fs.collection(collection).document(document).delete { err in
             completion?(err != nil)
         }
     }

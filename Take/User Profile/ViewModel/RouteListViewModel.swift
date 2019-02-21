@@ -50,7 +50,7 @@ struct RouteListViewModel {
         for userId in routeList.routes.keys {
             let routesForUser = routeList.routes[userId] ?? []
             for routeId in routesForUser {
-                Firestore.firestore().query(collection: "routes", by: "id", with: routeId, of: Route.self) { route in
+                FirestoreService.shared.fs.query(collection: "routes", by: "id", with: routeId, of: Route.self) { route in
                     if let route = route.first {
                         if routes[userId] == nil {
                             routes[userId] = [route]
@@ -70,7 +70,7 @@ struct RouteListViewModel {
     func getContributors(completion: @escaping (_ contributors: [User]) -> Void) {
         var users: [User] = []
         for userId in routeList.contributors {
-            Firestore.firestore().query(collection: "users", by: "id", with: userId, of: User.self) { user in
+            FirestoreService.shared.fs.query(collection: "users", by: "id", with: userId, of: User.self) { user in
                 guard let user = user.first else { return }
                 users.append(user)
                 if users.count == self.routeList.contributors.count {
@@ -81,7 +81,7 @@ struct RouteListViewModel {
     }
 
     func getOwner(completion: @escaping (_ owner: User) -> Void) {
-        Firestore.firestore().query(collection: "users", by: "id", with: routeList.owner, of: User.self) { owner in
+        FirestoreService.shared.fs.query(collection: "users", by: "id", with: routeList.owner, of: User.self) { owner in
             guard let owner = owner.first else { return }
             completion(owner)
         }
@@ -94,7 +94,7 @@ struct RouteListViewModel {
         }
         userRoutes = userRoutes.filter { $0 != route.id }
         routeList.routes[user.id] = userRoutes
-        Firestore.firestore().save(object: routeList, to: "routeLists", with: routeList.id) {
+        FirestoreService.shared.fs.save(object: routeList, to: "routeLists", with: routeList.id) {
             completion(true)
         }
     }

@@ -1,7 +1,8 @@
 import ARKit
+import SceneKit
 import UIKit
 
-class RouteArViewVC: UIViewController, ARSCNViewDelegate {
+class RouteArViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     // MARK: - IBOutlets
     var sceneView: ARSCNView!
@@ -9,6 +10,7 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate {
     // MARK: - Variables
     var route: Route?
     var diagrams: [UIImage] = []
+//    var diagrams: [ARReferenceImage] = []
 
     // MARK: - View load/unload
     override func viewDidLoad() {
@@ -17,8 +19,24 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate {
         var refImageArr: [ARReferenceImage] = []
         var count = 0
 
-        sceneView = ARSCNView(frame: view.frame)
+        sceneView = ARSCNView()
+        sceneView.delegate = self
+        sceneView.session.delegate = self
         view.addSubview(sceneView)
+
+//        let referenceImages = Set(diagrams)
+//        let configuration = ARWorldTrackingConfiguration()
+//        configuration.detectionImages = referenceImages
+//        self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+
+        sceneView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: sceneView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: sceneView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: sceneView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: sceneView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+
+        let config = ARImageTrackingConfiguration()
+        sceneView.session.run(config)
 
         if let route = route {
             let arKeys = Array(route.routeArUrls.keys)
@@ -35,20 +53,14 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate {
                             let referenceImages = Set(refImageArr)
                             let configuration = ARWorldTrackingConfiguration()
                             configuration.detectionImages = referenceImages
-                            self.sceneView.session.run(configuration)
+                            DispatchQueue.main.async {
+                                self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+                            }
                         }
                     }
                 }
             }
         }
-
-//        for image in theRoute?.ardiagrams ?? [] {
-//            guard let cgImage = image.bgImage.cgImage else { continue }
-//            let refImage = ARReferenceImage(cgImage, orientation: .up, physicalWidth: 10)
-//            refImage.name = "\(count)"
-//            refImageArr.append(refImage)
-//            count += 1
-//        }
 
     }
 
@@ -56,6 +68,34 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate {
         super.viewWillDisappear(animated)
         sceneView.session.pause()
     }
+
+//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+//        guard let imageAnchor = anchor as? ARImageAnchor else { return }
+//        let referenceImage = imageAnchor.referenceImage
+//        DispatchQueue.global(qos: .background).async {
+//
+//            // Create a plane to visualize the initial position of the detected image.
+//            let plane = SCNPlane(width: referenceImage.physicalSize.width,
+//                                 height: referenceImage.physicalSize.height)
+//            let planeNode = SCNNode(geometry: plane)
+//            planeNode.opacity = 0.25
+//
+//            /*
+//             `SCNPlane` is vertically oriented in its local coordinate space, but
+//             `ARImageAnchor` assumes the image is horizontal in its local space, so
+//             rotate the plane to match.
+//             */
+//            planeNode.eulerAngles.x = -.pi / 2
+//
+//            // Add the plane visualization to the scene.
+//            node.addChildNode(planeNode)
+//        }
+//
+//        DispatchQueue.main.async {
+//            let imageName = referenceImage.name ?? ""
+//            print("Detected image “\(imageName)”")
+//        }
+//    }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
@@ -88,16 +128,4 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate {
         let transform = SCNMatrix4Mult(translation, rotation)
         planeMaterial.diffuse.contentsTransform = transform
     }
-
-    func imageByCombiningImage(firstImage: UIImage, withImage secondImage: UIImage) -> UIImage {
-        let size = CGSize(width: 300, height: 300)
-        UIGraphicsBeginImageContext(size)
-        let areaSize = CGRect(x: 0, y: 0, width: size.width, height: size.height)
-        firstImage.draw(in: areaSize)
-        secondImage.draw(in: areaSize, blendMode: .destinationAtop, alpha: 1.0)
-        guard let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() else { return UIImage() }
-        UIGraphicsEndImageContext()
-        return newImage
-    }
 }
-

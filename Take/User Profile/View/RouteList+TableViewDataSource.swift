@@ -14,7 +14,7 @@ extension RouteListVC: UITableViewDataSource {
         cell.difficultyLabel.text = rvm.rating
         cell.typesLabel.text = rvm.typesString
         cell.selectionStyle = .none
-        Firestore.firestore().query(collection: "users", by: "id", with: cellRoutes[indexPath.row].owner, of: User.self) { user in
+        FirestoreService.shared.fs.query(collection: "users", by: "id", with: cellRoutes[indexPath.row].owner, of: User.self) { user in
             if let user = user.first {
                 let userViewModel = UserViewModel(user: user)
                 userViewModel.getProfilePhoto { image in

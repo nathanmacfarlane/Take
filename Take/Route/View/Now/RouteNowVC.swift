@@ -40,7 +40,7 @@ class RouteNowVC: UIViewController {
 
         weatherIconImageView.image = UIImage()
         latAndLongLabel.text = routeViewModel.latAndLongString
-        sunsetValueLabel.text = "2"
+        sunsetValueLabel.text = ""
         windTypeLabel.text = "MPH"
         tempTypeLabel.text = "°F"
         sunsetTypeLabel.text = "PM"

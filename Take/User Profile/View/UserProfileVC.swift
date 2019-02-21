@@ -68,7 +68,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
     func selectedNotification(_ noti: Notification) {
         if let noti = noti as? NotificationCollaboration {
-            Firestore.firestore().query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
+            FirestoreService.shared.fs.query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
                 guard let routeList = routeList.first else { return }
                 let routeListVC = RouteListVC()
                 routeListVC.user = self.user

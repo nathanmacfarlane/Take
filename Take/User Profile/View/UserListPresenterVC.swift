@@ -13,9 +13,8 @@ class UserListPresenterVC: UIViewController, UITableViewDelegate, UITableViewDat
         super.viewDidLoad()
 
         initViews()
-        let db = Firestore.firestore()
         for friend in currentUser.user.friends {
-            db.query(collection: "users", by: "id", with: friend, of: User.self) { user in
+            FirestoreService.shared.fs.query(collection: "users", by: "id", with: friend, of: User.self) { user in
                 guard let user = user.first else { return }
                 self.users.append(UserViewModel(user: user))
                 DispatchQueue.main.async {
@@ -47,13 +46,12 @@ class UserListPresenterVC: UIViewController, UITableViewDelegate, UITableViewDat
         let user = users[indexPath.row]
         if !routeList.contributors.contains(user.id) && !routeList.invitees.contains(user.id) {
             routeList.invitees.append(user.id)
-            let db = Firestore.firestore()
-            db.save(object: routeList, to: "routeLists", with: routeList.id) {
+            FirestoreService.shared.fs.save(object: routeList, to: "routeLists", with: routeList.id) {
                 self.dismiss(animated: true, completion: nil)
             }
             let title = "\(user.name) added you to \(routeList.name)"
             let notification = NotificationCollaboration(date: Date(), fromUser: currentUser.id, toUser: user.id, routeListId: routeList.id, title: title)
-            db.save(object: notification, to: "notifications", with: notification.id, completion: nil)
+            FirestoreService.shared.fs.save(object: notification, to: "notifications", with: notification.id, completion: nil)
         }
     }
 

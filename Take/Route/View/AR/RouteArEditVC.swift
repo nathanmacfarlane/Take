@@ -88,7 +88,7 @@ class RouteArEditVC: UIViewController, PHPhotoLibraryChangeObserver, UICollectio
         if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "RoutePhotoCVCell", for: indexPath) as? RoutePhotosCVC {
             getImageFromCameraRoll(index: indexPath.row) { image in
                 DispatchQueue.main.async {
-                    cell.imageView.image = image
+                    cell.bgImageView.image = image
                 }
             }
             return cell

@@ -34,7 +34,7 @@
 		2203ADB0220D3707004EDBF2 /* HypeStarTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADAF220D3707004EDBF2 /* HypeStarTVC.swift */; };
 		2203ADB2220D3BF3004EDBF2 /* StarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB1220D3BF3004EDBF2 /* StarViewModel.swift */; };
 		2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB3220D3F64004EDBF2 /* HypeType.swift */; };
-		2203ADB6220D5363004EDBF2 /* ARAddorViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB5220D5363004EDBF2 /* ARAddorViewVC.swift */; };
+		2203ADB6220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB5220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift */; };
 		2204AAE320C23DFC0035E3B7 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 2204AAE220C23DFC0035E3B7 /* plus.png */; };
 		220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725A8213A6C01005448E8 /* RouteFirestore.swift */; };
 		220725AD213D05C0005448E8 /* placeholderUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 220725AC213D05BF005448E8 /* placeholderUser.png */; };
@@ -48,8 +48,8 @@
 		2211F3C32147492E00E79E99 /* Int.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211F3C22147492E00E79E99 /* Int.swift */; };
 		2211F3C62147539900E79E99 /* eraser.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3C42147539800E79E99 /* eraser.png */; };
 		2211F3C72147539900E79E99 /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3C52147539900E79E99 /* brush.png */; };
-		2215B92321B1002E00BDBA2F /* AddCommentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2215B92221B1002E00BDBA2F /* AddCommentViewController.swift */; };
-		2215B92521B253C700BDBA2F /* CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2215B92421B253C700BDBA2F /* CommentDelegate.swift */; };
+		22197B2E221CE22E0006303E /* FirestoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22197B2D221CE22E0006303E /* FirestoreService.swift */; };
+		22197B30221E56450006303E /* RoutePhotosAddVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22197B2F221E56450006303E /* RoutePhotosAddVC.swift */; };
 		22207DFE21CB4255004475AF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22207DFD21CB4255004475AF /* Notification.swift */; };
 		22207E0021CB4A55004475AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22207DFF21CB4A55004475AF /* GoogleService-Info.plist */; };
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
@@ -94,7 +94,6 @@
 		225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */ = {isa = PBXBuildFile; fileRef = 225FE8B420C63FAB00C98E1A /* imageLoading.png */; };
 		22640A2D21A227010033C006 /* share.png in Resources */ = {isa = PBXBuildFile; fileRef = 22640A2C21A227010033C006 /* share.png */; };
 		22640A2F21A229EC0033C006 /* download.png in Resources */ = {isa = PBXBuildFile; fileRef = 22640A2E21A229EC0033C006 /* download.png */; };
-		22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22640A3021A22F550033C006 /* CommentTableViewCell.swift */; };
 		2269862221BD0ABB008F7697 /* Lightbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862121BD0ABB008F7697 /* Lightbox.framework */; };
 		2269862521BD0B74008F7697 /* Cache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862321BD0B74008F7697 /* Cache.framework */; };
 		2269862621BD0B74008F7697 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862421BD0B74008F7697 /* Imaginary.framework */; };
@@ -128,12 +127,10 @@
 		22BDB74B21BE5B830064E7C1 /* SearchRoutes+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */; };
 		22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */; };
 		22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74E21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift */; };
-		22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75021BE5D630064E7C1 /* AddComment+ImagePicker.swift */; };
 		22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */; };
 		22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */; };
 		22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */; };
 		22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */; };
-		22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */; };
 		22CFAA082216A6B700801B37 /* ArColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA072216A6B700801B37 /* ArColorButton.swift */; };
 		22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA092216B55300801B37 /* ArActionButton.swift */; };
 		22CFAA0C221891A600801B37 /* RouteArEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0B221891A600801B37 /* RouteArEditVC.swift */; };
@@ -143,6 +140,7 @@
 		22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3922093FE00053C48E /* HypeTVC.swift */; };
 		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
+		22F5D84D221E7A4F006824C0 /* ARImageUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
 		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
 		71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE9221CF207009D0E5B /* DmViewModel.swift */; };
@@ -187,7 +185,7 @@
 		2203ADAF220D3707004EDBF2 /* HypeStarTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeStarTVC.swift; sourceTree = "<group>"; };
 		2203ADB1220D3BF3004EDBF2 /* StarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarViewModel.swift; sourceTree = "<group>"; };
 		2203ADB3220D3F64004EDBF2 /* HypeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeType.swift; sourceTree = "<group>"; };
-		2203ADB5220D5363004EDBF2 /* ARAddorViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARAddorViewVC.swift; sourceTree = "<group>"; };
+		2203ADB5220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAddImagesPresentrVC.swift; sourceTree = "<group>"; };
 		2204AAE220C23DFC0035E3B7 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
 		220725A8213A6C01005448E8 /* RouteFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestore.swift; sourceTree = "<group>"; };
 		220725AC213D05BF005448E8 /* placeholderUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderUser.png; sourceTree = "<group>"; };
@@ -201,8 +199,8 @@
 		2211F3C22147492E00E79E99 /* Int.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Int.swift; sourceTree = "<group>"; };
 		2211F3C42147539800E79E99 /* eraser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eraser.png; sourceTree = "<group>"; };
 		2211F3C52147539900E79E99 /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
-		2215B92221B1002E00BDBA2F /* AddCommentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCommentViewController.swift; sourceTree = "<group>"; };
-		2215B92421B253C700BDBA2F /* CommentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentDelegate.swift; sourceTree = "<group>"; };
+		22197B2D221CE22E0006303E /* FirestoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreService.swift; sourceTree = "<group>"; };
+		22197B2F221E56450006303E /* RoutePhotosAddVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotosAddVC.swift; sourceTree = "<group>"; };
 		22207DFB21CB2F49004475AF /* Take.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Take.entitlements; sourceTree = "<group>"; };
 		22207DFD21CB4255004475AF /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		22207DFF21CB4A55004475AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -248,7 +246,6 @@
 		225FE8B420C63FAB00C98E1A /* imageLoading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = imageLoading.png; sourceTree = "<group>"; };
 		22640A2C21A227010033C006 /* share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share.png; sourceTree = "<group>"; };
 		22640A2E21A229EC0033C006 /* download.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = download.png; sourceTree = "<group>"; };
-		22640A3021A22F550033C006 /* CommentTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommentTableViewCell.swift; sourceTree = "<group>"; };
 		2269862121BD0ABB008F7697 /* Lightbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Lightbox.framework; path = Carthage/Build/iOS/Lightbox.framework; sourceTree = "<group>"; };
 		2269862321BD0B74008F7697 /* Cache.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cache.framework; path = Carthage/Build/iOS/Cache.framework; sourceTree = "<group>"; };
 		2269862421BD0B74008F7697 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
@@ -282,12 +279,10 @@
 		22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+SearchBar.swift"; sourceTree = "<group>"; };
 		22BDB74E21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+CLLocationManager.swift"; sourceTree = "<group>"; };
-		22BDB75021BE5D630064E7C1 /* AddComment+ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AddComment+ImagePicker.swift"; sourceTree = "<group>"; };
 		22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteManager+PageBoy.swift"; sourceTree = "<group>"; };
 		22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+LightBox.swift"; sourceTree = "<group>"; };
-		22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CommentDelegate.swift"; sourceTree = "<group>"; };
 		22CFAA072216A6B700801B37 /* ArColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArColorButton.swift; sourceTree = "<group>"; };
 		22CFAA092216B55300801B37 /* ArActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArActionButton.swift; sourceTree = "<group>"; };
 		22CFAA0B221891A600801B37 /* RouteArEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArEditVC.swift; sourceTree = "<group>"; };
@@ -297,6 +292,7 @@
 		22E60D3922093FE00053C48E /* HypeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeTVC.swift; sourceTree = "<group>"; };
 		22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeCommentTVC.swift; sourceTree = "<group>"; };
 		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
+		22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARImageUrls.swift; sourceTree = "<group>"; };
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -370,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
+				22197B2C221CE21C0006303E /* Singletons */,
 				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				2293C4BC220BC55B00D5DB4A /* Area */,
 				227C7F8E21F100EE00115906 /* New-Edit Route */,
@@ -458,6 +455,14 @@
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
 		};
+		22197B2C221CE21C0006303E /* Singletons */ = {
+			isa = PBXGroup;
+			children = (
+				22197B2D221CE22E0006303E /* FirestoreService.swift */,
+			);
+			path = Singletons;
+			sourceTree = "<group>";
+		};
 		22207DFC21CB423B004475AF /* Notifications */ = {
 			isa = PBXGroup;
 			children = (
@@ -487,6 +492,7 @@
 			children = (
 				2234F5962213F82F00D2B8D9 /* ImagePicker.swift */,
 				22D9E63722167F9A002D8D9E /* ArButton.swift */,
+				22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */,
 			);
 			path = "Reusable Classes";
 			sourceTree = "<group>";
@@ -653,8 +659,6 @@
 		22BDB73721BE50B20064E7C1 /* Comment */ = {
 			isa = PBXGroup;
 			children = (
-				2215B92421B253C700BDBA2F /* CommentDelegate.swift */,
-				22BDB73921BE51050064E7C1 /* View */,
 				22BDB73121BE4C660064E7C1 /* Model */,
 			);
 			path = Comment;
@@ -672,16 +676,6 @@
 				2203ADB3220D3F64004EDBF2 /* HypeType.swift */,
 			);
 			path = Model;
-			sourceTree = "<group>";
-		};
-		22BDB73921BE51050064E7C1 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				22640A3021A22F550033C006 /* CommentTableViewCell.swift */,
-				2215B92221B1002E00BDBA2F /* AddCommentViewController.swift */,
-				22BDB75021BE5D630064E7C1 /* AddComment+ImagePicker.swift */,
-			);
-			path = View;
 			sourceTree = "<group>";
 		};
 		22BDB73A21BE51760064E7C1 /* Search */ = {
@@ -749,7 +743,7 @@
 				22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */,
 				22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */,
 				22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */,
-				22BDB75A21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift */,
+				22197B2F221E56450006303E /* RoutePhotosAddVC.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -759,7 +753,7 @@
 			children = (
 				223BB23021A7E93600130070 /* RouteManagerVC.swift */,
 				22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */,
-				2203ADB5220D5363004EDBF2 /* ARAddorViewVC.swift */,
+				2203ADB5220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -1076,7 +1070,6 @@
 				22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */,
 				2254180C2171D99E000F575A /* RouteTVC.swift in Sources */,
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
-				2215B92321B1002E00BDBA2F /* AddCommentViewController.swift in Sources */,
 				22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */,
 				2234F5942213564E00D2B8D9 /* RouteAddArVC.swift in Sources */,
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
@@ -1109,7 +1102,6 @@
 				2293C4CE220D2D2200D5DB4A /* CommentViewModel.swift in Sources */,
 				719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */,
 				2234F5972213F82F00D2B8D9 /* ImagePicker.swift in Sources */,
-				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
 				714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */,
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
@@ -1121,8 +1113,8 @@
 				2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
 				223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */,
+				22197B2E221CE22E0006303E /* FirestoreService.swift in Sources */,
 				22BDB74021BE569D0064E7C1 /* RouteDetail+Twicket.swift in Sources */,
-				2215B92521B253C700BDBA2F /* CommentDelegate.swift in Sources */,
 				22BDB74B21BE5B830064E7C1 /* SearchRoutes+TableViewDataSource.swift in Sources */,
 				043F788220AEA3E00043C08A /* Double.swift in Sources */,
 				043F788720AEA4120043C08A /* UIButton.swift in Sources */,
@@ -1134,6 +1126,8 @@
 				225EFA9221CB8FBE00C3952D /* UserListPresenterVC.swift in Sources */,
 				044061FE209D8A9D005C06C3 /* TypeButton.swift in Sources */,
 				2293C4C0220BC58E00D5DB4A /* Area.swift in Sources */,
+				22197B30221E56450006303E /* RoutePhotosAddVC.swift in Sources */,
+				22F5D84D221E7A4F006824C0 /* ARImageUrls.swift in Sources */,
 				2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */,
 				229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */,
 				22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */,
@@ -1146,11 +1140,10 @@
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
-				22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
-				2203ADB6220D5363004EDBF2 /* ARAddorViewVC.swift in Sources */,
+				2203ADB6220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift in Sources */,
 				2209A8E322169EEE00959C66 /* RouteArEditMenu.swift in Sources */,
 				2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */,
 				22BD6D5521C0E56F0047FF8A /* RouteListVC.swift in Sources */,
@@ -1211,7 +1204,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -1265,7 +1258,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
