@@ -130,6 +130,8 @@ PODS:
     - nanopb (~> 0.3)
   - gRPC-Core/Interface (1.14.0)
   - GTMSessionFetcher/Core (1.2.1)
+  - IHKeyboardAvoiding (4.6)
+  - IQKeyboardManagerSwift (6.2.0)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.6.0)
   - nanopb (0.3.901):
@@ -158,6 +160,8 @@ DEPENDENCIES:
   - Firebase/Storage
   - Geofirestore
   - GMStepper
+  - IHKeyboardAvoiding
+  - IQKeyboardManagerSwift
   - Mapbox-iOS-SDK
   - Presentr
   - SwiftLint
@@ -190,6 +194,8 @@ SPEC REPOS:
     - "gRPC-C++"
     - gRPC-Core
     - GTMSessionFetcher
+    - IHKeyboardAvoiding
+    - IQKeyboardManagerSwift
     - leveldb-library
     - Mapbox-iOS-SDK
     - nanopb
@@ -225,6 +231,8 @@ SPEC CHECKSUMS:
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
   GTMSessionFetcher: 32aeca0aa144acea523e1c8e053089dec2cb98ca
+  IHKeyboardAvoiding: 2a664fdb5f964359fa7ec8fc5c9aebb447583ff8
+  IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 204c04713477cf2a88c52c5a8eed1790eb75a02a
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
@@ -236,6 +244,6 @@ SPEC CHECKSUMS:
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: c87a73de550845a079cd8cfe98067ec11eb4d3e7
+PODFILE CHECKSUM: 33611c4e0b57803e96eb6401374ca1a2aba678dc
 
 COCOAPODS: 1.5.3

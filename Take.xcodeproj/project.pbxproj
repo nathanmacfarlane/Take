@@ -141,6 +141,8 @@
 		714C1D0822015AA900D0DECB /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0422015AA900D0DECB /* mountain.png */; };
 		714C1D0A2201613000D0DECB /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D092201613000D0DECB /* octo.png */; };
 		71624CE8221CCCC7009D0E5B /* MsgLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */; };
+		71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE9221CF207009D0E5B /* DmViewModel.swift */; };
+		7171B542221E55FA00740796 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171B541221E55FA00740796 /* Message.swift */; };
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
 		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
@@ -292,6 +294,8 @@
 		714C1D0422015AA900D0DECB /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mountain.png; path = ../../../../Downloads/mountain.png; sourceTree = "<group>"; };
 		714C1D092201613000D0DECB /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/octo.png; sourceTree = "<group>"; };
 		71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogVC.swift; sourceTree = "<group>"; };
+		71624CE9221CF207009D0E5B /* DmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmViewModel.swift; sourceTree = "<group>"; };
+		7171B541221E55FA00740796 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
 		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
@@ -485,6 +489,7 @@
 				2249F0A821C9F31D0032D58C /* RouteList.swift */,
 				2249F0AA21CA03F00032D58C /* RouteListTVC.swift */,
 				7184498622090C380029C023 /* DM.swift */,
+				7171B541221E55FA00740796 /* Message.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -494,6 +499,7 @@
 			children = (
 				2249F0AC21CA0F680032D58C /* RouteListViewModel.swift */,
 				2249F0AF21CA12C60032D58C /* UserViewModel.swift */,
+				71624CE9221CF207009D0E5B /* DmViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -975,6 +981,8 @@
 				"${BUILT_PRODUCTS_DIR}/GMStepper/GMStepper.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
+				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework",
 				"${PODS_ROOT}/Mapbox-iOS-SDK/dynamic/Mapbox.framework.dSYM",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
@@ -997,6 +1005,8 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GMStepper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Mapbox.framework",
 				"${DWARF_DSYM_FOLDER_PATH}/Mapbox.framework.dSYM",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
@@ -1074,6 +1084,7 @@
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
 				2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
+				71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
 				223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */,
@@ -1082,6 +1093,7 @@
 				22BDB74B21BE5B830064E7C1 /* SearchRoutes+TableViewDataSource.swift in Sources */,
 				043F788220AEA3E00043C08A /* Double.swift in Sources */,
 				043F788720AEA4120043C08A /* UIButton.swift in Sources */,
+				7171B542221E55FA00740796 /* Message.swift in Sources */,
 				043F788920AEA4220043C08A /* UIView.swift in Sources */,
 				22207DFE21CB4255004475AF /* Notification.swift in Sources */,
 				043F789120AEBF270043C08A /* UIImage.swift in Sources */,

@@ -11,4 +11,10 @@ struct DM: Codable {
 struct ThreadContent: Codable {
     var message: String
     var sender: String
+
+    init(message: String, sender: String) {
+        self.message = message
+        self.sender = sender
+    }
 }
+

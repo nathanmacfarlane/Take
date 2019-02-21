@@ -5,10 +5,11 @@ import Presentr
 import UIKit
 class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var user: User?
+    var friend: User?
     var dms: [DM] = []
+    var dm: DM?
     var profImage = UIImage(named: "rocki3.jpeg")
     var dmTableView: UITableView!
-    var friend: User?
     var friendId = String()
     
     override func viewDidLoad() {
@@ -19,7 +20,6 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func getDms() {
         let db = Firestore.firestore()
-//        print(self.user?.name)
         db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you shtink", of: DM.self) {
             dm in
             self.dms = dm
@@ -39,11 +39,11 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
         for notMe in dms[indexPath.row].userIds where (notMe != self.user?.id) {
             friendId = notMe
-            print(friendId)
         }
         let db = Firestore.firestore()
         db.query(collection: "users", by: "id", with: friendId, of: User.self) { users in
             guard let user = users.first else { print("noooo i suck"); return }
+            self.friend = user
                 cell.nameLabel.text = user.username // placeholder for username
                 let userViewModel = UserViewModel(user: user)
                 userViewModel.getProfilePhoto { image in
@@ -51,11 +51,29 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                         cell.profPic.setBackgroundImage(image, for: .normal)
                     }
                 }
-            
         }
         cell.messageLabel.text = dms[indexPath.row].Thread.first?.message
+        self.dm = dms[indexPath.row]
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    
+        let msgLog = MsgLogVC(collectionViewLayout: UICollectionViewFlowLayout())
+        msgLog.user = user
+        msgLog.dm = self.dm
+        msgLog.friend = self.friend
+        let nav = UINavigationController(rootViewController: msgLog)
+        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+    
     }
     
     @objc
