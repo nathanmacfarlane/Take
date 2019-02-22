@@ -9,7 +9,7 @@ class RoutePhotosCVC: UICollectionViewCell {
         // bgImage view
         bgImageView = UIImageView()
         bgImageView.contentMode = .scaleAspectFill
-        bgImageView.backgroundColor = UIColor(hexString: "#111114")
+        bgImageView.backgroundColor = UIColor(hex: "#111114")
         self.backgroundColor = .clear
         addSubview(bgImageView)
         bgImageView.translatesAutoresizingMaskIntoConstraints = false

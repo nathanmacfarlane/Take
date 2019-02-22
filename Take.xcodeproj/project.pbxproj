@@ -141,6 +141,8 @@
 		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5D84D221E7A4F006824C0 /* ARImageUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */; };
+		22F5D853221F3733006824C0 /* PhotoViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D852221F3733006824C0 /* PhotoViewerVC.swift */; };
+		22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D856221F731E006824C0 /* PaddingLabel.swift */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
 		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
 		71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE9221CF207009D0E5B /* DmViewModel.swift */; };
@@ -293,6 +295,9 @@
 		22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeCommentTVC.swift; sourceTree = "<group>"; };
 		22ECE97020C91AC300DCF44E /* NewAreaTarget.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTarget.png; sourceTree = "<group>"; };
 		22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARImageUrls.swift; sourceTree = "<group>"; };
+		22F5D84E221F0D47006824C0 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = ../Lightbox/Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
+		22F5D852221F3733006824C0 /* PhotoViewerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewerVC.swift; sourceTree = "<group>"; };
+		22F5D856221F731E006824C0 /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -493,6 +498,7 @@
 				2234F5962213F82F00D2B8D9 /* ImagePicker.swift */,
 				22D9E63722167F9A002D8D9E /* ArButton.swift */,
 				22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */,
+				22F5D856221F731E006824C0 /* PaddingLabel.swift */,
 			);
 			path = "Reusable Classes";
 			sourceTree = "<group>";
@@ -744,6 +750,7 @@
 				22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */,
 				22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */,
 				22197B2F221E56450006303E /* RoutePhotosAddVC.swift */,
+				22F5D852221F3733006824C0 /* PhotoViewerVC.swift */,
 			);
 			path = Photo;
 			sourceTree = "<group>";
@@ -789,6 +796,7 @@
 		F5A5B31038575E7A93581D1C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				22F5D84E221F0D47006824C0 /* Imaginary.framework */,
 				2269862321BD0B74008F7697 /* Cache.framework */,
 				2269862421BD0B74008F7697 /* Imaginary.framework */,
 				2269862121BD0ABB008F7697 /* Lightbox.framework */,
@@ -1067,6 +1075,7 @@
 				7184498722090C380029C023 /* DM.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
 				2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */,
+				22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */,
 				22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */,
 				2254180C2171D99E000F575A /* RouteTVC.swift in Sources */,
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
@@ -1110,6 +1119,7 @@
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */,
 				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
+				22F5D853221F3733006824C0 /* PhotoViewerVC.swift in Sources */,
 				2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
 				223B538D21A92A5B006E1824 /* RouteHypeVC.swift in Sources */,

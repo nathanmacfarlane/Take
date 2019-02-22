@@ -1,7 +1,7 @@
 import Blueprints
 import FirebaseAuth
 import FirebaseFirestore
-import Lightbox
+//import Lightbox
 import UIKit
 
 class RoutePhotosVC: UIViewController {
@@ -20,15 +20,6 @@ class RoutePhotosVC: UIViewController {
     // MARK: - Variables
     var images: [ARImageComment] = []
 
-    var lightboxImages: [LightboxImage] {
-        var temp: [LightboxImage] = []
-        for image in images {
-            guard let url = URL(string: image.image.bgImage ?? "") else { continue }
-            temp.append(LightboxImage(imageURL: url, text: image.comment ?? ""))
-        }
-        return temp
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,17 +32,13 @@ class RoutePhotosVC: UIViewController {
         }
 
         DispatchQueue.global(qos: .background).async {
-            var count = 0
             for commentId in self.routeViewModel.route.comments {
                 FirestoreService.shared.fs.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comments in
                     guard let comment = comments.first, let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
                     let image = ARImageUrls(bgImage: imgUrl)
                     let arImageContent = ARImageComment(image: image, comment: comment.message)
                     self.images.append(arImageContent)
-                    count += 1
-                    if count == self.routeViewModel.route.comments.count {
-                        self.myImagesCV.reloadData()
-                    }
+                    self.myImagesCV.insertItems(at: [IndexPath(item: self.images.count - 1, section: 0)])
                 }
             }
         }
@@ -67,10 +54,9 @@ class RoutePhotosVC: UIViewController {
                 FirestoreService.shared.fs.save(object: comment, to: "comments", with: comment.id, completion: nil)
                 self.routeViewModel.route.comments.append(comment.id)
                 FirestoreService.shared.fs.save(object: self.routeViewModel.route, to: "routes", with: self.routeViewModel.id, completion: nil)
-                // add url to images
                 let arImageComment = ARImageComment(image: ARImageUrls(bgImage: url?.absoluteString), comment: message)
                 self.images.append(arImageComment)
-                self.myImagesCV.reloadData()
+                self.myImagesCV.insertItems(at: [IndexPath(item: self.images.count - 1, section: 0)])
             }
         }
 
