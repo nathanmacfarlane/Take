@@ -18,7 +18,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var whippers: TypeButton!
     var partnerMatch =  UIButton()
     var climberSearch =  UIButton()
-    var profImage = UIImage(named: "rocki3.jpeg")
+    var profImage = UIImage()
     let homeImage = UIImage(named: "home.png")
     let carabinerImage = UIImage(named: "carabiner.png")
     let beerImage = UIImage(named: "beer.png")

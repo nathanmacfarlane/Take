@@ -10,7 +10,13 @@ class PartnerMatchVC: UIViewController {
         initViews()
     }
     
+    @objc func backToProf() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     func initViews() {
+        let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         
+        self.navigationItem.leftBarButtonItem = backButton
     }
 }

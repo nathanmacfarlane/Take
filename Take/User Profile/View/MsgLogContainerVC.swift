@@ -79,7 +79,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         }
         return cell
     }
-
     
     func initViews() {
         
