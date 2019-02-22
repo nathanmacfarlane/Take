@@ -52,7 +52,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                     }
                 }
         }
-        cell.messageLabel.text = dms[indexPath.row].Thread.first?.message
+        cell.messageLabel.text = dms[indexPath.row].Thread.last?.message
         self.dm = dms[indexPath.row]
         
         return cell

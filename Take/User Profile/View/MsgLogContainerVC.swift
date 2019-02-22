@@ -25,13 +25,13 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     print("Document data was empty.")
                     return
                 }
-                //                print("Current data: \(data)")
-                print("yoooo")
+               //
                 DispatchQueue.main.async {
                     self.msgTableView.reloadData()
+                    let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
+                    self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
         }
-        
         initViews()
     }
     
