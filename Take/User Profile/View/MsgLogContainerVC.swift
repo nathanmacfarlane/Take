@@ -126,6 +126,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        sendButton.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 100).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
         sendButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
@@ -133,7 +134,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         inputTextField.translatesAutoresizingMaskIntoConstraints = false
         inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 10).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: 10).isActive = true
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
     }
     
