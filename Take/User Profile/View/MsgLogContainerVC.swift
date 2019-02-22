@@ -2,7 +2,7 @@ import UIKit
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
-import UIKit
+import CodableFirebase
 
 class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var dmViewModel: DmViewModel!
@@ -25,7 +25,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     print("Document data was empty.")
                     return
                 }
-               //
+                let decoder = FirebaseDecoder()
+                guard let result = try? decoder.decode(DM.self, from: data as Any) else { return }
+                self.dm?.Thread = result.Thread
                 DispatchQueue.main.async {
                     self.msgTableView.reloadData()
                     let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
@@ -95,6 +97,8 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let sendButton = UIButton(type: .system)
         sendButton.setTitle("Send It", for: .normal)
         sendButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
+//        sendButton.backgroundColor = UIColor(named: "PinkAccent")
+//        sendButton.layer.cornerRadius = 8
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
     
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
@@ -123,7 +127,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         
         inputTextField.translatesAutoresizingMaskIntoConstraints = false
