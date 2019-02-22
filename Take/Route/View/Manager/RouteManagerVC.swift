@@ -38,10 +38,6 @@ class RouteManagerVC: TabmanViewController {
             appearance.layout.itemDistribution = .centered
         }
         self.title = routeViewModel.name
-
-        
-
-
     }
 
     @objc

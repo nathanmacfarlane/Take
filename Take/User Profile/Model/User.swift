@@ -11,4 +11,12 @@ struct User: Codable {
     var friends: [String]
     var types: [String] = [] // TR (Top Rope), Sport, Trad, Boulder
     var messageIds: [String] = []
+    var beer: String
+    var whips: String
+    var climbYear: String
+    var tradGrade: String
+    var trGrade: String
+    var sportGrade: String
+    var boulderGrade: String
+    var age: Int
 }

@@ -147,6 +147,7 @@
 		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
 		718449902209581F0029C023 /* DmTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498F2209581F0029C023 /* DmTVC.swift */; };
 		719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC917221F339900D167F0 /* MsgLogContainerVC.swift */; };
+		719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */; };
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
@@ -300,6 +301,7 @@
 		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
 		7184498F2209581F0029C023 /* DmTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmTVC.swift; sourceTree = "<group>"; };
 		719BC917221F339900D167F0 /* MsgLogContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogContainerVC.swift; sourceTree = "<group>"; };
+		719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerMatchVC.swift; sourceTree = "<group>"; };
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -362,6 +364,7 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
 				2293C4BC220BC55B00D5DB4A /* Area */,
 				227C7F8E21F100EE00115906 /* New-Edit Route */,
 				22207DFC21CB423B004475AF /* Notifications */,
@@ -750,6 +753,14 @@
 			path = Hype;
 			sourceTree = "<group>";
 		};
+		719BC91E221FD99400D167F0 /* Partnerr Match Stuff */ = {
+			isa = PBXGroup;
+			children = (
+				719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */,
+			);
+			path = "Partnerr Match Stuff";
+			sourceTree = "<group>";
+		};
 		811A414256C4F3EA9BE8B610 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1079,6 +1090,7 @@
 				2249F0AD21CA0F680032D58C /* RouteListViewModel.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				2293C4CE220D2D2200D5DB4A /* CommentViewModel.swift in Sources */,
+				719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */,
 				22BDB75B21BE60060064E7C1 /* RoutePhotos+CommentDelegate.swift in Sources */,
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
 				714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */,

@@ -40,7 +40,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         textField.textColor = .white
         textField.attributedPlaceholder = NSAttributedString(string: "Enter message... keep it short",
                                                                attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
-        textField.placeholder = "Enter message, keep it short"
         return textField
     }()
 
@@ -61,7 +60,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 90
-    }
+    } 
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dm?.Thread.count ?? 0
