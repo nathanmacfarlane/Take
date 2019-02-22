@@ -21,5 +21,7 @@ target 'Take' do
   pod "GMStepper"
   pod "WSTagsField"
   pod 'Cosmos'
+  pod 'IHKeyboardAvoiding'
+  pod 'IQKeyboardManagerSwift'
 
 end

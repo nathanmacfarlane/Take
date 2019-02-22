@@ -1,3 +1,4 @@
+import Firebase
 import FirebaseAuth
 import Foundation
 import UIKit
@@ -21,9 +22,15 @@ class InitialVC: UIViewController {
         searchRoutes.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
 
         let userProfile = UserProfileVC()
-        userProfile.title = "User Profile"
         userProfile.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "TabBarUser.png"), tag: 1)
         userProfile.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+        if let userId = Auth.auth().currentUser?.uid {
+            Firestore.firestore().query(collection: "users", by: "id", with: userId, of: User.self) { users in
+                guard let loggedInUser: User = users.first else { return }
+                // here you have access to the user that is currently logged in in the variable loggedInUser
+                userProfile.navigationItem.title = loggedInUser.username
+            }
+        }
 
         let mapVC = MapVC()
         mapVC.title = "Map View"

@@ -14,7 +14,7 @@ extension SearchRoutesVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let anyItem = self.resultsMashed[indexPath.row]
         switch self.resultsMashed[indexPath.row] {
-        case is Route:
+        case is Route: 
             guard let theRoute = anyItem as? Route else { return UITableViewCell() }
             return getRouteCell(route: theRoute)
         default:
