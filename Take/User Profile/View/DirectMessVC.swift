@@ -59,12 +59,12 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    
-        let msgLog = MsgLogVC(collectionViewLayout: UICollectionViewFlowLayout())
-        msgLog.user = user
-        msgLog.dm = self.dm
-        msgLog.friend = self.friend
-        let nav = UINavigationController(rootViewController: msgLog)
+        let msgLogContainer = MsgLogContainerVC()
+        msgLogContainer.user = user
+        msgLogContainer.dm = self.dm
+        msgLogContainer.friend = self.friend
+
+        let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false

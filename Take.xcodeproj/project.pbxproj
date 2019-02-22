@@ -140,13 +140,13 @@
 		714C1D0722015AA900D0DECB /* carabiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0322015AA800D0DECB /* carabiner.png */; };
 		714C1D0822015AA900D0DECB /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0422015AA900D0DECB /* mountain.png */; };
 		714C1D0A2201613000D0DECB /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D092201613000D0DECB /* octo.png */; };
-		71624CE8221CCCC7009D0E5B /* MsgLogVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */; };
 		71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE9221CF207009D0E5B /* DmViewModel.swift */; };
 		7171B542221E55FA00740796 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171B541221E55FA00740796 /* Message.swift */; };
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
 		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
 		718449902209581F0029C023 /* DmTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498F2209581F0029C023 /* DmTVC.swift */; };
+		719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC917221F339900D167F0 /* MsgLogContainerVC.swift */; };
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
@@ -293,13 +293,13 @@
 		714C1D0322015AA800D0DECB /* carabiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carabiner.png; path = ../../../../Downloads/carabiner.png; sourceTree = "<group>"; };
 		714C1D0422015AA900D0DECB /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mountain.png; path = ../../../../Downloads/mountain.png; sourceTree = "<group>"; };
 		714C1D092201613000D0DECB /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/octo.png; sourceTree = "<group>"; };
-		71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogVC.swift; sourceTree = "<group>"; };
 		71624CE9221CF207009D0E5B /* DmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmViewModel.swift; sourceTree = "<group>"; };
 		7171B541221E55FA00740796 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
 		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
 		7184498F2209581F0029C023 /* DmTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmTVC.swift; sourceTree = "<group>"; };
+		719BC917221F339900D167F0 /* MsgLogContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogContainerVC.swift; sourceTree = "<group>"; };
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -578,7 +578,7 @@
 				229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */,
 				225EFA9121CB8FBE00C3952D /* UserListPresenterVC.swift */,
 				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
-				71624CE7221CCCC7009D0E5B /* MsgLogVC.swift */,
+				719BC917221F339900D167F0 /* MsgLogContainerVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1070,6 +1070,7 @@
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
 				2249F0B621CA2BD50032D58C /* RouteListUserCVC.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
+				719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */,
 				2203ADB2220D3BF3004EDBF2 /* StarViewModel.swift in Sources */,
 				2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */,
 				22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */,
@@ -1115,7 +1116,6 @@
 				22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,
-				71624CE8221CCCC7009D0E5B /* MsgLogVC.swift in Sources */,
 				04C83B1320B556EF008D842D /* Date.swift in Sources */,
 				2203ADB6220D5363004EDBF2 /* ARAddorViewVC.swift in Sources */,
 				2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */,
