@@ -134,6 +134,7 @@
 		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
+		714968EE22211B45002E1850 /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714968ED22211B45002E1850 /* NewMessageVC.swift */; };
 		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
 		714C1D0522015AA900D0DECB /* beer.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0122015AA800D0DECB /* beer.png */; };
 		714C1D0622015AA900D0DECB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0222015AA800D0DECB /* home.png */; };
@@ -288,6 +289,7 @@
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		714968ED22211B45002E1850 /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
 		714C1CFF2201573C00D0DECB /* DirectMessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessVC.swift; sourceTree = "<group>"; };
 		714C1D0122015AA800D0DECB /* beer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beer.png; path = ../../../../Downloads/beer.png; sourceTree = "<group>"; };
 		714C1D0222015AA800D0DECB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../../../../Downloads/home.png; sourceTree = "<group>"; };
@@ -582,6 +584,7 @@
 				225EFA9121CB8FBE00C3952D /* UserListPresenterVC.swift */,
 				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
 				719BC917221F339900D167F0 /* MsgLogContainerVC.swift */,
+				714968ED22211B45002E1850 /* NewMessageVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1104,6 +1107,7 @@
 				22BDB74021BE569D0064E7C1 /* RouteDetail+Twicket.swift in Sources */,
 				2215B92521B253C700BDBA2F /* CommentDelegate.swift in Sources */,
 				22BDB74B21BE5B830064E7C1 /* SearchRoutes+TableViewDataSource.swift in Sources */,
+				714968EE22211B45002E1850 /* NewMessageVC.swift in Sources */,
 				043F788220AEA3E00043C08A /* Double.swift in Sources */,
 				043F788720AEA4120043C08A /* UIButton.swift in Sources */,
 				7171B542221E55FA00740796 /* Message.swift in Sources */,

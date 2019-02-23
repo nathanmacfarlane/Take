@@ -90,6 +90,22 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc
+    func toNewMess() {
+        let newDM = NewMessageVC()
+        newDM.user = self.user
+        newDM.dmList = self.dms
+        let nav = UINavigationController(rootViewController: newDM)
+        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+    }
+    
     func initViews() {
         
         self.navigationItem.title = "DMs"
@@ -102,8 +118,10 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         dmTableView.backgroundColor = UIColor(named: "BluePrimaryDark")
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
+        let newMessButton = UIBarButtonItem(image: UIImage(named: "icon_edit"), style: .done, target: self, action: #selector(toNewMess))
         
         self.navigationItem.leftBarButtonItem = backButton
+        self.navigationItem.rightBarButtonItem = newMessButton
         
         view.addSubview(dmTableView)
         
