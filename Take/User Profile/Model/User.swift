@@ -17,6 +17,6 @@ struct User: Codable {
     var tradGrade: String
     var trGrade: String
     var sportGrade: String
-    var boulderGrade: String
+    var boulderGrade: Int
     var age: Int
 }

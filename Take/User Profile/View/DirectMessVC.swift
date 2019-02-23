@@ -20,8 +20,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     func getDms() {
         let db = Firestore.firestore()
-        db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you shtink", of: DM.self) {
-            dm in
+        db.query(collection: "messages", by: "messageId", with: self.user?.messageIds.first ?? "you shtink", of: DM.self) { dm in
             self.dms = dm
             self.dmTableView.reloadData()
         }

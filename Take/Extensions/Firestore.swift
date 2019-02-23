@@ -18,7 +18,9 @@ extension Firestore {
         self.query(collection: collection, by: field, with: value) { documents in
             for doc in documents {
                 guard let result = try? decoder.decode(T.self, from: doc.data() as Any) else {
-                    continue }
+                    print("error parsing: \(doc.data())")
+                    continue
+                }
                 results.append(result)
             }
             completion(results)

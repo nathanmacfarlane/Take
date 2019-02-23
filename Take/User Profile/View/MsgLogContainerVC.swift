@@ -15,20 +15,19 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "")
-            .addSnapshotListener { documentSnapshot, error in
+        Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "").addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
+                    print("Error fetching document: \(String(describing: error))")
                     return
                 }
-                guard let data = document.data() else {
+                if document.data() == nil {
                     print("Document data was empty.")
                     return
                 }
-               //
                 DispatchQueue.main.async {
                     self.msgTableView.reloadData()
-                    let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
+                    guard let dm = self.dm else { return }
+                    let indexPath = IndexPath(row: dm.Thread.count - 1, section: 0)
                     self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
         }
@@ -38,12 +37,10 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     let inputTextField: UITextField = {
         let textField = UITextField()
         textField.textColor = .white
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter message... keep it short",
-                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        textField.attributedPlaceholder = NSAttributedString(string: "Enter message... keep it short", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
         return textField
     }()
 
-    
     @objc
     func handleSend() {
         guard let msg = self.inputTextField.text, let id = self.user?.id else { return }
@@ -51,10 +48,16 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
         self.dm?.Thread.append(tc) // should not have the ! but i am lazy
         Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
+        if let user = self.user, let friend = self.friend, let dm = self.dm {
+            let noti = NotificationMessage(fromUser: user, toUser: friend.id, message: tc.message, messagesId: dm.messageId)
+            Firestore.firestore().save(object: noti, to: "notifications", with: "\(dm.messageId)-\(dm.Thread.count)", completion: nil)
+        }
+
         self.inputTextField.text = ""
     }
     
-    @objc func backToProf() {
+    @objc
+    func backToProf() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -100,7 +103,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.title = self.friend?.username
-        
         
         view.addSubview(containerView)
         view.addSubview(sendButton)
@@ -151,7 +153,7 @@ class MsgCell: UITableViewCell {
     }
     
     required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        super.init(coder: aDecoder)
     }
     
     func setup() {
@@ -164,7 +166,6 @@ class MsgCell: UITableViewCell {
         senderLabel.font = UIFont(name: "Avenir", size: 18)
         senderLabel.text = "rockinator"
         
-        
         container.backgroundColor = UIColor(named: "BluePrimary")
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 8
@@ -176,8 +177,8 @@ class MsgCell: UITableViewCell {
         container.translatesAutoresizingMaskIntoConstraints = false
         container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9/10).isActive = true
-        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 2/3).isActive = true
+        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9 / 10).isActive = true
+        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 2 / 3).isActive = true
         
         message.translatesAutoresizingMaskIntoConstraints = false
         let messageWidthConst = NSLayoutConstraint(item: message, attribute: .width, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 3, constant: 0)
@@ -189,7 +190,7 @@ class MsgCell: UITableViewCell {
         senderLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0).isActive = true
         senderLabel.bottomAnchor.constraint(equalTo: container.topAnchor).isActive = true
         senderLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
-        senderLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
+        senderLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1 / 3).isActive = true
     }
     
 }

@@ -8,7 +8,8 @@ exports.userNotification = functions.firestore.document('notifications/{id}').on
 
   const payload = {
     notification: {
-      title: notification.title
+      title: notification.title,
+      body: notification.body
     }
   };
 
@@ -20,3 +21,25 @@ exports.userNotification = functions.firestore.document('notifications/{id}').on
 
   return 0;
 });
+
+// exports.dmNotification = functions.firestore.document('messages/{id}').onUpdate((change, context) => {
+//
+//   console.log('after: ', change.after.data())
+//   console.log('before: ', change.before.data())
+//
+//   // const notification = snap.data();
+//   //
+//   // const payload = {
+//   //   notification: {
+//   //     title: notification.title
+//   //   }
+//   // };
+//   //
+//   // admin.messaging().sendToTopic(notification.toUser, payload).then(function(response) {
+//   //   console.log('Notification sent successfully:', response);
+//   // }).catch(function(error){
+//   //   console.log('Notification sent failed:', error);
+//   // });
+//
+//   return 0;
+// });

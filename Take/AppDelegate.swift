@@ -2,9 +2,9 @@ import CodableFirebase
 import Firebase
 import FirebaseInstanceID
 import FirebaseMessaging
+import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
-import IQKeyboardManagerSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {

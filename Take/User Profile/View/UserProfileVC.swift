@@ -54,6 +54,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
     func getToDoLists(user: Firebase.User) {
         let db = Firestore.firestore()
+        print("user: \(user.uid)")
         db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
             guard let user = user.first else { return }
             self.user = user
@@ -120,6 +121,11 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
     @objc
     private func goLogout(sender: UIButton!) {
+        if let currentUser = Auth.auth().currentUser?.uid {
+            Messaging.messaging().unsubscribe(fromTopic: currentUser) { _ in
+                print("Unsubscribed from '\(currentUser)' topic")
+            }
+        }
         try? Auth.auth().signOut()
         self.present(LoginVC(), animated: true, completion: nil)
     }
@@ -189,7 +195,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 //        self.navigationItem.rightBarButtonItem = notiIconButton
         
         let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openDmView))
-        let msgIcon = UIImage(named: "mail.png")
+        let msgIcon = UIImage(named: "icon_msg")
         msgButton.image = msgIcon
         msgButton.tintColor = .lightGray
         self.navigationItem.rightBarButtonItem = msgButton

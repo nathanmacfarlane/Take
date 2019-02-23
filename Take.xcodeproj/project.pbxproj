@@ -135,21 +135,13 @@
 		22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */ = {isa = PBXBuildFile; fileRef = 22ECE97020C91AC300DCF44E /* NewAreaTarget.png */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
 		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
-		714C1D0522015AA900D0DECB /* beer.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0122015AA800D0DECB /* beer.png */; };
-		714C1D0622015AA900D0DECB /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0222015AA800D0DECB /* home.png */; };
-		714C1D0722015AA900D0DECB /* carabiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0322015AA800D0DECB /* carabiner.png */; };
-		714C1D0822015AA900D0DECB /* mountain.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D0422015AA900D0DECB /* mountain.png */; };
-		714C1D0A2201613000D0DECB /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 714C1D092201613000D0DECB /* octo.png */; };
 		71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71624CE9221CF207009D0E5B /* DmViewModel.swift */; };
 		7171B542221E55FA00740796 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7171B541221E55FA00740796 /* Message.swift */; };
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
-		7184498E220947E20029C023 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498D220947E10029C023 /* mail.png */; };
 		718449902209581F0029C023 /* DmTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498F2209581F0029C023 /* DmTVC.swift */; };
 		719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC917221F339900D167F0 /* MsgLogContainerVC.swift */; };
 		719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */; };
-		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
-		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -289,21 +281,13 @@
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		714C1CFF2201573C00D0DECB /* DirectMessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessVC.swift; sourceTree = "<group>"; };
-		714C1D0122015AA800D0DECB /* beer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beer.png; path = ../../../../Downloads/beer.png; sourceTree = "<group>"; };
-		714C1D0222015AA800D0DECB /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../../../../Downloads/home.png; sourceTree = "<group>"; };
-		714C1D0322015AA800D0DECB /* carabiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carabiner.png; path = ../../../../Downloads/carabiner.png; sourceTree = "<group>"; };
-		714C1D0422015AA900D0DECB /* mountain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mountain.png; path = ../../../../Downloads/mountain.png; sourceTree = "<group>"; };
-		714C1D092201613000D0DECB /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/octo.png; sourceTree = "<group>"; };
 		71624CE9221CF207009D0E5B /* DmViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmViewModel.swift; sourceTree = "<group>"; };
 		7171B541221E55FA00740796 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
-		7184498D220947E10029C023 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/mail.png; sourceTree = "<group>"; };
 		7184498F2209581F0029C023 /* DmTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmTVC.swift; sourceTree = "<group>"; };
 		719BC917221F339900D167F0 /* MsgLogContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogContainerVC.swift; sourceTree = "<group>"; };
 		719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerMatchVC.swift; sourceTree = "<group>"; };
-		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
-		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -394,15 +378,7 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				7184498D220947E10029C023 /* mail.png */,
 				7184498B220946E00029C023 /* msg.png */,
-				714C1D092201613000D0DECB /* octo.png */,
-				714C1D0122015AA800D0DECB /* beer.png */,
-				714C1D0322015AA800D0DECB /* carabiner.png */,
-				714C1D0222015AA800D0DECB /* home.png */,
-				714C1D0422015AA900D0DECB /* mountain.png */,
-				719D1E4921FE669E0091A25A /* rocki2.jpeg */,
-				719D1E4721FE65A90091A25A /* rocki3.jpeg */,
 				22640A2C21A227010033C006 /* share.png */,
 				225418172172A258000F575A /* edit.png */,
 				22640A2E21A229EC0033C006 /* download.png */,
@@ -866,7 +842,6 @@
 				229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */,
 				2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */,
 				225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */,
-				719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */,
 				0451454B209449E100FE72BB /* minus.png in Resources */,
 				04514549209432FE00FE72BB /* unchecked.png in Resources */,
 				046ED55620BE6F940055B35A /* Readme.md in Resources */,
@@ -874,18 +849,13 @@
 				0452556A2091B6DE00A4A384 /* Assets.xcassets in Resources */,
 				22640A2F21A229EC0033C006 /* download.png in Resources */,
 				22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */,
-				714C1D0522015AA900D0DECB /* beer.png in Resources */,
 				2211F3C72147539900E79E99 /* brush.png in Resources */,
 				04514547209432E100FE72BB /* checked.png in Resources */,
-				714C1D0822015AA900D0DECB /* mountain.png in Resources */,
 				229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */,
 				04C83B4820BB6D6B008D842D /* close-white.png in Resources */,
-				714C1D0622015AA900D0DECB /* home.png in Resources */,
 				2259C47520CEDAF70000065E /* user.png in Resources */,
 				229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */,
-				7184498E220947E20029C023 /* mail.png in Resources */,
 				2211F3BD2147431800E79E99 /* done.png in Resources */,
-				719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */,
 				2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */,
 				04C83B0B20B548EF008D842D /* profile.jpg in Resources */,
 				229C93DB20D5DB9F00FAA320 /* Anno-Knot.png in Resources */,
@@ -893,10 +863,8 @@
 				220725AD213D05C0005448E8 /* placeholderUser.png in Resources */,
 				2211F3BA214742DF00E79E99 /* undo.png in Resources */,
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
-				714C1D0A2201613000D0DECB /* octo.png in Resources */,
 				22640A2D21A227010033C006 /* share.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
-				714C1D0722015AA900D0DECB /* carabiner.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
 				225418182172A258000F575A /* edit.png in Resources */,
 				225418082171BFE0000F575A /* Colors.xcassets in Resources */,
