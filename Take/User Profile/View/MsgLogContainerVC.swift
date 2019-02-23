@@ -50,8 +50,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func handleSend() {
         guard let msg = self.inputTextField.text, let id = self.user?.id else { return }
         let tc = ThreadContent(message: msg, sender: id)
-        
-        self.dm?.Thread.append(tc) // should not have the ! but i am lazy
+        self.dm?.Thread.append(tc)
         Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
         self.inputTextField.text = ""
     }
@@ -160,7 +159,7 @@ class MsgCell: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = .clear
+        self.backgroundColor = .black
         
         message.textColor = .white
         message.font = UIFont(name: "Avenir", size: 18)
