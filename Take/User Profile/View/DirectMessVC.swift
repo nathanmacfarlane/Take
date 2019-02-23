@@ -6,7 +6,7 @@ import UIKit
 
 class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var user: User?
-    var friend: [User] = []
+    var friends: [User] = []
     var dms: [DM] = []
     var dm: DM?
     var profImage = UIImage(named: "rocki3.jpeg")
@@ -24,7 +24,6 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let db = Firestore.firestore()
         
         guard let messages = self.user?.messageIds else { return }
-        print(messages)
         for message in messages {
             db.query(collection: "messages", by: "messageId", with: message, of: DM.self) {
                 dm in
@@ -52,7 +51,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let db = Firestore.firestore()
         db.query(collection: "users", by: "id", with: friendId, of: User.self) { users in
             guard let user = users.first else { print("noooo i suck"); return }
-            self.friend.append(user)
+            self.friends.append(user)
                 cell.nameLabel.text = user.username // placeholder for username
                 let userViewModel = UserViewModel(user: user)
                 userViewModel.getProfilePhoto { image in
@@ -71,7 +70,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
         msgLogContainer.dm = self.dms[indexPath.row]
-        msgLogContainer.friend = self.friend[indexPath.row]
+        msgLogContainer.friend = self.friends[indexPath.row]
 
         let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
@@ -107,7 +106,6 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func initViews() {
-        
         self.navigationItem.title = "DMs"
         // table view
         self.dmTableView = UITableView()

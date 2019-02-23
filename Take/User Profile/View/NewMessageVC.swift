@@ -2,16 +2,18 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
     
     var user: User?
     var dmList: [DM] = []
+    var friends: [User] = []
     var friendTableView: UITableView!
+    var mySearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         initViews()
+        mySearchBar.text = ""
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -19,29 +21,17 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.friends.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { return SearchDMCell() }
-//        for notMe in dms[indexPath.row].userIds where (notMe != self.user?.id) {
-//            friendId = notMe
-//        }
-//        let db = Firestore.firestore()
-//        db.query(collection: "users", by: "id", with: friendId, of: User.self) { users in
-//            guard let user = users.first else { print("noooo i suck"); return }
-//            self.friend.append(user)
-//            cell.nameLabel.text = user.username // placeholder for username
-//            let userViewModel = UserViewModel(user: user)
-//            userViewModel.getProfilePhoto { image in
-//                DispatchQueue.main.async {
-//                    cell.profPic.setBackgroundImage(image, for: .normal)
-//                }
-//            }
-//        }
-//        cell.messageLabel.text = dms[indexPath.row].Thread.last?.message
-//        self.dm = dms[indexPath.row]
-//
+        guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { print("njifjinf")
+            return SearchDMCell() }
+        cell.usernameLabel.text = self.friends[indexPath.row].username
+        print(self.friends[indexPath.row].username)
+        print("helloooooooooo")
+        print(self.friends)
+        
         return cell
     }
     
@@ -50,12 +40,57 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         self.dismiss(animated: true, completion: nil)
     }
     
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        self.mySearchBar.resignFirstResponder()
+        
+        guard let searchText = searchBar.text else { return }
+        Firestore.firestore().query(collection: "users", by: "name", with: searchText, of: User.self) { users in
+            guard let user = users.first else { print("noooo i suck"); return }
+            self.friends.append(user)
+            self.friendTableView.reloadData()
+        }
+    }
+    
     func initViews() {
+        view.backgroundColor = UIColor(named: "BluePrimary")
+        
         self.navigationItem.title = "New DM"
-        
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
-        
         self.navigationItem.leftBarButtonItem = backButton
+        
+        // table
+        self.friendTableView = UITableView()
+        self.friendTableView.backgroundColor = .clear
+        friendTableView.register(SearchDMCell.self, forCellReuseIdentifier: "SearchDMCell")
+        friendTableView.dataSource = self
+        friendTableView.delegate = self
+        friendTableView.separatorStyle = .none
+        
+        // search bar stuff
+        self.mySearchBar = UISearchBar()
+        mySearchBar.delegate = self
+        mySearchBar.searchBarStyle = .minimal
+        mySearchBar.placeholder = "Search..."
+        
+        let textFieldInsideSearchBar = mySearchBar.value(forKey: "searchField") as? UITextField
+        textFieldInsideSearchBar?.textColor = .white
+        
+        self.view.addSubview(mySearchBar)
+        view.addSubview(self.friendTableView)
+        
+        // x, y, w, h
+        mySearchBar.translatesAutoresizingMaskIntoConstraints = false
+        let searchBarTopConst = NSLayoutConstraint(item: mySearchBar, attribute: .top, relatedBy: .equal, toItem: view.safeAreaLayoutGuide, attribute: .top, multiplier: 1, constant: 15)
+        let searchBarLeadingConst = NSLayoutConstraint(item: mySearchBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0)
+        let searchBarTrialingConst = NSLayoutConstraint(item: mySearchBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0)
+        NSLayoutConstraint.activate([searchBarTopConst, searchBarLeadingConst, searchBarTrialingConst])
+        
+        friendTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: friendTableView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: friendTableView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: friendTableView, attribute: .top, relatedBy: .equal, toItem: mySearchBar, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: friendTableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
     }
 }
 
@@ -83,7 +118,6 @@ class SearchDMCell: UITableViewCell {
         
         usernameLabel.textColor = .white
         usernameLabel.font = UIFont(name: "Avenir", size: 18)
-        usernameLabel.text = "rockinatorDefault"
         
         
         container.backgroundColor = UIColor(named: "BluePrimary")

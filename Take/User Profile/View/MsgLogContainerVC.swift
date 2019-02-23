@@ -82,6 +82,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func initViews() {
+        view.backgroundColor = .black
         
         self.msgTableView = UITableView()
         self.msgTableView.backgroundColor = .clear
