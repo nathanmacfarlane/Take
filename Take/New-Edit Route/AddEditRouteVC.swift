@@ -32,19 +32,20 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
 
     @objc
     func saveRoute() {
-        route?.rating = Int(difficultyStepper.value)
-        route?.name = nameField.text ?? ""
-        route?.pitches = Int(pitchesStepper.value)
-        route?.buffer = self.buffer
-        route?.types = typesField.tags.map { $0.text }
-        if route?.latitude == nil {
-            route?.latitude = 35.30138770099251
+        guard let route = route else { return }
+        route.rating = Int(difficultyStepper.value)
+        route.name = nameField.text ?? ""
+        route.pitches = Int(pitchesStepper.value)
+        route.buffer = self.buffer
+        route.types = typesField.tags.map { $0.text }
+        if route.latitude == nil {
+            route.latitude = 35.51425171
         }
-        if route?.longitude == nil {
-            route?.longitude = -120.69601771685053
+        if route.longitude == nil {
+            route.longitude = -120.67471753
         }
-        if let id = route?.id {
-            FirestoreService.shared.fs.save(object: route, to: "routes", with: id, completion: nil)
+        FirestoreService.shared.fs.save(object: route, to: "routes", with: route.id) {
+            RouteViewModel(route: route).saveToGeoFire()
         }
         self.dismiss(animated: true, completion: nil)
     }

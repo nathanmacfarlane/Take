@@ -25,7 +25,8 @@ class RoutePhotosVC: UIViewController {
 
         self.initViews()
 
-        self.routeViewModel.route.routeArUrls.forEach { item in
+        for item in self.routeViewModel.route.routeArUrls {
+            if item.value.isEmpty { continue }
             let image = ARImageUrls(dgImage: item.value[1], bgImage: item.value[0])
             let arImageContent = ARImageComment(image: image, comment: nil)
             images.append(arImageContent)
@@ -37,8 +38,12 @@ class RoutePhotosVC: UIViewController {
                     guard let comment = comments.first, let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
                     let image = ARImageUrls(bgImage: imgUrl)
                     let arImageContent = ARImageComment(image: image, comment: comment.message)
-                    self.images.append(arImageContent)
-                    self.myImagesCV.insertItems(at: [IndexPath(item: self.images.count - 1, section: 0)])
+                    DispatchQueue.main.async {
+                        self.images.append(arImageContent)
+                        if self.images.count == self.routeViewModel.route.comments.count + self.routeViewModel.route.routeArUrls.count {
+                            self.myImagesCV.reloadData()
+                        }
+                    }
                 }
             }
         }

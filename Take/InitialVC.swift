@@ -37,7 +37,12 @@ class InitialVC: UIViewController {
         mapVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "TabMap.png"), tag: 1)
         mapVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
 
-        let controllerArray = [searchRoutes, userProfile, mapVC]
+        let routeArView = ARMenu()
+        routeArView.title = "AR Viewer"
+        routeArView.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_ar"), tag: 1)
+        routeArView.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+
+        let controllerArray = [searchRoutes, userProfile, mapVC, routeArView]
         tabBarCnt.viewControllers = controllerArray.map {
             let nav = UINavigationController(rootViewController: $0)
             nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")

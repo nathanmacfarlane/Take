@@ -2,7 +2,7 @@ import ARKit
 import SceneKit
 import UIKit
 
-class RouteArViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
+class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     // MARK: - IBOutlets
     var sceneView: ARSCNView!
@@ -11,24 +11,24 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
     var route: Route?
     var diagrams: [UIImage] = []
     var configuration: ARWorldTrackingConfiguration?
-//    var diagrams: [ARReferenceImage] = []
+    //    var diagrams: [ARReferenceImage] = []
 
     // MARK: - View load/unload
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        var refImageArr: [ARReferenceImage] = []
-//        var count = 0
+        //        var refImageArr: [ARReferenceImage] = []
+        //        var count = 0
 
         sceneView = ARSCNView()
         sceneView.delegate = self
         sceneView.session.delegate = self
         view.addSubview(sceneView)
 
-//        let referenceImages = Set(diagrams)
-//        let configuration = ARWorldTrackingConfiguration()
-//        configuration.detectionImages = referenceImages
-//        self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
+        //        let referenceImages = Set(diagrams)
+        //        let configuration = ARWorldTrackingConfiguration()
+        //        configuration.detectionImages = referenceImages
+        //        self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 
         sceneView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sceneView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
@@ -79,33 +79,33 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
 
     }
 
-//    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
-//        guard let imageAnchor = anchor as? ARImageAnchor else { return }
-//        let referenceImage = imageAnchor.referenceImage
-//        DispatchQueue.global(qos: .background).async {
-//
-//            // Create a plane to visualize the initial position of the detected image.
-//            let plane = SCNPlane(width: referenceImage.physicalSize.width,
-//                                 height: referenceImage.physicalSize.height)
-//            let planeNode = SCNNode(geometry: plane)
-//            planeNode.opacity = 0.25
-//
-//            /*
-//             `SCNPlane` is vertically oriented in its local coordinate space, but
-//             `ARImageAnchor` assumes the image is horizontal in its local space, so
-//             rotate the plane to match.
-//             */
-//            planeNode.eulerAngles.x = -.pi / 2
-//
-//            // Add the plane visualization to the scene.
-//            node.addChildNode(planeNode)
-//        }
-//
-//        DispatchQueue.main.async {
-//            let imageName = referenceImage.name ?? ""
-//            print("Detected image “\(imageName)”")
-//        }
-//    }
+    //    func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
+    //        guard let imageAnchor = anchor as? ARImageAnchor else { return }
+    //        let referenceImage = imageAnchor.referenceImage
+    //        DispatchQueue.global(qos: .background).async {
+    //
+    //            // Create a plane to visualize the initial position of the detected image.
+    //            let plane = SCNPlane(width: referenceImage.physicalSize.width,
+    //                                 height: referenceImage.physicalSize.height)
+    //            let planeNode = SCNNode(geometry: plane)
+    //            planeNode.opacity = 0.25
+    //
+    //            /*
+    //             `SCNPlane` is vertically oriented in its local coordinate space, but
+    //             `ARImageAnchor` assumes the image is horizontal in its local space, so
+    //             rotate the plane to match.
+    //             */
+    //            planeNode.eulerAngles.x = -.pi / 2
+    //
+    //            // Add the plane visualization to the scene.
+    //            node.addChildNode(planeNode)
+    //        }
+    //
+    //        DispatchQueue.main.async {
+    //            let imageName = referenceImage.name ?? ""
+    //            print("Detected image “\(imageName)”")
+    //        }
+    //    }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let imageAnchor = anchor as? ARImageAnchor else { return }
@@ -113,13 +113,13 @@ class RouteArViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate {
         DispatchQueue.global(qos: .background).async {
             let plane = SCNPlane(width: referenceImage.physicalSize.width, height: referenceImage.physicalSize.height)
             guard let referenceName = referenceImage.name, let index = Int(referenceName) else { return }
-//            guard let route = self.route else { return }
+            //            guard let route = self.route else { return }
             let diagram = self.diagrams[index]
-//            var theImage = self.imageByCombiningImage(firstImage: diagram, withImage: route.ardiagrams[index].bgImage)
+            //            var theImage = self.imageByCombiningImage(firstImage: diagram, withImage: route.ardiagrams[index].bgImage)
             //            plane.materials[0].diffuse.contents = theImage
             //            var theImage = self.theRoute!.ardiagrams![index].diagram!
             //            theImage = theImage.addTextToImage(drawText: self.theRoute!.name, atPoint: CGPoint(x: 20, y: 20))
-//            theImage = theImage.textToImage(drawText: route.name, atPoint: CGPoint(x: 20, y: 20))
+            //            theImage = theImage.textToImage(drawText: route.name, atPoint: CGPoint(x: 20, y: 20))
             plane.materials[0].diffuse.contents = diagram
             self.rotatePlane(planeMaterial: plane.materials[0])
 

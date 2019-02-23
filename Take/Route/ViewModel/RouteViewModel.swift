@@ -195,4 +195,14 @@ class RouteViewModel {
             }
         }
     }
+
+    func saveToGeoFire() {
+        let geoFirestoreRef = Firestore.firestore().collection("route-geos")
+        let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
+        geoFirestore.setLocation(location: location, forDocumentWithID: id) { error in
+            if error == nil {
+                print("Saved location successfully!")
+            }
+        }
+    }
 }

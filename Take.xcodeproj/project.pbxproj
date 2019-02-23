@@ -113,6 +113,8 @@
 		229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */; };
 		229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93EA20DB410800FAA320 /* Anno-Circle-Red.png */; };
 		229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */ = {isa = PBXBuildFile; fileRef = 229C93EE20DB42F000FAA320 /* Anno-Circle-Pink.png */; };
+		229DBF67221F9BDA0065CD6C /* ARViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DBF66221F9BDA0065CD6C /* ARViewVC.swift */; };
+		229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DBF68221FACED0065CD6C /* ARMenu.swift */; };
 		229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */; };
 		22BD6D4521BF53160047FF8A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4421BF53160047FF8A /* Weather.swift */; };
 		22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4621BF53F80047FF8A /* Forecast.swift */; };
@@ -267,6 +269,8 @@
 		229C93E020DB3D4C00FAA320 /* Anno-Circle-Blue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Blue.png"; sourceTree = "<group>"; };
 		229C93EA20DB410800FAA320 /* Anno-Circle-Red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Red.png"; sourceTree = "<group>"; };
 		229C93EE20DB42F000FAA320 /* Anno-Circle-Pink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Anno-Circle-Pink.png"; sourceTree = "<group>"; };
+		229DBF66221F9BDA0065CD6C /* ARViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewVC.swift; sourceTree = "<group>"; };
+		229DBF68221FACED0065CD6C /* ARMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMenu.swift; sourceTree = "<group>"; };
 		229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListPresenterVC.swift; sourceTree = "<group>"; };
 		22BD6D4421BF53160047FF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		22BD6D4621BF53F80047FF8A /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
@@ -371,6 +375,7 @@
 			isa = PBXGroup;
 			children = (
 				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
+				229DBF65221F9BBF0065CD6C /* ARView */,
 				22197B2C221CE21C0006303E /* Singletons */,
 				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				2293C4BC220BC55B00D5DB4A /* Area */,
@@ -581,6 +586,15 @@
 				2293C4C4220BDE4F00D5DB4A /* AreaViewModel.swift */,
 			);
 			path = "View Model";
+			sourceTree = "<group>";
+		};
+		229DBF65221F9BBF0065CD6C /* ARView */ = {
+			isa = PBXGroup;
+			children = (
+				229DBF66221F9BDA0065CD6C /* ARViewVC.swift */,
+				229DBF68221FACED0065CD6C /* ARMenu.swift */,
+			);
+			path = ARView;
 			sourceTree = "<group>";
 		};
 		22BD6D4221BF520E0047FF8A /* Now */ = {
@@ -1077,6 +1091,7 @@
 				2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */,
 				22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */,
 				22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */,
+				229DBF67221F9BDA0065CD6C /* ARViewVC.swift in Sources */,
 				2254180C2171D99E000F575A /* RouteTVC.swift in Sources */,
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
 				22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */,
@@ -1114,6 +1129,7 @@
 				22BD6D4B21BF66070047FF8A /* Constants.swift in Sources */,
 				714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */,
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
+				229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */,
 				2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */,
 				22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
@@ -1283,6 +1299,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
@@ -1312,6 +1329,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
 				CODE_SIGN_ENTITLEMENTS = Take/Take.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
