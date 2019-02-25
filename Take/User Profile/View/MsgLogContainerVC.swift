@@ -1,8 +1,8 @@
 import UIKit
+import CodableFirebase
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
-import CodableFirebase
 
 class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var dmViewModel: DmViewModel!
@@ -14,7 +14,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.title = self.friend?.username
         Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "")
             .addSnapshotListener { documentSnapshot, error in
                 guard let document = documentSnapshot else {
@@ -33,9 +33,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
                     self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
-        }
+            }
         initViews()
-    }
+        }
     
     let inputTextField: UITextField = {
         let textField = UITextField()
@@ -45,7 +45,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         return textField
     }()
 
-    
     @objc
     func handleSend() {
         guard let msg = self.inputTextField.text, let id = self.user?.id else { return }
@@ -55,7 +54,8 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         self.inputTextField.text = ""
     }
     
-    @objc func backToProf() {
+    @objc
+    func backToProf() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -103,8 +103,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.title = self.friend?.username
-        
         
         view.addSubview(containerView)
         view.addSubview(sendButton)

@@ -70,8 +70,18 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
         msgLogContainer.dm = self.dms[indexPath.row]
-        msgLogContainer.friend = self.friends[indexPath.row]
-
+        
+        // friend array was not in the expected order... so this is the work-around
+        for notMe in dms[indexPath.row].userIds where (notMe != self.user?.id) {
+            friendId = notMe
+        }
+        for fri in self.friends {
+            if(fri.id == friendId) {
+                print(fri)
+                msgLogContainer.friend = fri
+            }
+        }
+        
         let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")

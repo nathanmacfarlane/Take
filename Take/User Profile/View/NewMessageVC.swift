@@ -6,6 +6,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     var user: User?
     var dmList: [DM] = []
+    var dm: DM?
     var friends: [User] = []
     var friendTableView: UITableView!
     var mySearchBar: UISearchBar!
@@ -38,6 +39,41 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         return cell
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let userId = self.user?.id else { return }
+        let friendId = self.friends[indexPath.row].id
+        
+        let tc = ThreadContent(message: "", sender: userId)
+        dm = DM(messageId: UUID().uuidString, userIds: [userId, friendId], thread: [tc])
+        
+        if let messId = dm?.messageId { // append message id onto users
+            self.friends[indexPath.row].messageIds.append(messId)
+            self.user?.messageIds.append(messId)
+        }
+        
+        print(dm)
+        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
+        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
+        Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
+        
+        print("helooooooo")
+        let msgLogContainer = MsgLogContainerVC()
+        msgLogContainer.user = self.user
+        msgLogContainer.friend = self.friends[indexPath.row]
+        msgLogContainer.dm = dm
+
+        let nav = UINavigationController(rootViewController: msgLogContainer)
+        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+        
+    }
+    
     @objc
     func backToProf() {
         self.dismiss(animated: true, completion: nil)
@@ -49,7 +85,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         
         guard let searchText = searchBar.text else { return }
         Firestore.firestore().query(collection: "users", by: "name", with: searchText, of: User.self) { users in
-            guard let user = users.first else { print("noooo i suck"); return }
+            guard let user = users.first else { print("error in search bar"); return }
             self.friends.append(user)
             self.friendTableView.reloadData()
         }
