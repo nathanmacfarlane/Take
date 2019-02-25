@@ -17,7 +17,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 120
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -28,10 +28,13 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { print("njifjinf")
             return SearchDMCell() }
         cell.usernameLabel.text = self.friends[indexPath.row].username
-        print(self.friends[indexPath.row].username)
-        print("helloooooooooo")
-        print(self.friends)
         
+        let userViewModel = UserViewModel(user: self.friends[indexPath.row])
+        userViewModel.getProfilePhoto { image in
+            DispatchQueue.main.async {
+                cell.profPic.setBackgroundImage(image, for: .normal)
+            }
+        }
         return cell
     }
     
@@ -99,6 +102,7 @@ class SearchDMCell: UITableViewCell {
     var usernameLabel = UILabel()
     let container = UIView()
     var indent = CGFloat(100)
+    var profPic: TypeButton!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -113,29 +117,42 @@ class SearchDMCell: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = .black
+        self.backgroundColor = UIColor(named: "BluePrimary")
         
         
         usernameLabel.textColor = .white
-        usernameLabel.font = UIFont(name: "Avenir", size: 18)
+        usernameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
         
         
-        container.backgroundColor = UIColor(named: "BluePrimary")
+        container.backgroundColor = UIColor(named: "BluePrimaryDark")
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 8
         
+        profPic = TypeButton()
+        profPic.addBorder(width: 1)
+        profPic.layer.cornerRadius = 8
+        profPic.clipsToBounds = true
+        profPic.contentMode = .scaleAspectFit
+        
         addSubview(container)
         addSubview(usernameLabel)
+        addSubview(profPic)
+        
+        profPic.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: profPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: profPic, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 3 / 5, constant: 0).isActive = true
         
         container.translatesAutoresizingMaskIntoConstraints = false
         container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
         container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9/10).isActive = true
-        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 2/3).isActive = true
+        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 5/6).isActive = true
         
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        usernameLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0).isActive = true
-        usernameLabel.bottomAnchor.constraint(equalTo: container.topAnchor).isActive = true
+        usernameLabel.leftAnchor.constraint(equalTo: profPic.rightAnchor, constant: 25).isActive = true
+        usernameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
         usernameLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
         usernameLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
     }
