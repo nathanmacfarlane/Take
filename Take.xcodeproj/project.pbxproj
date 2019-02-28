@@ -54,6 +54,8 @@
 		22207E0021CB4A55004475AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22207DFF21CB4A55004475AF /* GoogleService-Info.plist */; };
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
 		2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2222745821ABAE170039E486 /* RoutePhotosCVC.swift */; };
+		222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222F7F9C22279368002E30C2 /* ARLoadingTVC.swift */; };
+		222F7F9F2227BD75002E30C2 /* ArImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222F7F9E2227BD75002E30C2 /* ArImage.swift */; };
 		2234F5942213564E00D2B8D9 /* RouteAddArVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F5932213564E00D2B8D9 /* RouteAddArVC.swift */; };
 		2234F5972213F82F00D2B8D9 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F5962213F82F00D2B8D9 /* ImagePicker.swift */; };
 		2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F598221540A100D2B8D9 /* RouteArEdit+Swifty.swift */; };
@@ -210,6 +212,8 @@
 		22207DFF21CB4A55004475AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2220E70F20C8E32400F525EC /* MKMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MKMapView.swift; sourceTree = "<group>"; };
 		2222745821ABAE170039E486 /* RoutePhotosCVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotosCVC.swift; sourceTree = "<group>"; };
+		222F7F9C22279368002E30C2 /* ARLoadingTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARLoadingTVC.swift; sourceTree = "<group>"; };
+		222F7F9E2227BD75002E30C2 /* ArImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArImage.swift; sourceTree = "<group>"; };
 		2234F5932213564E00D2B8D9 /* RouteAddArVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAddArVC.swift; sourceTree = "<group>"; };
 		2234F5962213F82F00D2B8D9 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2234F598221540A100D2B8D9 /* RouteArEdit+Swifty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteArEdit+Swifty.swift"; sourceTree = "<group>"; };
@@ -504,6 +508,7 @@
 				22D9E63722167F9A002D8D9E /* ArButton.swift */,
 				22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */,
 				22F5D856221F731E006824C0 /* PaddingLabel.swift */,
+				222F7F9E2227BD75002E30C2 /* ArImage.swift */,
 			);
 			path = "Reusable Classes";
 			sourceTree = "<group>";
@@ -593,6 +598,7 @@
 			children = (
 				229DBF66221F9BDA0065CD6C /* ARViewVC.swift */,
 				229DBF68221FACED0065CD6C /* ARMenu.swift */,
+				222F7F9C22279368002E30C2 /* ARLoadingTVC.swift */,
 			);
 			path = ARView;
 			sourceTree = "<group>";
@@ -1072,6 +1078,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2234F59B2215499B00D2B8D9 /* RouteView.swift in Sources */,
+				222F7F9F2227BD75002E30C2 /* ArImage.swift in Sources */,
 				22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */,
 				22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */,
 				2249F0B221CA26DF0032D58C /* RouteList+TableViewDelegate.swift in Sources */,
@@ -1109,6 +1116,7 @@
 				2293C4C5220BDE4F00D5DB4A /* AreaViewModel.swift in Sources */,
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
+				222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */,
 				22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */,
 				2249F0BC21CACEC80032D58C /* UserProfile+TableViewDataSource.swift in Sources */,
 				22541812217284C8000F575A /* RouteDetailVC.swift in Sources */,
