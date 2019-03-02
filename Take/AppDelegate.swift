@@ -1,5 +1,6 @@
 import CodableFirebase
 import Firebase
+import FirebaseFirestore
 import FirebaseInstanceID
 import FirebaseMessaging
 import IQKeyboardManagerSwift
@@ -27,6 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //        application.registerForRemoteNotifications()
 
         FirebaseApp.configure()
+
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = false
+        FirestoreService.shared.fs.settings = settings
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainView = InitialVC()

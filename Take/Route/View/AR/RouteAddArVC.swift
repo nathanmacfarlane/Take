@@ -1,9 +1,10 @@
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseStorage
 import Presentr
 import UIKit
 
-class RouteAddArVC: UIViewController, RouteArEditProtocol {
+class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
 
     // injections
     var route: Route?
@@ -12,6 +13,8 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
     var centerArButton: ArButton!
     var leftArButton: ArButton!
     var rightArButton: ArButton!
+    var commentBg: UILabel!
+    var commentField: UITextView!
 
     var cancelButton: UIButton!
     var saveButton: UIButton!
@@ -36,7 +39,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         rockLabel = UILabel()
         rockLabel.text = "ROCK"
         rockLabel.textAlignment = .center
-        rockLabel.font = UIFont(name: "Avenir-Black", size: 80)
+        rockLabel.font = UIFont(name: "Avenir-Black", size: 40)
         rockLabel.textColor = .black
 
         centerArButton = ArButton()
@@ -58,11 +61,16 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
             myMutableString.addAttribute(.foregroundColor, value: color, range: NSRange(location: start.encodedOffset, length: "(roughly 10 feet apart)".count))
             promptLabel.attributedText = myMutableString
         }
-        let promptLabel2 = UILabel()
-        promptLabel2.textColor = UIColor(hex: "#BEBEBE")
-        promptLabel2.font = UIFont(name: "Avenir-Book", size: 18)
-        promptLabel2.numberOfLines = 0
-        promptLabel2.text = "To begin, move to the corresponding location and tap on AR icon above."
+
+        commentBg = UILabel()
+        commentBg.backgroundColor = .white
+
+        commentField = UITextView()
+        commentField.textColor = .black
+        commentField.backgroundColor = .clear
+        commentField.font = UIFont(name: "Avenir-Book", size: 14)
+        commentField.delegate = self
+        commentField.returnKeyType = .done
 
         view.addSubview(saveButton)
         view.addSubview(cancelButton)
@@ -71,7 +79,8 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         view.addSubview(leftArButton)
         view.addSubview(rightArButton)
         view.addSubview(promptLabel)
-        view.addSubview(promptLabel2)
+        view.addSubview(commentBg)
+        view.addSubview(commentField)
 
         cancelButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
@@ -88,8 +97,8 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         rockLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: rockLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: rockLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: rockLabel, attribute: .top, relatedBy: .equal, toItem: cancelButton, attribute: .bottom, multiplier: 1, constant: 60).isActive = true
-        NSLayoutConstraint(item: rockLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 70).isActive = true
+        NSLayoutConstraint(item: rockLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: rockLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
 
         centerArButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: centerArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -109,15 +118,22 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         NSLayoutConstraint(item: rightArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
         NSLayoutConstraint(item: rightArButton, attribute: .width, relatedBy: .equal, toItem: rightArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
 
+        commentBg.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: commentBg, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .bottom, relatedBy: .equal, toItem: rockLabel, attribute: .top, multiplier: 1, constant: -20).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .top, relatedBy: .equal, toItem: cancelButton, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+
+        commentField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: commentField, attribute: .leading, relatedBy: .equal, toItem: commentBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .trailing, relatedBy: .equal, toItem: commentBg, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .bottom, relatedBy: .equal, toItem: commentBg, attribute: .bottom, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .top, relatedBy: .equal, toItem: commentBg, attribute: .top, multiplier: 1, constant: 10).isActive = true
+
         promptLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: promptLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: promptLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
-        NSLayoutConstraint(item: promptLabel, attribute: .bottom, relatedBy: .equal, toItem: promptLabel2, attribute: .top, multiplier: 1, constant: -10).isActive = true
-
-        promptLabel2.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: promptLabel2, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
-        NSLayoutConstraint(item: promptLabel2, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
-        NSLayoutConstraint(item: promptLabel2, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -80).isActive = true
+        NSLayoutConstraint(item: promptLabel, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -25).isActive = true
     }
 
     func finishedEditingAr(image: UIImage?, diagram: UIImage?) {
@@ -154,11 +170,19 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
 
     }
 
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if (text as NSString).rangeOfCharacter(from: CharacterSet.newlines).location == NSNotFound {
+            return true
+        }
+        textView.resignFirstResponder()
+        return false
+    }
+
     func saveDiagramToFB(arButton: ArButton) {
 
-        guard let route = route else { return }
+        guard let route = route, let userId = Auth.auth().currentUser?.uid else { return }
         let imageRef = Storage.storage().reference().child("Routes/\(route.id)")
-        guard let bgImage = centerArButton.imageView?.image,
+        guard let bgImage = arButton.imageView?.image,
             let dgImage = arButton.diagramImageView.image,
             let bgData = bgImage.jpegData(compressionQuality: 0.1) as NSData?,
             let dgData = dgImage.pngData() as NSData? else { return }
@@ -174,8 +198,11 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
                 guard let downloadURL = url else { return }
                 bgUrl = "\(downloadURL)"
                 if !dgUrl.isEmpty {
-                    self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    FirestoreService.shared.fs.save(object: route, to: "routes", with: route.id, completion: nil)
+                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id)
+                    FirestoreService.shared.fs.save(object: arDiagram, to: "arDiagrams", with: arDiagram.id) {
+                        route.arDiagrams.append(arDiagram.id)
+                        FirestoreService.shared.fs.collection("routes").document(route.id).setData([ "arDiagrams": route.arDiagrams ], merge: true)
+                    }
                 }
             }
         }
@@ -186,8 +213,11 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
                 guard let downloadURL = url else { return }
                 dgUrl = "\(downloadURL)"
                 if !bgUrl.isEmpty {
-                    self.route?.routeArUrls[imageId] = [bgUrl, dgUrl]
-                    FirestoreService.shared.fs.save(object: route, to: "routes", with: route.id, completion: nil)
+                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id)
+                    FirestoreService.shared.fs.save(object: arDiagram, to: "arDiagrams", with: arDiagram.id) {
+                        route.arDiagrams.append(arDiagram.id)
+                        FirestoreService.shared.fs.collection("routes").document(route.id).setData([ "arDiagrams": route.arDiagrams ], merge: true)
+                    }
                 }
             }
         }
@@ -209,12 +239,15 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol {
         let lineView2 = LineView(frame: view.bounds, from: rockLabel.getOutsidePoint(side: .bottom, padding: 10), to: leftArButton.getOutsidePoint(side: .top, padding: 10))
         view.addSubview(lineView2)
         let lineView3 = LineView(frame: view.bounds, from: rockLabel.getOutsidePoint(side: .bottom, padding: 10), to: rightArButton.getOutsidePoint(side: .top, padding: 10))
+        commentBg.layer.cornerRadius = 10
+        commentBg.clipsToBounds = true
         view.addSubview(lineView3)
         view.bringSubviewToFront(cancelButton)
         view.bringSubviewToFront(saveButton)
         view.bringSubviewToFront(leftArButton)
         view.bringSubviewToFront(centerArButton)
         view.bringSubviewToFront(rightArButton)
+        view.bringSubviewToFront(commentField)
     }
 
 }

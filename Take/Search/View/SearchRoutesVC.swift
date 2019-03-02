@@ -55,7 +55,7 @@ class SearchRoutesVC: UIViewController {
     }
 
     private func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimary")
+        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
 
         // nav add new button
         let myNavAddNewButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goAddNew))

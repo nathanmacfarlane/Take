@@ -157,7 +157,6 @@ class RouteViewModel {
 
     func getCurrentWeather(completion: @escaping (_ weather: WeatherViewModel) -> Void) {
         let url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
-        print("url: \(url)")
         guard let now = URL(string: url) else {
             print("bad url")
             return

@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-class Route: Codable {
+class Route: Codable, Hashable {
 
     // MARK: - properties
     var name: String
@@ -16,11 +16,18 @@ class Route: Codable {
     var latitude: Double?
     var longitude: Double?
     var imageUrls: [String: String] = [:]
-    var routeArUrls: [String: [String]] = [:]
-    //var stars: [String: Double] = [:]
+    var arDiagrams: [String] = []
     var stars: [String: Star] = [:]
     var area: String?
     var comments: [String] = []
+
+    static func == (lhs: Route, rhs: Route) -> Bool {
+        return lhs.id == rhs.id
+    }
+
+    var hashValue: Int {
+        return id.hashValue
+    }
 
     // MARK: - Coding Keys
     /* Whatever keys are in here are required to be apart of the object in firebase */
@@ -38,7 +45,6 @@ class Route: Codable {
         case pitches
         case rating
         case buffer
-        case routeArUrls
         case comments
         case closureInfo
     }
@@ -50,8 +56,7 @@ class Route: Codable {
         self.types = []
         self.comments = []
         self.imageUrls = [:]
-        self.routeArUrls = [:]
-//        self.stars = [:]
+        self.arDiagrams = []
         self.stars = [:]
     }
 }

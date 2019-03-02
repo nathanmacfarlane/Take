@@ -3,6 +3,7 @@ import UIKit
 class RouteAddImagesPresentrVC: UIViewController {
 
     var delegate: AddImagesDelegate?
+    var route: Route?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,7 +55,7 @@ class RouteAddImagesPresentrVC: UIViewController {
     }
 }
 
-protocol AddImagesDelegate {
+protocol AddImagesDelegate: class {
     func hitAddAr()
     func hitAddPhotos()
 }

@@ -4,8 +4,6 @@ import UIKit
 
 class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate {
 
-    var delegate: RoutePhotosAddDelegate?
-
     var saveButton: UIButton!
     var commentField: UITextView!
     var commentFieldBg: UILabel!
@@ -15,6 +13,9 @@ class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollec
     var selected = Set<Int>()
 
     var allPhotos: PHFetchResult<PHAsset>!
+
+    var route: Route?
+    var userId: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,19 +169,20 @@ class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollec
         }
     }
 
-    func photoLibraryDidChange(_ changeInstance: PHChange) {
-
-    }
+    func photoLibraryDidChange(_ changeInstance: PHChange) { }
 
     @objc
     func hitSave() {
-        var images: [UIImage] = []
+        guard let route = self.route, let userId = self.userId else { return }
         for i in selected {
-            guard let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? RoutePhotosCVC,
-                let image = cell.bgImageView.image else { continue }
-            images.append(image)
+            guard let cell = collectionView.cellForItem(at: IndexPath(row: i, section: 0)) as? RoutePhotosCVC, let image = cell.bgImageView.image else { continue }
+
+            var comment = Comment(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: commentField.text, imageUrl: nil, routeId: route.id)
+            image.saveToFb(route: route) { url in
+                comment.imageUrl = url?.absoluteString
+                FirestoreService.shared.fs.save(object: comment, to: "comments", with: comment.id, completion: nil)
+            }
         }
-        delegate?.addedPhotos(message: commentField.text, images: images)
         dismiss(animated: true, completion: nil)
     }
 
@@ -189,8 +191,4 @@ class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollec
         saveButton.clipsToBounds = true
     }
 
-}
-
-protocol RoutePhotosAddDelegate: class {
-    func addedPhotos(message: String, images: [UIImage])
 }

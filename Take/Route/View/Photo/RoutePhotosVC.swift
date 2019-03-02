@@ -25,43 +25,25 @@ class RoutePhotosVC: UIViewController {
 
         self.initViews()
 
-        for item in self.routeViewModel.route.routeArUrls {
-            if item.value.isEmpty { continue }
-            let image = ARImageUrls(dgImage: item.value[1], bgImage: item.value[0])
-            let arImageContent = ARImageComment(image: image, comment: nil)
-            images.append(arImageContent)
-        }
-
         DispatchQueue.global(qos: .background).async {
-            for commentId in self.routeViewModel.route.comments {
-                FirestoreService.shared.fs.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comments in
-                    guard let comment = comments.first, let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
-                    let image = ARImageUrls(bgImage: imgUrl)
-                    let arImageContent = ARImageComment(image: image, comment: comment.message)
-                    DispatchQueue.main.async {
-                        self.images.append(arImageContent)
-                        if self.images.count == self.routeViewModel.route.comments.count + self.routeViewModel.route.routeArUrls.count {
-                            self.myImagesCV.reloadData()
-                        }
-                    }
+
+            FirestoreService.shared.fs.listen(collection: "arDiagrams", by: "routeId", with: self.routeViewModel.id, of: ARDiagram.self) { arDiagram in
+                let image = ARImageUrls(dgImage: arDiagram.dgImageUrl, bgImage: arDiagram.bgImageUrl)
+                let arImageContent = ARImageComment(image: image, comment: arDiagram.message)
+                DispatchQueue.main.async {
+                    self.images.insert(arImageContent, at: 0)
+                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
                 }
             }
-        }
 
-    }
-
-    func updatedImages(message: String, images: [UIImage]) {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
-        for image in images {
-            var comment = Comment(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: message, imageUrl: nil, routeId: routeViewModel.id)
-            image.saveToFb(route: routeViewModel.route) { url in
-                comment.imageUrl = url?.absoluteString
-                FirestoreService.shared.fs.save(object: comment, to: "comments", with: comment.id, completion: nil)
-                self.routeViewModel.route.comments.append(comment.id)
-                FirestoreService.shared.fs.save(object: self.routeViewModel.route, to: "routes", with: self.routeViewModel.id, completion: nil)
-                let arImageComment = ARImageComment(image: ARImageUrls(bgImage: url?.absoluteString), comment: message)
-                self.images.append(arImageComment)
-                self.myImagesCV.insertItems(at: [IndexPath(item: self.images.count - 1, section: 0)])
+            FirestoreService.shared.fs.listen(collection: "comments", by: "routeId", with: self.routeViewModel.id, of: Comment.self) { comment in
+                guard let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
+                let image = ARImageUrls(bgImage: imgUrl)
+                let arImageContent = ARImageComment(image: image, comment: comment.message)
+                DispatchQueue.main.async {
+                    self.images.insert(arImageContent, at: 0)
+                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
+                }
             }
         }
 

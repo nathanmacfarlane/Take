@@ -15,7 +15,7 @@ class RouteTVC: UITableViewCell {
 
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.backgroundColor = .black
 
         nameLabel = UILabel()
         nameLabel.textColor = .white

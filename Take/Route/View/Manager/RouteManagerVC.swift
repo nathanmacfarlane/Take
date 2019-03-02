@@ -1,10 +1,11 @@
 import ARKit
+import FirebaseAuth
 import Pageboy
 import Presentr
 import Tabman
 import UIKit
 
-class RouteManagerVC: TabmanViewController, AddImagesDelegate, RoutePhotosAddDelegate {
+class RouteManagerVC: TabmanViewController, AddImagesDelegate {
 
     var routeViewModel: RouteViewModel!
     var vcs: [UIViewController] = []
@@ -48,14 +49,12 @@ class RouteManagerVC: TabmanViewController, AddImagesDelegate, RoutePhotosAddDel
     }
 
     func hitAddPhotos() {
+        guard let userId = Auth.auth().currentUser?.uid else { return }
         let routeAddPhotosVC = RoutePhotosAddVC()
-        routeAddPhotosVC.delegate = self
+        routeAddPhotosVC.route = routeViewModel.route
+        routeAddPhotosVC.userId = userId
         let presenter = Presentr(presentationType: .fullScreen)
         self.customPresentViewController(presenter, viewController: routeAddPhotosVC, animated: true)
-    }
-
-    func addedPhotos(message: String, images: [UIImage]) {
-        photos.updatedImages(message: message, images: images)
     }
 
     @objc
@@ -78,6 +77,7 @@ class RouteManagerVC: TabmanViewController, AddImagesDelegate, RoutePhotosAddDel
         }()
         let arVC = RouteAddImagesPresentrVC()
         arVC.delegate = self
+        arVC.route = routeViewModel.route
         self.customPresentViewController(presenter, viewController: arVC, animated: true)
 
     }

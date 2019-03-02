@@ -27,6 +27,30 @@ extension Firestore {
         }
     }
 
+    /// Generic firebase query for classes that conform to Decodable
+    /// - Parameters:
+    ///   - collection: Name of firebase collection containing desired object(s)
+    ///   - field: Query on (ex: name, id, type)
+    ///   - value: Variable to query with
+    ///   - type: Class type (ex: Route, Comment)
+    ///   - completion: Fires when the query is completed
+    ///   - results: Array of objects matching the type specified
+    func listen<T>(collection: String, by field: String, with value: Any, of type: T.Type, completion: @escaping (_ results: T) -> Void) where T: Decodable {
+        let decoder = FirebaseDecoder()
+        let settings = self.settings
+        settings.areTimestampsInSnapshotsEnabled = true
+        self.settings = settings
+
+        self.collection(collection).whereField(field, isEqualTo: value).addSnapshotListener { snapshot, _ in
+            guard let snapshot = snapshot else { return }
+            for snap in snapshot.documentChanges where snap.type == .added {
+                guard let result = try? decoder.decode(T.self, from: snap.document.data() as Any) else { return }
+                completion(result)
+            }
+        }
+
+    }
+
     /// Generic firebase save function for classes that conform to Encodable
     /// - Parameters:
     ///   - object: Any type that conforms to Encodable Protocol

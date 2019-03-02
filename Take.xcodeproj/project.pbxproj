@@ -67,6 +67,7 @@
 		223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B538E21A92C06006E1824 /* RoutePhotosVC.swift */; };
 		223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B539021A92EED006E1824 /* RouteNowVC.swift */; };
 		223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223BB23021A7E93600130070 /* RouteManagerVC.swift */; };
+		223E317D2228E29800ABD6AE /* ARRefImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223E317C2228E29800ABD6AE /* ARRefImage.swift */; };
 		2249F0A721C9E9CD0032D58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A621C9E9CD0032D58C /* User.swift */; };
 		2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A821C9F31D0032D58C /* RouteList.swift */; };
 		2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0AA21CA03F00032D58C /* RouteListTVC.swift */; };
@@ -118,6 +119,9 @@
 		229DBF67221F9BDA0065CD6C /* ARViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DBF66221F9BDA0065CD6C /* ARViewVC.swift */; };
 		229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DBF68221FACED0065CD6C /* ARMenu.swift */; };
 		229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */; };
+		22A121982229F98400CA002B /* ARDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A121972229F98400CA002B /* ARDiagram.swift */; };
+		22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */; };
+		22BA2A26222A35EE0054BC1D /* HypeArTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */; };
 		22BD6D4521BF53160047FF8A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4421BF53160047FF8A /* Weather.swift */; };
 		22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4621BF53F80047FF8A /* Forecast.swift */; };
 		22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */; };
@@ -225,6 +229,7 @@
 		223B538E21A92C06006E1824 /* RoutePhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotosVC.swift; sourceTree = "<group>"; };
 		223B539021A92EED006E1824 /* RouteNowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNowVC.swift; sourceTree = "<group>"; };
 		223BB23021A7E93600130070 /* RouteManagerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteManagerVC.swift; sourceTree = "<group>"; };
+		223E317C2228E29800ABD6AE /* ARRefImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRefImage.swift; sourceTree = "<group>"; };
 		2249F0A621C9E9CD0032D58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2249F0A821C9F31D0032D58C /* RouteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteList.swift; sourceTree = "<group>"; };
 		2249F0AA21CA03F00032D58C /* RouteListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListTVC.swift; sourceTree = "<group>"; };
@@ -276,6 +281,9 @@
 		229DBF66221F9BDA0065CD6C /* ARViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARViewVC.swift; sourceTree = "<group>"; };
 		229DBF68221FACED0065CD6C /* ARMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMenu.swift; sourceTree = "<group>"; };
 		229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListPresenterVC.swift; sourceTree = "<group>"; };
+		22A121972229F98400CA002B /* ARDiagram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDiagram.swift; sourceTree = "<group>"; };
+		22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDiagramViewModel.swift; sourceTree = "<group>"; };
+		22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeArTVC.swift; sourceTree = "<group>"; };
 		22BD6D4421BF53160047FF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		22BD6D4621BF53F80047FF8A /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
@@ -379,9 +387,9 @@
 			isa = PBXGroup;
 			children = (
 				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
+				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				229DBF65221F9BBF0065CD6C /* ARView */,
 				22197B2C221CE21C0006303E /* Singletons */,
-				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				2293C4BC220BC55B00D5DB4A /* Area */,
 				227C7F8E21F100EE00115906 /* New-Edit Route */,
 				22207DFC21CB423B004475AF /* Notifications */,
@@ -509,6 +517,7 @@
 				22F5D84C221E7A4F006824C0 /* ARImageUrls.swift */,
 				22F5D856221F731E006824C0 /* PaddingLabel.swift */,
 				222F7F9E2227BD75002E30C2 /* ArImage.swift */,
+				223E317C2228E29800ABD6AE /* ARRefImage.swift */,
 			);
 			path = "Reusable Classes";
 			sourceTree = "<group>";
@@ -525,6 +534,24 @@
 			isa = PBXGroup;
 			children = (
 				22383AE621D0A8C20010E6CC /* NotificationPresenterVC.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		223E317E2229F30900ABD6AE /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				22A121972229F98400CA002B /* ARDiagram.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		223E317F2229F31200ABD6AE /* View */ = {
+			isa = PBXGroup;
+			children = (
+				229DBF66221F9BDA0065CD6C /* ARViewVC.swift */,
+				229DBF68221FACED0065CD6C /* ARMenu.swift */,
+				222F7F9C22279368002E30C2 /* ARLoadingTVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -596,11 +623,19 @@
 		229DBF65221F9BBF0065CD6C /* ARView */ = {
 			isa = PBXGroup;
 			children = (
-				229DBF66221F9BDA0065CD6C /* ARViewVC.swift */,
-				229DBF68221FACED0065CD6C /* ARMenu.swift */,
-				222F7F9C22279368002E30C2 /* ARLoadingTVC.swift */,
+				22BA2A24222A34D50054BC1D /* ViewModel */,
+				223E317F2229F31200ABD6AE /* View */,
+				223E317E2229F30900ABD6AE /* Model */,
 			);
 			path = ARView;
+			sourceTree = "<group>";
+		};
+		22BA2A24222A34D50054BC1D /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		22BD6D4221BF520E0047FF8A /* Now */ = {
@@ -792,6 +827,7 @@
 				22E60D3922093FE00053C48E /* HypeTVC.swift */,
 				22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */,
 				2203ADAF220D3707004EDBF2 /* HypeStarTVC.swift */,
+				22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */,
 			);
 			path = Hype;
 			sourceTree = "<group>";
@@ -1095,6 +1131,7 @@
 				22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */,
 				7184498722090C380029C023 /* DM.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
+				223E317D2228E29800ABD6AE /* ARRefImage.swift in Sources */,
 				2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */,
 				22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */,
 				22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */,
@@ -1131,6 +1168,7 @@
 				2211F3C32147492E00E79E99 /* Int.swift in Sources */,
 				2249F0AD21CA0F680032D58C /* RouteListViewModel.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
+				22A121982229F98400CA002B /* ARDiagram.swift in Sources */,
 				2293C4CE220D2D2200D5DB4A /* CommentViewModel.swift in Sources */,
 				719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */,
 				2234F5972213F82F00D2B8D9 /* ImagePicker.swift in Sources */,
@@ -1167,11 +1205,13 @@
 				22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */,
 				22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */,
 				22BD6D4521BF53160047FF8A /* Weather.swift in Sources */,
+				22BA2A26222A35EE0054BC1D /* HypeArTVC.swift in Sources */,
 				2249F0BA21CACE8B0032D58C /* UserProfile+TableViewDelegate.swift in Sources */,
 				2203ADB0220D3707004EDBF2 /* HypeStarTVC.swift in Sources */,
 				2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */,
 				22CFAA082216A6B700801B37 /* ArColorButton.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
+				22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
