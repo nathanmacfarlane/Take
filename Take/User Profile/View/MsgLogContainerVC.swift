@@ -37,11 +37,14 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         initViews()
         }
     
-    let inputTextField: UITextField = {
-        let textField = UITextField()
+    let inputTextField: FlexibleTextView = {
+        let textField = FlexibleTextView()
         textField.textColor = .white
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter message... keep it short",
-                                                               attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        textField.maxHeight = 75
+        textField.textColor = .white
+        textField.font = UIFont(name: "Avenir", size: 18)
+        textField.backgroundColor = UIColor(named: "BluePrimaryDark")
+        textField.placeholder = "enter text here yo.... lol sheeit"
         return textField
     }()
 
@@ -159,7 +162,7 @@ class MsgCell: UITableViewCell {
     
     func setup() {
         self.backgroundColor = .black
-        
+    
         message.textColor = .white
         message.font = UIFont(name: "Avenir", size: 18)
         
@@ -179,7 +182,7 @@ class MsgCell: UITableViewCell {
         container.translatesAutoresizingMaskIntoConstraints = false
         container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9/10).isActive = true
+        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 6/10).isActive = true
         container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 2/3).isActive = true
         
         message.translatesAutoresizingMaskIntoConstraints = false

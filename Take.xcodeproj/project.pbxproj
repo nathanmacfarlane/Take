@@ -151,6 +151,7 @@
 		719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */; };
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
+		71D0586E222A3F200024114A /* FlexibleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D0586D222A3F200024114A /* FlexibleTextView.swift */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -306,6 +307,7 @@
 		719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerMatchVC.swift; sourceTree = "<group>"; };
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
+		71D0586D222A3F200024114A /* FlexibleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleTextView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -585,6 +587,7 @@
 				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
 				719BC917221F339900D167F0 /* MsgLogContainerVC.swift */,
 				714968ED22211B45002E1850 /* NewMessageVC.swift */,
+				71D0586D222A3F200024114A /* FlexibleTextView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1129,6 +1132,7 @@
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
+				71D0586E222A3F200024114A /* FlexibleTextView.swift in Sources */,
 				22640A3121A22F550033C006 /* CommentTableViewCell.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,
 				22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */,

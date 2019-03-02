@@ -9,7 +9,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var friends: [User] = []
     var dms: [DM] = []
     var dm: DM?
-    var profImage = UIImage(named: "rocki3.jpeg")
+    var profImage = UIImage()
     var dmTableView: UITableView!
     var friendId = String()
     
