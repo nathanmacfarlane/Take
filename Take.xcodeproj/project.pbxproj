@@ -146,6 +146,7 @@
 		22CFAA0C221891A600801B37 /* RouteArEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0B221891A600801B37 /* RouteArEditVC.swift */; };
 		22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0D221943D400801B37 /* RouteArViewVC.swift */; };
 		22CFAA10221947FA00801B37 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0F221947FA00801B37 /* String.swift */; };
+		22D4D018222BAFD300429AF7 /* ChooseLocationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D4D017222BAFD300429AF7 /* ChooseLocationVC.swift */; };
 		22D9E63822167F9A002D8D9E /* ArButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22D9E63722167F9A002D8D9E /* ArButton.swift */; };
 		22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3922093FE00053C48E /* HypeTVC.swift */; };
 		22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */; };
@@ -310,6 +311,7 @@
 		22CFAA0B221891A600801B37 /* RouteArEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArEditVC.swift; sourceTree = "<group>"; };
 		22CFAA0D221943D400801B37 /* RouteArViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArViewVC.swift; sourceTree = "<group>"; };
 		22CFAA0F221947FA00801B37 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		22D4D017222BAFD300429AF7 /* ChooseLocationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChooseLocationVC.swift; sourceTree = "<group>"; };
 		22D9E63722167F9A002D8D9E /* ArButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArButton.swift; sourceTree = "<group>"; };
 		22E60D3922093FE00053C48E /* HypeTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeTVC.swift; sourceTree = "<group>"; };
 		22E60D3D22094CF60053C48E /* HypeCommentTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeCommentTVC.swift; sourceTree = "<group>"; };
@@ -588,6 +590,7 @@
 			isa = PBXGroup;
 			children = (
 				227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */,
+				22D4D017222BAFD300429AF7 /* ChooseLocationVC.swift */,
 			);
 			path = "New-Edit Route";
 			sourceTree = "<group>";
@@ -1219,6 +1222,7 @@
 				22CFAA082216A6B700801B37 /* ArColorButton.swift in Sources */,
 				046E3E6120BD38F9009E63D8 /* MPFunctions.swift in Sources */,
 				22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */,
+				22D4D018222BAFD300429AF7 /* ChooseLocationVC.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,

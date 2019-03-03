@@ -1,11 +1,12 @@
 import FirebaseFirestore
 import GMStepper
 import MapKit
+import Presentr
 import TwicketSegmentedControl
 import UIKit
 import WSTagsField
 
-class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
+class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseLocationDelegate, MKMapViewDelegate {
 
     var route: Route?
     var difficultyStepper: GMStepper!
@@ -17,6 +18,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
     var nameField: UITextField!
     var typesField: WSTagsField!
     var buffer: Int?
+    var mapView: MKMapView!
 
     var tags: [String] = ([RouteType.tr, RouteType.sport, RouteType.trad, RouteType.aid].map { $0.rawValue })
 
@@ -61,9 +63,36 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         segmentIndex > 0 ? self.buffer = segmentIndex - 1 : nil
     }
 
+    func choseLocation(location: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegion(center: location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        mapView.setRegion(region, animated: true)
+        setMap(location: location)
+    }
+
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+        setMap(location: mapView.region.center)
+    }
+
     @objc
     func tappedMapRegion() {
-        print("should show map view... yay")
+        let presentr = Presentr(presentationType: .popup)
+        presentr.backgroundOpacity = 0.8
+        let chooseLocationVC = ChooseLocationVC()
+        chooseLocationVC.delegate = self
+        customPresentViewController(presentr, viewController: chooseLocationVC, animated: true)
+    }
+
+    func setMap(location: CLLocationCoordinate2D) {
+        mapView.removeAllAnnotations()
+        let anno = MKPointAnnotation()
+        anno.coordinate = location
+        anno.title = ""
+        mapView.addAnnotation(anno)
+        latLongLabel.text = "\(Double(location.latitude).rounded(toPlaces: 6)), \(Double(location.longitude).rounded(toPlaces: 6))"
+        CLLocation(latitude: mapView.region.center.latitude, longitude: mapView.region.center.longitude).cityAndState { city, state, _ in
+            guard let city = city, let state = state else { return }
+            self.locationNameLabel.text = "\(city), \(state)"
+        }
     }
 
     func initViews() {
@@ -199,9 +228,10 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         cragNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
         locationNameLabel = UILabel()
-        locationNameLabel.text = "Tap to Choose"
+        locationNameLabel.text = "Tap to Search"
         locationNameLabel.textColor = UIColor(hex: "#B9ABAB")
         locationNameLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
+        locationNameLabel.numberOfLines = 0
 
         latLongLabel = UILabel()
         latLongLabel.text = ""
@@ -220,7 +250,13 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
             }
         }
 
-        let mapView = MKMapView()
+        mapView = MKMapView()
+        mapView.showsUserLocation = true
+        mapView.delegate = self
+        if let loc = LocationService.shared.location?.coordinate {
+            let region = MKCoordinateRegion(center: loc, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+            mapView.setRegion(region, animated: true)
+        }
 
         view.addSubview(nameField)
         view.addSubview(closeButton)
@@ -327,7 +363,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         NSLayoutConstraint(item: locationNameLabel, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: locationNameLabel, attribute: .trailing, relatedBy: .equal, toItem: cragBg, attribute: .centerX, multiplier: 1, constant: -10).isActive = true
         NSLayoutConstraint(item: locationNameLabel, attribute: .centerY, relatedBy: .equal, toItem: cragBg, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: locationNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+//        NSLayoutConstraint(item: locationNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
 
         latLongLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: latLongLabel, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
