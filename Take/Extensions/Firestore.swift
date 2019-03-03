@@ -12,10 +12,10 @@ extension Firestore {
     ///   - type: Class type (ex: Route, Comment)
     ///   - completion: Fires when the query is completed
     ///   - results: Array of objects matching the type specified
-    func query<T>(collection: String, by field: String, with value: Any, of type: T.Type, completion: @escaping (_ results: [T]) -> Void) where T: Decodable {
+    func query<T>(collection: String, by field: String, with value: Any, of type: T.Type, and limit: Int? = nil, completion: @escaping (_ results: [T]) -> Void) where T: Decodable {
         var results: [T] = []
         let decoder = FirebaseDecoder()
-        self.query(collection: collection, by: field, with: value) { documents in
+        self.query(collection: collection, by: field, with: value, and: limit) { documents in
             for doc in documents {
                 guard let result = try? decoder.decode(T.self, from: doc.data() as Any) else {
                     print("error parsing: \(doc.data())")
@@ -74,11 +74,13 @@ extension Firestore {
         }
     }
     /// Generic private internal function used by previous function
-    private func query(collection: String, by field: String, with value: Any, completion: @escaping (_ results: [QueryDocumentSnapshot]) -> Void) {
+    private func query(collection: String, by field: String, with value: Any, and limit: Int? = nil, completion: @escaping (_ results: [QueryDocumentSnapshot]) -> Void) {
         let settings = self.settings
         settings.areTimestampsInSnapshotsEnabled = true
         self.settings = settings
-        self.collection(collection).whereField(field, isEqualTo: value).getDocuments { snapshot, err in
+        var query = self.collection(collection).whereField(field, isEqualTo: value)
+        if let limit = limit { query = query.limit(to: limit) }
+        query.getDocuments { snapshot, err in
             guard err == nil, let snap = snapshot else { return }
             completion(snap.documents)
         }

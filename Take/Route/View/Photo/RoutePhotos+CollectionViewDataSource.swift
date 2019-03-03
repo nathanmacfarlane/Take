@@ -11,13 +11,15 @@ extension RoutePhotosVC: UICollectionViewDataSource {
             let comment = images[indexPath.row]
             cell.bgImageView.image = nil
             cell.dgImageView.image = nil
-            DispatchQueue.global(qos: .background).async {
-                comment.image.bgImage?.getImage { image in
+            if let bgImage = comment.image.bgImage {
+                ImageCache.shared.getImage(for: bgImage) { image in
                     DispatchQueue.main.async {
                         cell.bgImageView.image = image
                     }
                 }
-                comment.image.dgImage?.getImage { image in
+            }
+            if let dgImage = comment.image.dgImage {
+                ImageCache.shared.getImage(for: dgImage) { image in
                     DispatchQueue.main.async {
                         cell.dgImageView.image = image
                     }

@@ -60,6 +60,7 @@
 		2234F5972213F82F00D2B8D9 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F5962213F82F00D2B8D9 /* ImagePicker.swift */; };
 		2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F598221540A100D2B8D9 /* RouteArEdit+Swifty.swift */; };
 		2234F59B2215499B00D2B8D9 /* RouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2234F59A2215499B00D2B8D9 /* RouteView.swift */; };
+		223535B6222B72AF0095EBDF /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223535B5222B72AF0095EBDF /* LocationService.swift */; };
 		2236A1EA21BB691E00F12A57 /* RouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2236A1E921BB691E00F12A57 /* RouteViewModel.swift */; };
 		2237F62E21BD050800265BDD /* Blueprints.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2237F62D21BD050800265BDD /* Blueprints.framework */; };
 		22383AE721D0A8C20010E6CC /* NotificationPresenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22383AE621D0A8C20010E6CC /* NotificationPresenterVC.swift */; };
@@ -122,6 +123,7 @@
 		22A121982229F98400CA002B /* ARDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A121972229F98400CA002B /* ARDiagram.swift */; };
 		22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */; };
 		22BA2A26222A35EE0054BC1D /* HypeArTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */; };
+		22BA2A28222A465A0054BC1D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A27222A465A0054BC1D /* ImageCache.swift */; };
 		22BD6D4521BF53160047FF8A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4421BF53160047FF8A /* Weather.swift */; };
 		22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4621BF53F80047FF8A /* Forecast.swift */; };
 		22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */; };
@@ -222,6 +224,7 @@
 		2234F5962213F82F00D2B8D9 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		2234F598221540A100D2B8D9 /* RouteArEdit+Swifty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteArEdit+Swifty.swift"; sourceTree = "<group>"; };
 		2234F59A2215499B00D2B8D9 /* RouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteView.swift; sourceTree = "<group>"; };
+		223535B5222B72AF0095EBDF /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
 		2236A1E921BB691E00F12A57 /* RouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteViewModel.swift; sourceTree = "<group>"; };
 		2237F62D21BD050800265BDD /* Blueprints.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Blueprints.framework; path = Carthage/Build/iOS/Blueprints.framework; sourceTree = "<group>"; };
 		22383AE621D0A8C20010E6CC /* NotificationPresenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPresenterVC.swift; sourceTree = "<group>"; };
@@ -284,6 +287,7 @@
 		22A121972229F98400CA002B /* ARDiagram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDiagram.swift; sourceTree = "<group>"; };
 		22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDiagramViewModel.swift; sourceTree = "<group>"; };
 		22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeArTVC.swift; sourceTree = "<group>"; };
+		22BA2A27222A465A0054BC1D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		22BD6D4421BF53160047FF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		22BD6D4621BF53F80047FF8A /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
@@ -481,6 +485,8 @@
 			isa = PBXGroup;
 			children = (
 				22197B2D221CE22E0006303E /* FirestoreService.swift */,
+				22BA2A27222A465A0054BC1D /* ImageCache.swift */,
+				223535B5222B72AF0095EBDF /* LocationService.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -1118,6 +1124,7 @@
 				22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */,
 				22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */,
 				2249F0B221CA26DF0032D58C /* RouteList+TableViewDelegate.swift in Sources */,
+				22BA2A28222A465A0054BC1D /* ImageCache.swift in Sources */,
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				22595D6421FD5F2A00DD84F1 /* CLLocation.swift in Sources */,
 				2293C4C7220CFBEF00D5DB4A /* AddStarRatingVC.swift in Sources */,
@@ -1220,6 +1227,7 @@
 				2203ADB6220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift in Sources */,
 				2209A8E322169EEE00959C66 /* RouteArEditMenu.swift in Sources */,
 				2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */,
+				223535B6222B72AF0095EBDF /* LocationService.swift in Sources */,
 				22BD6D5521C0E56F0047FF8A /* RouteListVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -60,12 +60,12 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             arViewModel.getUsername { username in
                 cell.nameLabel.text = username
             }
-            arViewModel.bgImageUrl.getImage { image in
+            ImageCache.shared.getImage(for: arViewModel.bgImageUrl) { image in
                 DispatchQueue.main.async {
                     cell.commentImageView.image = image
                 }
             }
-            arViewModel.dgImageUrl.getImage { image in
+            ImageCache.shared.getImage(for: arViewModel.dgImageUrl) { image in
                 DispatchQueue.main.async {
                     cell.dgImageView.image = image
                 }
@@ -81,9 +81,11 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
             commentViewModel.getUsername { username in
                 cell.nameLabel.text = username
             }
-            commentViewModel.getImage { image in
-                DispatchQueue.main.async {
-                    cell.commentImageView.image = image
+            if let imageUrl = commentViewModel.imageUrl {
+                ImageCache.shared.getImage(for: imageUrl) { image in
+                    DispatchQueue.main.async {
+                        cell.commentImageView.image = image
+                    }
                 }
             }
             cell.dateLabel.text = commentViewModel.dateString

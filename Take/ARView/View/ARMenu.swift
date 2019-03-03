@@ -34,7 +34,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.reloadData()
         mapVC.mapView.removeAllAnnotations()
 
-        //queryRoutes()
+        queryRoutes()
     }
 
     override func viewDidLoad() {
@@ -47,40 +47,37 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func queryRoutes() {
-//        let geoFirestoreRef = FirestoreService.shared.fs
-//        let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef.collection("route-geos"))
+        let geoFirestoreRef = Firestore.firestore().collection("route-geos")
+        let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
+
+//        guard let location = LocationService.shared.location else { return }
 //
-//        let locManager = CLLocationManager()
-//        locManager.requestWhenInUseAuthorization()
-//        if CLLocationManager.authorizationStatus() == .authorizedWhenInUse ||
-//            CLLocationManager.authorizationStatus() ==  .authorizedAlways {
-//
-//            if let location = locManager.location {
-//                circleQuery = geoFirestore.query(withCenter: location, radius: meters)
-//                handle = circleQuery?.observe(.documentEntered) { key, _ in
-//                    guard let routeId = key else { return }
-//                    Firestore.firestore().collection("routes").whereField("id", isEqualTo: routeId).getDocuments { snapshot, _ in
-//                        let decoder = FirebaseDecoder()
-//                        for document in snapshot?.documents ?? [] {
-//                            guard let result = try? decoder.decode(Route.self, from: document.data() as Any) else { continue }
-//                            let rvm = RouteViewModel(route: result)
-//                            self.totalCount += result.routeArUrls.values.count
-//                            if !result.routeArUrls.keys.isEmpty {
-//                                self.routeViewModels.append(rvm)
-//                                self.tableView.insertRows(at: [IndexPath(row: self.routeViewModels.count - 1, section: 0)], with: .middle)
-//                                self.routesMap[result.id] = self.routeViewModels.count - 1
-//                                for urls in result.routeArUrls.values {
-//                                    self.addImage(route: result, dgUrl: urls[1], bgUrl: urls[0])
-//                                }
-//                                DispatchQueue.main.async {
-//                                    let anno = MKPointAnnotation()
-//                                    anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//                                    anno.title = rvm.name
-//                                    anno.subtitle = "\(rvm.rating) \(rvm.typesString)"
-//                                    self.mapVC.mapView.addAnnotation(anno)
-//                                    self.mapVC.mapView.showAnnotations(self.mapVC.mapView.annotations, animated: true)
-//                                }
-//                            }
+//        circleQuery = geoFirestore.query(withCenter: location, radius: meters)
+//        handle = circleQuery?.observe(.documentEntered) { key, _ in
+//            guard let routeId = key else { return }
+//            Firestore.firestore().collection("routes").whereField("id", isEqualTo: routeId).getDocuments { snapshot, _ in
+//                let decoder = FirebaseDecoder()
+//                for document in snapshot?.documents ?? [] {
+//                    guard let result = try? decoder.decode(Route.self, from: document.data() as Any) else { continue }
+//                    let rvm = RouteViewModel(route: result)
+//                    self.totalCount += result.arDiagrams.count
+//                    if !result.arDiagrams.isEmpty {
+//                        self.routeViewModels.append(rvm)
+//                        self.tableView.insertRows(at: [IndexPath(row: self.routeViewModels.count - 1, section: 0)], with: .middle)
+//                        self.routesMap[result.id] = self.routeViewModels.count - 1
+////                        for url in result.arDiagrams {
+////                            self.addImage(route: result, dgUrl: url.dg, bgUrl: urls[0])
+////                        }
+////                        for urls in result.arDiagrams.values {
+////                            self.addImage(route: result, dgUrl: urls[1], bgUrl: urls[0])
+////                        }
+//                        DispatchQueue.main.async {
+//                            let anno = MKPointAnnotation()
+//                            anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+//                            anno.title = rvm.name
+//                            anno.subtitle = "\(rvm.rating) \(rvm.typesString)"
+//                            self.mapVC.mapView.addAnnotation(anno)
+//                            self.mapVC.mapView.showAnnotations(self.mapVC.mapView.annotations, animated: true)
 //                        }
 //                    }
 //                }
@@ -99,12 +96,12 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         var count = 0
         var dgImage: UIImage?
         var bgImage: UIImage?
-        bgUrl.getImage { image in
+        ImageCache.shared.getImage(for: bgUrl) { image in
             bgImage = image
             count += 1
             self.handleImages(route: route, count: count, dgImage: dgImage, bgImage: bgImage)
         }
-        dgUrl.getImage { image in
+        ImageCache.shared.getImage(for: dgUrl) { image in
             dgImage = image
             count += 1
             self.handleImages(route: route, count: count, dgImage: dgImage, bgImage: bgImage)

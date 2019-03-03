@@ -28,22 +28,6 @@ class CommentViewModel {
             completion(userViewModel.name)
         }
     }
-    func getImage(completion: @escaping (_ image: UIImage?) -> Void) {
-        guard let imageUrl = self.imageUrl, let theURL = URL(string: imageUrl) else {
-            completion(nil)
-            return
-        }
-        URLSession.shared.dataTask(with: theURL) { data, _, _ in
-            guard let theData = data, let theImage = UIImage(data: theData) else {
-                completion(nil)
-                return
-            }
-            DispatchQueue.main.async {
-                completion(theImage)
-            }
-        }
-        .resume()
-    }
     init(comment: Comment) {
         self.comment = comment
     }

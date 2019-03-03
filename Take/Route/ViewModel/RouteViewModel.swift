@@ -182,15 +182,11 @@ class RouteViewModel {
         .resume()
     }
 
-    func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
-        guard let commentId = route.comments.first else {
-            completion(nil, nil)
-            return
-        }
-        FirestoreService.shared.fs.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comment in
+    func fsLoadFirstImage(completion: @escaping (_ image: UIImage?) -> Void) {
+        FirestoreService.shared.fs.query(collection: "comments", by: "routeId", with: route.id, of: Comment.self, and: 1) { comment in
             guard let comment = comment.first else { return }
             comment.imageUrl?.getImage { image in
-                completion(commentId, image)
+                completion(image)
             }
         }
     }

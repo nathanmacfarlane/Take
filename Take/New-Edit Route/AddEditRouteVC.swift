@@ -1,5 +1,6 @@
 import FirebaseFirestore
 import GMStepper
+import MapKit
 import TwicketSegmentedControl
 import UIKit
 import WSTagsField
@@ -9,6 +10,10 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
     var route: Route?
     var difficultyStepper: GMStepper!
     var pitchesStepper: GMStepper!
+    var cragBg: UIView!
+    var cragNameLabel: UILabel!
+    var locationNameLabel: UILabel!
+    var latLongLabel: UILabel!
     var nameField: UITextField!
     var typesField: WSTagsField!
     var buffer: Int?
@@ -21,6 +26,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         if route == nil {
             route = Route(name: "", id: UUID().uuidString, pitches: 1)
         }
+        buffer = route?.buffer
 
         initViews()
     }
@@ -53,6 +59,11 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
     // twicket seg control
     func didSelect(_ segmentIndex: Int) {
         segmentIndex > 0 ? self.buffer = segmentIndex - 1 : nil
+    }
+
+    @objc
+    func tappedMapRegion() {
+        print("should show map view... yay")
     }
 
     func initViews() {
@@ -174,6 +185,43 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         cragLabel.textColor = .gray
         cragLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
+        cragBg = UIView()
+        cragBg.backgroundColor = UIColor(hex: "#15171A")
+        cragBg.clipsToBounds = true
+        cragBg.isUserInteractionEnabled = true
+
+        let tapMapRegion = UITapGestureRecognizer(target: self, action: #selector(tappedMapRegion))
+        cragBg.addGestureRecognizer(tapMapRegion)
+
+        cragNameLabel = UILabel()
+        cragNameLabel.text = ""
+        cragNameLabel.textColor = .white
+        cragNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
+
+        locationNameLabel = UILabel()
+        locationNameLabel.text = "Tap to Choose"
+        locationNameLabel.textColor = UIColor(hex: "#B9ABAB")
+        locationNameLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
+
+        latLongLabel = UILabel()
+        latLongLabel.text = ""
+        latLongLabel.textColor = UIColor(hex: "#B9ABAB")
+        latLongLabel.font = UIFont(name: "Avenir-Heavy", size: 9)
+
+        if let route = self.route, let areaId = route.area {
+            FirestoreService.shared.fs.query(collection: "areas", by: "id", with: areaId, of: Area.self, and: 1) { area in
+                guard let area = area.first else { return }
+                let areaViewModel = AreaViewModel(area: area)
+                self.cragNameLabel.text = areaViewModel.name
+                areaViewModel.cityAndState { c, s in
+                    self.locationNameLabel.text = "\(c), \(s)"
+                }
+                self.latLongLabel.text = areaViewModel.latAndLongString
+            }
+        }
+
+        let mapView = MKMapView()
+
         view.addSubview(nameField)
         view.addSubview(closeButton)
         view.addSubview(saveButton)
@@ -185,6 +233,11 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         view.addSubview(typesLabel)
         view.addSubview(typesField)
         view.addSubview(cragLabel)
+        view.addSubview(cragBg)
+        cragBg.addSubview(mapView)
+        cragBg.addSubview(cragNameLabel)
+        cragBg.addSubview(locationNameLabel)
+        cragBg.addSubview(latLongLabel)
 
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: closeButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
@@ -244,6 +297,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         NSLayoutConstraint(item: typesField, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: typesField, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: typesField, attribute: .top, relatedBy: .equal, toItem: typesLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: typesField, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 45).isActive = true
 
         cragLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: cragLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
@@ -251,7 +305,41 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate {
         NSLayoutConstraint(item: cragLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: cragLabel, attribute: .top, relatedBy: .equal, toItem: typesField, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
 
-        // TODO: add input and configure back end for the route areas
+        cragBg.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cragBg, attribute: .leading, relatedBy: .equal, toItem: cragLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cragBg, attribute: .trailing, relatedBy: .equal, toItem: cragLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cragBg, attribute: .top, relatedBy: .equal, toItem: cragLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: cragBg, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
+
+        mapView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: cragBg, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: cragBg, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: cragBg, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+
+        cragNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cragNameLabel, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: cragNameLabel, attribute: .trailing, relatedBy: .equal, toItem: cragBg, attribute: .centerX, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: cragNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: cragNameLabel, attribute: .bottom, relatedBy: .equal, toItem: locationNameLabel, attribute: .top, multiplier: 1, constant: 0).isActive = true
+
+        locationNameLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: locationNameLabel, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: locationNameLabel, attribute: .trailing, relatedBy: .equal, toItem: cragBg, attribute: .centerX, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: locationNameLabel, attribute: .centerY, relatedBy: .equal, toItem: cragBg, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: locationNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
+        latLongLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: latLongLabel, attribute: .leading, relatedBy: .equal, toItem: cragBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: latLongLabel, attribute: .trailing, relatedBy: .equal, toItem: cragBg, attribute: .centerX, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: latLongLabel, attribute: .top, relatedBy: .equal, toItem: locationNameLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: latLongLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+
+    }
+
+    override func viewWillLayoutSubviews() {
+        cragBg.layer.cornerRadius = 5
+        cragBg.clipsToBounds = true
     }
 
 }

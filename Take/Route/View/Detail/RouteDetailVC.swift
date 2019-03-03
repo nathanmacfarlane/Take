@@ -149,9 +149,11 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
                 routeViewModel.getArea { area in
                     let areaViewModel = AreaViewModel(area: area)
                     areaView.titleButton.setTitle(areaViewModel.name, for: .normal)
-                    areaViewModel.getImage { image in
-                        DispatchQueue.main.async {
-                            areaView.imageView.image = image
+                    if let url = areaViewModel.area.imageUrl {
+                        ImageCache.shared.getImage(for: url) { image in
+                            DispatchQueue.main.async {
+                                areaView.imageView.image = image
+                            }
                         }
                     }
                 }
