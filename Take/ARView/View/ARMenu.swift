@@ -8,6 +8,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var tableView: UITableView!
     var loadingButton: UIButton!
+    var nearbyLabel: UILabel!
 
     let meters = 100.0
     var routeViewModels: [RouteViewModel] = []
@@ -16,9 +17,12 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     var totalCount = 0
     var loadedCount = 0
+    var geoQueryFinished = false
 
     var diagrams: [Route: [ArImage]] = [:]
     var routesMap: [String: Int] = [:]
+
+    var routeIdToDiagramCount: [String: Int] = [:]
 
     var circleQuery: GFSCircleQuery?
     var handle: GFSQueryHandle?
@@ -26,6 +30,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
+        geoQueryFinished = false
         totalCount = 0
         loadedCount = 0
         diagrams = [:]
@@ -47,82 +52,88 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
 
     func queryRoutes() {
-        let geoFirestoreRef = Firestore.firestore().collection("route-geos")
+        let geoFirestoreRef = FirestoreService.shared.fs.collection("route-geos")
         let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
 
-//        guard let location = LocationService.shared.location else { return }
-//
-//        circleQuery = geoFirestore.query(withCenter: location, radius: meters)
-//        handle = circleQuery?.observe(.documentEntered) { key, _ in
-//            guard let routeId = key else { return }
-//            Firestore.firestore().collection("routes").whereField("id", isEqualTo: routeId).getDocuments { snapshot, _ in
-//                let decoder = FirebaseDecoder()
-//                for document in snapshot?.documents ?? [] {
-//                    guard let result = try? decoder.decode(Route.self, from: document.data() as Any) else { continue }
-//                    let rvm = RouteViewModel(route: result)
-//                    self.totalCount += result.arDiagrams.count
-//                    if !result.arDiagrams.isEmpty {
-//                        self.routeViewModels.append(rvm)
-//                        self.tableView.insertRows(at: [IndexPath(row: self.routeViewModels.count - 1, section: 0)], with: .middle)
-//                        self.routesMap[result.id] = self.routeViewModels.count - 1
-////                        for url in result.arDiagrams {
-////                            self.addImage(route: result, dgUrl: url.dg, bgUrl: urls[0])
-////                        }
-////                        for urls in result.arDiagrams.values {
-////                            self.addImage(route: result, dgUrl: urls[1], bgUrl: urls[0])
-////                        }
-//                        DispatchQueue.main.async {
-//                            let anno = MKPointAnnotation()
-//                            anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-//                            anno.title = rvm.name
-//                            anno.subtitle = "\(rvm.rating) \(rvm.typesString)"
-//                            self.mapVC.mapView.addAnnotation(anno)
-//                            self.mapVC.mapView.showAnnotations(self.mapVC.mapView.annotations, animated: true)
-//                        }
-//                    }
-//                }
-//            }
-//        }
+        guard let location = LocationService.shared.location else { return }
+
+        circleQuery = geoFirestore.query(withCenter: location, radius: meters)
+        handle = circleQuery?.observe(.documentEntered) { key, _ in
+            guard let routeId = key else { return }
+
+            FirestoreService.shared.fs.query(collection: "arDiagrams", by: "routeId", with: routeId, of: ARDiagram.self) { diagrams in
+                self.totalCount += diagrams.count
+                let justTheRoute = self.routeViewModels.filter { $0.id == routeId }
+                if justTheRoute.isEmpty && !diagrams.isEmpty {
+                    self.routeIdToDiagramCount[routeId] = diagrams.count
+                    FirestoreService.shared.fs.query(collection: "routes", by: "id", with: routeId, of: Route.self, and: 1) { route in
+                        guard let route = route.first else { return }
+                        let rvm = RouteViewModel(route: route)
+                        self.routeViewModels.append(rvm)
+                        self.nearbyLabel.text = "Nearby AR Diagrams"
+                        self.tableView.insertRows(at: [IndexPath(row: self.routeViewModels.count - 1, section: 0)], with: .middle)
+                        self.routesMap[route.id] = self.routeViewModels.count - 1
+
+                        for diagram in diagrams {
+                            self.addImage(route: route, dgUrl: diagram.dgImageUrl, bgUrl: diagram.bgImageUrl)
+                        }
+
+                        DispatchQueue.main.async {
+                            let anno = MKPointAnnotation()
+                            anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
+                            anno.title = rvm.name
+                            anno.subtitle = "\(rvm.rating) \(rvm.typesString)"
+                            self.mapVC.mapView.addAnnotation(anno)
+                            self.mapVC.mapView.showAnnotations(self.mapVC.mapView.annotations, animated: true)
+                        }
+
+                    }
+                }
+            }
+        }
+
+        _ = circleQuery?.observeReady {
+            self.geoQueryFinished = true
+        }
     }
 
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-//        if let handle = handle {
-//            circleQuery?.removeObserver(withHandle: handle)
-//        }
+        if let handle = handle {
+            circleQuery?.removeObserver(withHandle: handle)
+        }
     }
 
     func addImage(route: Route, dgUrl: String, bgUrl: String) {
-        var count = 0
         var dgImage: UIImage?
         var bgImage: UIImage?
         ImageCache.shared.getImage(for: bgUrl) { image in
             bgImage = image
-            count += 1
-            self.handleImages(route: route, count: count, dgImage: dgImage, bgImage: bgImage)
+            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage)
         }
         ImageCache.shared.getImage(for: dgUrl) { image in
             dgImage = image
-            count += 1
-            self.handleImages(route: route, count: count, dgImage: dgImage, bgImage: bgImage)
+            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage)
         }
     }
 
-    func handleImages(route: Route, count: Int, dgImage: UIImage?, bgImage: UIImage?) {
-        if count == 2 {
+    func handleImages(route: Route, dgImage: UIImage?, bgImage: UIImage?) {
+        if dgImage != nil && bgImage != nil {
             if self.diagrams[route] != nil {
                 self.diagrams[route]?.append(ArImage(dgImage: dgImage, bgImage: bgImage))
             } else {
                 self.diagrams[route] = [ArImage(dgImage: dgImage, bgImage: bgImage)]
             }
-            if let index = routesMap[route.id], let cell = tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ARLoadingTVC, let total = cell.totalCount {
-                cell.currentCount += 1
-                cell.progressBar.setProgress(cell.currentCount / total, animated: true)
-            }
-            loadedCount += 1
-            if loadedCount == totalCount {
-                loadingButton.setTitle("View AR", for: .normal)
-                loadingButton.addTarget(self, action: #selector(goToAr), for: .touchUpInside)
+            DispatchQueue.main.async {
+                if let index = self.routesMap[route.id], let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ARLoadingTVC, let total = cell.totalCount {
+                    cell.currentCount += 1
+                    cell.progressBar.setProgress(cell.currentCount / total, animated: true)
+                }
+                self.loadedCount += 1
+                if self.geoQueryFinished && self.loadedCount == self.totalCount {
+                    self.loadingButton.setTitle("View AR", for: .normal)
+                    self.loadingButton.addTarget(self, action: #selector(self.goToAr), for: .touchUpInside)
+                }
             }
         }
     }
@@ -145,8 +156,8 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ARLoadingTVC") as? ARLoadingTVC else { return UITableViewCell() }
         cell.nameLabel.text = routeViewModels[indexPath.row].name
-        cell.numberDiagramsLabel.text = "\(routeViewModels[indexPath.row].route.arDiagrams.count)"
-        cell.totalCount = Float(routeViewModels[indexPath.row].route.arDiagrams.count)
+        cell.numberDiagramsLabel.text = "\(routeIdToDiagramCount[routeViewModels[indexPath.row].id] ?? 0)"
+        cell.totalCount = Float(routeIdToDiagramCount[routeViewModels[indexPath.row].id] ?? 0)
         cell.currentCount = 0
         return cell
     }
@@ -161,8 +172,8 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         loadingButton.setTitleColor(UIColor(hex: "#C7C7C7"), for: .normal)
         loadingButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 17)
 
-        let nearbyLabel = UILabel()
-        nearbyLabel.text = "Nearby AR Diagrams"
+        nearbyLabel = UILabel()
+        nearbyLabel.text = ""
         nearbyLabel.textColor = UIColor(hex: "#808080")
         nearbyLabel.font = UIFont(name: "Avenir-Medium", size: 17)
 

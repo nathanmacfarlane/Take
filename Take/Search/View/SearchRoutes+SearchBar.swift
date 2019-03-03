@@ -1,3 +1,4 @@
+import CodableFirebase
 import FirebaseFirestore
 import Foundation
 import UIKit

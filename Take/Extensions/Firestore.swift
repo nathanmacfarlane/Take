@@ -37,10 +37,6 @@ extension Firestore {
     ///   - results: Array of objects matching the type specified
     func listen<T>(collection: String, by field: String, with value: Any, of type: T.Type, completion: @escaping (_ results: T) -> Void) where T: Decodable {
         let decoder = FirebaseDecoder()
-        let settings = self.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        self.settings = settings
-
         self.collection(collection).whereField(field, isEqualTo: value).addSnapshotListener { snapshot, _ in
             guard let snapshot = snapshot else { return }
             for snap in snapshot.documentChanges where snap.type == .added {
@@ -75,9 +71,6 @@ extension Firestore {
     }
     /// Generic private internal function used by previous function
     private func query(collection: String, by field: String, with value: Any, and limit: Int? = nil, completion: @escaping (_ results: [QueryDocumentSnapshot]) -> Void) {
-        let settings = self.settings
-        settings.areTimestampsInSnapshotsEnabled = true
-        self.settings = settings
         var query = self.collection(collection).whereField(field, isEqualTo: value)
         if let limit = limit { query = query.limit(to: limit) }
         query.getDocuments { snapshot, err in

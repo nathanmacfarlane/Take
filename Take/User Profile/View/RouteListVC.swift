@@ -148,18 +148,15 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
 
         if let noti = self.notification {
             FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
-                if let user = user.first {
-                    inviteLabel.text = "You've been invited by \(user.name)"
-                }
+                guard let user = user.first else { return }
+                inviteLabel.text = "You've been invited by \(user.name)"
             }
         } else {
             FirestoreService.shared.fs.query(collection: "notifications", by: "toUser", with: self.user.id, of: NotificationCollaboration.self) { noti in
-                if let noti = noti.first {
-                    FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
-                        if let user = user.first {
-                            inviteLabel.text = "You've been invited by \(user.name)"
-                        }
-                    }
+                guard let noti = noti.first else { return }
+                FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
+                    guard let user = user.first else { return }
+                    inviteLabel.text = "You've been invited by \(user.name)"
                 }
             }
         }
