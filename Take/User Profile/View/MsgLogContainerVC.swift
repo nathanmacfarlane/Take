@@ -109,6 +109,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         msgTableView.delegate = self
         msgTableView.rowHeight = UITableView.automaticDimension
         msgTableView.estimatedRowHeight = 100
+        msgTableView.allowsSelection = false
         
         let containerView = UIView()
         containerView.backgroundColor = UIColor(named: "BluePrimaryDark")
