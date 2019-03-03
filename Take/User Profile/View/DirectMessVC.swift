@@ -52,13 +52,13 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         db.query(collection: "users", by: "id", with: friendId, of: User.self) { users in
             guard let user = users.first else { print("noooo i suck"); return }
             self.friends.append(user)
-                cell.nameLabel.text = user.username // placeholder for username
-                let userViewModel = UserViewModel(user: user)
-                userViewModel.getProfilePhoto { image in
-                    DispatchQueue.main.async {
-                        cell.profPic.setBackgroundImage(image, for: .normal)
-                    }
+            cell.nameLabel.text = user.username // placeholder for username
+            let userViewModel = UserViewModel(user: user)
+            userViewModel.getProfilePhoto { image in
+                DispatchQueue.main.async {
+                    cell.profPic.setBackgroundImage(image, for: .normal)
                 }
+            }
         }
         cell.messageLabel.text = dms[indexPath.row].Thread.last?.message
         self.dm = dms[indexPath.row]
