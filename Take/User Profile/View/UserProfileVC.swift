@@ -1,5 +1,6 @@
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseMessaging
 import Foundation
 import Presentr
 import UIKit
