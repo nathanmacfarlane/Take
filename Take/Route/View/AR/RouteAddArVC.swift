@@ -24,17 +24,19 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(hex: "#202226")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         cancelButton = UIButton()
         cancelButton.setTitle("Cancel", for: .normal)
         cancelButton.titleLabel?.font = UIFont(name: "Avenir-Book", size: 20)
         cancelButton.addTarget(self, action: #selector(goCancel), for: .touchUpInside)
+        cancelButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
 
         saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         saveButton.addTarget(self, action: #selector(goSave), for: .touchUpInside)
+        saveButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
 
         rockLabel = UILabel()
         rockLabel.text = "ROCK"
@@ -52,13 +54,13 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
         rightArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
 
         let promptLabel = UILabel()
-        promptLabel.textColor = UIColor(hex: "#BEBEBE")
+        promptLabel.textColor = UISettings.shared.colorScheme.textSecondary
         promptLabel.font = UIFont(name: "Avenir-Book", size: 18)
         promptLabel.numberOfLines = 0
         let str = "If possible, please upload 3 photos from different positions around the rock (roughly 10 feet apart). This improves the accuracy for future climbers."
-        if let font = UIFont(name: "Avenir-Book", size: 18), let color = UIColor(named: "PinkAccentDark"), let start = str.index(of: "(") {
+        if let font = UIFont(name: "Avenir-Book", size: 18), let start = str.index(of: "(") {
             let myMutableString = NSMutableAttributedString(string: str, attributes: [.font: font])
-            myMutableString.addAttribute(.foregroundColor, value: color, range: NSRange(location: start.encodedOffset, length: "(roughly 10 feet apart)".count))
+            myMutableString.addAttribute(.foregroundColor, value: UISettings.shared.colorScheme.accent, range: NSRange(location: start.encodedOffset, length: "(roughly 10 feet apart)".count))
             promptLabel.attributedText = myMutableString
         }
 
@@ -256,16 +258,12 @@ class LineView: UIView {
 
     var from: CGPoint?
     var to: CGPoint?
-    var strokeColor = UIColor(named: "PinkAccentDark")
 
-    init(frame: CGRect, from: CGPoint, to: CGPoint, with strokeColor: UIColor? = nil) {
+    init(frame: CGRect, from: CGPoint, to: CGPoint) {
         super.init(frame: frame)
         self.backgroundColor = UIColor(white: 1.0, alpha: 0.0)
         self.from = from
         self.to = to
-        if let sc = strokeColor {
-            self.strokeColor = sc
-        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -274,9 +272,7 @@ class LineView: UIView {
 
     override func draw(_ rect: CGRect) {
         if let context = UIGraphicsGetCurrentContext(), let from = from, let to = to {
-            if let cgC = strokeColor?.cgColor {
-                context.setStrokeColor(cgC)
-            }
+            context.setStrokeColor(UISettings.shared.colorScheme.accent.cgColor)
             context.setLineWidth(2)
             context.beginPath()
             context.move(to: from)

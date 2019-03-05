@@ -12,7 +12,7 @@ class WeatherViewModel {
         let sunsetDate = Date(timeIntervalSince1970: weather.sys.sunset)
         let hour = sunsetDate.getInt(type: .hour)
         let minute = (sunsetDate.getInt(type: .minute))
-        return ("\(hour > 12 ? (hour - 12) : hour):\(minute)", (hour >= 12 ? "PM" : "AM"))
+        return ("\(hour > 12 ? (hour - 12) : hour):\(String(format: "%02d", minute))", (hour >= 12 ? "PM" : "AM"))
     }
 
     var temperature: Double {

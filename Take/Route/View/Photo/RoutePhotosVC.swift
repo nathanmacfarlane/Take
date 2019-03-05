@@ -50,7 +50,7 @@ class RoutePhotosVC: UIViewController {
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         self.title = routeViewModel.name
 
         let waterfallLayout = VerticalBlueprintLayout(

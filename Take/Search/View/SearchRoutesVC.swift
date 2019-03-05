@@ -9,22 +9,14 @@ class SearchRoutesVC: UIViewController {
 
     // Private Models
     struct SearchResults {
-        var walls: [String] = []
-        var areas: [String] = []
-        var cities: [String] = []
         var routes: [Route] = []
 
         mutating func clear() {
-            walls.removeAll()
-            cities.removeAll()
-            areas.removeAll()
             routes.removeAll()
         }
     }
 
     // MARK: - Variables
-    let locationManager: CLLocationManager = CLLocationManager()
-    var userCurrentLocation: CLLocation?
     var results: SearchResults = SearchResults()
     var resultsMashed: [Any] = []
 
@@ -38,14 +30,6 @@ class SearchRoutesVC: UIViewController {
         myTableView.reloadData()
         mySearchBar.text = ""
 
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        if CLLocationManager.locationServicesEnabled() {
-            locationManager.delegate = self
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-        }
-
     }
 
     @objc
@@ -55,11 +39,11 @@ class SearchRoutesVC: UIViewController {
     }
 
     private func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         // nav add new button
         let myNavAddNewButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(goAddNew))
-        myNavAddNewButton.tintColor = UIColor(named: "PinkAccent")
+        myNavAddNewButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.rightBarButtonItem = myNavAddNewButton
 
         // search bars
@@ -68,7 +52,7 @@ class SearchRoutesVC: UIViewController {
         mySearchBar.searchBarStyle = .minimal
         mySearchBar.placeholder = "Ex. Bishop Peak"
         let textFieldInsideSearchBar = mySearchBar.value(forKey: "searchField") as? UITextField
-        textFieldInsideSearchBar?.textColor = .white
+        textFieldInsideSearchBar?.textColor = UISettings.shared.colorScheme.textPrimary
 
         // table view
         self.myTableView = UITableView()

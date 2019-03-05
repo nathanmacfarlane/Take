@@ -48,71 +48,71 @@ class RouteNowVC: UIViewController {
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         let weatherViewBG = UILabel()
-        weatherViewBG.backgroundColor = UIColor(hex: "#333741")
+        weatherViewBG.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#333741") : UIColor(hex: "#CCCED1")
         weatherViewBG.layer.cornerRadius = 15
         weatherViewBG.clipsToBounds = true
 
         let imageBg = UILabel()
-        imageBg.backgroundColor = view.backgroundColor
+        imageBg.backgroundColor = UISettings.shared.colorScheme.backgroundDarker
         imageBg.layer.cornerRadius = 40
         imageBg.clipsToBounds = true
 
         weatherIconImageView = UIImageView()
 
         cityLabel = UILabel()
-        cityLabel.textColor = UIColor(hex: "#E2E2E2")
+        cityLabel.textColor = UISettings.shared.colorScheme.textPrimary
         cityLabel.font = UIFont(name: "Avenir-Black", size: 24)
         cityLabel.textAlignment = .center
 
         stateLabel = UILabel()
-        stateLabel.textColor = UIColor(hex: "#E2E2E2")
+        stateLabel.textColor = UISettings.shared.colorScheme.textPrimary
         stateLabel.font = UIFont(name: "Avenir-Black", size: 12)
         stateLabel.textAlignment = .center
 
         latAndLongLabel = UILabel()
-        latAndLongLabel.textColor = UIColor(hex: "#202226")
+        latAndLongLabel.textColor = UISettings.shared.mode == .dark ? UIColor(hex: "#202226") : UIColor(hex: "#727479")
         latAndLongLabel.font = UIFont(name: "Avenir-Black", size: 18)
         latAndLongLabel.textAlignment = .center
 
         let windIconImageView = UIImageView()
-        windIconImageView.image = UIImage(named: "icon_wind")
+        windIconImageView.image = UIImage(named: "icon_wind\(UISettings.shared.mode == .dark ? "" : "_blue")")
 
         let tempIconImageView = UIImageView()
-        tempIconImageView.image = UIImage(named: "icon_temp")
+        tempIconImageView.image = UIImage(named: "icon_temp\(UISettings.shared.mode == .dark ? "" : "_blue")")
 
         let sunsetIconImageView = UIImageView()
-        sunsetIconImageView.image = UIImage(named: "icon_sunset")
+        sunsetIconImageView.image = UIImage(named: "icon_sunset\(UISettings.shared.mode == .dark ? "" : "_blue")")
 
         windValueLabel = UILabel()
-        windValueLabel.textColor = UIColor(hex: "#202226")
+        windValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
         windValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
         windValueLabel.textAlignment = .center
 
         tempValueLabel = UILabel()
-        tempValueLabel.textColor = UIColor(hex: "#202226")
+        tempValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
         tempValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
         tempValueLabel.textAlignment = .center
 
         sunsetValueLabel = UILabel()
-        sunsetValueLabel.textColor = UIColor(hex: "#202226")
+        sunsetValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
         sunsetValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
         sunsetValueLabel.textAlignment = .center
 
         windTypeLabel = UILabel()
-        windTypeLabel.textColor = UIColor(hex: "#E2E2E2")
+        windTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
         windTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
         windTypeLabel.textAlignment = .center
 
         tempTypeLabel = UILabel()
-        tempTypeLabel.textColor = UIColor(hex: "#E2E2E2")
+        tempTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
         tempTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
         tempTypeLabel.textAlignment = .center
 
         sunsetTypeLabel = UILabel()
-        sunsetTypeLabel.textColor = UIColor(hex: "#E2E2E2")
+        sunsetTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
         sunsetTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
         sunsetTypeLabel.textAlignment = .center
 
@@ -230,12 +230,12 @@ class RouteNowVC: UIViewController {
         if let closureInfo = routeViewModel.closureInfo {
 
             let closuresViewBG = UILabel()
-            closuresViewBG.backgroundColor = UIColor(hex: "#333741")
+            closuresViewBG.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#333741") : UIColor(hex: "#CCCED1")
             closuresViewBG.layer.cornerRadius = 15
             closuresViewBG.clipsToBounds = true
 
             closuresDetailLabel = UILabel()
-            closuresDetailLabel.textColor = UIColor(hex: "#D6D6D6")
+            closuresDetailLabel.textColor = UISettings.shared.colorScheme.textPrimary
             closuresDetailLabel.font = UIFont(name: "Avenir-Book", size: 16)
             closuresDetailLabel.numberOfLines = 0
             closuresDetailLabel.textAlignment = .left

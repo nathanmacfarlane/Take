@@ -45,18 +45,18 @@ class InitialVC: UIViewController {
         let controllerArray = [searchRoutes, userProfile, mapVC, routeArView]
         tabBarCnt.viewControllers = controllerArray.map {
             let nav = UINavigationController(rootViewController: $0)
-            nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-            nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+            nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+            nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
             nav.navigationBar.isTranslucent = false
             nav.navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+                .foregroundColor: UISettings.shared.colorScheme.textPrimary,
                 .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
             ]
             return nav
         }
 
-        tabBarCnt.tabBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        tabBarCnt.tabBar.tintColor = UIColor(named: "PinkAccent")
+        tabBarCnt.tabBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        tabBarCnt.tabBar.tintColor = UISettings.shared.colorScheme.accent
         tabBarCnt.tabBar.isTranslucent = false
 
         self.view.addSubview(tabBarCnt.view)
