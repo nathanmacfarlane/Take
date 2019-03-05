@@ -91,6 +91,8 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
+        
+        dmTableView.deselectRow(at: indexPath, animated: false)
     
     }
     
@@ -115,7 +117,7 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         present(nav, animated: true, completion: nil)
     }
     
-    func initViews() {
+   func initViews() {
         self.navigationItem.title = "DMs"
         // table view
         self.dmTableView = UITableView()

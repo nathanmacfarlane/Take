@@ -15,6 +15,7 @@ class DmTVC: UITableViewCell {
 //        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         self.backgroundColor = UIColor(named: "BluePrimary")
+        self.selectionStyle = .default
         
         nameLabel = UILabel()
         nameLabel.textColor = .white
