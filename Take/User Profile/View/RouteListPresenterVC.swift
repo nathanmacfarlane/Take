@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 import FirebaseAuth
 import Foundation
 import Presentr
@@ -10,7 +10,6 @@ class RouteListPresenterVC: UIViewController, UITableViewDelegate, UITableViewDa
     var routeLists: [RouteListViewModel] = []
     var currentUser: User!
     var tableView: UITableView!
-    let db = Firestore.firestore()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,10 +39,10 @@ class RouteListPresenterVC: UIViewController, UITableViewDelegate, UITableViewDa
 
     func getLists() {
         guard let firUser = Auth.auth().currentUser else { return }
-        db.query(collection: "users", by: "id", with: firUser.uid, of: User.self) { users in
+        FirestoreService.shared.fs.query(collection: "users", by: "id", with: firUser.uid, of: User.self) { users in
             guard let user = users.first, let toDoListId = user.toDo.first else { return }
             self.currentUser = user
-            self.db.query(collection: "routeLists", by: "id", with: toDoListId, of: RouteList.self) { lists in
+            FirestoreService.shared.fs.query(collection: "routeLists", by: "id", with: toDoListId, of: RouteList.self) { lists in
                 self.routeLists = lists.map { rl -> RouteListViewModel in
                     RouteListViewModel(routeList: rl)
                 }
@@ -61,7 +60,7 @@ class RouteListPresenterVC: UIViewController, UITableViewDelegate, UITableViewDa
             } else {
                 list.routes[currentUser.id]?.append(self.route.id)
             }
-            db.save(object: list, to: "routeLists", with: list.id) {
+            FirestoreService.shared.fs.save(object: list, to: "routeLists", with: list.id) {
                 print("save successful")
                 self.dismiss(animated: true, completion: nil)
             }

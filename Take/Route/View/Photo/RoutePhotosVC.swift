@@ -1,6 +1,7 @@
 import Blueprints
+import FirebaseAuth
 import FirebaseFirestore
-import Lightbox
+//import Lightbox
 import UIKit
 
 class RoutePhotosVC: UIViewController {
@@ -10,26 +11,14 @@ class RoutePhotosVC: UIViewController {
 
     // MARK: - Outlets
     var myImagesCV: UICollectionView!
-    var commentCV: AddCommentViewController!
 
-    // MARK: - Variables
-    var comments: [String: CommentViewModel] = [:]
-    var commentKeys: [String] = []
-    var images: [String: UIImage] = [:]
-    var imagesCVConst: NSLayoutConstraint!
-    var heightConstraint: NSLayoutConstraint!
-    var isAddingComment: Bool = false
-    var lightboxImages: [LightboxImage] {
-        var temp: [LightboxImage] = []
-        for commentkey in commentKeys {
-            let lbImage = LightboxImage(image: self.images[commentkey] ?? UIImage(), text: self.comments[commentkey]?.message ?? "")
-            temp.append(lbImage)
-        }
-        return temp
+    struct ARImageComment {
+        var image: ARImageUrls
+        var comment: String?
     }
 
-    // MARK: - Protocols
-    weak var delegate: CommentDelegate?
+    // MARK: - Variables
+    var images: [ARImageComment] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,29 +26,23 @@ class RoutePhotosVC: UIViewController {
         self.initViews()
 
         DispatchQueue.global(qos: .background).async {
-            let db = Firestore.firestore()
-            for commentId in self.routeViewModel.route.comments {
-                db.query(collection: "comments", by: "id", with: commentId, of: Comment.self) { comments in
-                    if let comment = comments.first {
-                        let commentViewModel = CommentViewModel(comment: comment)
-                        if let imgUrl = commentViewModel.imageUrl, let theUrl = URL(string: imgUrl) {
-                            self.comments[commentId] = commentViewModel
-                            self.images[commentId] = UIImage()
 
-                            URLSession.shared.dataTask(with: theUrl) { data, _, _ in
-                                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                                self.images[commentId] = theImage
-                                DispatchQueue.main.async {
-                                    self.myImagesCV.reloadData()
-                                }
-                            }
-                            .resume()
-                            self.commentKeys.append(commentId)
-                            DispatchQueue.main.async {
-                                self.myImagesCV.reloadData()
-                            }
-                        }
-                    }
+            FirestoreService.shared.fs.listen(collection: "arDiagrams", by: "routeId", with: self.routeViewModel.id, of: ARDiagram.self) { arDiagram in
+                let image = ARImageUrls(dgImage: arDiagram.dgImageUrl, bgImage: arDiagram.bgImageUrl)
+                let arImageContent = ARImageComment(image: image, comment: arDiagram.message)
+                DispatchQueue.main.async {
+                    self.images.insert(arImageContent, at: 0)
+                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
+                }
+            }
+
+            FirestoreService.shared.fs.listen(collection: "comments", by: "routeId", with: self.routeViewModel.id, of: Comment.self) { comment in
+                guard let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
+                let image = ARImageUrls(bgImage: imgUrl)
+                let arImageContent = ARImageComment(image: image, comment: comment.message)
+                DispatchQueue.main.async {
+                    self.images.insert(arImageContent, at: 0)
+                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
                 }
             }
         }
@@ -69,11 +52,6 @@ class RoutePhotosVC: UIViewController {
     func initViews() {
         self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
         self.title = routeViewModel.name
-
-        // add comment view
-        commentCV = AddCommentViewController()
-        commentCV.routeViewModel = routeViewModel
-        commentCV.delegate = self
 
         let waterfallLayout = VerticalBlueprintLayout(
             itemsPerRow: 2,
@@ -89,24 +67,12 @@ class RoutePhotosVC: UIViewController {
         myImagesCV.backgroundColor = .clear
         myImagesCV.showsHorizontalScrollIndicator = false
 
-        // add to subview
-        view.addSubview(commentCV.view)
         view.addSubview(myImagesCV)
-
-        addChild(commentCV)
-
-        commentCV.view.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: commentCV.view, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: commentCV.view, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: commentCV.view, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
-        heightConstraint = NSLayoutConstraint(item: commentCV.view, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
-        heightConstraint.isActive = true
-        commentCV.didMove(toParent: self)
 
         myImagesCV.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: myImagesCV, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myImagesCV, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: commentCV.view, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myImagesCV, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 60).isActive = true
         NSLayoutConstraint(item: myImagesCV, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
     }

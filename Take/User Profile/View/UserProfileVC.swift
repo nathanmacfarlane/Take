@@ -1,5 +1,6 @@
-import Firebase
 import FirebaseAuth
+import FirebaseFirestore
+import FirebaseMessaging
 import Foundation
 import Presentr
 import UIKit
@@ -48,46 +49,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         super.viewWillAppear(true)
         routeLists = []
         if let currentUser = Auth.auth().currentUser {
-            getToDoLists(user: currentUser)
-        }
-    }
-
-    func getToDoLists(user: Firebase.User) {
-        let db = Firestore.firestore()
-        print("user: \(user.uid)")
-        db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
-            guard let user = user.first else { return }
-            self.user = user
-            self.userNameLabel.text = user.name
-            self.beerLabel.text = "Favorite beer is \(user.beer)"
-            self.whipLabel.text = "Number of massive whips: \(user.whips)"
-            self.carabinerLabel.text = "Climbing since \(user.climbYear)"
-            self.trGrade.text = user.trGrade
-            self.tradGrade.text = user.tradGrade
-            self.sportGrade.text = user.sportGrade
-                let userViewModel = UserViewModel(user: user)
-                userViewModel.getProfilePhoto { image in
-                    DispatchQueue.main.async {
-                        self.profPic.setBackgroundImage(image, for: .normal)
-                    }
-                }
-            
-//            for routeListId in user.toDo {
-//                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
-//                    guard let routeList = routeList.first else { return }
-//                    self.routeLists.append(RouteListViewModel(routeList: routeList))
-//                    self.tableView.reloadData()
-//                }
-//            }
-//            let userViewModel = UserViewModel(user: user)
-//            userViewModel.getNotifications { notifications in
-//                self.notifications = notifications
-//                if !notifications.isEmpty {
-//                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
-//                } else {
-//                    self.navigationItem.rightBarButtonItem?.tintColor = .white
-//                }
-//            }
+//            getToDoLists(user: currentUser)
         }
     }
 
@@ -107,7 +69,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
     func selectedNotification(_ noti: Notification) {
         if let noti = noti as? NotificationCollaboration {
-            Firestore.firestore().query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
+            FirestoreService.shared.fs.query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
                 guard let routeList = routeList.first else { return }
                 let routeListVC = RouteListVC()
                 routeListVC.user = self.user

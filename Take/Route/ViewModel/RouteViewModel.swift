@@ -148,7 +148,7 @@ class RouteViewModel {
 
     func getArea(completion: @escaping (_ area: Area) -> Void) {
         if let routeId = self.route.area {
-            Firestore.firestore().query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
+            FirestoreService.shared.fs.query(collection: "areas", by: "id", with: routeId, of: Area.self) { area in
                 guard let area = area.first else { return }
                 completion(area)
             }
@@ -157,7 +157,6 @@ class RouteViewModel {
 
     func getCurrentWeather(completion: @escaping (_ weather: WeatherViewModel) -> Void) {
         let url = "https://api.openweathermap.org/data/2.5/weather?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
-        print("url: \(url)")
         guard let now = URL(string: url) else {
             print("bad url")
             return
@@ -175,7 +174,6 @@ class RouteViewModel {
 
     func getForecastWeather(completion: @escaping (_ forecast: ForecastViewModel) -> Void) {
         let url = "https://api.openweathermap.org/data/2.5/forecast?units=imperial&lat=\(self.location.coordinate.latitude)&lon=\(self.location.coordinate.longitude)&APPID=\(Constants.weatherApiKey)"
-        print("url: \(url)")
         guard let future = URL(string: url) else { return }
         URLSession.shared.dataTask(with: future) { data, _, _ in
             guard let data = data, let forecast = try? JSONDecoder().decode(Forecast.self, from: data) else { return }
@@ -184,35 +182,22 @@ class RouteViewModel {
         .resume()
     }
 
-    func fsLoadImages(completion: @escaping (_ images: [String: UIImage]) -> Void) {
-        var images: [String: UIImage] = [:]
-        var count = 0
-        for routeImage in route.imageUrls {
-            guard let theURL = URL(string: routeImage.value) else { continue }
-            URLSession.shared.dataTask(with: theURL) { data, _, _ in
-                guard let theData = data, let theImage = UIImage(data: theData) else { return }
-                images[routeImage.key] = theImage
-                count += 1
-                if count == self.route.imageUrls.count {
-                    completion(images)
-                }
+    func fsLoadFirstImage(completion: @escaping (_ image: UIImage?) -> Void) {
+        FirestoreService.shared.fs.query(collection: "comments", by: "routeId", with: route.id, of: Comment.self, and: 1) { comment in
+            guard let comment = comment.first else { return }
+            comment.imageUrl?.getImage { image in
+                completion(image)
             }
-            .resume()
         }
     }
 
-    func fsLoadFirstImage(completion: @escaping (_ key: String?, _ image: UIImage?) -> Void) {
-        guard let routeImage = route.imageUrls.first, let theURL = URL(string: routeImage.value) else {
-            completion(nil, nil)
-            return
-        }
-        URLSession.shared.dataTask(with: theURL) { data, _, _ in
-            guard let theData = data, let theImage = UIImage(data: theData) else {
-                completion(nil, nil)
-                return
+    func saveToGeoFire() {
+        let geoFirestoreRef = Firestore.firestore().collection("route-geos")
+        let geoFirestore = GeoFirestore(collectionRef: geoFirestoreRef)
+        geoFirestore.setLocation(location: location, forDocumentWithID: id) { error in
+            if error == nil {
+                print("Saved location successfully!")
             }
-            completion(routeImage.key, theImage)
         }
-        .resume()
     }
 }

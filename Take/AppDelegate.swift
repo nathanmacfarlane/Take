@@ -1,5 +1,6 @@
 import CodableFirebase
 import Firebase
+import FirebaseFirestore
 import FirebaseInstanceID
 import FirebaseMessaging
 import IQKeyboardManagerSwift
@@ -28,6 +29,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         FirebaseApp.configure()
 
+        // init so that other view controllers can access the location singleton
+        _ = LocationService.shared
+
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = false
+        FirestoreService.shared.fs.settings = settings
+
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainView = InitialVC()
         self.window?.rootViewController = mainView
@@ -40,7 +48,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             handleNotification(aps: aps)
         }
 
+        NotificationCenter.default.addObserver(self, selector: #selector(willResignActive), name: UIApplication.willResignActiveNotification, object: nil)
+
         return true
+    }
+
+    @objc
+    func willResignActive() {
+        print("app entering background... clearing cache")
+        print("removed \(ImageCache.shared.cache.keys.count) images from cache")
+        ImageCache.shared.clearCache()
     }
 
     func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

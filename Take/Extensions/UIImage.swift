@@ -1,12 +1,4 @@
-//
-//  UIImave.swift
-//  Take
-//
-//  Created by Family on 5/18/18.
-//  Copyright © 2018 N8. All rights reserved.
-//
-
-import Firebase
+import FirebaseStorage
 import Foundation
 import UIKit
 

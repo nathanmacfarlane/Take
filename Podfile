@@ -15,7 +15,6 @@ target 'Take' do
   pod 'CodableFirebase'
   pod 'Firebase/Firestore'
   pod 'SwiftyDraw'
-  pod 'Mapbox-iOS-SDK'
   pod 'Tabman', '~> 1.10'
   pod 'Presentr'
   pod "GMStepper"
@@ -23,5 +22,6 @@ target 'Take' do
   pod 'Cosmos'
   pod 'IHKeyboardAvoiding'
   pod 'IQKeyboardManagerSwift'
+  pod 'UIImageColors'
 
 end

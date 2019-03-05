@@ -37,7 +37,6 @@ class WeatherViewModel {
 
     var weatherIcon: UIImage? {
         guard let icon = weather.weather.first?.icon else { return nil }
-        print("icon: \(icon)")
         return UIImage(named: "\(icon.prefix(2))")
     }
 }

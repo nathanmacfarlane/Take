@@ -1,7 +1,6 @@
 import Cosmos
 import FirebaseAuth
 import FirebaseFirestore
-import Mapbox
 import Presentr
 import TwicketSegmentedControl
 import UIKit
@@ -39,18 +38,26 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
     }
 
     func hitMapButton() {
-        if let navController = self.tabBarController?.viewControllers?[2] as? UINavigationController,
-            let mapVC = navController.viewControllers.first as? MapVC {
-            mapVC.initialRoutes = [routeViewModel.route]
-            self.tabBarController?.selectedIndex = 2
-        }
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .popup)
+            customPresenter.transitionType = .coverVertical
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = .white
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let mapVC = MapVC()
+        mapVC.initialRoutes = [routeViewModel.route]
+        mapVC.animateMap = true
+        self.customPresentViewController(presenter, viewController: mapVC, animated: true)
     }
 
     func hitSave(stars: Double) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         routeViewModel.addStar(stars, forUserId: userId)
         cosmos.rating = routeViewModel.averageStar ?? 0.0
-        Firestore.firestore().save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
+        FirestoreService.shared.fs.save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
     }
 
     @objc
@@ -142,8 +149,12 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
                 routeViewModel.getArea { area in
                     let areaViewModel = AreaViewModel(area: area)
                     areaView.titleButton.setTitle(areaViewModel.name, for: .normal)
-                    areaViewModel.getImage { image in
-                        areaView.imageView.image = image
+                    if let url = areaViewModel.area.imageUrl {
+                        ImageCache.shared.getImage(for: url) { image in
+                            DispatchQueue.main.async {
+                                areaView.imageView.image = image
+                            }
+                        }
                     }
                 }
                 routeViewModel.cityAndState { city, state in
