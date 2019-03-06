@@ -17,6 +17,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var beer: TypeButton!
     var whippers: TypeButton!
     var partnerMatch =  UIButton()
+    var editButton =  UIButton()
     var climberSearch =  UIButton()
     var profImage = UIImage()
     let homeImage = UIImage(named: "home.png")
@@ -32,6 +33,11 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     let tradGrade = UILabel()
     let trGrade = UILabel()
     let sportGrade = UILabel()
+    
+    var tradLetter = ""
+    var trLetter = ""
+    var sportLetter = ""
+    
     //let boulderGrade = UILabel()
     //let aidGrade = UILabel()
 
@@ -52,6 +58,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         }
     }
 
+    func getLetters() {
+        
+    }
     func getToDoLists(user: Firebase.User) {
         let db = Firestore.firestore()
         db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
@@ -61,9 +70,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             self.beerLabel.text = "Favorite beer is \(user.beer)"
             self.whipLabel.text = "Number of massive whips: \(user.whips)"
             self.carabinerLabel.text = "Climbing since \(user.climbYear)"
-            self.trGrade.text = user.trGrade
-            self.tradGrade.text = user.tradGrade
-            self.sportGrade.text = user.sportGrade
+            self.trGrade.text = "5.\(user.trGrade)" + user.trLetter
+            self.tradGrade.text = "5.\(user.tradGrade)" + user.tradLetter
+            self.sportGrade.text = "5.\(user.sportGrade)" + user.sportLetter
                 let userViewModel = UserViewModel(user: user)
                 userViewModel.getProfilePhoto { image in
                     DispatchQueue.main.async {
@@ -211,7 +220,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         carabinerLabel.textColor = .lightGray
         carabinerLabel.textAlignment = .left
         carabinerLabel.font = UIFont(name: "Avenir", size: 20)
-        carabinerLabel.text = "Climbing since 2016"
         
         beerLabel.textColor = .lightGray
         beerLabel.textAlignment = .left
@@ -271,9 +279,16 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         partnerMatch.backgroundColor = UIColor(hex: "#d341f4")
         partnerMatch.layer.cornerRadius = 8
         
+        editButton = UIButton()
+//        editButton.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
+        editButton.setTitle("Edit Profile", for: .normal)
+        editButton.setTitleColor( .black, for: .normal)
+        editButton.backgroundColor = UIColor(named: "Placeholder")
+        editButton.layer.cornerRadius = 8
+        
         climberSearch = UIButton()
         climberSearch.setTitle("climber Search", for: .normal)
-        climberSearch.backgroundColor = UIColor(hex: "#8041f4")
+        climberSearch.backgroundColor = .blue
         climberSearch.layer.cornerRadius = 8
         
         view.addSubview(userNameLabel)
@@ -295,6 +310,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(whipLabel)
         view.addSubview(partnerMatch)
         view.addSubview(climberSearch)
+        view.addSubview(editButton)
         
         
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -407,6 +423,11 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: climberSearch, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: climberSearch, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.5, constant: 0).isActive = true
         
+        editButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: editButton, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: editButton, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: editButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
+        NSLayoutConstraint(item: editButton, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.0, constant: 0).isActive = true
     }
     
 }

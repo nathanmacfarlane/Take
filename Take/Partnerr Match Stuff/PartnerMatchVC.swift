@@ -6,6 +6,7 @@ import UIKit
 class PartnerMatchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor(named: "BluePrimaryDark")
         
         initViews()
     }
@@ -16,7 +17,7 @@ class PartnerMatchVC: UIViewController {
     
     func initViews() {
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
-        
         self.navigationItem.leftBarButtonItem = backButton
+        self.navigationItem.title = "Partner Match"
     }
 }

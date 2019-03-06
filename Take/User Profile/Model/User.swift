@@ -14,9 +14,12 @@ struct User: Codable {
     var beer: String
     var whips: String
     var climbYear: String
-    var tradGrade: String
-    var trGrade: String
-    var sportGrade: String
+    var tradGrade: Int
+    var trGrade: Int
+    var sportGrade: Int
     var boulderGrade: Int
     var age: Int
+    var trLetter: String
+    var tradLetter: String
+    var sportLetter: String
 }
