@@ -152,6 +152,8 @@
 		719D1E4821FE65A90091A25A /* rocki3.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4721FE65A90091A25A /* rocki3.jpeg */; };
 		719D1E4A21FE669E0091A25A /* rocki2.jpeg in Resources */ = {isa = PBXBuildFile; fileRef = 719D1E4921FE669E0091A25A /* rocki2.jpeg */; };
 		71D0586E222A3F200024114A /* FlexibleTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D0586D222A3F200024114A /* FlexibleTextView.swift */; };
+		71F6B5D62230D62300BAEC87 /* MatchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6B5D52230D62300BAEC87 /* MatchResultsVC.swift */; };
+		71F6B5DA2230D75100BAEC87 /* MatchCriteria.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71F6B5D92230D75100BAEC87 /* MatchCriteria.swift */; };
 		956C8A93E8A98CAFBAE78CAA /* Pods_Take.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */; };
 /* End PBXBuildFile section */
 
@@ -308,6 +310,8 @@
 		719D1E4721FE65A90091A25A /* rocki3.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki3.jpeg; path = ../../../../Desktop/rocki3.jpeg; sourceTree = "<group>"; };
 		719D1E4921FE669E0091A25A /* rocki2.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = rocki2.jpeg; path = ../../../../Desktop/rocki2.jpeg; sourceTree = "<group>"; };
 		71D0586D222A3F200024114A /* FlexibleTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlexibleTextView.swift; sourceTree = "<group>"; };
+		71F6B5D52230D62300BAEC87 /* MatchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchResultsVC.swift; sourceTree = "<group>"; };
+		71F6B5D92230D75100BAEC87 /* MatchCriteria.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchCriteria.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -368,7 +372,7 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
-				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
+				719BC91E221FD99400D167F0 /* Partnerr Match */,
 				2293C4BC220BC55B00D5DB4A /* Area */,
 				227C7F8E21F100EE00115906 /* New-Edit Route */,
 				22207DFC21CB423B004475AF /* Notifications */,
@@ -584,9 +588,9 @@
 				2249F0BB21CACEC80032D58C /* UserProfile+TableViewDataSource.swift */,
 				229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */,
 				225EFA9121CB8FBE00C3952D /* UserListPresenterVC.swift */,
-				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
 				719BC917221F339900D167F0 /* MsgLogContainerVC.swift */,
 				714968ED22211B45002E1850 /* NewMessageVC.swift */,
+				714C1CFF2201573C00D0DECB /* DirectMessVC.swift */,
 				71D0586D222A3F200024114A /* FlexibleTextView.swift */,
 			);
 			path = View;
@@ -759,12 +763,30 @@
 			path = Hype;
 			sourceTree = "<group>";
 		};
-		719BC91E221FD99400D167F0 /* Partnerr Match Stuff */ = {
+		719BC91E221FD99400D167F0 /* Partnerr Match */ = {
+			isa = PBXGroup;
+			children = (
+				71F6B5D82230D71600BAEC87 /* Model */,
+				71F6B5D72230D6E000BAEC87 /* View */,
+			);
+			path = "Partnerr Match";
+			sourceTree = "<group>";
+		};
+		71F6B5D72230D6E000BAEC87 /* View */ = {
 			isa = PBXGroup;
 			children = (
 				719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */,
+				71F6B5D52230D62300BAEC87 /* MatchResultsVC.swift */,
 			);
-			path = "Partnerr Match Stuff";
+			path = View;
+			sourceTree = "<group>";
+		};
+		71F6B5D82230D71600BAEC87 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				71F6B5D92230D75100BAEC87 /* MatchCriteria.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		811A414256C4F3EA9BE8B610 /* Pods */ = {
@@ -1091,6 +1113,7 @@
 				2249F0BC21CACEC80032D58C /* UserProfile+TableViewDataSource.swift in Sources */,
 				22541812217284C8000F575A /* RouteDetailVC.swift in Sources */,
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
+				71F6B5D62230D62300BAEC87 /* MatchResultsVC.swift in Sources */,
 				2249F0B621CA2BD50032D58C /* RouteListUserCVC.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
 				719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */,
@@ -1132,6 +1155,7 @@
 				22BD6D5821C0EF3F0047FF8A /* MapVC.swift in Sources */,
 				22E60D3A22093FE00053C48E /* HypeTVC.swift in Sources */,
 				22BD6D4521BF53160047FF8A /* Weather.swift in Sources */,
+				71F6B5DA2230D75100BAEC87 /* MatchCriteria.swift in Sources */,
 				2249F0BA21CACE8B0032D58C /* UserProfile+TableViewDelegate.swift in Sources */,
 				2203ADB0220D3707004EDBF2 /* HypeStarTVC.swift in Sources */,
 				2222745921ABAE170039E486 /* RoutePhotosCVC.swift in Sources */,

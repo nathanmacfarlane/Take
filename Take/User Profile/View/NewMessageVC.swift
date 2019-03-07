@@ -56,7 +56,6 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
         Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
         
-        print("helooooooo")
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
         msgLogContainer.friend = self.friends[indexPath.row]

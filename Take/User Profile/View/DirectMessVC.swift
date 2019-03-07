@@ -77,7 +77,6 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         }
         for fri in self.friends {
             if(fri.id == friendId) {
-                print(fri)
                 msgLogContainer.friend = fri
             }
         }
