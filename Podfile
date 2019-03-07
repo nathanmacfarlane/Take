@@ -23,5 +23,6 @@ target 'Take' do
   pod 'Cosmos'
   pod 'IHKeyboardAvoiding'
   pod 'IQKeyboardManagerSwift'
+  pod 'MultiSlider'
 
 end

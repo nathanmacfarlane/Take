@@ -332,7 +332,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: userBio, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
         
         trGrade.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: trGrade, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: trGrade, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 2).isActive = true
         NSLayoutConstraint(item: trGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: trGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: trGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
@@ -344,7 +344,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: tradGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         sportGrade.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: sportGrade, attribute: .leading, relatedBy: .equal, toItem: sportButton, attribute: .leading, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: sportGrade, attribute: .leading, relatedBy: .equal, toItem: sportButton, attribute: .leading, multiplier: 1, constant: 2).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true

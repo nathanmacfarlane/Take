@@ -1,5 +1,6 @@
 PODS:
   - AutoInsetter (1.3.0)
+  - AvailableHapticFeedback (1.0.0)
   - BoringSSL (10.0.6):
     - BoringSSL/Implementation (= 10.0.6)
     - BoringSSL/Interface (= 10.0.6)
@@ -134,6 +135,10 @@ PODS:
   - IQKeyboardManagerSwift (6.2.0)
   - leveldb-library (1.20)
   - Mapbox-iOS-SDK (4.6.0)
+  - MiniLayout (1.3.0)
+  - MultiSlider (1.9.0):
+    - AvailableHapticFeedback
+    - MiniLayout
   - nanopb (0.3.901):
     - nanopb/decode (= 0.3.901)
     - nanopb/encode (= 0.3.901)
@@ -163,6 +168,7 @@ DEPENDENCIES:
   - IHKeyboardAvoiding
   - IQKeyboardManagerSwift
   - Mapbox-iOS-SDK
+  - MultiSlider
   - Presentr
   - SwiftLint
   - SwiftyDraw
@@ -172,6 +178,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AutoInsetter
+    - AvailableHapticFeedback
     - BoringSSL
     - CodableFirebase
     - Cosmos
@@ -198,6 +205,8 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - leveldb-library
     - Mapbox-iOS-SDK
+    - MiniLayout
+    - MultiSlider
     - nanopb
     - Pageboy
     - Presentr
@@ -209,6 +218,7 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
+  AvailableHapticFeedback: dbd483684e693281b85e671d95ac3593dfbad34f
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
   CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
   Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
@@ -235,6 +245,8 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   Mapbox-iOS-SDK: 204c04713477cf2a88c52c5a8eed1790eb75a02a
+  MiniLayout: 57c42e7e44cb47a9ef95650970ee1d2718725518
+  MultiSlider: e3b9a9318eaae0e5a4542c544300d3397eecd6b2
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
@@ -244,6 +256,6 @@ SPEC CHECKSUMS:
   Tabman: 6cff148419c5d8812d0e9f08f93b6f1c6ba54502
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: 33611c4e0b57803e96eb6401374ca1a2aba678dc
+PODFILE CHECKSUM: 23fac1c406c8f6fd2e8dd4ad3f5c30bd3aa99cf6
 
 COCOAPODS: 1.5.3
