@@ -20,15 +20,24 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getMatches() {
         let db = Firestore.firestore()
         let ref = db.collection("users")
-        let query = ref.whereField("age", isGreaterThanOrEqualTo: 23)
+//        let query = ref.whereField("age", isGreaterThanOrEqualTo: 18)
+//            .whereField("age", isLessThanOrEqualTo: 30) { snapshot, err in
+//            guard err == nil, let snap = snapshot else { return }
+//
+//        }
+        
+        let query = ref.whereField("age", isGreaterThan: 10).whereField("age", isLessThan: 30)
+        query.getDocuments { snapshot, err in
+            guard err == nil, let snap = snapshot else { print("nooooo"); return }
+            print(snap)
+        
+        }
         
         db.query(collection: "users", by: "age", with: 23, of: User.self) {
             users in
             self.climbers = users
-            print(self.climbers)
             
         }
-        print(self.climbers)
         
     }
     
