@@ -119,7 +119,7 @@ class RouteHypeVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         tableView = UITableView()
         tableView.register(HypeCommentTVC.self, forCellReuseIdentifier: "HypeCommentTVC")

@@ -14,7 +14,7 @@ class HypeCommentTVC: HypeTVC {
         commentImageView.layer.masksToBounds = true
 
         commentLabel = UILabel()
-        commentLabel.textColor = UIColor(hex: "#BFBFBF")
+        commentLabel.textColor = UISettings.shared.colorScheme.textSecondary
         commentLabel.font = UIFont(name: "Avenir-Book", size: 18)
         commentLabel.numberOfLines = 0
 

@@ -23,7 +23,7 @@ class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollec
         let allPhotosOptions = PHFetchOptions()
         allPhotosOptions.fetchLimit = 20
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        allPhotos = PHAsset.fetchAssets(with: allPhotosOptions)
+        allPhotos = PHAsset.fetchAssets(with: allPhotosOptions) 
 
         initViews()
 

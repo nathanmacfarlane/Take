@@ -89,6 +89,7 @@
 		2254181021727CF3000F575A /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 2254180F21727CF2000F575A /* checkmark.png */; };
 		22541812217284C8000F575A /* RouteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22541811217284C8000F575A /* RouteDetailVC.swift */; };
 		225418182172A258000F575A /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 225418172172A258000F575A /* edit.png */; };
+		22576B14222E3DB600CB5C85 /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22576B13222E3DB600CB5C85 /* UISettings.swift */; };
 		22595D6421FD5F2A00DD84F1 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22595D6321FD5F2A00DD84F1 /* CLLocation.swift */; };
 		2259C47120CEDA280000065E /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 2259C47020CEDA280000065E /* search.png */; };
 		2259C47320CEDAA90000065E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 2259C47220CEDAA80000065E /* map.png */; };
@@ -136,11 +137,9 @@
 		22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */; };
 		22BDB74B21BE5B830064E7C1 /* SearchRoutes+TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */; };
 		22BDB74D21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */; };
-		22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB74E21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift */; };
 		22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */; };
 		22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */; };
 		22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */; };
-		22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */; };
 		22CFAA082216A6B700801B37 /* ArColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA072216A6B700801B37 /* ArColorButton.swift */; };
 		22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA092216B55300801B37 /* ArActionButton.swift */; };
 		22CFAA0C221891A600801B37 /* RouteArEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0B221891A600801B37 /* RouteArEditVC.swift */; };
@@ -254,6 +253,7 @@
 		2254180F21727CF2000F575A /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = checkmark.png; sourceTree = "<group>"; };
 		22541811217284C8000F575A /* RouteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailVC.swift; sourceTree = "<group>"; };
 		225418172172A258000F575A /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
+		22576B13222E3DB600CB5C85 /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
 		22595D6321FD5F2A00DD84F1 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		2259C47020CEDA280000065E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		2259C47220CEDAA80000065E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
@@ -301,11 +301,9 @@
 		22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+TableViewDelegate.swift"; sourceTree = "<group>"; };
 		22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+TableViewDataSource.swift"; sourceTree = "<group>"; };
 		22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+SearchBar.swift"; sourceTree = "<group>"; };
-		22BDB74E21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchRoutes+CLLocationManager.swift"; sourceTree = "<group>"; };
 		22BDB75221BE5DED0064E7C1 /* RouteManager+PageBoy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RouteManager+PageBoy.swift"; sourceTree = "<group>"; };
 		22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
-		22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+LightBox.swift"; sourceTree = "<group>"; };
 		22CFAA072216A6B700801B37 /* ArColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArColorButton.swift; sourceTree = "<group>"; };
 		22CFAA092216B55300801B37 /* ArActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArActionButton.swift; sourceTree = "<group>"; };
 		22CFAA0B221891A600801B37 /* RouteArEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArEditVC.swift; sourceTree = "<group>"; };
@@ -489,6 +487,7 @@
 				22197B2D221CE22E0006303E /* FirestoreService.swift */,
 				22BA2A27222A465A0054BC1D /* ImageCache.swift */,
 				223535B5222B72AF0095EBDF /* LocationService.swift */,
+				22576B13222E3DB600CB5C85 /* UISettings.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -763,7 +762,6 @@
 				22BDB74821BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift */,
 				22BDB74A21BE5B820064E7C1 /* SearchRoutes+TableViewDataSource.swift */,
 				22BDB74C21BE5C0C0064E7C1 /* SearchRoutes+SearchBar.swift */,
-				22BDB74E21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -812,7 +810,6 @@
 				223B538E21A92C06006E1824 /* RoutePhotosVC.swift */,
 				22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */,
 				22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */,
-				22BDB75821BE5F680064E7C1 /* RoutePhotos+LightBox.swift */,
 				22197B2F221E56450006303E /* RoutePhotosAddVC.swift */,
 				22F5D852221F3733006824C0 /* PhotoViewerVC.swift */,
 			);
@@ -1131,7 +1128,6 @@
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
 				22595D6421FD5F2A00DD84F1 /* CLLocation.swift in Sources */,
 				2293C4C7220CFBEF00D5DB4A /* AddStarRatingVC.swift in Sources */,
-				22BDB74F21BE5C970064E7C1 /* SearchRoutes+CLLocationManager.swift in Sources */,
 				718449902209581F0029C023 /* DmTVC.swift in Sources */,
 				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
 				229499E321AD1005002C60C6 /* Comment.swift in Sources */,
@@ -1164,7 +1160,6 @@
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */,
-				22BDB75921BE5F680064E7C1 /* RoutePhotos+LightBox.swift in Sources */,
 				2249F0BC21CACEC80032D58C /* UserProfile+TableViewDataSource.swift in Sources */,
 				22541812217284C8000F575A /* RouteDetailVC.swift in Sources */,
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
@@ -1187,10 +1182,10 @@
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
 				229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */,
 				2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */,
+				22576B14222E3DB600CB5C85 /* UISettings.swift in Sources */,
 				22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */,
-				22BDB75121BE5D630064E7C1 /* AddComment+ImagePicker.swift in Sources */,
 				22F5D853221F3733006824C0 /* PhotoViewerVC.swift in Sources */,
 				2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,

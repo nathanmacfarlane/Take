@@ -27,15 +27,15 @@ class RouteManagerVC: TabmanViewController, AddImagesDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         self.dataSource = self
         bar.appearance = TabmanBar.Appearance { appearance in
             appearance.text.font = UIFont(name: "Avenir", size: 16)
-            appearance.indicator.color = .white
+            appearance.indicator.color = UISettings.shared.colorScheme.textPrimary
             appearance.style.background = .solid(color: .clear)
-            appearance.state.selectedColor = .white
-            appearance.state.color = .gray
+            appearance.state.selectedColor = UISettings.shared.colorScheme.textPrimary
+            appearance.state.color = UISettings.shared.colorScheme.textSecondary
             appearance.layout.itemDistribution = .centered
         }
         self.title = routeViewModel.name

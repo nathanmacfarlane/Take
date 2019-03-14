@@ -15,7 +15,8 @@ class ArButton: UIButton {
     }
 
     func myInit() {
-        setImage(UIImage(named: "icon_ar"), for: .normal)
+        setImage(UIImage(named: "icon_ar")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        tintColor = UISettings.shared.colorScheme.accent
         imageView?.contentMode = .scaleAspectFill
 
         diagramImageView = UIImageView()

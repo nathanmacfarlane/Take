@@ -45,7 +45,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = UIColor(hex: "#202226")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         initViews()
 

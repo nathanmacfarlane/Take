@@ -11,7 +11,7 @@ class RouteAreaView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor(hex: "#18191A")
+        backgroundColor = UISettings.shared.colorScheme.backgroundDarker
 
         // init views
         imageView = UIImageView()
@@ -25,7 +25,7 @@ class RouteAreaView: UIView {
         titleButton.addTarget(self, action: #selector(hitTitleButton), for: .touchUpInside)
 
         cityStateLabel = UILabel()
-        cityStateLabel.textColor = UIColor(hex: "#4E4E50")
+        cityStateLabel.textColor = UISettings.shared.colorScheme.backgroundLighter
         cityStateLabel.font = UIFont(name: "Avenir-Black", size: 15)
 
         viewMapButton = UIButton()

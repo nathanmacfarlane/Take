@@ -18,8 +18,8 @@ class HypeStarTVC: HypeTVC {
         cosmos.settings.filledBorderColor = .clear
         cosmos.settings.updateOnTouch = false
         cosmos.settings.starMargin = -4
-        cosmos.settings.filledImage = UIImage(named: "icon_star_selected")
-        cosmos.settings.emptyImage = UIImage(named: "icon_star")
+        cosmos.settings.filledImage = UISettings.shared.mode == .dark ? UIImage(named: "icon_star_selected") : UIImage(named: "icon_star")
+        cosmos.settings.emptyImage = UISettings.shared.mode == .dark ? UIImage(named: "icon_star") : UIImage(named: "icon_star_selected")
         cosmos.settings.fillMode = .precise
 
         self.addSubview(cosmos)
