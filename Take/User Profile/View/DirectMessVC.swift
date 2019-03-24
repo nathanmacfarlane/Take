@@ -76,14 +76,14 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             friendId = notMe
         }
         for fri in self.friends {
-            if(fri.id == friendId) {
+            if fri.id == friendId {
                 msgLogContainer.friend = fri
             }
         }
         
         let nav = UINavigationController(rootViewController: msgLogContainer)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor =  UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
@@ -92,11 +92,11 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         present(nav, animated: true, completion: nil)
         
         dmTableView.deselectRow(at: indexPath, animated: false)
-    
+        
     }
     
     @objc
-     func backToProf() {
+    func backToProf() {
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -106,8 +106,8 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         newDM.user = self.user
         newDM.dmList = self.dms
         let nav = UINavigationController(rootViewController: newDM)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor =  UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
@@ -116,15 +116,15 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         present(nav, animated: true, completion: nil)
     }
     
-   func initViews() {
+    func initViews() {
         self.navigationItem.title = "DMs"
         // table view
         self.dmTableView = UITableView()
         dmTableView.register(DmTVC.self, forCellReuseIdentifier: "DmCellTV")
         dmTableView.dataSource = self
         dmTableView.delegate = self
-        dmTableView.separatorStyle = .none 
-        dmTableView.backgroundColor = UIColor(named: "BluePrimaryDark")
+        dmTableView.separatorStyle = .none
+        dmTableView.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         let newMessButton = UIBarButtonItem(image: UIImage(named: "icon_edit"), style: .done, target: self, action: #selector(toNewMess))

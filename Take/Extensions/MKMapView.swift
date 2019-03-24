@@ -32,8 +32,8 @@ extension MKMapView {
         let metersInLongitude = loc3.distance(from: loc4)
         return metersInLatitude < metersInLongitude ? metersInLatitude : metersInLongitude
     }
-    func centerMapOn(_ location: CLLocation, withRadius radius: Double = 3000) {
+    func centerMapOn(_ location: CLLocation, animated: Bool = true, withRadius radius: Double = 3000) {
         let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: radius, longitudinalMeters: radius)
-        self.setRegion(coordinateRegion, animated: true)
+        self.setRegion(coordinateRegion, animated: animated)
     }
 }

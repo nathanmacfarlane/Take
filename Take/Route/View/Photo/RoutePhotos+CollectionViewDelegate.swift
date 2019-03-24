@@ -1,19 +1,13 @@
 import Foundation
-import Lightbox
 import UIKit
 
 extension RoutePhotosVC: UICollectionViewDelegate {
-
-    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        if scrollView == myImagesCV && isAddingComment {
-            toggleCommentView()
-        }
-    }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let lightboxController = LightboxController(images: lightboxImages, startIndex: indexPath.row)
-        lightboxController.pageDelegate = self
-        lightboxController.dismissalDelegate = self
-        lightboxController.dynamicBackground = true
-        present(lightboxController, animated: true, completion: nil)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? RoutePhotosCVC else { return }
+        let photoViewer = PhotoViewerVC()
+        photoViewer.bgImage = cell.bgImageView.image
+        photoViewer.dgImage = cell.dgImageView.image
+        photoViewer.message = images[indexPath.row].comment
+        present(photoViewer, animated: true, completion: nil)
     }
 }

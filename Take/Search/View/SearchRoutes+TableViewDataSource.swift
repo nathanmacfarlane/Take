@@ -31,7 +31,7 @@ extension SearchRoutesVC: UITableViewDataSource {
         cell.typesLabel.text = rvm.typesString
         cell.selectionStyle = .none
         DispatchQueue.global(qos: .background).async {
-            rvm.fsLoadFirstImage { _, image in
+            rvm.fsLoadFirstImage { image in
                 DispatchQueue.main.async {
                     cell.indicator.stopAnimating()
                     cell.indicator.removeFromSuperview()

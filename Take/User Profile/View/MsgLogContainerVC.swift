@@ -33,9 +33,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                     let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
                     self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                 }
-            }
-        initViews()
         }
+        initViews()
+    }
     
     let inputTextField: FlexibleTextView = {
         let textField = FlexibleTextView()
@@ -47,7 +47,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         textField.placeholder = "enter text here yo.... lol sheeit"
         return textField
     }()
-
+    
     @objc
     func handleSend() {
         guard let msg = self.inputTextField.text, let id = self.user?.id else { return }
@@ -67,7 +67,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         print(UITableView.automaticDimension)
         return 100
     }
-//
+    //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dm?.Thread.count ?? 0
     }
@@ -75,14 +75,14 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MsgCell = self.msgTableView.dequeueReusableCell(withIdentifier: "MsgCell") as? MsgCell else { return MsgCell() }
         cell.message.text = dm?.Thread[indexPath.row].message
-//        cell.textViewDidChange(cell.message)
+        //        cell.textViewDidChange(cell.message)
         
         if dm?.Thread[indexPath.row].sender == self.user?.id {
             guard let user = self.user else { return cell}
             let userViewModel = UserViewModel(user: user)
             userViewModel.getProfilePhoto { image in
                 DispatchQueue.main.async {
-                cell.profPic.setBackgroundImage(image, for: .normal)
+                    cell.profPic.setBackgroundImage(image, for: .normal)
                 }
             }
         } else {
@@ -118,7 +118,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         sendButton.setTitle("Send It", for: .normal)
         sendButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-    
+        
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
         
@@ -163,7 +163,7 @@ class MsgCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
+        
         self.layer.masksToBounds = true
         setup()
     }
@@ -205,20 +205,3 @@ class MsgCell: UITableViewCell {
     }
     
 }
-
-//extension MsgCell: UITextViewDelegate {
-//
-//    func textViewDidChange(_ textView: UITextView) {
-//        let size = CGSize(width: 200, height: 10000)
-//        let estimatedSize = textView.sizeThatFits(size)
-//        print("here here here")
-//        textView.constraints.forEach { (constraint) in
-//            if constraint.firstAttribute == .height {
-//                constraint.constant = estimatedSize.height
-//                print(estimatedSize.height)
-//                print("nfidjnvodnvokdfsnokvndknvkdnx")
-//            }
-//
-//        }
-//    }
-//}

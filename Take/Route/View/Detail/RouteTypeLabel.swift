@@ -8,7 +8,7 @@ class RouteTypeLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         textAlignment = .center
-        backgroundColor = UIColor(hex: "#4A4E53")
+        backgroundColor = UISettings.shared.colorScheme.backgroundDarker
         textColor = .white
     }
 

@@ -4,7 +4,7 @@ import Foundation
 import Presentr
 import UIKit
 class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
-
+    
     var user: User?
     var routeLists: [RouteListViewModel] = []
     var notifications: [Notification] = []
@@ -40,16 +40,15 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     
     //let boulderGrade = UILabel()
     //let aidGrade = UILabel()
-
     var tableView: UITableView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         initViews()
     }
-
-// notification stuff
+    
+    // notification stuff
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         routeLists = []
@@ -57,7 +56,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             getToDoLists(user: currentUser)
         }
     }
-
+    
     func getLetters() {
         
     }
@@ -73,32 +72,32 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             self.trGrade.text = "5.\(user.trGrade)" + user.trLetter
             self.tradGrade.text = "5.\(user.tradGrade)" + user.tradLetter
             self.sportGrade.text = "5.\(user.sportGrade)" + user.sportLetter
-                let userViewModel = UserViewModel(user: user)
-                userViewModel.getProfilePhoto { image in
-                    DispatchQueue.main.async {
-                        self.profPic.setBackgroundImage(image, for: .normal)
-                    }
+            let userViewModel = UserViewModel(user: user)
+            userViewModel.getProfilePhoto { image in
+                DispatchQueue.main.async {
+                    self.profPic.setBackgroundImage(image, for: .normal)
                 }
+            }
             
-//            for routeListId in user.toDo {
-//                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
-//                    guard let routeList = routeList.first else { return }
-//                    self.routeLists.append(RouteListViewModel(routeList: routeList))
-//                    self.tableView.reloadData()
-//                }
-//            }
-//            let userViewModel = UserViewModel(user: user)
-//            userViewModel.getNotifications { notifications in
-//                self.notifications = notifications
-//                if !notifications.isEmpty {
-//                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
-//                } else {
-//                    self.navigationItem.rightBarButtonItem?.tintColor = .white
-//                }
-//            }
+            //            for routeListId in user.toDo {
+            //                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
+            //                    guard let routeList = routeList.first else { return }
+            //                    self.routeLists.append(RouteListViewModel(routeList: routeList))
+            //                    self.tableView.reloadData()
+            //                }
+            //            }
+            //            let userViewModel = UserViewModel(user: user)
+            //            userViewModel.getNotifications { notifications in
+            //                self.notifications = notifications
+            //                if !notifications.isEmpty {
+            //                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
+            //                } else {
+            //                    self.navigationItem.rightBarButtonItem?.tintColor = .white
+            //                }
+            //            }
         }
     }
-
+    
     func clearedNotification(_ noti: Notification) {
         var index = 0
         for notification in notifications {
@@ -112,7 +111,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             index += 1
         }
     }
-
+    
     func selectedNotification(_ noti: Notification) {
         if let noti = noti as? NotificationCollaboration {
             Firestore.firestore().query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
@@ -126,13 +125,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             }
         }
     }
-
+    
     @objc
     private func goLogout(sender: UIButton!) {
         try? Auth.auth().signOut()
         self.present(LoginVC(), animated: true, completion: nil)
     }
-
+    
     @objc
     func notiSelected() {
         guard let user = self.user else { return }
@@ -158,22 +157,22 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         let dms = DirectMessVC()
         dms.user = user
         let nav = UINavigationController(rootViewController: dms)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.barTintColor =  UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor =  UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
-            present(nav, animated: true, completion: nil)
+        present(nav, animated: true, completion: nil)
     }
     
     @objc
     func openPartnerMatchView() {
         let pm = PartnerMatchVC()
         let nav = UINavigationController(rootViewController: pm)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
@@ -183,96 +182,103 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     }
     
     func initViews() {
-        view.backgroundColor = UIColor(named: "BluePrimaryDark")
-
+        view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
+        
         // nav logout button
         let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
-        myNavLogoutButton.tintColor = UIColor(named: "PinkAccent")
+        myNavLogoutButton.tintColor =  UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = myNavLogoutButton
-
-//        // nav noti button
-//        let notiIcon = UIImage(named: "notification")
-//        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
-//        notiIconButton.image = notiIcon
-//        notiIconButton.tintColor = .white
-//        self.navigationItem.rightBarButtonItem = notiIconButton
+        
+        //        // nav noti button
+        //        let notiIcon = UIImage(named: "notification")
+        //        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
+        //        notiIconButton.image = notiIcon
+        //        notiIconButton.tintColor = .white
+        //        self.navigationItem.rightBarButtonItem = notiIconButton
         
         let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openDmView))
         let msgIcon = UIImage(named: "mail.png")
         msgButton.image = msgIcon
-        msgButton.tintColor = .lightGray
+        msgButton.tintColor = UISettings.shared.colorScheme.textSecondary
         self.navigationItem.rightBarButtonItem = msgButton
         
-        userNameLabel.textColor = .white
+        userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         userNameLabel.textAlignment = .left
         userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
         
-        userBio.textColor = .lightGray
+        userBio.textColor = UISettings.shared.colorScheme.textSecondary
         userBio.textAlignment = .left
         userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
         userBio.text = "I am a climber"
         
-        homeLabel.textColor = .lightGray
+        homeLabel.textColor = UISettings.shared.colorScheme.textSecondary
         homeLabel.textAlignment = .left
         homeLabel.font = UIFont(name: "Avenir", size: 20)
         homeLabel.text = "Currently in San Luis Obispo, Ca"
         
-        carabinerLabel.textColor = .lightGray
+        carabinerLabel.textColor = UISettings.shared.colorScheme.textSecondary
         carabinerLabel.textAlignment = .left
         carabinerLabel.font = UIFont(name: "Avenir", size: 20)
         
-        beerLabel.textColor = .lightGray
+        beerLabel.textColor = UISettings.shared.colorScheme.textSecondary
         beerLabel.textAlignment = .left
         beerLabel.font = UIFont(name: "Avenir", size: 20)
-
-        whipLabel.textColor = .lightGray
+        
+        whipLabel.textColor = UISettings.shared.colorScheme.textSecondary
         whipLabel.textAlignment = .left
         whipLabel.font = UIFont(name: "Avenir", size: 20)
-
+        
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
-        sportButton.addBorder(width: 1)
+        sportButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         sportButton.backgroundColor = UIColor(hex: "#0E4343")
         
         trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
-        trButton.addBorder(width: 1)
+        trButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         trButton.backgroundColor = UIColor(hex: "#0E4343")
         
         tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
-        tradButton.addBorder(width: 1)
+        tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         tradButton.backgroundColor = UIColor(hex: "#0E4343")
         
         profPic = TypeButton()
-        profPic.addBorder(width: 2.5)
+        profPic.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 2.5)
         profPic.clipsToBounds = true
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
         
         home = TypeButton()
         home.setBackgroundImage(homeImage, for: .normal)
+        home.tintColor = UISettings.shared.colorScheme.textSecondary
+        
         carabiner = TypeButton()
         carabiner.setBackgroundImage(carabinerImage, for: .normal)
+        carabiner.tintColor = UISettings.shared.colorScheme.textSecondary
+        
         beer = TypeButton()
         beer.setBackgroundImage(beerImage, for: .normal)
+        beer.tintColor = UISettings.shared.colorScheme.textSecondary
+        
         whippers = TypeButton()
         whippers.setBackgroundImage(whipImage, for: .normal)
+        whippers.tintColor = UISettings.shared.colorScheme.textSecondary
         
         tradGrade.font = UIFont(name: "Avenir", size: 16)
-        tradGrade.textColor = .white
+        tradGrade.textColor = UISettings.shared.colorScheme.textSecondary
         tradGrade.textAlignment = .left
         
         trGrade.font = UIFont(name: "Avenir", size: 16)
-        trGrade.textColor = .white
+        trGrade.textColor = UISettings.shared.colorScheme.textSecondary
         trGrade.textAlignment = .left
         
         sportGrade.font = UIFont(name: "Avenir", size: 16)
-        sportGrade.textColor = .white
+        sportGrade.textColor = UISettings.shared.colorScheme.textSecondary
         sportGrade.textAlignment = .left
         
-//        let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openNextView))
+        //        let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openNextView))
         partnerMatch = UIButton()
         partnerMatch.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
         partnerMatch.setTitle("partnerMatch", for: .normal)
@@ -280,7 +286,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         partnerMatch.layer.cornerRadius = 8
         
         editButton = UIButton()
-//        editButton.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
+        //        editButton.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
         editButton.setTitle("Edit Profile", for: .normal)
         editButton.setTitleColor( .black, for: .normal)
         editButton.backgroundColor = UIColor(named: "Placeholder")

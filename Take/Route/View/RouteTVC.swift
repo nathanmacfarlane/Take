@@ -15,18 +15,18 @@ class RouteTVC: UITableViewCell {
 
         self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.backgroundColor = UISettings.shared.mode == .dark ? .black : UIColor(hex: "#C9C9C9")
 
         nameLabel = UILabel()
-        nameLabel.textColor = .white
+        nameLabel.textColor = UISettings.shared.colorScheme.textPrimary
         nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
 
         difficultyLabel = UILabel()
-        difficultyLabel.textColor = .white
+        difficultyLabel.textColor = UISettings.shared.colorScheme.textPrimary
         difficultyLabel.font = UIFont(name: "Avenir", size: 17)
 
         typesLabel = UILabel()
-        typesLabel.textColor = .white
+        typesLabel.textColor = UISettings.shared.colorScheme.textPrimary
         typesLabel.font = UIFont(name: "Avenir", size: 17)
 
         indicator = UIActivityIndicatorView(style: .white)

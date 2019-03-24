@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 struct Comment: Codable, HypeType {
     var id: String
@@ -9,12 +8,12 @@ struct Comment: Codable, HypeType {
     var imageUrl: String?
     var routeId: String
 
-    init(id: String, userId: String, dateString: String, message: String?, imageUrl: String?, routeId: String) {
-        self.id = id
-        self.userId = userId
-        self.dateString = dateString
-        self.message = message
-        self.imageUrl = imageUrl
-        self.routeId = routeId
-    }
+//    init(id: String, userId: String, dateString: String, message: String?, imageUrl: String?, routeId: String) {
+//        self.id = id
+//        self.userId = userId
+//        self.dateString = dateString
+//        self.message = message
+//        self.imageUrl = imageUrl
+//        self.routeId = routeId
+//    }
 }

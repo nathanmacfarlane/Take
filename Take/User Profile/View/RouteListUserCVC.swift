@@ -9,7 +9,7 @@ class RouteListUserCVC: UICollectionViewCell {
 
         imageView = UIImageView()
         imageView.contentMode = .scaleAspectFill
-        imageView.backgroundColor = UIColor(hexString: "#111114")
+        imageView.backgroundColor = UIColor(hex: "#111114")
         imageView.clipsToBounds = true
         self.backgroundColor = .clear
         addSubview(imageView)

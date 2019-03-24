@@ -37,21 +37,26 @@ class InitialVC: UIViewController {
         mapVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "TabMap.png"), tag: 1)
         mapVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
 
-        let controllerArray = [searchRoutes, userProfile, mapVC]
+        let routeArView = ARMenu()
+        routeArView.title = "AR Viewer"
+        routeArView.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "icon_ar"), tag: 1)
+        routeArView.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)
+
+        let controllerArray = [searchRoutes, userProfile, mapVC, routeArView]
         tabBarCnt.viewControllers = controllerArray.map {
             let nav = UINavigationController(rootViewController: $0)
-            nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-            nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+            nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+            nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
             nav.navigationBar.isTranslucent = false
             nav.navigationBar.titleTextAttributes = [
-                .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+                .foregroundColor: UISettings.shared.colorScheme.textPrimary,
                 .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
             ]
             return nav
         }
 
-        tabBarCnt.tabBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        tabBarCnt.tabBar.tintColor = UIColor(named: "PinkAccent")
+        tabBarCnt.tabBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        tabBarCnt.tabBar.tintColor = UISettings.shared.colorScheme.accent
         tabBarCnt.tabBar.isTranslucent = false
 
         self.view.addSubview(tabBarCnt.view)

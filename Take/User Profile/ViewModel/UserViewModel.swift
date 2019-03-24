@@ -1,4 +1,4 @@
-import Firebase
+import FirebaseFirestore
 import Foundation
 import UIKit
 
@@ -26,7 +26,7 @@ struct UserViewModel {
     }
     
     func getNotifications(completion: @escaping (_ notification: [NotificationCollaboration]) -> Void) {
-        Firestore.firestore().query(collection: "notifications", by: "toUser", with: id, of: NotificationCollaboration.self) { notifications in
+        FirestoreService.shared.fs.query(collection: "notifications", by: "toUser", with: id, of: NotificationCollaboration.self) { notifications in
             completion(notifications)
         }
     }

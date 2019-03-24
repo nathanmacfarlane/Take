@@ -14,7 +14,7 @@ class HypeCommentTVC: HypeTVC {
         commentImageView.layer.masksToBounds = true
 
         commentLabel = UILabel()
-        commentLabel.textColor = UIColor(hex: "#BFBFBF")
+        commentLabel.textColor = UISettings.shared.colorScheme.textSecondary
         commentLabel.font = UIFont(name: "Avenir-Book", size: 18)
         commentLabel.numberOfLines = 0
 
@@ -32,7 +32,7 @@ class HypeCommentTVC: HypeTVC {
         NSLayoutConstraint(item: commentLabel, attribute: .leading, relatedBy: .equal, toItem: commentImageView, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: commentLabel, attribute: .trailing, relatedBy: .equal, toItem: bgView, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: commentLabel, attribute: .top, relatedBy: .equal, toItem: eventLabel, attribute: .bottom, multiplier: 1, constant: 5).isActive = true
-        NSLayoutConstraint(item: commentLabel, attribute: .height, relatedBy: .greaterThanOrEqual, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: commentLabel, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
         NSLayoutConstraint(item: bgView, attribute: .bottom, relatedBy: .equal, toItem: commentLabel, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
 

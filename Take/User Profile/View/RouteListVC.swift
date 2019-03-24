@@ -1,5 +1,5 @@
 import Blueprints
-import Firebase
+import FirebaseFirestore
 import FirebaseAuth
 import Foundation
 import Presentr
@@ -71,7 +71,7 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
-        Firestore.firestore().query(collection: "users", by: "id", with: userId, of: User.self) { user in
+        FirestoreService.shared.fs.query(collection: "users", by: "id", with: userId, of: User.self) { user in
             guard let user = user.first else { return }
             let uspvc = UserListPresenterVC()
             uspvc.currentUser = UserViewModel(user: user)
@@ -86,11 +86,10 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         invitees = removeUser(user: self.user, list: invitees)
         routeListViewModel.routeList.invitees = invitees
         routeListViewModel.routeList.contributors.append(user.id)
-        let db = Firestore.firestore()
-        db.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
+        FirestoreService.shared.fs.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
             self.inviteViewConstraint.constant = 0.0
             if let noti = self.notification {
-                db.delete(document: noti.id, from: "notifications", completion: nil)
+                FirestoreService.shared.fs.delete(document: noti.id, from: "notifications", completion: nil)
             }
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
@@ -103,7 +102,7 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             }
         }
         user.toDo.append(routeListViewModel.id)
-        db.save(object: user, to: "users", with: user.id, completion: nil)
+        FirestoreService.shared.fs.save(object: user, to: "users", with: user.id, completion: nil)
     }
 
     @objc
@@ -111,11 +110,10 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         var invitees = routeListViewModel.routeList.invitees
         invitees = removeUser(user: self.user, list: invitees)
         routeListViewModel.routeList.invitees = invitees
-        let db = Firestore.firestore()
-        db.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
+        FirestoreService.shared.fs.save(object: routeListViewModel.routeList, to: "routeLists", with: routeListViewModel.id) {
             self.inviteViewConstraint.constant = 0.0
             if let noti = self.notification {
-                db.delete(document: noti.id, from: "notifications", completion: nil)
+                FirestoreService.shared.fs.delete(document: noti.id, from: "notifications", completion: nil)
             }
             UIView.animate(withDuration: 0.2) {
                 self.view.layoutIfNeeded()
@@ -148,21 +146,17 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         inviteLabel.textColor = .gray
         inviteLabel.textAlignment = .center
 
-        let db = Firestore.firestore()
         if let noti = self.notification {
-            db.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
-                if let user = user.first {
-                    inviteLabel.text = "You've been invited by \(user.name)"
-                }
+            FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
+                guard let user = user.first else { return }
+                inviteLabel.text = "You've been invited by \(user.name)"
             }
         } else {
-            db.query(collection: "notifications", by: "toUser", with: self.user.id, of: NotificationCollaboration.self) { noti in
-                if let noti = noti.first {
-                    db.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
-                        if let user = user.first {
-                            inviteLabel.text = "You've been invited by \(user.name)"
-                        }
-                    }
+            FirestoreService.shared.fs.query(collection: "notifications", by: "toUser", with: self.user.id, of: NotificationCollaboration.self) { noti in
+                guard let noti = noti.first else { return }
+                FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
+                    guard let user = user.first else { return }
+                    inviteLabel.text = "You've been invited by \(user.name)"
                 }
             }
         }

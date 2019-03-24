@@ -1,7 +1,6 @@
 import Cosmos
 import FirebaseAuth
 import FirebaseFirestore
-import Mapbox
 import Presentr
 import TwicketSegmentedControl
 import UIKit
@@ -39,18 +38,26 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
     }
 
     func hitMapButton() {
-        if let navController = self.tabBarController?.viewControllers?[2] as? UINavigationController,
-            let mapVC = navController.viewControllers.first as? MapVC {
-            mapVC.initialRoutes = [routeViewModel.route]
-            self.tabBarController?.selectedIndex = 2
-        }
+        let presenter: Presentr = {
+            let customPresenter = Presentr(presentationType: .popup)
+            customPresenter.transitionType = .coverVertical
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            customPresenter.backgroundColor = UISettings.shared.mode == .dark ? .white : .black
+            customPresenter.backgroundOpacity = 0.5
+            return customPresenter
+        }()
+        let mapVC = MapVC()
+        mapVC.initialRoutes = [routeViewModel.route]
+        mapVC.animateMap = true
+        self.customPresentViewController(presenter, viewController: mapVC, animated: true)
     }
 
     func hitSave(stars: Double) {
         guard let userId = Auth.auth().currentUser?.uid else { return }
         routeViewModel.addStar(stars, forUserId: userId)
         cosmos.rating = routeViewModel.averageStar ?? 0.0
-        Firestore.firestore().save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
+        FirestoreService.shared.fs.save(object: routeViewModel.route, to: "routes", with: routeViewModel.id, completion: nil)
     }
 
     @objc
@@ -60,7 +67,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
             customPresenter.transitionType = .coverVertical
             customPresenter.roundCorners = true
             customPresenter.cornerRadius = 15
-            customPresenter.backgroundColor = .white
+            customPresenter.backgroundColor = UISettings.shared.mode == .dark ? .white : .black
             customPresenter.backgroundOpacity = 0.5
             return customPresenter
         }()
@@ -72,26 +79,26 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
     }
 
     func initViews() {
-        self.view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         // rating header
         let ratingLabel = UILabel()
         ratingLabel.text = "RATING"
-        ratingLabel.textColor = .lightGray
+        ratingLabel.textColor = UISettings.shared.colorScheme.textSecondary
         ratingLabel.textAlignment = .center
         ratingLabel.font = UIFont(name: "Avenir", size: 14)
 
         // rating value
         ratingValue = UILabel()
         ratingValue.text = routeViewModel.rating
-        ratingValue.textColor = .white
+        ratingValue.textColor = UISettings.shared.colorScheme.textPrimary
         ratingValue.textAlignment = .center
         ratingValue.font = UIFont(name: "Avenir", size: 24)
 
         // stars header
         let starsLabel = UILabel()
         starsLabel.text = "STARS"
-        starsLabel.textColor = .lightGray
+        starsLabel.textColor = UISettings.shared.colorScheme.textSecondary
         starsLabel.textAlignment = .center
         starsLabel.font = UIFont(name: "Avenir", size: 14)
 
@@ -105,8 +112,8 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         cosmos.settings.filledBorderColor = .clear
         cosmos.settings.updateOnTouch = false
         cosmos.settings.starMargin = -4
-        cosmos.settings.filledImage = UIImage(named: "icon_star_selected")
-        cosmos.settings.emptyImage = UIImage(named: "icon_star")
+        cosmos.settings.filledImage = UISettings.shared.mode == .dark ? UIImage(named: "icon_star_selected") : UIImage(named: "icon_star")
+        cosmos.settings.emptyImage = UISettings.shared.mode == .dark ? UIImage(named: "icon_star") : UIImage(named: "icon_star_selected")
         cosmos.settings.fillMode = .precise
 
         let starTap = UITapGestureRecognizer(target: self, action: #selector(hitStars))
@@ -115,14 +122,14 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         // pitches header
         let pitchesLabel = UILabel()
         pitchesLabel.text = "PITCHES"
-        pitchesLabel.textColor = .lightGray
+        pitchesLabel.textColor = UISettings.shared.colorScheme.textSecondary
         pitchesLabel.textAlignment = .center
         pitchesLabel.font = UIFont(name: "Avenir", size: 14)
 
         // pitches value
         pitchesValue = UILabel()
         pitchesValue.text = routeViewModel.pitchesString
-        pitchesValue.textColor = .white
+        pitchesValue.textColor = UISettings.shared.colorScheme.textPrimary
         pitchesValue.textAlignment = .center
         pitchesValue.font = UIFont(name: "Avenir", size: 24)
 
@@ -142,8 +149,12 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
                 routeViewModel.getArea { area in
                     let areaViewModel = AreaViewModel(area: area)
                     areaView.titleButton.setTitle(areaViewModel.name, for: .normal)
-                    areaViewModel.getImage { image in
-                        areaView.imageView.image = image
+                    if let url = areaViewModel.area.imageUrl {
+                        ImageCache.shared.getImage(for: url) { image in
+                            DispatchQueue.main.async {
+                                areaView.imageView.image = image
+                            }
+                        }
                     }
                 }
                 routeViewModel.cityAndState { city, state in
@@ -162,7 +173,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         let segControl = TwicketSegmentedControl()
         segControl.setSegmentItems(["Description", "Protection"])
         segControl.isSliderShadowHidden = true
-        segControl.sliderBackgroundColor = UIColor(hex: "#4A4E53")
+        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
         segControl.backgroundColor = .clear
         segControl.delegate = self
 
@@ -170,7 +181,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         infoLabel = UILabel()
         infoLabel.text = routeViewModel.info
         infoLabel.numberOfLines = 0
-        infoLabel.textColor = .white
+        infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
         infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
 
         // add to subview

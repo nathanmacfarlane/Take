@@ -15,25 +15,17 @@ class AreaViewModel {
         return CLLocation(latitude: area.latitude, longitude: area.longitude)
     }
 
-    func getImage(completion: @escaping (_ image: UIImage?) -> Void) {
-        guard let imageUrl = self.area.imageUrl, let theURL = URL(string: imageUrl) else {
-            completion(nil)
-            return
-        }
-        URLSession.shared.dataTask(with: theURL) { data, _, _ in
-            guard let theData = data, let theImage = UIImage(data: theData) else {
-                completion(nil)
-                return
-            }
-            DispatchQueue.main.async {
-                completion(theImage)
-            }
-        }
-        .resume()
-    }
-
     init(area: Area) {
         self.area = area
     }
 
+    var latAndLongString: String {
+        return "\(Double(location.coordinate.latitude).rounded(toPlaces: 4)) \(Double(location.coordinate.longitude).rounded(toPlaces: 4))"
+    }
+
+    func cityAndState(completion: @escaping (_ city: String, _ state: String) -> Void) {
+        self.location.cityAndState { c, s, _ in
+            completion(c ?? "", s ?? "")
+        }
+    }
 }
