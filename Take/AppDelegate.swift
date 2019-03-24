@@ -56,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @objc
     func willResignActive() {
         print("app entering background... clearing cache")
-        print("removed \(ImageCache.shared.cache.keys.count) images from cache")
         ImageCache.shared.clearCache()
     }
 

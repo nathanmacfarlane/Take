@@ -36,9 +36,15 @@
 		2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB3220D3F64004EDBF2 /* HypeType.swift */; };
 		2203ADB6220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2203ADB5220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift */; };
 		2204AAE320C23DFC0035E3B7 /* plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 2204AAE220C23DFC0035E3B7 /* plus.png */; };
+		2205BD242244B1DA003A5715 /* NewArVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2205BD232244B1DA003A5715 /* NewArVC.swift */; };
 		220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 220725A8213A6C01005448E8 /* RouteFirestore.swift */; };
 		220725AD213D05C0005448E8 /* placeholderUser.png in Resources */ = {isa = PBXBuildFile; fileRef = 220725AC213D05BF005448E8 /* placeholderUser.png */; };
 		2209A8E322169EEE00959C66 /* RouteArEditMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2209A8E222169EEE00959C66 /* RouteArEditMenu.swift */; };
+		2211DF482245FB0300FB169B /* MPRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211DF472245FB0300FB169B /* MPRoute.swift */; };
+		2211DF4A2245FBF800FB169B /* MPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211DF492245FBF800FB169B /* MPService.swift */; };
+		2211DF4C224609AA00FB169B /* MPUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211DF4B224609AA00FB169B /* MPUser.swift */; };
+		2211DF4E22460E9A00FB169B /* MPTick.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211DF4D22460E9A00FB169B /* MPTick.swift */; };
+		2211DF50224611C700FB169B /* MPToDoList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2211DF4F224611C700FB169B /* MPToDoList.swift */; };
 		2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B22147254B00E79E99 /* closeMenuIcon.png */; };
 		2211F3B72147284500E79E99 /* hamburgerMenuIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B62147284400E79E99 /* hamburgerMenuIcon.png */; };
 		2211F3BA214742DF00E79E99 /* undo.png in Resources */ = {isa = PBXBuildFile; fileRef = 2211F3B8214742DD00E79E99 /* undo.png */; };
@@ -90,6 +96,9 @@
 		22541812217284C8000F575A /* RouteDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22541811217284C8000F575A /* RouteDetailVC.swift */; };
 		225418182172A258000F575A /* edit.png in Resources */ = {isa = PBXBuildFile; fileRef = 225418172172A258000F575A /* edit.png */; };
 		22576B14222E3DB600CB5C85 /* UISettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22576B13222E3DB600CB5C85 /* UISettings.swift */; };
+		22576B16222F05DA00CB5C85 /* AreaManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22576B15222F05DA00CB5C85 /* AreaManagerVC.swift */; };
+		22576B18222F07F100CB5C85 /* AreaTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22576B17222F07F100CB5C85 /* AreaTVC.swift */; };
+		22576B1A222F0FE100CB5C85 /* AreaDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22576B19222F0FE100CB5C85 /* AreaDetailVC.swift */; };
 		22595D6421FD5F2A00DD84F1 /* CLLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22595D6321FD5F2A00DD84F1 /* CLLocation.swift */; };
 		2259C47120CEDA280000065E /* search.png in Resources */ = {isa = PBXBuildFile; fileRef = 2259C47020CEDA280000065E /* search.png */; };
 		2259C47320CEDAA90000065E /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 2259C47220CEDAA80000065E /* map.png */; };
@@ -104,6 +113,11 @@
 		2269862621BD0B74008F7697 /* Imaginary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2269862421BD0B74008F7697 /* Imaginary.framework */; };
 		227C7F9021F1012F00115906 /* AddEditRouteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */; };
 		227C7F9221F105DD00115906 /* UITextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227C7F9121F105DD00115906 /* UITextField.swift */; };
+		227F7AC0223F6E7E00D4E232 /* MapPreviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F7ABF223F6E7E00D4E232 /* MapPreviewView.swift */; };
+		227F7AC2223F71C600D4E232 /* OldMapAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F7AC1223F71C600D4E232 /* OldMapAreaView.swift */; };
+		227F7AC4223F759800D4E232 /* MapRoutePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 227F7AC3223F759800D4E232 /* MapRoutePreview.swift */; };
+		2281EA622230C28700236325 /* AreaRoutesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2281EA612230C28700236325 /* AreaRoutesVC.swift */; };
+		2281EA64223105A000236325 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2281EA63223105A000236325 /* PieChartView.swift */; };
 		228ED47720CA5C9F00A4DBA4 /* NewAreaTargetWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = 228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */; };
 		2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */; };
 		2293C4C0220BC58E00D5DB4A /* Area.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2293C4BF220BC58E00D5DB4A /* Area.swift */; };
@@ -199,9 +213,15 @@
 		2203ADB3220D3F64004EDBF2 /* HypeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeType.swift; sourceTree = "<group>"; };
 		2203ADB5220D5363004EDBF2 /* RouteAddImagesPresentrVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteAddImagesPresentrVC.swift; sourceTree = "<group>"; };
 		2204AAE220C23DFC0035E3B7 /* plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = plus.png; sourceTree = "<group>"; };
+		2205BD232244B1DA003A5715 /* NewArVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewArVC.swift; sourceTree = "<group>"; };
 		220725A8213A6C01005448E8 /* RouteFirestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteFirestore.swift; sourceTree = "<group>"; };
 		220725AC213D05BF005448E8 /* placeholderUser.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = placeholderUser.png; sourceTree = "<group>"; };
 		2209A8E222169EEE00959C66 /* RouteArEditMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArEditMenu.swift; sourceTree = "<group>"; };
+		2211DF472245FB0300FB169B /* MPRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPRoute.swift; sourceTree = "<group>"; };
+		2211DF492245FBF800FB169B /* MPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPService.swift; sourceTree = "<group>"; };
+		2211DF4B224609AA00FB169B /* MPUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPUser.swift; sourceTree = "<group>"; };
+		2211DF4D22460E9A00FB169B /* MPTick.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPTick.swift; sourceTree = "<group>"; };
+		2211DF4F224611C700FB169B /* MPToDoList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MPToDoList.swift; sourceTree = "<group>"; };
 		2211F3B22147254B00E79E99 /* closeMenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = closeMenuIcon.png; sourceTree = "<group>"; };
 		2211F3B62147284400E79E99 /* hamburgerMenuIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = hamburgerMenuIcon.png; sourceTree = "<group>"; };
 		2211F3B8214742DD00E79E99 /* undo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = undo.png; sourceTree = "<group>"; };
@@ -254,6 +274,9 @@
 		22541811217284C8000F575A /* RouteDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteDetailVC.swift; sourceTree = "<group>"; };
 		225418172172A258000F575A /* edit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = edit.png; sourceTree = "<group>"; };
 		22576B13222E3DB600CB5C85 /* UISettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UISettings.swift; sourceTree = "<group>"; };
+		22576B15222F05DA00CB5C85 /* AreaManagerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaManagerVC.swift; sourceTree = "<group>"; };
+		22576B17222F07F100CB5C85 /* AreaTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaTVC.swift; sourceTree = "<group>"; };
+		22576B19222F0FE100CB5C85 /* AreaDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaDetailVC.swift; sourceTree = "<group>"; };
 		22595D6321FD5F2A00DD84F1 /* CLLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocation.swift; sourceTree = "<group>"; };
 		2259C47020CEDA280000065E /* search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = search.png; sourceTree = "<group>"; };
 		2259C47220CEDAA80000065E /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
@@ -268,6 +291,11 @@
 		2269862421BD0B74008F7697 /* Imaginary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Imaginary.framework; path = Carthage/Build/iOS/Imaginary.framework; sourceTree = "<group>"; };
 		227C7F8F21F1012F00115906 /* AddEditRouteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEditRouteVC.swift; sourceTree = "<group>"; };
 		227C7F9121F105DD00115906 /* UITextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITextField.swift; sourceTree = "<group>"; };
+		227F7ABF223F6E7E00D4E232 /* MapPreviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapPreviewView.swift; sourceTree = "<group>"; };
+		227F7AC1223F71C600D4E232 /* OldMapAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OldMapAreaView.swift; sourceTree = "<group>"; };
+		227F7AC3223F759800D4E232 /* MapRoutePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapRoutePreview.swift; sourceTree = "<group>"; };
+		2281EA612230C28700236325 /* AreaRoutesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AreaRoutesVC.swift; sourceTree = "<group>"; };
+		2281EA63223105A000236325 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		228ED47620CA5C9E00A4DBA4 /* NewAreaTargetWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = NewAreaTargetWhite.png; sourceTree = "<group>"; };
 		2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteTypeLabel.swift; sourceTree = "<group>"; };
 		2293C4BF220BC58E00D5DB4A /* Area.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Area.swift; sourceTree = "<group>"; };
@@ -390,6 +418,8 @@
 		0452555F2091B6D600A4A384 /* Take */ = {
 			isa = PBXGroup;
 			children = (
+				2211DF462245FAD600FB169B /* Mountain Project */,
+				2205BD222244B1BE003A5715 /* NewARView */,
 				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
 				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				229DBF65221F9BBF0065CD6C /* ARView */,
@@ -481,6 +511,25 @@
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
 		};
+		2205BD222244B1BE003A5715 /* NewARView */ = {
+			isa = PBXGroup;
+			children = (
+				2205BD232244B1DA003A5715 /* NewArVC.swift */,
+			);
+			path = NewARView;
+			sourceTree = "<group>";
+		};
+		2211DF462245FAD600FB169B /* Mountain Project */ = {
+			isa = PBXGroup;
+			children = (
+				2211DF472245FB0300FB169B /* MPRoute.swift */,
+				2211DF4B224609AA00FB169B /* MPUser.swift */,
+				2211DF4D22460E9A00FB169B /* MPTick.swift */,
+				2211DF4F224611C700FB169B /* MPToDoList.swift */,
+			);
+			path = "Mountain Project";
+			sourceTree = "<group>";
+		};
 		22197B2C221CE21C0006303E /* Singletons */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +537,7 @@
 				22BA2A27222A465A0054BC1D /* ImageCache.swift */,
 				223535B5222B72AF0095EBDF /* LocationService.swift */,
 				22576B13222E3DB600CB5C85 /* UISettings.swift */,
+				2211DF492245FBF800FB169B /* MPService.swift */,
 			);
 			path = Singletons;
 			sourceTree = "<group>";
@@ -607,7 +657,11 @@
 		2293C4BD220BC56800D5DB4A /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2293C4C1220BCDD100D5DB4A /* RouteAreaView.swift */,
+				22576B15222F05DA00CB5C85 /* AreaManagerVC.swift */,
+				22576B17222F07F100CB5C85 /* AreaTVC.swift */,
+				22576B19222F0FE100CB5C85 /* AreaDetailVC.swift */,
+				2281EA612230C28700236325 /* AreaRoutesVC.swift */,
+				2281EA63223105A000236325 /* PieChartView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -687,6 +741,9 @@
 			isa = PBXGroup;
 			children = (
 				22BD6D5721C0EF3F0047FF8A /* MapVC.swift */,
+				227F7ABF223F6E7E00D4E232 /* MapPreviewView.swift */,
+				227F7AC1223F71C600D4E232 /* OldMapAreaView.swift */,
+				227F7AC3223F759800D4E232 /* MapRoutePreview.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -798,6 +855,7 @@
 				22541811217284C8000F575A /* RouteDetailVC.swift */,
 				22BDB73F21BE569D0064E7C1 /* RouteDetail+Twicket.swift */,
 				2293C4BA220BBC3100D5DB4A /* RouteTypeLabel.swift */,
+				2293C4C1220BCDD100D5DB4A /* RouteAreaView.swift */,
 				2293C4C6220CFBEF00D5DB4A /* AddStarRatingVC.swift */,
 			);
 			path = Detail;
@@ -1119,10 +1177,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2211DF4A2245FBF800FB169B /* MPService.swift in Sources */,
+				2205BD242244B1DA003A5715 /* NewArVC.swift in Sources */,
 				2234F59B2215499B00D2B8D9 /* RouteView.swift in Sources */,
 				222F7F9F2227BD75002E30C2 /* ArImage.swift in Sources */,
+				22576B1A222F0FE100CB5C85 /* AreaDetailVC.swift in Sources */,
 				22E60D3E22094CF60053C48E /* HypeCommentTVC.swift in Sources */,
 				22BD6D5121C0DB630047FF8A /* InitialVC.swift in Sources */,
+				227F7AC0223F6E7E00D4E232 /* MapPreviewView.swift in Sources */,
+				2281EA622230C28700236325 /* AreaRoutesVC.swift in Sources */,
 				2249F0B221CA26DF0032D58C /* RouteList+TableViewDelegate.swift in Sources */,
 				22BA2A28222A465A0054BC1D /* ImageCache.swift in Sources */,
 				2254180321712CE3000F575A /* SearchRoutesVC.swift in Sources */,
@@ -1146,7 +1209,9 @@
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
 				22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */,
 				2234F5942213564E00D2B8D9 /* RouteAddArVC.swift in Sources */,
+				227F7AC4223F759800D4E232 /* MapRoutePreview.swift in Sources */,
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
+				2281EA64223105A000236325 /* PieChartView.swift in Sources */,
 				22383AE721D0A8C20010E6CC /* NotificationPresenterVC.swift in Sources */,
 				22D9E63822167F9A002D8D9E /* ArButton.swift in Sources */,
 				2249F0B021CA12C60032D58C /* UserViewModel.swift in Sources */,
@@ -1155,9 +1220,12 @@
 				22CFAA0C221891A600801B37 /* RouteArEditVC.swift in Sources */,
 				2293C4CC220D2C3600D5DB4A /* Star.swift in Sources */,
 				043F788420AEA3F40043C08A /* UIImageView.swift in Sources */,
+				227F7AC2223F71C600D4E232 /* OldMapAreaView.swift in Sources */,
 				043F787F20AD5B700043C08A /* RouteType.swift in Sources */,
 				2293C4C5220BDE4F00D5DB4A /* AreaViewModel.swift in Sources */,
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
+				2211DF50224611C700FB169B /* MPToDoList.swift in Sources */,
+				22576B18222F07F100CB5C85 /* AreaTVC.swift in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */,
 				2249F0BC21CACEC80032D58C /* UserProfile+TableViewDataSource.swift in Sources */,
@@ -1166,6 +1234,8 @@
 				2249F0B621CA2BD50032D58C /* RouteListUserCVC.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
 				719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */,
+				2211DF482245FB0300FB169B /* MPRoute.swift in Sources */,
+				22576B16222F05DA00CB5C85 /* AreaManagerVC.swift in Sources */,
 				2203ADB2220D3BF3004EDBF2 /* StarViewModel.swift in Sources */,
 				2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */,
 				22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */,
@@ -1174,6 +1244,7 @@
 				2249F0AD21CA0F680032D58C /* RouteListViewModel.swift in Sources */,
 				045255612091B6D600A4A384 /* AppDelegate.swift in Sources */,
 				22A121982229F98400CA002B /* ARDiagram.swift in Sources */,
+				2211DF4C224609AA00FB169B /* MPUser.swift in Sources */,
 				2293C4CE220D2D2200D5DB4A /* CommentViewModel.swift in Sources */,
 				719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */,
 				2234F5972213F82F00D2B8D9 /* ImagePicker.swift in Sources */,
@@ -1182,6 +1253,7 @@
 				2293C4BB220BBC3100D5DB4A /* RouteTypeLabel.swift in Sources */,
 				229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */,
 				2203ADB4220D3F64004EDBF2 /* HypeType.swift in Sources */,
+				2211DF4E22460E9A00FB169B /* MPTick.swift in Sources */,
 				22576B14222E3DB600CB5C85 /* UISettings.swift in Sources */,
 				22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,

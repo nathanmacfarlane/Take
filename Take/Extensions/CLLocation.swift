@@ -3,8 +3,10 @@ import MapKit
 
 extension CLLocation {
     func cityAndState(completion: @escaping (_ city: String?, _ state: String?, _ error: Error?) -> Void) {
-        CLGeocoder().reverseGeocodeLocation(self) { placemarks, error in
-            completion(placemarks?.first?.locality, self.stateAbbrevToString(placemarks?.first?.administrativeArea), error)
+        DispatchQueue.global(qos: .background).async {
+            CLGeocoder().reverseGeocodeLocation(self) { placemarks, error in
+                completion(placemarks?.first?.locality, self.stateAbbrevToString(placemarks?.first?.administrativeArea), error)
+            }
         }
     }
 

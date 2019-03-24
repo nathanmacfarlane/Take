@@ -4,7 +4,7 @@ import UIKit
 class ImageCache {
 
     static let shared = ImageCache()
-    var cache: [String: UIImage] = [:]
+    private var cache: [String: UIImage] = [:]
 
     func addImage(url: String, image: UIImage) {
         cache[url] = image

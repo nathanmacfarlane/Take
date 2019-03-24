@@ -2,20 +2,17 @@ import UIKit
 
 class RouteTVC: UITableViewCell {
 
-    var routeViewModel: RouteViewModel!
-
     var nameLabel: UILabel!
     var difficultyLabel: UILabel!
     var typesLabel: UILabel!
-    var indicator: UIActivityIndicatorView!
     var firstImageView: UIImageView!
+
+    var widthConst: NSLayoutConstraint?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
-        self.backgroundColor = UISettings.shared.mode == .dark ? .black : UIColor(hex: "#C9C9C9")
+        backgroundColor = .clear
 
         nameLabel = UILabel()
         nameLabel.textColor = UISettings.shared.colorScheme.textPrimary
@@ -29,47 +26,57 @@ class RouteTVC: UITableViewCell {
         typesLabel.textColor = UISettings.shared.colorScheme.textPrimary
         typesLabel.font = UIFont(name: "Avenir", size: 17)
 
-        indicator = UIActivityIndicatorView(style: .white)
-        indicator.startAnimating()
-
         firstImageView = UIImageView()
-        self.firstImageView.contentMode = .scaleAspectFill
+        firstImageView.contentMode = .scaleAspectFill
+        firstImageView.clipsToBounds = true
+        firstImageView.layer.cornerRadius = 10
 
-        self.addSubview(nameLabel)
-        self.addSubview(difficultyLabel)
-        self.addSubview(typesLabel)
-        self.addSubview(firstImageView)
-        self.addSubview(indicator)
+        let bgView = UILabel()
+        bgView.backgroundColor = UISettings.shared.mode == .dark ? .black : UIColor(hex: "#C9C9C9")
+        bgView.layer.cornerRadius = 10
+        bgView.layer.masksToBounds = true
+
+        addSubview(bgView)
+        addSubview(nameLabel)
+        addSubview(difficultyLabel)
+        addSubview(typesLabel)
+        addSubview(firstImageView)
+
+        bgView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: bgView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: bgView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: bgView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: bgView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
         difficultyLabel.translatesAutoresizingMaskIntoConstraints = false
-        let difficultyLabelWidthConst = NSLayoutConstraint(item: difficultyLabel, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 0.5, constant: 0)
-        let difficultyLabelCenterXConst = NSLayoutConstraint(item: difficultyLabel, attribute: .left, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0)
-        let difficultyLabelCenterYConst = NSLayoutConstraint(item: difficultyLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([difficultyLabelWidthConst, difficultyLabelCenterXConst, difficultyLabelCenterYConst])
+        NSLayoutConstraint(item: difficultyLabel, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: difficultyLabel, attribute: .leading, relatedBy: .equal, toItem: firstImageView, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: difficultyLabel, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
 
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
-        let nameLabelLeadingConst = NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: difficultyLabel, attribute: .leading, multiplier: 1, constant: 0)
-        let nameLabelTrailingConst = NSLayoutConstraint(item: nameLabel, attribute: .trailing, relatedBy: .equal, toItem: difficultyLabel, attribute: .trailing, multiplier: 1, constant: 0)
-        let nameLabelBottomConst = NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: difficultyLabel, attribute: .top, multiplier: 1, constant: 5)
-        NSLayoutConstraint.activate([nameLabelLeadingConst, nameLabelTrailingConst, nameLabelBottomConst])
+        NSLayoutConstraint(item: nameLabel, attribute: .leading, relatedBy: .equal, toItem: difficultyLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: nameLabel, attribute: .trailing, relatedBy: .equal, toItem: difficultyLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: nameLabel, attribute: .bottom, relatedBy: .equal, toItem: difficultyLabel, attribute: .top, multiplier: 1, constant: 5).isActive = true
 
         typesLabel.translatesAutoresizingMaskIntoConstraints = false
-        let typesLabelLeadingConst = NSLayoutConstraint(item: typesLabel, attribute: .leading, relatedBy: .equal, toItem: difficultyLabel, attribute: .leading, multiplier: 1, constant: 0)
-        let typesLabelTrailingConst = NSLayoutConstraint(item: typesLabel, attribute: .trailing, relatedBy: .equal, toItem: difficultyLabel, attribute: .trailing, multiplier: 1, constant: 0)
-        let typesLabelTopConst = NSLayoutConstraint(item: typesLabel, attribute: .top, relatedBy: .equal, toItem: difficultyLabel, attribute: .bottom, multiplier: 1, constant: -5)
-        NSLayoutConstraint.activate([typesLabelLeadingConst, typesLabelTrailingConst, typesLabelTopConst])
-
-        indicator.translatesAutoresizingMaskIntoConstraints = false
-        let indicatorCenterX = NSLayoutConstraint(item: indicator, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 0.5, constant: 0)
-        let indicatorCenterY = NSLayoutConstraint(item: indicator, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([indicatorCenterX, indicatorCenterY])
+        NSLayoutConstraint(item: typesLabel, attribute: .leading, relatedBy: .equal, toItem: difficultyLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: typesLabel, attribute: .trailing, relatedBy: .equal, toItem: difficultyLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: typesLabel, attribute: .top, relatedBy: .equal, toItem: difficultyLabel, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
 
         firstImageView.translatesAutoresizingMaskIntoConstraints = false
-        let imageLeftConst = NSLayoutConstraint(item: firstImageView, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 0)
-        let imageRightConst = NSLayoutConstraint(item: firstImageView, attribute: .trailing, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: -10)
-        let imageTopConst = NSLayoutConstraint(item: firstImageView, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 0)
-        let imageBottomConst = NSLayoutConstraint(item: firstImageView, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([imageLeftConst, imageRightConst, imageTopConst, imageBottomConst])
+        NSLayoutConstraint(item: firstImageView, attribute: .leading, relatedBy: .equal, toItem: bgView, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: firstImageView, attribute: .top, relatedBy: .equal, toItem: bgView, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: firstImageView, attribute: .bottom, relatedBy: .equal, toItem: bgView, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        widthConst = NSLayoutConstraint(item: firstImageView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 0)
+        widthConst?.isActive = true
+    }
+
+    func setImage(image: UIImage?) {
+        firstImageView.image = image
+        widthConst?.constant = frame.width / 2
+        UIView.animate(withDuration: 0.3) {
+            self.layoutIfNeeded()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
