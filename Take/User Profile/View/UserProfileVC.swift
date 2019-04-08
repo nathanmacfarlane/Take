@@ -128,12 +128,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     }
     
     @objc
-    private func goLogout(sender: UIButton!) {
-        try? Auth.auth().signOut()
-        self.present(LoginVC(), animated: true, completion: nil)
-    }
-    
-    @objc
     func notiSelected() {
         guard let user = self.user else { return }
         let presenter: Presentr = {
@@ -171,6 +165,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     @objc
     func openPartnerMatchView() {
         let pm = PartnerMatchVC()
+        guard let user = self.user else{ return }
+        pm.user = user
         let nav = UINavigationController(rootViewController: pm)
         nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
@@ -200,11 +196,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     func initViews() {
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
-        // nav logout button
-        let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
-        myNavLogoutButton.tintColor = UISettings.shared.colorScheme.accent
-        self.navigationItem.leftBarButtonItem = myNavLogoutButton
-        
         //        // nav noti button
         //        let notiIcon = UIImage(named: "notification")
         //        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
@@ -217,6 +208,12 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         msgButton.image = msgIcon
         msgButton.tintColor = UISettings.shared.colorScheme.textSecondary
         self.navigationItem.rightBarButtonItem = msgButton
+        
+        let pmButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openPartnerMatchView))
+        let pmIcon = UIImage(named: "rope")
+        pmButton.image = pmIcon
+        pmButton.tintColor = UISettings.shared.colorScheme.accent
+        self.navigationItem.leftBarButtonItem = pmButton
         
         userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         userNameLabel.textAlignment = .left
@@ -293,12 +290,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         sportGrade.textColor = UISettings.shared.colorScheme.textSecondary
         sportGrade.textAlignment = .left
         
-        //        let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openNextView))
-        partnerMatch = UIButton()
-        partnerMatch.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
-        partnerMatch.setTitle("partnerMatch", for: .normal)
-        partnerMatch.backgroundColor = UIColor(hex: "#d341f4")
-        partnerMatch.layer.cornerRadius = 8
         
         editButton = UIButton()
         editButton.addTarget(self, action: #selector(openEditProfile), for: UIControl.Event.touchUpInside)
@@ -306,11 +297,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         editButton.setTitleColor( .black, for: .normal)
         editButton.backgroundColor = UIColor(named: "Placeholder")
         editButton.layer.cornerRadius = 8
-        
-        climberSearch = UIButton()
-        climberSearch.setTitle("climber Search", for: .normal)
-        climberSearch.backgroundColor = .blue
-        climberSearch.layer.cornerRadius = 8
         
         view.addSubview(userNameLabel)
         view.addSubview(userBio)
@@ -329,8 +315,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(carabinerLabel)
         view.addSubview(beerLabel)
         view.addSubview(whipLabel)
-        view.addSubview(partnerMatch)
-        view.addSubview(climberSearch)
         view.addSubview(editButton)
         
         
@@ -431,18 +415,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         whipLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: whipLabel, attribute: .leading, relatedBy: .equal, toItem: whippers, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
         NSLayoutConstraint(item: whipLabel,  attribute: .bottom, relatedBy: .equal, toItem: whippers, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
-        
-        partnerMatch.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: partnerMatch, attribute: .leading, relatedBy: .equal, toItem: whippers, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: partnerMatch,  attribute: .top, relatedBy: .equal, toItem: whippers, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: partnerMatch, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
-        NSLayoutConstraint(item: partnerMatch, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.5, constant: 0).isActive = true
-        
-        climberSearch.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: climberSearch, attribute: .leading, relatedBy: .equal, toItem: partnerMatch, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: climberSearch,  attribute: .top, relatedBy: .equal, toItem: whippers, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: climberSearch, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
-        NSLayoutConstraint(item: climberSearch, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.5, constant: 0).isActive = true
         
         editButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: editButton, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 0).isActive = true

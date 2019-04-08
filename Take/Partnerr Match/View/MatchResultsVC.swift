@@ -10,6 +10,8 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var matchCrit: MatchCriteria?
     var dmTableView: UITableView!
     var climbers: [User] = []
+    var user: User?
+    var dm: DM?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,6 +65,38 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let userId = self.user?.id else { return }
+        let friendId = self.climbers[indexPath.row].id
+        
+        let tc = ThreadContent(message: "", sender: userId)
+        dm = DM(messageId: UUID().uuidString, userIds: [userId, friendId], thread: [tc])
+        
+        if let messId = dm?.messageId { // append message id onto users
+            self.climbers[indexPath.row].messageIds.append(messId)
+            self.user?.messageIds.append(messId)
+        }
+        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
+        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
+        Firestore.firestore().save(object: self.climbers[indexPath.row], to: "users", with: self.climbers[indexPath.row].id, completion: nil)
+        
+        let msgLogContainer = MsgLogContainerVC()
+        msgLogContainer.user = self.user
+        msgLogContainer.friend = self.climbers[indexPath.row]
+        msgLogContainer.dm = dm
+        
+        let nav = UINavigationController(rootViewController: msgLogContainer)
+        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+        
     }
    
     @objc func backToProf() {

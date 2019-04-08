@@ -11,6 +11,7 @@ class PartnerMatchVC: UIViewController {
     var rightSliderLabel = UITextField()
     var leftSliderLabel = UITextField()
     var matchCriteria: MatchCriteria?
+    var user: User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,6 +31,8 @@ class PartnerMatchVC: UIViewController {
         matchCriteria?.ageLow = (ageSlider.value[0] - 1)
         matchCriteria?.ageHigh = (ageSlider.value[1] + 1)
         let mr = MatchResultsVC()
+        guard let user = self.user else { return }
+        mr.user = user
         mr.matchCrit = self.matchCriteria
         let nav = UINavigationController(rootViewController: mr)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
