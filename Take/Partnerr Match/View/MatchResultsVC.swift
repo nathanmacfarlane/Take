@@ -1,5 +1,7 @@
+import CodableFirebase
 import Firebase
 import FirebaseAuth
+import FirebaseFirestore
 import Foundation
 import Presentr
 import UIKit
@@ -19,26 +21,24 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func getMatches() {
         let db = Firestore.firestore()
-        let ref = db.collection("users")
-//        let query = ref.whereField("age", isGreaterThanOrEqualTo: 18)
-//            .whereField("age", isLessThanOrEqualTo: 30) { snapshot, err in
-//            guard err == nil, let snap = snapshot else { return }
-//
-//        }
+        let ref = db.collection("users") 
         
-        let query = ref.whereField("age", isGreaterThan: 10).whereField("age", isLessThan: 30)
+        let query = ref.whereField("age", isGreaterThan: self.matchCrit?.ageLow).whereField("age", isLessThan: self.matchCrit?.ageHigh)
         query.getDocuments { snapshot, err in
             guard err == nil, let snap = snapshot else { print("nooooo"); return }
-            print(snap)
-        
+//            print(snap)
+            guard let data = snapshot?.documents else {
+                print("Document data was empty.")
+                return
+            }
+            print(data)
+            for d in data {
+                let decoder = FirebaseDecoder()
+                guard let result = try? decoder.decode(User.self, from: d.data() as Any) else { return }
+                self.climbers.append(result)
+                self.dmTableView.reloadData()
+            }
         }
-        
-        db.query(collection: "users", by: "age", with: 23, of: User.self) {
-            users in
-            self.climbers = users
-            
-        }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -46,24 +46,22 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.climbers.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("yooooooo"); return DmTVC() }
-        let db = Firestore.firestore()
-        db.query(collection: "users", by: "age", with: 23, of: User.self) { users in
-            guard let user = users.first else {return}
-            cell.nameLabel.text = user.username // placeholder for username
-            let userViewModel = UserViewModel(user: user)
-            userViewModel.getProfilePhoto { image in
-                DispatchQueue.main.async {
-                    cell.profPic.setBackgroundImage(image, for: .normal)
-                }
+        guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("error"); return DmTVC() }
+        print("here")
+        print(self.climbers)
+        cell.nameLabel.text = climbers[indexPath.row].username
+        cell.messageLabel.text = climbers[indexPath.row].bio
+        let userViewModel = UserViewModel(user: self.climbers[indexPath.row])
+        userViewModel.getProfilePhoto { image in
+            DispatchQueue.main.async {
+                cell.profPic.setBackgroundImage(image, for: .normal)
             }
-        }
-        cell.messageLabel.text = "I am a climber"
         
+        }
         return cell
     }
    

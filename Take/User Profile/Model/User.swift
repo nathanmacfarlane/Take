@@ -22,4 +22,5 @@ struct User: Codable {
     var trLetter: String
     var tradLetter: String
     var sportLetter: String
+    var bio: String
 }

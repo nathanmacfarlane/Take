@@ -24,16 +24,11 @@ class PartnerMatchVC: UIViewController {
     @objc func backToProf() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-    @objc
-    func sliderChanged() {
-        print("\(self.ageSlider.value)") // e.g., [1.0, 4.5, 5.0]
-    }
-    
+
     @objc
     func openMatchResults() {
-        matchCriteria?.ageLow = ageSlider.value[0]
-        matchCriteria?.ageHigh = ageSlider.value[1]
+        matchCriteria?.ageLow = (ageSlider.value[0] - 1)
+        matchCriteria?.ageHigh = (ageSlider.value[1] + 1)
         let mr = MatchResultsVC()
         mr.matchCrit = self.matchCriteria
         let nav = UINavigationController(rootViewController: mr)
@@ -52,16 +47,11 @@ class PartnerMatchVC: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.title = "Partner Match"
         
-        
-        rightSliderLabel.text = "yoo"
-        leftSliderLabel.text = "yee"
-        
         ageSlider.minimumValue = 18
-        ageSlider.maximumValue = 35
+        ageSlider.maximumValue = 40
         ageSlider.trackWidth = 5
         ageSlider.tintColor = UIColor(named: "PinkAccent")
         ageSlider.value = [18, 40]
-        ageSlider.addTarget(self, action: #selector(sliderChanged), for: .valueChanged)
         ageSlider.orientation = .horizontal
         ageSlider.outerTrackColor = UIColor(named: "Placeholder")
         ageSlider.valueLabelPosition = .top

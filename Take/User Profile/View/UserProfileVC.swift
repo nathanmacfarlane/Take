@@ -66,6 +66,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             guard let user = user.first else { return }
             self.user = user
             self.userNameLabel.text = user.name
+            self.userBio.text = user.bio
             self.beerLabel.text = "Favorite beer is \(user.beer)"
             self.whipLabel.text = "Number of massive whips: \(user.whips)"
             self.carabinerLabel.text = "Climbing since \(user.climbYear)"
@@ -181,12 +182,27 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         present(nav, animated: true, completion: nil)
     }
     
+    @objc
+    func openEditProfile() {
+        let ep = EditProfileVC()
+        ep.user = self.user
+        let nav = UINavigationController(rootViewController: ep)
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+    }
+    
     func initViews() {
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
         // nav logout button
         let myNavLogoutButton = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(goLogout))
-        myNavLogoutButton.tintColor =  UISettings.shared.colorScheme.accent
+        myNavLogoutButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = myNavLogoutButton
         
         //        // nav noti button
@@ -209,7 +225,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         userBio.textColor = UISettings.shared.colorScheme.textSecondary
         userBio.textAlignment = .left
         userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
-        userBio.text = "I am a climber"
         
         homeLabel.textColor = UISettings.shared.colorScheme.textSecondary
         homeLabel.textAlignment = .left
@@ -286,7 +301,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         partnerMatch.layer.cornerRadius = 8
         
         editButton = UIButton()
-        //        editButton.addTarget(self, action: #selector(openPartnerMatchView), for: UIControl.Event.touchUpInside)
+        editButton.addTarget(self, action: #selector(openEditProfile), for: UIControl.Event.touchUpInside)
         editButton.setTitle("Edit Profile", for: .normal)
         editButton.setTitleColor( .black, for: .normal)
         editButton.backgroundColor = UIColor(named: "Placeholder")

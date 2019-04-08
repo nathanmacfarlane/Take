@@ -63,8 +63,8 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        print("uitableview automatic...")
-        print(UITableView.automaticDimension)
+//        print("uitableview automatic...")
+//        print(UITableView.automaticDimension)
         return 100
     }
     //
@@ -78,7 +78,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         //        cell.textViewDidChange(cell.message)
         
         if dm?.Thread[indexPath.row].sender == self.user?.id {
-            guard let user = self.user else { return cell}
+            guard let user = self.user else { return cell }
             let userViewModel = UserViewModel(user: user)
             userViewModel.getProfilePhoto { image in
                 DispatchQueue.main.async {
@@ -86,7 +86,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         } else {
-            guard let friend = self.friend else { return cell}
+            guard let friend = self.friend else { return cell }
             let userViewModel = UserViewModel(user: friend)
             userViewModel.getProfilePhoto { image in
                 DispatchQueue.main.async {
@@ -94,7 +94,6 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
                 }
             }
         }
-        
         
         return cell
     }

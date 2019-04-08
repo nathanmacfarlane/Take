@@ -26,7 +26,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { print("njifjinf")
+        guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { print("error")
             return SearchDMCell() }
         cell.usernameLabel.text = self.friends[indexPath.row].username
         
@@ -50,8 +50,6 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             self.friends[indexPath.row].messageIds.append(messId)
             self.user?.messageIds.append(messId)
         }
-        
-        print(dm)
         Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
         Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
         Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
