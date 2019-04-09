@@ -8,6 +8,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     var dmList: [DM] = []
     var dm: DM?
     var friends: [User] = []
+    var friend: User?
     var friendTableView: UITableView!
     var mySearchBar: UISearchBar!
     
@@ -40,25 +41,47 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let userId = self.user?.id else { return }
-        let friendId = self.friends[indexPath.row].id
+        guard let user = self.user else { return }
+        self.friend = self.friends[indexPath.row]
+        guard let friend = self.friend else { return }
         
-        let tc = ThreadContent(message: "", sender: userId)
-        dm = DM(messageId: UUID().uuidString, userIds: [userId, friendId], thread: [tc])
+        var flag = false
+        var count = 0
         
-        if let messId = dm?.messageId { // append message id onto users
-            self.friends[indexPath.row].messageIds.append(messId)
-            self.user?.messageIds.append(messId)
+        for msgId in user.messageIds {
+            count += 1
+            if friend.messageIds.contains(msgId) {
+                flag = true
+                let db = Firestore.firestore()
+                db.query(collection: "messages", by: "messageId", with: msgId, of: DM.self) { dm in
+                    guard let mess = dm.first else { print("error finding dm"); return }
+                    self.dm = mess
+                    self.linkToMsg()
+                }
+                break
+            }
+            if(!flag && count == user.messageIds.count) {
+                let tc = ThreadContent(message: "", sender: user.id)
+                self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, friend.id], thread: [tc])
+                if let messId = self.dm?.messageId { // append message id onto users
+                    self.friends[indexPath.row].messageIds.append(messId)
+                    self.user?.messageIds.append(messId)
+                }
+                Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
+                Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
+                Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
+                self.linkToMsg()
+            }
         }
-        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
-        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
-        Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
-        
+    }
+    
+    
+    @objc func linkToMsg() {
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
-        msgLogContainer.friend = self.friends[indexPath.row]
-        msgLogContainer.dm = dm
-
+        msgLogContainer.friend = self.friend
+        msgLogContainer.dm = self.dm
+        
         let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
@@ -67,8 +90,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
-        present(nav, animated: true, completion: nil)
-        
+        self.present(nav, animated: true, completion: nil)
     }
     
     @objc

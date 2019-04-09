@@ -11,7 +11,9 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var dmTableView: UITableView!
     var climbers: [User] = []
     var user: User?
+    var match: User?
     var dm: DM?
+    var flag = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +35,6 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print("Document data was empty.")
                 return
             }
-            print(data)
             for d in data {
                 let decoder = FirebaseDecoder()
                 guard let result = try? decoder.decode(User.self, from: d.data() as Any) else { return }
@@ -53,8 +54,6 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("error"); return DmTVC() }
-        print("here")
-        print(self.climbers)
         cell.nameLabel.text = climbers[indexPath.row].username
         cell.messageLabel.text = climbers[indexPath.row].bio
         let userViewModel = UserViewModel(user: self.climbers[indexPath.row])
@@ -62,30 +61,51 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             DispatchQueue.main.async {
                 cell.profPic.setBackgroundImage(image, for: .normal)
             }
-        
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let userId = self.user?.id else { return }
-        let friendId = self.climbers[indexPath.row].id
+        guard let user = self.user else { return }
+        self.match = self.climbers[indexPath.row]
+        guard let match = self.match else { return }
         
-        let tc = ThreadContent(message: "", sender: userId)
-        dm = DM(messageId: UUID().uuidString, userIds: [userId, friendId], thread: [tc])
+        self.flag = false
+        var count = 0
         
-        if let messId = dm?.messageId { // append message id onto users
-            self.climbers[indexPath.row].messageIds.append(messId)
-            self.user?.messageIds.append(messId)
+        for msgId in user.messageIds {
+            count += 1
+            if match.messageIds.contains(msgId) {
+                self.flag = true
+                let db = Firestore.firestore()
+                db.query(collection: "messages", by: "messageId", with: msgId, of: DM.self) { dm in
+                    guard let mess = dm.first else { print("error finding dm"); return }
+                    self.dm = mess
+                    self.linkToMsg()
+                }
+                break
+            }
+            if(!self.flag && count == user.messageIds.count) {
+                let tc = ThreadContent(message: "", sender: user.id)
+                self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, match.id], thread: [tc])
+                if let messId = self.dm?.messageId { // append message id onto users
+                    self.climbers[indexPath.row].messageIds.append(messId)
+                    self.user?.messageIds.append(messId)
+                }
+                Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
+                Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
+                Firestore.firestore().save(object: self.climbers[indexPath.row], to: "users", with: self.climbers[indexPath.row].id, completion: nil)
+                self.linkToMsg()
+            }
         }
-        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
-        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "lol sheeit", completion: nil)
-        Firestore.firestore().save(object: self.climbers[indexPath.row], to: "users", with: self.climbers[indexPath.row].id, completion: nil)
-        
+    }
+    
+    
+    @objc func linkToMsg() {
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
-        msgLogContainer.friend = self.climbers[indexPath.row]
-        msgLogContainer.dm = dm
+        msgLogContainer.friend = self.match
+        msgLogContainer.dm = self.dm
         
         let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
@@ -95,8 +115,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
-        present(nav, animated: true, completion: nil)
-        
+        self.present(nav, animated: true, completion: nil)
     }
    
     @objc func backToProf() {

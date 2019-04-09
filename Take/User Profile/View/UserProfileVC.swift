@@ -204,13 +204,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         //        self.navigationItem.rightBarButtonItem = notiIconButton
         
         let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openDmView))
-        let msgIcon = UIImage(named: "mail.png")
+        let msgIcon = UIImage(named: "envelope")
         msgButton.image = msgIcon
         msgButton.tintColor = UISettings.shared.colorScheme.textSecondary
         self.navigationItem.rightBarButtonItem = msgButton
         
         let pmButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openPartnerMatchView))
-        let pmIcon = UIImage(named: "rope")
+        let pmIcon = UIImage(named: "handshake")
         pmButton.image = pmIcon
         pmButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = pmButton

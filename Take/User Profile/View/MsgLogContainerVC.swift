@@ -15,24 +15,23 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = self.friend?.username
-        Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "")
-            .addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(error!)")
-                    return
-                }
-                guard let data = document.data() else {
-                    print("Document data was empty.")
-                    return
-                }
-                let decoder = FirebaseDecoder()
-                guard let result = try? decoder.decode(DM.self, from: data as Any) else { return }
-                self.dm?.Thread = result.Thread
-                DispatchQueue.main.async {
-                    self.msgTableView.reloadData()
-                    let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
-                    self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
+        Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "").addSnapshotListener { documentSnapshot, error in
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            let decoder = FirebaseDecoder()
+            guard let result = try? decoder.decode(DM.self, from: data as Any) else { return }
+            self.dm?.Thread = result.Thread
+            DispatchQueue.main.async {
+                self.msgTableView.reloadData()
+                let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
+                self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
         }
         initViews()
     }
@@ -59,6 +58,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @objc
     func backToProf() {
+        let 
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -99,10 +99,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     }
     
     func initViews() {
-        view.backgroundColor = .black
-        
         self.msgTableView = UITableView()
         self.msgTableView.backgroundColor = .clear
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         msgTableView.register(MsgCell.self, forCellReuseIdentifier: "MsgCell")
         msgTableView.dataSource = self
         msgTableView.delegate = self
@@ -172,7 +171,7 @@ class MsgCell: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = .black
+        self.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         
         message.textColor = .white
         message.backgroundColor = .clear
