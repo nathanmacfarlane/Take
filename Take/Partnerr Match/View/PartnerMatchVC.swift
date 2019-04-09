@@ -17,7 +17,7 @@ class PartnerMatchVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         matchCriteria = MatchCriteria(ageL: 0, ageH: 0, sportGrade: 0,
                                           trGrade: 0, tradGrade: 0, boulderGrade: 0,
                                           sportLetter: "", trLetter: "", tradLetter: "")

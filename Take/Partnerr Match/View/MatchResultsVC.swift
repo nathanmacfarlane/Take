@@ -6,7 +6,7 @@ import Foundation
 import Presentr
 import UIKit
 
-class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSource{
+class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var matchCrit: MatchCriteria?
     var dmTableView: UITableView!
     var climbers: [User] = []
@@ -18,7 +18,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Results"
-        view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         getMatches()
         initViews()
     }
@@ -47,7 +47,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
+        return 140
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -55,9 +55,12 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: DmTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? DmTVC else { print("error"); return DmTVC() }
-        cell.nameLabel.text = climbers[indexPath.row].username
-        cell.messageLabel.text = climbers[indexPath.row].bio
+        guard let cell: MatchTVC = self.dmTableView.dequeueReusableCell(withIdentifier: "DmCellTV") as? MatchTVC else { print("error"); return MatchTVC() }
+        cell.usernameLabel.text = climbers[indexPath.row].username
+        cell.tradLabel.text = "5.\(climbers[indexPath.row].tradGrade)" + climbers[indexPath.row].tradLetter
+        cell.trLabel.text = "5.\(climbers[indexPath.row].trGrade)" + climbers[indexPath.row].trLetter
+        cell.sportLabel.text = "5.\(climbers[indexPath.row].sportGrade)" + climbers[indexPath.row].sportLetter
+        cell.boulderLabel.text = "V\(climbers[indexPath.row].boulderGrade)"
         let userViewModel = UserViewModel(user: self.climbers[indexPath.row])
         userViewModel.getProfilePhoto { image in
             DispatchQueue.main.async {
@@ -110,7 +113,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         msgLogContainer.dm = self.dm
         
         let nav = UINavigationController(rootViewController: msgLogContainer)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
@@ -129,11 +132,11 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         self.navigationItem.leftBarButtonItem = backButton
         
         self.dmTableView = UITableView()
-        dmTableView.register(DmTVC.self, forCellReuseIdentifier: "DmCellTV")
+        dmTableView.register(MatchTVC.self, forCellReuseIdentifier: "DmCellTV")
         dmTableView.dataSource = self
         dmTableView.delegate = self
         dmTableView.separatorStyle = .none
-        dmTableView.backgroundColor = UIColor(named: "BluePrimaryDark")
+        dmTableView.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         
         view.addSubview(dmTableView)
         
