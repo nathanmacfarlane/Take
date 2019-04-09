@@ -58,7 +58,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     @objc
     func backToProf() {
-        let 
+        guard let friend = self.friend else { return }
+        let oldDM = DirectMessVC()
+        oldDM.friends.append(friend)
         self.dismiss(animated: true, completion: nil)
     }
     

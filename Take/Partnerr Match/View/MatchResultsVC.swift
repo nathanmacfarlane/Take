@@ -26,7 +26,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     func getMatches() {
         let db = Firestore.firestore()
         let ref = db.collection("users") 
-        
+        guard let user = self.user else { return }
         let query = ref.whereField("age", isGreaterThan: self.matchCrit?.ageLow).whereField("age", isLessThan: self.matchCrit?.ageHigh)
         query.getDocuments { snapshot, err in
             guard err == nil, let snap = snapshot else { print("nooooo"); return }
@@ -38,8 +38,10 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             for d in data {
                 let decoder = FirebaseDecoder()
                 guard let result = try? decoder.decode(User.self, from: d.data() as Any) else { return }
-                self.climbers.append(result)
-                self.dmTableView.reloadData()
+                if result.id != user.id {
+                    self.climbers.append(result)
+                    self.dmTableView.reloadData()
+                }
             }
         }
     }
