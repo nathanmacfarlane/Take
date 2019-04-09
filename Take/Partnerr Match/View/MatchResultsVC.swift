@@ -91,20 +91,30 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 break
             }
             if(!self.flag && count == user.messageIds.count) {
-                let tc = ThreadContent(message: "", sender: user.id)
-                self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, match.id], thread: [tc])
-                if let messId = self.dm?.messageId { // append message id onto users
-                    self.climbers[indexPath.row].messageIds.append(messId)
-                    self.user?.messageIds.append(messId)
-                }
-                Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
-                Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
-                Firestore.firestore().save(object: self.climbers[indexPath.row], to: "users", with: self.climbers[indexPath.row].id, completion: nil)
-                self.linkToMsg()
+                self.newDM()
+                self.flag = true
             }
+        }
+        if !self.flag {
+            self.newDM()
         }
     }
     
+    @objc func newDM() {
+        guard let user = self.user else { return }
+        guard let match = self.match else { return }
+        
+        let tc = ThreadContent(message: "", sender: user.id)
+        self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, match.id], thread: [tc])
+        if let messId = self.dm?.messageId { // append message id onto users
+            self.match?.messageIds.append(messId)
+            self.user?.messageIds.append(messId)
+        }
+        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
+        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
+        Firestore.firestore().save(object: self.match, to: "users", with: self.match?.id ?? "error in creating new msg", completion: nil)
+        self.linkToMsg()
+    }
     
     @objc func linkToMsg() {
         let msgLogContainer = MsgLogContainerVC()

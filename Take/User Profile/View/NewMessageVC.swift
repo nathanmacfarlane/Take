@@ -44,7 +44,6 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let user = self.user else { return }
         self.friend = self.friends[indexPath.row]
         guard let friend = self.friend else { return }
-        
         var flag = false
         var count = 0
         
@@ -61,20 +60,30 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
                 break
             }
             if(!flag && count == user.messageIds.count) {
-                let tc = ThreadContent(message: "", sender: user.id)
-                self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, friend.id], thread: [tc])
-                if let messId = self.dm?.messageId { // append message id onto users
-                    self.friends[indexPath.row].messageIds.append(messId)
-                    self.user?.messageIds.append(messId)
-                }
-                Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
-                Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
-                Firestore.firestore().save(object: self.friends[indexPath.row], to: "users", with: self.friends[indexPath.row].id, completion: nil)
-                self.linkToMsg()
+                self.newDM()
+                flag = true
             }
+        }
+        if !flag {
+            self.newDM()
         }
     }
     
+    @objc func newDM() {
+        guard let user = self.user else { return }
+        guard let friend = self.friend else { return }
+        
+        let tc = ThreadContent(message: "", sender: user.id)
+        self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, friend.id], thread: [tc])
+        if let messId = self.dm?.messageId { // append message id onto users
+            self.friend?.messageIds.append(messId)
+            self.user?.messageIds.append(messId)
+        }
+        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
+        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
+        Firestore.firestore().save(object: self.friend, to: "users", with: self.friend?.id ?? "error in creating new msg", completion: nil)
+        self.linkToMsg()
+    }
     
     @objc func linkToMsg() {
         let msgLogContainer = MsgLogContainerVC()
