@@ -6,6 +6,8 @@ import FirebaseMessaging
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
+import GoogleMaps
+import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
@@ -31,6 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         // init so that other view controllers can access the location singleton
         _ = LocationService.shared
+
+        GMSServices.provideAPIKey("AIzaSyABwatGpHYZOMUgTQ469NFHg6CLSWDL2HQ")
+        GMSPlacesClient.provideAPIKey("AIzaSyABwatGpHYZOMUgTQ469NFHg6CLSWDL2HQ")
 
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = false

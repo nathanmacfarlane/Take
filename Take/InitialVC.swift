@@ -32,7 +32,7 @@ class InitialVC: UIViewController {
             }
         }
 
-        let mapVC = MapVC()
+        let mapVC = TestMapVC()
         mapVC.title = "Map View"
         mapVC.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "TabMap.png"), tag: 1)
         mapVC.tabBarItem.imageInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 0)

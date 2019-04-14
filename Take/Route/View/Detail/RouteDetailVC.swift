@@ -241,7 +241,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         segControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -40).isActive = true
-        NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: areaView ?? ratingValue, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: areaView ?? typesLabels.first ?? ratingValue, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
 
         infoTextView.translatesAutoresizingMaskIntoConstraints = false

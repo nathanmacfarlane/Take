@@ -6,6 +6,9 @@ PODS:
   - BoringSSL/Implementation (10.0.6):
     - BoringSSL/Interface (= 10.0.6)
   - BoringSSL/Interface (10.0.6)
+  - ClusterKit/Core (0.4.0)
+  - ClusterKit/MapKit (0.4.0):
+    - ClusterKit/Core
   - CodableFirebase (0.2.1)
   - Cosmos (17.0.0)
   - Firebase (5.13.0):
@@ -95,6 +98,13 @@ PODS:
     - GoogleUtilities/Network (~> 5.2)
     - "GoogleUtilities/NSData+zlib (~> 5.2)"
     - nanopb (~> 0.3)
+  - GoogleMaps (3.0.3):
+    - GoogleMaps/Maps (= 3.0.3)
+  - GoogleMaps/Base (3.0.3)
+  - GoogleMaps/Maps (3.0.3):
+    - GoogleMaps/Base
+  - GooglePlaces (3.0.3):
+    - GoogleMaps/Base (= 3.0.3)
   - GoogleUtilities/AppDelegateSwizzler (5.3.6):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -138,6 +148,9 @@ PODS:
     - nanopb/encode (= 0.3.901)
   - nanopb/decode (0.3.901)
   - nanopb/encode (0.3.901)
+  - NVActivityIndicatorView (4.6.1):
+    - NVActivityIndicatorView/Presenter (= 4.6.1)
+  - NVActivityIndicatorView/Presenter (4.6.1)
   - Pageboy (2.6.1)
   - Presentr (1.9)
   - Protobuf (3.6.1)
@@ -150,6 +163,7 @@ PODS:
   - WSTagsField (4.0.0)
 
 DEPENDENCIES:
+  - ClusterKit/MapKit
   - CodableFirebase
   - Cosmos
   - Firebase/Auth
@@ -160,8 +174,11 @@ DEPENDENCIES:
   - Firebase/Storage
   - Geofirestore
   - GMStepper
+  - GoogleMaps
+  - GooglePlaces
   - IHKeyboardAvoiding
   - IQKeyboardManagerSwift
+  - NVActivityIndicatorView
   - Presentr
   - SwiftLint
   - SwiftyDraw
@@ -173,6 +190,7 @@ SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - AutoInsetter
     - BoringSSL
+    - ClusterKit
     - CodableFirebase
     - Cosmos
     - Firebase
@@ -190,6 +208,8 @@ SPEC REPOS:
     - Geofirestore
     - GMStepper
     - GoogleAppMeasurement
+    - GoogleMaps
+    - GooglePlaces
     - GoogleUtilities
     - "gRPC-C++"
     - gRPC-Core
@@ -198,6 +218,7 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - leveldb-library
     - nanopb
+    - NVActivityIndicatorView
     - Pageboy
     - Presentr
     - Protobuf
@@ -210,6 +231,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   AutoInsetter: 0ea4dddc17042ab45114ec5d5980764efae98584
   BoringSSL: e10f92a27043805c01071fe815a5cd98ae8212e7
+  ClusterKit: a15da2e7a437c525b18e10f007fd2198336e3e2e
   CodableFirebase: 0bf201991eeec35eb9fcd987d271ea463cf34a80
   Cosmos: 309e489f21ffc91a1eeecfebef7f817cd2fcfba6
   Firebase: 6df9a6114bc9f106a98fe83d5438d4d9833c2019
@@ -227,6 +249,8 @@ SPEC CHECKSUMS:
   Geofirestore: ad548ea5e3c1ae595c746c7b796df5534d8202f3
   GMStepper: 89fb106944dfcc3aa3add7164e3ebd463ea2104b
   GoogleAppMeasurement: 5029d78f2b438bd30ffb44e6c558b57c21622727
+  GoogleMaps: fd5c9fa58871781b9fb94d4936f19c69fe60ce32
+  GooglePlaces: f09e76993c9c3ee4af8f4f7f535bb94d6aa3b649
   GoogleUtilities: 95996bea7c7d9b8fb811b7507669a4a8762f80c7
   "gRPC-C++": 19eec1ffd34de29453f5fab5b4697ad0f240ad51
   gRPC-Core: f4836515817c0eb479aeeb9cc27c91c4ba62a9f6
@@ -235,6 +259,7 @@ SPEC CHECKSUMS:
   IQKeyboardManagerSwift: b07ccf9d8cafe993dcd6cb794eb4ba34611a0c4e
   leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
   nanopb: 2901f78ea1b7b4015c860c2fdd1ea2fee1a18d48
+  NVActivityIndicatorView: 4ca19fccc84595a78957336a086d00a49be6ce61
   Pageboy: c2a25d1c280e9b622014b692626f1ff9298e0ad2
   Presentr: 7078d7eb5d1661ebeaae60c9e42a1e534de1b993
   Protobuf: 1eb9700044745f00181c136ef21b8ff3ad5a0fd5
@@ -244,6 +269,6 @@ SPEC CHECKSUMS:
   UIImageColors: c83669aff7ceb55a3b3f2c398f3b5c14632a267b
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: 8be54408c2270f751a2f49ebe03dc33ad9283ca9
+PODFILE CHECKSUM: 9279293f1d2d7a7fe54daf62b6acd1f7ad1e52ca
 
 COCOAPODS: 1.5.3

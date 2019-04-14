@@ -28,8 +28,8 @@ class SearchRoutesVC: UIViewController {
         super.viewDidLoad()
 
 //        let params = [MPQueryParam(title: MPQueryTitle.maxDistance, property: "200"),
-//                      MPQueryParam(title: MPQueryTitle.minDiff, property: "V3"),
-//                      MPQueryParam(title: MPQueryTitle.maxDiff, property: "V3"),
+//                      MPQueryParam(title: MPQueryTitle.minDiff, property: "5.7"),
+//                      MPQueryParam(title: MPQueryTitle.maxDiff, property: "5.12"),
 //                      MPQueryParam(title: MPQueryTitle.maxResults, property: "500")]
 //
 //        MPService.shared.getRoutesForLatLon(latitude: 35.3025, longitude: -120.6974, params: params) { routes in

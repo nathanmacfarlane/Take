@@ -76,8 +76,10 @@ class Route: Codable, Hashable {
         self.latitude = mpRoute.latitude
         self.longitude = mpRoute.longitude
 
-        if let rating = mpRoute.rating {
+        (self.rating, self.buffer) = mpRoute.takeRating
 
+//        if let rating = mpRoute.rating {
+//
 //            if self.types.contains("Boulder") {
 //                let splitUp = rating.split(separator: "V")
 //                if splitUp.count > 1 {
@@ -89,6 +91,6 @@ class Route: Codable, Hashable {
 //                    self.rating = Int("\(splitUp[1])")
 //                }
 //            }
-        }
+//        }
     }
 }

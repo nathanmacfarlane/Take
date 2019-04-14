@@ -9,7 +9,7 @@ class UISettings {
         return mode == .light ? light : dark
     }
     // set this variable to change the color scheme
-    var mode: ColorMode = .light
+    var mode: ColorMode = .dark
 }
 
 enum ColorMode {
