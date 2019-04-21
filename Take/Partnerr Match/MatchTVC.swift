@@ -40,8 +40,11 @@ class MatchTVC: UITableViewCell {
         usernameLabel.textColor = .white
         usernameLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
         
+        self.selectionStyle = .none
+        
         
         container.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
+        container.isUserInteractionEnabled = false
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 8
         
@@ -50,6 +53,7 @@ class MatchTVC: UITableViewCell {
         profPic.layer.cornerRadius = 8
         profPic.clipsToBounds = true
         profPic.contentMode = .scaleAspectFit
+        profPic.isUserInteractionEnabled = false
         
         let trButton = UIButton()
         trButton.setTitle("TR", for: .normal)
@@ -57,6 +61,7 @@ class MatchTVC: UITableViewCell {
         trButton.backgroundColor = UIColor(hex: "#0E4343")
         trButton.layer.cornerRadius = 8
         trButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 16)
+        trButton.isUserInteractionEnabled = false
         
         trLabel = UILabel()
         trLabel.font = UIFont(name: "Avenir-Heavy", size: 16)
@@ -69,6 +74,7 @@ class MatchTVC: UITableViewCell {
         tradButton.backgroundColor = UIColor(hex: "#0E4343")
         tradButton.layer.cornerRadius = 8
         tradButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 16)
+        tradButton.isUserInteractionEnabled = false
         
         tradLabel = UILabel()
         tradLabel.font = UIFont(name: "Avenir-Heavy", size: 16)
@@ -81,6 +87,7 @@ class MatchTVC: UITableViewCell {
         sportButton.backgroundColor = UIColor(hex: "#0E4343")
         sportButton.layer.cornerRadius = 8
         sportButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 14)
+        sportButton.isUserInteractionEnabled = false
         
         sportLabel = UILabel()
         sportLabel.font = UIFont(name: "Avenir-Heavy", size: 14)
@@ -93,6 +100,7 @@ class MatchTVC: UITableViewCell {
         boulderButton.backgroundColor = UIColor(hex: "#0E4343")
         boulderButton.layer.cornerRadius = 8
         boulderButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 14)
+        boulderButton.isUserInteractionEnabled = false
         
         boulderLabel = UILabel()
         boulderLabel.font = UIFont(name: "Avenir-Heavy", size: 14)

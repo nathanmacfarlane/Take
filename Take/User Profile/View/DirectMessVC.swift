@@ -15,8 +15,15 @@ class DirectMessVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getDms()
+//        getDms()
         initViews()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.dms = []
+        getDms()
         
     }
     

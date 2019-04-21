@@ -154,6 +154,7 @@
 		22F5D853221F3733006824C0 /* PhotoViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D852221F3733006824C0 /* PhotoViewerVC.swift */; };
 		22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5D856221F731E006824C0 /* PaddingLabel.swift */; };
 		22F5DE1121308320001ECC73 /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22F5DE1021308320001ECC73 /* Firestore.swift */; };
+		7121AC94226D091E001030C0 /* MatchProfVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7121AC93226D091E001030C0 /* MatchProfVC.swift */; };
 		714968EE22211B45002E1850 /* NewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714968ED22211B45002E1850 /* NewMessageVC.swift */; };
 		714C1D002201573C00D0DECB /* DirectMessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 714C1CFF2201573C00D0DECB /* DirectMessVC.swift */; };
 		715D5AE3225D088A006CA5E6 /* MatchTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 715D5AE2225D088A006CA5E6 /* MatchTVC.swift */; };
@@ -332,6 +333,7 @@
 		22F5DE1021308320001ECC73 /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		2369F38A78A9A642D1F60B06 /* Pods-Take.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Take.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Take/Pods-Take.debug.xcconfig"; sourceTree = "<group>"; };
 		5AF451BCCD3B6A2632299EAE /* Pods_Take.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Take.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7121AC93226D091E001030C0 /* MatchProfVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchProfVC.swift; sourceTree = "<group>"; };
 		714968ED22211B45002E1850 /* NewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMessageVC.swift; sourceTree = "<group>"; };
 		714C1CFF2201573C00D0DECB /* DirectMessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DirectMessVC.swift; sourceTree = "<group>"; };
 		715D5AE2225D088A006CA5E6 /* MatchTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchTVC.swift; sourceTree = "<group>"; };
@@ -883,6 +885,7 @@
 			children = (
 				719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */,
 				71F6B5D52230D62300BAEC87 /* MatchResultsVC.swift */,
+				7121AC93226D091E001030C0 /* MatchProfVC.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1224,6 +1227,7 @@
 				22541812217284C8000F575A /* RouteDetailVC.swift in Sources */,
 				2220E71020C8E32400F525EC /* MKMapView.swift in Sources */,
 				71F6B5D62230D62300BAEC87 /* MatchResultsVC.swift in Sources */,
+				7121AC94226D091E001030C0 /* MatchProfVC.swift in Sources */,
 				2249F0B621CA2BD50032D58C /* RouteListUserCVC.swift in Sources */,
 				220725A9213A6C01005448E8 /* RouteFirestore.swift in Sources */,
 				719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */,
