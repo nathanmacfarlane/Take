@@ -1,8 +1,8 @@
 import UIKit
+import CodableFirebase
 import Firebase
 import FirebaseAuth
 import FirebaseFirestore
-import UIKit
 
 class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var dmViewModel: DmViewModel!
@@ -14,57 +14,62 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.title = self.friend?.username
         Firestore.firestore().collection("messages").document(self.dm?.messageId ?? "").addSnapshotListener { documentSnapshot, error in
-                guard let document = documentSnapshot else {
-                    print("Error fetching document: \(String(describing: error))")
-                    return
-                }
-                if document.data() == nil {
-                    print("Document data was empty.")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.msgTableView.reloadData()
-                    guard let dm = self.dm else { return }
-                    let indexPath = IndexPath(row: dm.Thread.count - 1, section: 0)
-                    self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                }
+            guard let document = documentSnapshot else {
+                print("Error fetching document: \(error!)")
+                return
+            }
+            guard let data = document.data() else {
+                print("Document data was empty.")
+                return
+            }
+            let decoder = FirebaseDecoder()
+            guard let result = try? decoder.decode(DM.self, from: data as Any) else { return }
+            self.dm?.Thread = result.Thread
+            DispatchQueue.main.async {
+                self.msgTableView.reloadData()
+                let indexPath = IndexPath(row: self.dm!.Thread.count - 1, section: 0)
+                self.msgTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+            }
         }
         initViews()
     }
     
-    let inputTextField: UITextField = {
-        let textField = UITextField()
+    let inputTextField: FlexibleTextView = {
+        let textField = FlexibleTextView()
         textField.textColor = .white
-        textField.attributedPlaceholder = NSAttributedString(string: "Enter message... keep it short", attributes: [NSAttributedString.Key.foregroundColor: UIColor.black])
+        textField.maxHeight = 75
+        textField.textColor = .white
+        textField.font = UIFont(name: "Avenir", size: 18)
+        textField.backgroundColor = UIColor(named: "BluePrimaryDark")
+        textField.placeholder = "enter text here yo.... lol sheeit"
         return textField
     }()
-
+    
     @objc
     func handleSend() {
         guard let msg = self.inputTextField.text, let id = self.user?.id else { return }
         let tc = ThreadContent(message: msg, sender: id)
-        
-        self.dm?.Thread.append(tc) // should not have the ! but i am lazy
+        self.dm?.Thread.append(tc)
         Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "lol sheeit", completion: nil)
-        if let user = self.user, let friend = self.friend, let dm = self.dm {
-            let noti = NotificationMessage(fromUser: user, toUser: friend.id, message: tc.message, messagesId: dm.messageId)
-            Firestore.firestore().save(object: noti, to: "notifications", with: "\(dm.messageId)-\(dm.Thread.count)", completion: nil)
-        }
-
         self.inputTextField.text = ""
     }
     
     @objc
     func backToProf() {
+        guard let friend = self.friend else { return }
+        let oldDM = DirectMessVC()
+        oldDM.friends.append(friend)
         self.dismiss(animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 90
-    } 
-    
+//        print("uitableview automatic...")
+//        print(UITableView.automaticDimension)
+        return 100
+    }
+    //
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return dm?.Thread.count ?? 0
     }
@@ -72,25 +77,39 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: MsgCell = self.msgTableView.dequeueReusableCell(withIdentifier: "MsgCell") as? MsgCell else { return MsgCell() }
         cell.message.text = dm?.Thread[indexPath.row].message
+        //        cell.textViewDidChange(cell.message)
         
-        // using this if statement to avoid an extra query for the sender's username
-        // ok for now cuz dms are only between 2 people
         if dm?.Thread[indexPath.row].sender == self.user?.id {
-            cell.senderLabel.text = ""
+            guard let user = self.user else { return cell }
+            let userViewModel = UserViewModel(user: user)
+            userViewModel.getProfilePhoto { image in
+                DispatchQueue.main.async {
+                    cell.profPic.setBackgroundImage(image, for: .normal)
+                }
+            }
         } else {
-            cell.senderLabel.text = self.friend?.username
+            guard let friend = self.friend else { return cell }
+            let userViewModel = UserViewModel(user: friend)
+            userViewModel.getProfilePhoto { image in
+                DispatchQueue.main.async {
+                    cell.profPic.setBackgroundImage(image, for: .normal)
+                }
+            }
         }
+        
         return cell
     }
     
     func initViews() {
-        
         self.msgTableView = UITableView()
         self.msgTableView.backgroundColor = .clear
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         msgTableView.register(MsgCell.self, forCellReuseIdentifier: "MsgCell")
         msgTableView.dataSource = self
         msgTableView.delegate = self
-        msgTableView.separatorStyle = .none
+        msgTableView.rowHeight = UITableView.automaticDimension
+        msgTableView.estimatedRowHeight = 100
+        msgTableView.allowsSelection = false
         
         let containerView = UIView()
         containerView.backgroundColor = UIColor(named: "BluePrimaryDark")
@@ -99,10 +118,9 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         sendButton.setTitle("Send It", for: .normal)
         sendButton.setTitleColor(UIColor(named: "PinkAccent"), for: .normal)
         sendButton.addTarget(self, action: #selector(handleSend), for: .touchUpInside)
-    
+        
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.title = self.friend?.username
         
         view.addSubview(containerView)
         view.addSubview(sendButton)
@@ -124,14 +142,15 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         sendButton.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
+        sendButton.leftAnchor.constraint(equalTo: view.centerXAnchor, constant: 100).isActive = true
         sendButton.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        sendButton.widthAnchor.constraint(equalToConstant: 80).isActive = true
+        sendButton.widthAnchor.constraint(equalToConstant: 100).isActive = true
         sendButton.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
         
         inputTextField.translatesAutoresizingMaskIntoConstraints = false
         inputTextField.leftAnchor.constraint(equalTo: containerView.leftAnchor, constant: 10).isActive = true
         inputTextField.centerYAnchor.constraint(equalTo: containerView.centerYAnchor).isActive = true
-        inputTextField.widthAnchor.constraint(equalToConstant: 340).isActive = true
+        inputTextField.rightAnchor.constraint(equalTo: sendButton.leftAnchor, constant: 10).isActive = true
         inputTextField.heightAnchor.constraint(equalTo: containerView.heightAnchor).isActive = true
     }
     
@@ -139,58 +158,50 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
 
 class MsgCell: UITableViewCell {
     
-    var message = UITextField()
-    var senderLabel = UILabel()
-    let container = UIView()
-    var indent = CGFloat(100)
+    let message = UILabel()
+    var profPic: TypeButton!
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        //        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
         setup()
     }
     
     required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        fatalError("init(coder:) has not been implemented")
     }
     
     func setup() {
-        self.backgroundColor = .clear
+        self.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         
         message.textColor = .white
-        message.font = UIFont(name: "Avenir", size: 18)
+        message.backgroundColor = .clear
+        message.font = UIFont(name: "Avenir", size: 16)
+        message.lineBreakMode = .byWordWrapping
+        message.numberOfLines = 0
+        message.layer.masksToBounds = true
         
-        senderLabel.textColor = .white
-        senderLabel.font = UIFont(name: "Avenir", size: 18)
-        senderLabel.text = "rockinator"
+        profPic = TypeButton()
+        profPic.addBorder(width: 1)
+        profPic.layer.cornerRadius = 8
+        profPic.clipsToBounds = true
+        profPic.contentMode = .scaleAspectFit
         
-        container.backgroundColor = UIColor(named: "BluePrimary")
-        container.layer.masksToBounds = true
-        container.layer.cornerRadius = 8
-    
-        addSubview(container)
+        self.addSubview(profPic)
         addSubview(message)
-        addSubview(senderLabel)
         
-        container.translatesAutoresizingMaskIntoConstraints = false
-        container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9 / 10).isActive = true
-        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 2 / 3).isActive = true
+        profPic.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: profPic, attribute: .leading, relatedBy: .equal, toItem: self, attribute: .leading, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: profPic, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1 / 2, constant: 0).isActive = true
         
         message.translatesAutoresizingMaskIntoConstraints = false
-        let messageWidthConst = NSLayoutConstraint(item: message, attribute: .width, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 3, constant: 0)
-        let messageCenterXConst = NSLayoutConstraint(item: message, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 20)
-        let messageCenterYConst = NSLayoutConstraint(item: message, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0)
-        NSLayoutConstraint.activate([messageWidthConst, messageCenterXConst, messageCenterYConst])
-        
-        senderLabel.translatesAutoresizingMaskIntoConstraints = false
-        senderLabel.leftAnchor.constraint(equalTo: container.leftAnchor, constant: 0).isActive = true
-        senderLabel.bottomAnchor.constraint(equalTo: container.topAnchor).isActive = true
-        senderLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
-        senderLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1 / 3).isActive = true
+        message.leadingAnchor.constraint(equalTo: profPic.trailingAnchor, constant: 10).isActive = true
+        message.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10).isActive = true
+        message.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
+        message.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
     }
     
 }

@@ -3,9 +3,11 @@ import FirebaseAuth
 import Foundation
 import Presentr
 import UIKit
-class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
+class MatchProfVC: UIViewController {
     
     var user: User?
+    var match: User?
+    var dm: DM?
     var routeLists: [RouteListViewModel] = []
     var notifications: [Notification] = []
     var sportButton: TypeButton!
@@ -33,13 +35,11 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     let tradGrade = UILabel()
     let trGrade = UILabel()
     let sportGrade = UILabel()
+    var flag = false
     
     var tradLetter = ""
     var trLetter = ""
     var sportLetter = ""
-    
-    //let boulderGrade = UILabel()
-    //let aidGrade = UILabel()
     var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -52,168 +52,102 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         routeLists = []
-        if let currentUser = Auth.auth().currentUser {
-            getToDoLists(user: currentUser)
-        }
+        getMatch()
     }
     
-    func getLetters() {
+    func getMatch() {
+        
+        guard let match = self.match else { return }
+        self.userNameLabel.text = match.name
+        self.userBio.text = match.bio
+        self.beerLabel.text = "Favorite beer is \(match.beer)"
+        self.whipLabel.text = "Number of massive whips: \(match.whips)"
+        self.carabinerLabel.text = "Climbing since \(match.climbYear)"
+        self.trGrade.text = "5.\(match.trGrade)" + match.trLetter
+        self.tradGrade.text = "5.\(match.tradGrade)" + match.tradLetter
+        self.sportGrade.text = "5.\(match.sportGrade)" + match.sportLetter
+        let userViewModel = UserViewModel(user: match)
+        userViewModel.getProfilePhoto { image in
+            DispatchQueue.main.async {
+                self.profPic.setBackgroundImage(image, for: .normal)
+            }
+        }
         
     }
-    func getToDoLists(user: Firebase.User) {
-        let db = Firestore.firestore()
-        db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
-            guard let user = user.first else { return }
-            self.user = user
-            self.userNameLabel.text = user.name
-            self.userBio.text = user.bio
-            self.beerLabel.text = "Favorite beer is \(user.beer)"
-            self.whipLabel.text = "Number of massive whips: \(user.whips)"
-            self.carabinerLabel.text = "Climbing since \(user.climbYear)"
-            self.trGrade.text = "5.\(user.trGrade)" + user.trLetter
-            self.tradGrade.text = "5.\(user.tradGrade)" + user.tradLetter
-            self.sportGrade.text = "5.\(user.sportGrade)" + user.sportLetter
-            let userViewModel = UserViewModel(user: user)
-            userViewModel.getProfilePhoto { image in
-                DispatchQueue.main.async {
-                    self.profPic.setBackgroundImage(image, for: .normal)
-                }
-            }
-            
-            //            for routeListId in user.toDo {
-            //                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
-            //                    guard let routeList = routeList.first else { return }
-            //                    self.routeLists.append(RouteListViewModel(routeList: routeList))
-            //                    self.tableView.reloadData()
-            //                }
-            //            }
-            //            let userViewModel = UserViewModel(user: user)
-            //            userViewModel.getNotifications { notifications in
-            //                self.notifications = notifications
-            //                if !notifications.isEmpty {
-            //                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
-            //                } else {
-            //                    self.navigationItem.rightBarButtonItem?.tintColor = .white
-            //                }
-            //            }
-        }
-    }
     
-    func clearedNotification(_ noti: Notification) {
-        var index = 0
-        for notification in notifications {
-            if notification.id == noti.id {
-                notifications.remove(at: index)
-                if notifications.isEmpty {
-                    //self.navigationItem.rightBarButtonItem?.tintColor = .white
-                }
-                return
-            }
-            index += 1
-        }
-    }
-    
-    func selectedNotification(_ noti: Notification) {
-        if let noti = noti as? NotificationCollaboration {
-            Firestore.firestore().query(collection: "routeLists", by: "id", with: noti.routeListId, of: RouteList.self) { routeList in
-                guard let routeList = routeList.first else { return }
-                let routeListVC = RouteListVC()
-                routeListVC.user = self.user
-                routeListVC.notification = noti
-                routeListVC.routeListViewModel = RouteListViewModel(routeList: routeList)
-                self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
-                self.navigationController?.pushViewController(routeListVC, animated: true)
-            }
-        }
-    }
-    
-    @objc
-    func notiSelected() {
+    @objc func openDM() {
+        
+        self.flag = false
+        var count = 0
         guard let user = self.user else { return }
-        let presenter: Presentr = {
-            let customPresenter = Presentr(presentationType: .topHalf)
-            customPresenter.transitionType = .coverVerticalFromTop
-            customPresenter.dismissTransitionType = .crossDissolve
-            customPresenter.roundCorners = true
-            customPresenter.cornerRadius = 15
-            customPresenter.backgroundColor = .white
-            customPresenter.backgroundOpacity = 0.5
-            return customPresenter
-        }()
-        let npvc = NotificationPresenterVC()
-        npvc.delegate = self
-        npvc.user = user
-        npvc.notifications = self.notifications
-        self.customPresentViewController(presenter, viewController: npvc, animated: true)
+        guard let match = self.match else { return }
+
+        for msgId in user.messageIds {
+            count += 1
+            if match.messageIds.contains(msgId) {
+                self.flag = true
+                let db = Firestore.firestore()
+                db.query(collection: "messages", by: "messageId", with: msgId, of: DM.self) { dm in
+                    guard let mess = dm.first else { print("error finding dm"); return }
+                    self.dm = mess
+                    self.linkToMsg()
+                }
+                break
+            }
+            if(!self.flag && count == user.messageIds.count) {
+                self.newDM()
+                self.flag = true
+            }
+        }
+        if !self.flag {
+            self.newDM()
+        }
     }
     
-    @objc
-    func openDmView() {
-        let dms = DirectMessVC()
-        dms.user = user
-        let nav = UINavigationController(rootViewController: dms)
-        nav.navigationBar.barTintColor =  UISettings.shared.colorScheme.backgroundPrimary
-        nav.navigationBar.tintColor =  UISettings.shared.colorScheme.accent
-        nav.navigationBar.isTranslucent = false
-        nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
-            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
-        ]
-        present(nav, animated: true, completion: nil)
-    }
+        @objc func newDM() {
+            guard let user = self.user else { return }
+            guard let match = self.match else { return }
     
-    @objc
-    func openPartnerMatchView() {
-        let pm = PartnerMatchVC()
-        guard let user = self.user else{ return }
-        pm.user = user
-        let nav = UINavigationController(rootViewController: pm)
+            let tc = ThreadContent(message: "", sender: user.id)
+            self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, match.id], thread: [tc])
+            if let messId = self.dm?.messageId { // append message id onto users
+                self.match?.messageIds.append(messId)
+                self.user?.messageIds.append(messId)
+            }
+            Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
+            Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
+            Firestore.firestore().save(object: self.match, to: "users", with: self.match?.id ?? "error in creating new msg", completion: nil)
+            self.linkToMsg()
+        }
+    
+    @objc func linkToMsg() {
+        let msgLogContainer = MsgLogContainerVC()
+        msgLogContainer.user = self.user
+        msgLogContainer.friend = self.match
+        msgLogContainer.dm = self.dm
+        
+        let nav = UINavigationController(rootViewController: msgLogContainer)
         nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
-        nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
+        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(named: "Placeholder") ?? .white,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
-        present(nav, animated: true, completion: nil)
+        self.present(nav, animated: true, completion: nil)
     }
     
-    @objc
-    func openEditProfile() {
-        let ep = EditProfileVC()
-        ep.user = self.user
-        let nav = UINavigationController(rootViewController: ep)
-        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
-        nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
-        nav.navigationBar.isTranslucent = false
-        nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
-            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
-        ]
-        present(nav, animated: true, completion: nil)
+    @objc func backToMatches() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     func initViews() {
+        let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToMatches))
+        self.navigationItem.leftBarButtonItem = backButton
+        self.navigationItem.leftBarButtonItem?.tintColor = UISettings.shared.colorScheme.accent
+        self.navigationItem.title = self.match?.username
+   
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
-        
-        //        // nav noti button
-        //        let notiIcon = UIImage(named: "notification")
-        //        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
-        //        notiIconButton.image = notiIcon
-        //        notiIconButton.tintColor = .white
-        //        self.navigationItem.rightBarButtonItem = notiIconButton
-        
-        let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openDmView))
-        let msgIcon = UIImage(named: "envelope")
-        msgButton.image = msgIcon
-        msgButton.tintColor = UISettings.shared.colorScheme.textSecondary
-        self.navigationItem.rightBarButtonItem = msgButton
-        
-        let pmButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openPartnerMatchView))
-        let pmIcon = UIImage(named: "handshake")
-        pmButton.image = pmIcon
-        pmButton.tintColor = UISettings.shared.colorScheme.accent
-        self.navigationItem.leftBarButtonItem = pmButton
         
         userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         userNameLabel.textAlignment = .left
@@ -292,9 +226,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         
         
         editButton = UIButton()
-        editButton.addTarget(self, action: #selector(openEditProfile), for: UIControl.Event.touchUpInside)
-        editButton.setTitle("Edit Profile", for: .normal)
+        editButton.setTitle("Message", for: .normal)
         editButton.setTitleColor( .black, for: .normal)
+        editButton.addTarget(self, action: #selector(openDM), for: UIControl.Event.touchUpInside)
         editButton.backgroundColor = UIColor(named: "Placeholder")
         editButton.layer.cornerRadius = 8
         

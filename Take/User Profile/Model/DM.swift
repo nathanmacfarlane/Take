@@ -6,6 +6,12 @@ struct DM: Codable {
     var messageId: String
     var userIds: [String]
     var Thread: [ThreadContent]
+    
+    init(messageId: String, userIds: [String], thread: [ThreadContent]) {
+        self.messageId = messageId
+        self.userIds = userIds
+        self.Thread = thread
+    }
 }
 
 struct ThreadContent: Codable {
