@@ -185,8 +185,8 @@ DEPENDENCIES:
   - GooglePlaces
   - IHKeyboardAvoiding
   - IQKeyboardManagerSwift
-  - NVActivityIndicatorView
   - MultiSlider
+  - NVActivityIndicatorView
   - Presentr
   - SwiftLint
   - SwiftyDraw
@@ -285,6 +285,6 @@ SPEC CHECKSUMS:
   UIImageColors: c83669aff7ceb55a3b3f2c398f3b5c14632a267b
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: 79f0d8b141019685cca26bd7bd33f1e9b7038a71
+PODFILE CHECKSUM: f16aac1d8c24758a611f6e989e6858bd4da40c85
 
 COCOAPODS: 1.5.3

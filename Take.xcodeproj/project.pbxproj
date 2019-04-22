@@ -205,11 +205,6 @@
 		7184498722090C380029C023 /* DM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498622090C380029C023 /* DM.swift */; };
 		7184498C220946E00029C023 /* msg.png in Resources */ = {isa = PBXBuildFile; fileRef = 7184498B220946E00029C023 /* msg.png */; };
 		718449902209581F0029C023 /* DmTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7184498F2209581F0029C023 /* DmTVC.swift */; };
-		71876B8A2246D60F0009B2B1 /* beer.png in Resources */ = {isa = PBXBuildFile; fileRef = 71876B892246D60F0009B2B1 /* beer.png */; };
-		71876B8F2246D6C20009B2B1 /* carabiner.png in Resources */ = {isa = PBXBuildFile; fileRef = 71876B8B2246D6C20009B2B1 /* carabiner.png */; };
-		71876B902246D6C20009B2B1 /* home.png in Resources */ = {isa = PBXBuildFile; fileRef = 71876B8C2246D6C20009B2B1 /* home.png */; };
-		71876B912246D6C20009B2B1 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 71876B8D2246D6C20009B2B1 /* mail.png */; };
-		71876B922246D6C20009B2B1 /* octo.png in Resources */ = {isa = PBXBuildFile; fileRef = 71876B8E2246D6C20009B2B1 /* octo.png */; };
 		719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC917221F339900D167F0 /* MsgLogContainerVC.swift */; };
 		719BC920221FD9C300D167F0 /* PartnerMatchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */; };
 		71BFBBEF225ADF6F0014945C /* EditProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71BFBBEE225ADF6F0014945C /* EditProfileVC.swift */; };
@@ -468,11 +463,6 @@
 		7184498622090C380029C023 /* DM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DM.swift; sourceTree = "<group>"; };
 		7184498B220946E00029C023 /* msg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = msg.png; sourceTree = "<group>"; };
 		7184498F2209581F0029C023 /* DmTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DmTVC.swift; sourceTree = "<group>"; };
-		71876B892246D60F0009B2B1 /* beer.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = beer.png; path = ../../../../Downloads/beer.png; sourceTree = "<group>"; };
-		71876B8B2246D6C20009B2B1 /* carabiner.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = carabiner.png; path = ../../../../Downloads/takeIcons/carabiner.png; sourceTree = "<group>"; };
-		71876B8C2246D6C20009B2B1 /* home.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home.png; path = ../../../../Downloads/takeIcons/home.png; sourceTree = "<group>"; };
-		71876B8D2246D6C20009B2B1 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mail.png; path = ../../../../Downloads/takeIcons/mail.png; sourceTree = "<group>"; };
-		71876B8E2246D6C20009B2B1 /* octo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = octo.png; path = ../../../../Downloads/takeIcons/octo.png; sourceTree = "<group>"; };
 		719BC917221F339900D167F0 /* MsgLogContainerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MsgLogContainerVC.swift; sourceTree = "<group>"; };
 		719BC91F221FD9C300D167F0 /* PartnerMatchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnerMatchVC.swift; sourceTree = "<group>"; };
 		71BFBBEE225ADF6F0014945C /* EditProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileVC.swift; sourceTree = "<group>"; };
@@ -539,7 +529,6 @@
 				221B179F2256E0E500A92BDF /* Google-Maps-iOS-Utils */,
 				2211DF462245FAD600FB169B /* Mountain Project */,
 				2205BD222244B1BE003A5715 /* NewARView */,
-				719BC91E221FD99400D167F0 /* Partnerr Match Stuff */,
 				719BC91E221FD99400D167F0 /* Partnerr Match */,
 				2234F5952213F81D00D2B8D9 /* Reusable Classes */,
 				229DBF65221F9BBF0065CD6C /* ARView */,
@@ -575,11 +564,6 @@
 		0452557D2091C02800A4A384 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				71876B8B2246D6C20009B2B1 /* carabiner.png */,
-				71876B8C2246D6C20009B2B1 /* home.png */,
-				71876B8D2246D6C20009B2B1 /* mail.png */,
-				71876B8E2246D6C20009B2B1 /* octo.png */,
-				71876B892246D60F0009B2B1 /* beer.png */,
 				7184498B220946E00029C023 /* msg.png */,
 				22640A2C21A227010033C006 /* share.png */,
 				225418172172A258000F575A /* edit.png */,
@@ -1281,7 +1265,6 @@
 			files = (
 				04C83B4620BB68A1008D842D /* SLO.jpg in Resources */,
 				2254181021727CF3000F575A /* checkmark.png in Resources */,
-				71876B8F2246D6C20009B2B1 /* carabiner.png in Resources */,
 				2211F3C1214743E900E79E99 /* clear.png in Resources */,
 				225FE8B120C63DF000C98E1A /* noImages.png in Resources */,
 				0451454220941E1E00FE72BB /* filter.png in Resources */,
@@ -1290,7 +1273,6 @@
 				2254180E21727A75000F575A /* heart.png in Resources */,
 				229C93EF20DB42F000FAA320 /* Anno-Circle-Pink.png in Resources */,
 				2211F3B42147254C00E79E99 /* closeMenuIcon.png in Resources */,
-				71876B912246D6C20009B2B1 /* mail.png in Resources */,
 				225FE8B520C63FAB00C98E1A /* imageLoading.png in Resources */,
 				0451454B209449E100FE72BB /* minus.png in Resources */,
 				04514549209432FE00FE72BB /* unchecked.png in Resources */,
@@ -1299,13 +1281,11 @@
 				228D96FB2262BA5C00C5F32B /* RoutesPersisted.plist in Resources */,
 				0452556A2091B6DE00A4A384 /* Assets.xcassets in Resources */,
 				22640A2F21A229EC0033C006 /* download.png in Resources */,
-				71876B8A2246D60F0009B2B1 /* beer.png in Resources */,
 				22ECE97120C91AC300DCF44E /* NewAreaTarget.png in Resources */,
 				2211F3C72147539900E79E99 /* brush.png in Resources */,
 				04514547209432E100FE72BB /* checked.png in Resources */,
 				229C93E120DB3D4C00FAA320 /* Anno-Circle-Blue.png in Resources */,
 				04C83B4820BB6D6B008D842D /* close-white.png in Resources */,
-				71876B902246D6C20009B2B1 /* home.png in Resources */,
 				2259C47520CEDAF70000065E /* user.png in Resources */,
 				229C93DD20D5DBAB00FAA320 /* Anno-Fire.png in Resources */,
 				2211F3BD2147431800E79E99 /* done.png in Resources */,
@@ -1318,7 +1298,6 @@
 				229C93EB20DB410800FAA320 /* Anno-Circle-Red.png in Resources */,
 				22640A2D21A227010033C006 /* share.png in Resources */,
 				2259C47120CEDA280000065E /* search.png in Resources */,
-				71876B922246D6C20009B2B1 /* octo.png in Resources */,
 				2204AAE320C23DFC0035E3B7 /* plus.png in Resources */,
 				225418182172A258000F575A /* edit.png in Resources */,
 				225418082171BFE0000F575A /* Colors.xcassets in Resources */,
@@ -1405,9 +1384,9 @@
 				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/IHKeyboardAvoiding/IHKeyboardAvoiding.framework",
 				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
-				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/MiniLayout/MiniLayout.framework",
 				"${BUILT_PRODUCTS_DIR}/MultiSlider/MultiSlider.framework",
+				"${BUILT_PRODUCTS_DIR}/NVActivityIndicatorView/NVActivityIndicatorView.framework",
 				"${BUILT_PRODUCTS_DIR}/Pageboy/Pageboy.framework",
 				"${BUILT_PRODUCTS_DIR}/Presentr/Presentr.framework",
 				"${BUILT_PRODUCTS_DIR}/Protobuf/Protobuf.framework",
@@ -1434,9 +1413,9 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IHKeyboardAvoiding.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MiniLayout.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MultiSlider.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/NVActivityIndicatorView.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Pageboy.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Presentr.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Protobuf.framework",
