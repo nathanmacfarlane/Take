@@ -14,14 +14,15 @@ class DmTVC: UITableViewCell {
         
 //        self.layer.cornerRadius = 10
         self.layer.masksToBounds = true
-        self.backgroundColor = UIColor(named: "BluePrimary")
+        self.backgroundColor = UISettings.shared.colorScheme.backgroundCell
+        self.selectionStyle = .default
         
         nameLabel = UILabel()
-        nameLabel.textColor = .white
+        nameLabel.textColor = UISettings.shared.colorScheme.textPrimary
         nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
         
         messageLabel = UILabel()
-        messageLabel.textColor = .white
+        messageLabel.textColor = UISettings.shared.colorScheme.textSecondary
         messageLabel.font = UIFont(name: "Avenir", size: 16)
         
         

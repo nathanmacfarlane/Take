@@ -22,7 +22,7 @@ extension SearchRoutesVC: UITableViewDelegate {
             guard let route = self.resultsMashed[indexPath.row] as? Route else { return }
             rlpvc.route = route
             self.customPresentViewController(presenter, viewController: rlpvc, animated: true)
-            success(true)
+            success(true)   
         }
         toDoAction.image = UIImage(named: "icon_plus")
         toDoAction.backgroundColor = view.backgroundColor

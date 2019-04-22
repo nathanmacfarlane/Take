@@ -73,20 +73,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func applicationReceivedRemoteMessage(_ remoteMessage: MessagingRemoteMessage) {
-        print(remoteMessage.appData)
+//        print(remoteMessage.appData)
     }
 
     func handleNotification(aps: [String: AnyObject]) {
         print("aps: \(aps)")
         if let noti = try? FirebaseDecoder().decode(FirebaseNotification.self, from: aps) {
-            print("notification body: \(noti.alert.body)")
-            print("notification title: \(noti.alert.title)")
+//            print("notification body: \(noti.alert.body)")
+//            print("notification title: \(noti.alert.title)")
         }
     }
 
     func registerForPushNotifications() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, _ in
-            print("Permission granted: \(granted)")
+//            print("Permission granted: \(granted)")
             guard granted else { return }
             self?.getNotificationSettings()
         }
@@ -94,7 +94,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func getNotificationSettings() {
         UNUserNotificationCenter.current().getNotificationSettings { settings in
-            print("Notification settings: \(settings)")
+//            print("Notification settings: \(settings)")
             guard settings.authorizationStatus == .authorized else { return }
             DispatchQueue.main.async {
                 UIApplication.shared.registerForRemoteNotifications()
