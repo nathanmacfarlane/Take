@@ -1,4 +1,4 @@
-import Blueprints
+//import Blueprints
 import Cosmos
 import Foundation
 import UIKit
@@ -59,19 +59,20 @@ class MapRoutePreview: MapPreviewView, UICollectionViewDelegate, UICollectionVie
         pitchesLabel.textColor = #colorLiteral(red: 0.6235294118, green: 0.6235294118, blue: 0.6235294118, alpha: 1)
         pitchesLabel.font = UIFont(name: "Avenir-Black", size: 17)
 
-        let blueprintLayout = HorizontalBlueprintLayout(
-            itemsPerRow: 2,
-            itemsPerColumn: 1,
-            itemSize: CGSize(width: 75, height: 75),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
-            stickyHeaders: true,
-            stickyFooters: true
-        )
+//        let blueprintLayout = HorizontalBlueprintLayout(
+//            itemsPerRow: 2,
+//            itemsPerColumn: 1,
+//            itemSize: CGSize(width: 75, height: 75),
+//            minimumInteritemSpacing: 10,
+//            minimumLineSpacing: 10,
+//            sectionInset: UIEdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
+//            stickyHeaders: true,
+//            stickyFooters: true
+//        )
 
-        blueprintLayout.scrollDirection = .horizontal
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+//        blueprintLayout.scrollDirection = .horizontal
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+        collectionView = UICollectionView()
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self

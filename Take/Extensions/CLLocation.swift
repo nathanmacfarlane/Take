@@ -2,6 +2,11 @@ import Foundation
 import MapKit
 
 extension CLLocation {
+
+    convenience init(loc2d: CLLocationCoordinate2D) {
+        self.init(latitude: loc2d.latitude, longitude: loc2d.longitude)
+    }
+
     func cityAndState(completion: @escaping (_ city: String?, _ state: String?, _ error: Error?) -> Void) {
         DispatchQueue.global(qos: .background).async {
             CLGeocoder().reverseGeocodeLocation(self) { placemarks, error in

@@ -1,16 +1,16 @@
 import FirebaseFirestore
 import Geofirestore
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import UIKit
 
-class AreaDetailVC: UIViewController, TwicketSegmentedControlDelegate {
+class AreaDetailVC: UIViewController {
 
     var areaViewModel: AreaViewModel!
 
     var mapVC: MapVC!
     var mapBG: UIView!
     var cityStateLabel: UILabel!
-    var infoSeg: TwicketSegmentedControl!
+    var infoSeg: UISegmentedControl!
     var infoTextView: UITextView!
 
     override func viewDidLoad() {
@@ -55,12 +55,12 @@ class AreaDetailVC: UIViewController, TwicketSegmentedControlDelegate {
         mapBG.backgroundColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundDarker : UIColor(hex: "#C9C9C9")
         mapVC = MapVC()
 
-        infoSeg = TwicketSegmentedControl()
-        infoSeg.setSegmentItems(["Description", "Directions"])
-        infoSeg.isSliderShadowHidden = true
-        infoSeg.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
-        infoSeg.backgroundColor = .clear
-        infoSeg.delegate = self
+        infoSeg = UISegmentedControl(items: ["Description", "Directions"])
+//        infoSeg.setSegmentItems(["Description", "Directions"])
+//        infoSeg.isSliderShadowHidden = true
+//        infoSeg.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
+//        infoSeg.backgroundColor = .clear
+//        infoSeg.delegate = self
 
         infoTextView = UITextView()
         infoTextView.isEditable = false

@@ -2,11 +2,11 @@ import FirebaseFirestore
 import GMStepper
 import MapKit
 import Presentr
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import UIKit
 import WSTagsField
 
-class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseLocationDelegate, MKMapViewDelegate {
+class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegate {
 
     var route: Route?
     var difficultyStepper: GMStepper!
@@ -134,18 +134,19 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
             difficultyStepper.value = Double(rating)
         }
 
-        let bufferSeg = TwicketSegmentedControl()
-        bufferSeg.setSegmentItems(["", "a", "b", "c", "d"])
-        bufferSeg.isSliderShadowHidden = true
-        bufferSeg.sliderBackgroundColor = UIColor(hex: "#888888")
-        bufferSeg.segmentsBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
-        bufferSeg.backgroundColor = .clear
-        bufferSeg.defaultTextColor = .white
-        bufferSeg.highlightTextColor = .white
+        let bufferSeg = UISegmentedControl(items: ["", "a", "b", "c", "d"])
+//        bufferSeg.setSegmentItems(["", "a", "b", "c", "d"])
+//        bufferSeg.isSliderShadowHidden = true
+//        bufferSeg.sliderBackgroundColor = UIColor(hex: "#888888")
+//        bufferSeg.segmentsBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
+//        bufferSeg.backgroundColor = .clear
+//        bufferSeg.defaultTextColor = .white
+//        bufferSeg.highlightTextColor = .white
         if let buffer = route?.buffer {
-            bufferSeg.move(to: buffer + 1)
+//            bufferSeg.move(to: buffer + 1)
+            bufferSeg.selectedSegmentIndex = buffer + 1
         }
-        bufferSeg.delegate = self
+//        bufferSeg.delegate = self
 
         let pitchesLabel = UILabel()
         pitchesLabel.text = "Pitches"

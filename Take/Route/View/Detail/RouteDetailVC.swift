@@ -2,7 +2,7 @@ import Cosmos
 import FirebaseAuth
 import FirebaseFirestore
 import Presentr
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import UIKit
 
 class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
@@ -170,12 +170,12 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         }
 
         // segment control
-        let segControl = TwicketSegmentedControl()
-        segControl.setSegmentItems(["Description", "Protection"])
-        segControl.isSliderShadowHidden = true
-        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
-        segControl.backgroundColor = .clear
-        segControl.delegate = self
+        let segControl = UISegmentedControl(items: ["Description", "Protection"])
+//        segControl.setSegmentItems(["Description", "Protection"])
+//        segControl.isSliderShadowHidden = true
+//        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
+//        segControl.backgroundColor = .clear
+//        segControl.delegate = self
 
         // info label
         infoTextView = UITextView()

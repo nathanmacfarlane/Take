@@ -1,8 +1,10 @@
 import ClusterKit
+import FontAwesome_swift
 import Foundation
 import Geofirestore
 import GoogleMaps
 import MapKit
+import Presentr
 import UIKit
 
 class RouteItem: NSObject, GMUClusterItem {
@@ -15,18 +17,27 @@ class RouteItem: NSObject, GMUClusterItem {
     }
 }
 
-class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, GMUClusterRendererDelegate {
+class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate, GMUClusterRendererDelegate, UISearchBarDelegate, PlanRouteDelegate {
 
     // vars
-    private var addedRoutes: [String] = []
+    private var addedRouteItems: [RouteItem] = []
     private var selectedInfoWindow: MarkerCallout?
 
     // clustering
     private var mapView: GMSMapView!
     private var clusterManager: GMUClusterManager!
 
+    private var searchBar: UISearchBar!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        let attributes = [NSAttributedString.Key.font: UIFont.fontAwesome(ofSize: 20, style: .solid)]
+
+        let hiking = UIBarButtonItem(title: String.fontAwesomeIcon(name: .hiking), style: .plain, target: self, action: #selector(hitHiking))
+        hiking.setTitleTextAttributes(attributes, for: .normal)
+        hiking.setTitleTextAttributes(attributes, for: UIControl.State.selected)
+        navigationItem.setRightBarButton(hiking, animated: true)
 
         initViews()
 
@@ -44,9 +55,46 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
             for id in Array(routes.keys) {
                 guard let route = routes[id], let latitude = route["la"] as? Double, let longitude = route["lo"] as? Double else { continue }
                 let item = RouteItem(position: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), routeKey: id)
+                addedRouteItems.append(item)
                 self.clusterManager.add(item)
             }
+            clusterManager.cluster()
         }
+    }
+
+    func hitPreviewCheckItOut(allRoutes: [String], suggestedRoutes: [MPRoute]) {
+        let planTripVC = PlanTripVC()
+        planTripVC.allRoutes = allRoutes
+        planTripVC.suggestedRoutes = suggestedRoutes
+        present(planTripVC, animated: true, completion: nil)
+    }
+
+    @objc
+    func hitHiking() {
+
+        let visRegion = mapView.projection.visibleRegion()
+        let bounds = GMSCoordinateBounds(coordinate: visRegion.nearLeft, coordinate: visRegion.farRight)
+        let close = addedRouteItems.filter { bounds.contains(CLLocationCoordinate2D(latitude: $0.position.latitude, longitude: $0.position.longitude)) }
+
+        let presenter: Presentr = {
+            let width = ModalSize.fluid(percentage: 0.8)
+            let height = ModalSize.custom(size: 350)
+            let center = ModalCenterPosition.center
+            let customType = PresentationType.custom(width: width, height: height, center: center)
+
+            let customPresenter = Presentr(presentationType: customType)
+            customPresenter.backgroundColor = .black
+            customPresenter.backgroundOpacity = 0.5
+            customPresenter.roundCorners = true
+            customPresenter.cornerRadius = 15
+            return customPresenter
+        }()
+
+        let planTrip = PlanTripPreviewVC()
+        planTrip.routes = close.map { $0.routeKey ?? "" }
+        planTrip.location = CLLocation(loc2d: mapView.region.center)
+        planTrip.delegate = self
+        customPresentViewController(presenter, viewController: planTrip, animated: true)
     }
 
     func renderer(_ renderer: GMUClusterRenderer, willRenderMarker marker: GMSMarker) {
@@ -94,10 +142,44 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
 
         if let user = LocationService.shared.location {
             let camera = GMSCameraPosition.camera(withTarget: user.coordinate, zoom: 15.0)
-            mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
+            mapView = GMSMapView()
+            mapView.camera = camera
             mapView.delegate = self
-            view = mapView
             mapView.isMyLocationEnabled = true
+
+            view.addSubview(mapView)
+            mapView.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint(item: mapView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: mapView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        }
+
+        searchBar = UISearchBar()
+        searchBar.delegate = self
+        searchBar.barStyle = .black
+        searchBar.barTintColor = UIColor.clear
+        searchBar.backgroundColor = UIColor.clear
+        searchBar.isTranslucent = true
+        searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+
+        view.addSubview(searchBar)
+
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: searchBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: searchBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: searchBar, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
+
+        view.bringSubviewToFront(searchBar)
+    }
+
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder()
+        guard let addy = searchBar.text else { return }
+        CLGeocoder().geocodeAddressString(addy) { placemarks, _ in
+            guard let placemarks = placemarks, let location = placemarks.first?.location else { return }
+            self.mapView.animate(toLocation: CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude))
+            self.mapView.animate(toZoom: 15)
         }
     }
 
@@ -139,6 +221,10 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
         return nil
     }
 
+    func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
+        searchBar.resignFirstResponder()
+    }
+
     func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
 //        let geoRoutes = FirestoreService.shared.fs.collection("route-geos")
 //        let geoFirestoreRoutes = GeoFirestore(collectionRef: geoRoutes)
@@ -176,4 +262,8 @@ extension GMSMapView {
             self.moveCamera(update)
         }
     }
+}
+
+protocol PlanRouteDelegate {
+    func hitPreviewCheckItOut(allRoutes: [String], suggestedRoutes: [MPRoute])
 }

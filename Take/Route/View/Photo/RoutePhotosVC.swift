@@ -1,4 +1,4 @@
-import Blueprints
+//import Blueprints
 import FirebaseAuth
 import FirebaseFirestore
 //import Lightbox
@@ -53,14 +53,12 @@ class RoutePhotosVC: UIViewController {
         self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         self.title = routeViewModel.name
 
-        let waterfallLayout = VerticalBlueprintLayout(
-            itemsPerRow: 2,
-            itemSize: CGSize(width: view.frame.width / 3, height: view.frame.width / 1.5),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
+        layout.itemSize = CGSize(width: view.frame.width / 2 - 20, height: view.frame.height / 3)
 
-        myImagesCV = UICollectionView(frame: .zero, collectionViewLayout: waterfallLayout)
+        myImagesCV = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
         myImagesCV.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         myImagesCV.delegate = self
         myImagesCV.dataSource = self

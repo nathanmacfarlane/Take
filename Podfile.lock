@@ -84,6 +84,7 @@ PODS:
     - FirebaseAuthInterop (~> 1.0)
     - FirebaseCore (~> 5.1)
     - GTMSessionFetcher/Core (~> 1.1)
+  - FontAwesome.swift (1.6.0)
   - GeoFire (3.0.0):
     - Firebase/Database (~> 5.0)
   - Geofirestore (1.2.0):
@@ -172,6 +173,7 @@ DEPENDENCIES:
   - Firebase/Firestore
   - Firebase/Messaging
   - Firebase/Storage
+  - FontAwesome.swift
   - Geofirestore
   - GMStepper
   - GoogleMaps
@@ -204,6 +206,7 @@ SPEC REPOS:
     - FirebaseInstanceID
     - FirebaseMessaging
     - FirebaseStorage
+    - FontAwesome.swift
     - GeoFire
     - Geofirestore
     - GMStepper
@@ -245,6 +248,7 @@ SPEC CHECKSUMS:
   FirebaseInstanceID: e2fa4cb35ef5558c200f7f0ad8a53e212215f93e
   FirebaseMessaging: 0f14a264b0d7f867e8eff5d3556bc5d0d4e57888
   FirebaseStorage: 3d22c041370593e639fba013d1eb698a8dae2881
+  FontAwesome.swift: 71a422e7b209ee940c7c21a5d13964ecf2897ca4
   GeoFire: e3ae6f4be3f2466c3467ef6c1c203db3af935c59
   Geofirestore: ad548ea5e3c1ae595c746c7b796df5534d8202f3
   GMStepper: 89fb106944dfcc3aa3add7164e3ebd463ea2104b
@@ -269,6 +273,6 @@ SPEC CHECKSUMS:
   UIImageColors: c83669aff7ceb55a3b3f2c398f3b5c14632a267b
   WSTagsField: 3a10b75c304999ead6fb2251ddc2844266e7d9f2
 
-PODFILE CHECKSUM: 9279293f1d2d7a7fe54daf62b6acd1f7ad1e52ca
+PODFILE CHECKSUM: 384827882458f2ec9b69f867c65d4afb63d40bd8
 
 COCOAPODS: 1.5.3

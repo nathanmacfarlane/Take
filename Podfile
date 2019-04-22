@@ -25,5 +25,6 @@ target 'Take' do
   pod 'GoogleMaps'
   pod 'GooglePlaces'
   pod 'NVActivityIndicatorView'
+  pod 'FontAwesome.swift'
 
 end

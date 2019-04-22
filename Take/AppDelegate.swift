@@ -3,11 +3,11 @@ import Firebase
 import FirebaseFirestore
 import FirebaseInstanceID
 import FirebaseMessaging
+import GoogleMaps
+import GooglePlaces
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
-import GoogleMaps
-import GooglePlaces
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
