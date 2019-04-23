@@ -9,23 +9,56 @@ import UIKit
 class PartnerMatchVC: UIViewController {
     
     let ageSlider = MultiSlider()
-    var trStepper: GMStepper!
+    var gradeStepper: GMStepper!
     var rightSliderLabel = UITextField()
     var leftSliderLabel = UITextField()
     var matchCriteria: MatchCriteria?
     var user: User?
+    var trGrade = 0
+    var tradGrade = 0
+    var sportGrade = 0
+    var bGrade = 0
+    
+    var seg: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Top Rope", "Sport", "Trad", "Boulder"])
+        sc.tintColor = UISettings.shared.colorScheme.textSecondary
+        sc.selectedSegmentIndex = 0
+        sc.addTarget(self, action: #selector(handleSegmentChanges), for: .valueChanged)
+        return sc
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
-        matchCriteria = MatchCriteria(ageL: 0, ageH: 0, sportGrade: 0,
-                                          trGrade: 0, tradGrade: 0, boulderGrade: 0,
-                                          sportLetter: "", trLetter: "", tradLetter: "")
+        matchCriteria = MatchCriteria(ageL: 0, ageH: 0, sportGrade: 0, trGrade: 0, tradGrade: 0, boulderGrade: 0, sportLetter: "", trLetter: "", tradLetter: "")
         initViews()
     }
     
-    @objc func backToProf() {
+    @objc
+    func backToProf() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    @objc
+    func handleSegmentChanges() {
+        if seg.selectedSegmentIndex == 0 {
+            gradeStepper.items = Array(0...15).map { "5.\($0)" }
+            gradeStepper.value = Double(trGrade)
+            print(trGrade)
+        }
+        else if seg.selectedSegmentIndex == 1 {
+            gradeStepper.items = Array(0...15).map { "5.\($0)" }
+            gradeStepper.value = Double(sportGrade)
+        }
+        else if seg.selectedSegmentIndex == 2 {
+            gradeStepper.items = Array(0...15).map { "5.\($0)" }
+            gradeStepper.value = Double(tradGrade)
+        }
+        else if seg.selectedSegmentIndex == 3 {
+            gradeStepper.items = Array(0...15).map { "V\($0)" }
+            gradeStepper.value = Double(bGrade)
+        }
+        
     }
 
     @objc
@@ -45,6 +78,24 @@ class PartnerMatchVC: UIViewController {
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
+    }
+    
+    @objc
+    func selectGrade() {
+        print("BNDFOJBNJDFBNNBKROMBKRM")
+        if seg.selectedSegmentIndex == 0 {
+            trGrade = Int(gradeStepper.value)
+            
+        }
+        else if seg.selectedSegmentIndex == 1 {
+            sportGrade = Int(gradeStepper.value)
+        }
+        else if seg.selectedSegmentIndex == 2 {
+            tradGrade = Int(gradeStepper.value)
+        }
+        else if seg.selectedSegmentIndex == 3 {
+            bGrade = Int(gradeStepper.value)
+        }
     }
     
     func initViews() {
@@ -76,10 +127,16 @@ class PartnerMatchVC: UIViewController {
         ageSlider.snapStepSize = 1
         
         let ageLabel = UILabel()
-        ageLabel.text = "Age"
+        ageLabel.text = "Select Age"
         ageLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
         ageLabel.textAlignment = .center
         ageLabel.textColor = UISettings.shared.colorScheme.textSecondary
+        
+        let gradeLabel = UILabel()
+        gradeLabel.text = "Select Grades"
+        gradeLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
+        gradeLabel.textAlignment = .center
+        gradeLabel.textColor = UISettings.shared.colorScheme.textSecondary
         
         let sendButton = UIButton()
         sendButton.setTitle("Send It!", for: .normal)
@@ -89,27 +146,24 @@ class PartnerMatchVC: UIViewController {
         sendButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         sendButton.addTarget(self, action: #selector(openMatchResults), for: UIControl.Event.touchUpInside)
         
-        let trLabel = UILabel()
-        trLabel.text = "Top Rope Difficulty"
-        trLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        trLabel.font = UIFont(name: "Avenir-Black", size: 16)
-        
-        trStepper = GMStepper()
-        trStepper.minimumValue = 0
-        trStepper.maximumValue = 15
-        trStepper.stepValue = 1.0
+        gradeStepper = GMStepper()
+        gradeStepper.minimumValue = 0
+        gradeStepper.maximumValue = 15
+        gradeStepper.stepValue = 1.0
         if let trGrade = self.user?.trGrade {
-            trStepper.value = Double(trGrade)
+            gradeStepper.value = Double(trGrade)
         }
-        trStepper.items = Array(0...15).map { "5.\($0)" }
-        trStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
-        trStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
+        gradeStepper.items = Array(0...15).map { "5.\($0)" }
+        gradeStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        gradeStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
+        gradeStepper.addTarget(self, action: #selector(selectGrade), for: UIControl.Event.touchDown)
         
         view.addSubview(ageLabel)
+        view.addSubview(gradeLabel)
         view.addSubview(ageSlider)
         view.addSubview(sendButton)
-        view.addSubview(trStepper)
-        view.addSubview(trLabel)
+        view.addSubview(gradeStepper)
+        view.addSubview(seg)
         
         ageLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: ageLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -123,22 +177,28 @@ class PartnerMatchVC: UIViewController {
         NSLayoutConstraint(item: ageSlider, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
         NSLayoutConstraint(item: ageSlider, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
         
-        trStepper.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: trStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trStepper, attribute: .top, relatedBy: .equal, toItem: ageSlider, attribute: .bottom, multiplier: 1, constant: 50).isActive = true
-        NSLayoutConstraint(item: trStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
-        NSLayoutConstraint(item: trStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+        gradeLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: gradeLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: gradeLabel, attribute: .top, relatedBy: .equal, toItem: ageSlider, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: gradeLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: gradeLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
         
-        trLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: trLabel, attribute: .leading , relatedBy: .equal, toItem: trStepper, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trLabel, attribute: .bottom, relatedBy: .equal, toItem: trStepper, attribute: .top, multiplier: 1, constant: -2).isActive = true
-        NSLayoutConstraint(item: trLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/2, constant: 0).isActive = true
-        NSLayoutConstraint(item: trLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
-        
+        gradeStepper.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: gradeStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: gradeStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: gradeStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: gradeStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+      
         sendButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sendButton, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sendButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -15).isActive = true
         NSLayoutConstraint(item: sendButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: sendButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
+        
+        seg.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: seg, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .top, relatedBy: .equal, toItem: gradeLabel, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
     }
 }
