@@ -16,6 +16,7 @@ class MatchProfVC: UIViewController {
     var profPic: TypeButton!
     var home: TypeButton!
     var carabiner: TypeButton!
+    var boulderButton: TypeButton!
     var beer: TypeButton!
     var whippers: TypeButton!
     var partnerMatch =  UIButton()
@@ -35,6 +36,7 @@ class MatchProfVC: UIViewController {
     let tradGrade = UILabel()
     let trGrade = UILabel()
     let sportGrade = UILabel()
+    let boulderGrade = UILabel()
     var flag = false
     
     var tradLetter = ""
@@ -66,6 +68,7 @@ class MatchProfVC: UIViewController {
         self.trGrade.text = "5.\(match.trGrade)" + match.trLetter
         self.tradGrade.text = "5.\(match.tradGrade)" + match.tradLetter
         self.sportGrade.text = "5.\(match.sportGrade)" + match.sportLetter
+        self.boulderGrade.text = "V\(match.boulderGrade)"
         let userViewModel = UserViewModel(user: match)
         userViewModel.getProfilePhoto { image in
             DispatchQueue.main.async {
@@ -190,6 +193,11 @@ class MatchProfVC: UIViewController {
         tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         tradButton.backgroundColor = UIColor(hex: "#0E4343")
         
+        boulderButton = TypeButton()
+        boulderButton.setTitle("B", for: .normal)
+        boulderButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
+        boulderButton.backgroundColor = UIColor(hex: "#0E4343")
+        
         profPic = TypeButton()
         profPic.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 2.5)
         profPic.clipsToBounds = true
@@ -224,6 +232,10 @@ class MatchProfVC: UIViewController {
         sportGrade.textColor = UISettings.shared.colorScheme.textSecondary
         sportGrade.textAlignment = .center
         
+        boulderGrade.font = UIFont(name: "Avenir", size: 16)
+        boulderGrade.textColor = UISettings.shared.colorScheme.textSecondary
+        boulderGrade.textAlignment = .center
+        
         
         editButton = UIButton()
         editButton.setTitle("Message", for: .normal)
@@ -250,16 +262,19 @@ class MatchProfVC: UIViewController {
         view.addSubview(beerLabel)
         view.addSubview(whipLabel)
         view.addSubview(editButton)
+        view.addSubview(boulderButton)
+        view.addSubview(boulderGrade)
+        
         
         
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: userNameLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: userNameLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: userNameLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: userNameLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 2, constant: 0).isActive = true
+        NSLayoutConstraint(item: userNameLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: userNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         profPic.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: profPic, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: -40).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: profPic, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 3, constant: 0).isActive = true
         NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 3, constant: 0).isActive = true
@@ -315,6 +330,19 @@ class MatchProfVC: UIViewController {
         NSLayoutConstraint(item: home,  attribute: .top, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 80).isActive = true
         NSLayoutConstraint(item: home, attribute: .width, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 1, constant: 1).isActive = true
         NSLayoutConstraint(item: home, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .height, multiplier: 1, constant: 1).isActive = true
+        
+        
+        boulderButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: boulderButton, attribute: .leading, relatedBy: .equal, toItem: tradButton, attribute: .trailing, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: boulderButton, attribute: .bottom, relatedBy: .equal, toItem: trButton, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderButton, attribute: .width, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderButton, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        
+        boulderGrade.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: boulderGrade, attribute: .centerX, relatedBy: .equal, toItem: boulderButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         carabiner.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: carabiner, attribute: .leading, relatedBy: .equal, toItem: home, attribute: .leading, multiplier: 1, constant: 0).isActive = true
