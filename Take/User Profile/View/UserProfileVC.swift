@@ -13,28 +13,17 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var boulderButton: TypeButton!
     var tradButton: TypeButton!
     var profPic: TypeButton!
-    var home: TypeButton!
-    var carabiner: TypeButton!
-    var beer: TypeButton!
-    var whippers: TypeButton!
     var partnerMatch =  UIButton()
     var editButton =  UIButton()
     var climberSearch =  UIButton()
     var profImage = UIImage()
-    let homeImage = UIImage(named: "home.png")
-    let carabinerImage = UIImage(named: "carabiner.png")
-    let beerImage = UIImage(named: "beer.png")
-    let whipImage = UIImage(named: "octo.png")
     let userNameLabel = UILabel()
     let userBio = UILabel()
-    let homeLabel = UILabel()
-    let carabinerLabel = UILabel()
-    let beerLabel = UILabel()
-    let whipLabel = UILabel()
     let tradGrade = UILabel()
     let trGrade = UILabel()
     let sportGrade = UILabel()
     let boulderGrade = UILabel()
+    var infoTableView: UITableView!
     
     var tradLetter = ""
     var trLetter = ""
@@ -69,9 +58,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             self.user = user
             self.userNameLabel.text = user.name
             self.userBio.text = user.bio
-            self.beerLabel.text = "Favorite beer is \(user.beer)"
-            self.whipLabel.text = "Number of massive whips: \(user.whips)"
-            self.carabinerLabel.text = "Climbing since \(user.climbYear)"
             self.trGrade.text = "5.\(user.trGrade)" + user.trLetter
             self.tradGrade.text = "5.\(user.tradGrade)" + user.tradLetter
             self.sportGrade.text = "5.\(user.sportGrade)" + user.sportLetter
@@ -82,23 +68,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
                     self.profPic.setBackgroundImage(image, for: .normal)
                 }
             }
-            
-            //            for routeListId in user.toDo {
-            //                db.query(collection: "routeLists", by: "id", with: routeListId, of: RouteList.self) { routeList in
-            //                    guard let routeList = routeList.first else { return }
-            //                    self.routeLists.append(RouteListViewModel(routeList: routeList))
-            //                    self.tableView.reloadData()
-            //                }
-            //            }
-            //            let userViewModel = UserViewModel(user: user)
-            //            userViewModel.getNotifications { notifications in
-            //                self.notifications = notifications
-            //                if !notifications.isEmpty {
-            //                    self.navigationItem.rightBarButtonItem?.tintColor = UIColor(named: "PinkAccent")
-            //                } else {
-            //                    self.navigationItem.rightBarButtonItem?.tintColor = .white
-            //                }
-            //            }
         }
     }
     
@@ -129,6 +98,11 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             }
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 120
+    }
+    
     
     @objc
     func notiSelected() {
@@ -199,13 +173,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     func initViews() {
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
-        //        // nav noti button
-        //        let notiIcon = UIImage(named: "notification")
-        //        let notiIconButton = UIBarButtonItem(title: "Edit", style: .done, target: self, action: #selector(notiSelected))
-        //        notiIconButton.image = notiIcon
-        //        notiIconButton.tintColor = .white
-        //        self.navigationItem.rightBarButtonItem = notiIconButton
-        
         let msgButton = UIBarButtonItem(title: nil, style: .done, target: self, action: #selector(openDmView))
         let msgIcon = UIImage(named: "envelope")
         msgButton.image = msgIcon
@@ -225,23 +192,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         userBio.textColor = UISettings.shared.colorScheme.textSecondary
         userBio.textAlignment = .left
         userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
-        
-        homeLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        homeLabel.textAlignment = .left
-        homeLabel.font = UIFont(name: "Avenir", size: 20)
-        homeLabel.text = "Currently in San Luis Obispo, Ca"
-        
-        carabinerLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        carabinerLabel.textAlignment = .left
-        carabinerLabel.font = UIFont(name: "Avenir", size: 20)
-        
-        beerLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        beerLabel.textAlignment = .left
-        beerLabel.font = UIFont(name: "Avenir", size: 20)
-        
-        whipLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        whipLabel.textAlignment = .left
-        whipLabel.font = UIFont(name: "Avenir", size: 20)
+        userBio.numberOfLines = 0
+        userBio.lineBreakMode = .byWordWrapping
+        userBio.layer.masksToBounds = true
         
         // type buttons
         sportButton = TypeButton()
@@ -269,22 +222,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         profPic.clipsToBounds = true
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
-        
-        home = TypeButton()
-        home.setBackgroundImage(homeImage, for: .normal)
-        home.tintColor = UISettings.shared.colorScheme.textSecondary
-        
-        carabiner = TypeButton()
-        carabiner.setBackgroundImage(carabinerImage, for: .normal)
-        carabiner.tintColor = UISettings.shared.colorScheme.textSecondary
-        
-        beer = TypeButton()
-        beer.setBackgroundImage(beerImage, for: .normal)
-        beer.tintColor = UISettings.shared.colorScheme.textSecondary
-        
-        whippers = TypeButton()
-        whippers.setBackgroundImage(whipImage, for: .normal)
-        whippers.tintColor = UISettings.shared.colorScheme.textSecondary
         
         tradGrade.font = UIFont(name: "Avenir", size: 16)
         tradGrade.textColor = UISettings.shared.colorScheme.textSecondary
@@ -319,14 +256,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(trGrade)
         view.addSubview(tradGrade)
         view.addSubview(sportGrade)
-        view.addSubview(home)
-        view.addSubview(carabiner)
-        view.addSubview(beer)
-        view.addSubview(whippers)
-        view.addSubview(homeLabel)
-        view.addSubview(carabinerLabel)
-        view.addSubview(beerLabel)
-        view.addSubview(whipLabel)
         view.addSubview(editButton)
         view.addSubview(boulderGrade)
         view.addSubview(boulderButton)
@@ -345,33 +274,33 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 3, constant: 0).isActive = true
         
         userBio.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: userBio, attribute: .centerX, relatedBy: .equal, toItem: userNameLabel, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: userBio, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: userBio, attribute: .leading, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: userBio, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
         NSLayoutConstraint(item: userBio, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: userBio, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
         
         trGrade.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: trGrade, attribute: .centerX, relatedBy: .equal, toItem: trButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: trGrade, attribute: .top, relatedBy: .equal, toItem: trButton, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: trGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: trGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         tradGrade.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: tradGrade, attribute: .centerX, relatedBy: .equal, toItem: tradButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: tradGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: tradGrade, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: tradGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: tradGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         sportGrade.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sportGrade, attribute: .centerX, relatedBy: .equal, toItem: sportButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: sportGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: sportGrade, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: sportGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
         
         trButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: trButton, attribute: .trailing, relatedBy: .equal, toItem: sportButton, attribute: .leading, multiplier: 1, constant: -8).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .leading, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trButton, attribute: .bottom, relatedBy: .equal, toItem: trGrade, attribute: .top, multiplier: 1, constant: -5).isActive = true
+        NSLayoutConstraint(item: trButton, attribute: .top, relatedBy: .equal, toItem: userBio, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
         
@@ -398,55 +327,77 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         
         boulderGrade.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: boulderGrade, attribute: .centerX, relatedBy: .equal, toItem: boulderButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: boulderGrade, attribute: .bottom, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: boulderGrade, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: boulderGrade, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
         NSLayoutConstraint(item: boulderGrade, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 18).isActive = true
-        
-        home.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: home, attribute: .leading, relatedBy: .equal, toItem: profPic, attribute: .leading, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: home,  attribute: .top, relatedBy: .equal, toItem: profPic, attribute: .bottom, multiplier: 1, constant: 80).isActive = true
-        NSLayoutConstraint(item: home, attribute: .width, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 1, constant: 1).isActive = true
-        NSLayoutConstraint(item: home, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .height, multiplier: 1, constant: 1).isActive = true
-        
-        carabiner.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: carabiner, attribute: .leading, relatedBy: .equal, toItem: home, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: carabiner,  attribute: .top, relatedBy: .equal, toItem: home, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: carabiner, attribute: .width, relatedBy: .equal, toItem: home, attribute: .width, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: carabiner, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        
-        beer.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: beer, attribute: .leading, relatedBy: .equal, toItem: home, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: beer,  attribute: .top, relatedBy: .equal, toItem: carabiner, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: beer, attribute: .width, relatedBy: .equal, toItem: home, attribute: .width, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: beer, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        
-        whippers.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: whippers, attribute: .leading, relatedBy: .equal, toItem: beer, attribute: .leading, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: whippers,  attribute: .top, relatedBy: .equal, toItem: beer, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: whippers, attribute: .width, relatedBy: .equal, toItem: home, attribute: .width, multiplier: 1.5, constant: 0).isActive = true
-        NSLayoutConstraint(item: whippers, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.5, constant: 0).isActive = true
-        
-        homeLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: homeLabel, attribute: .leading, relatedBy: .equal, toItem: home, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: homeLabel,  attribute: .bottom, relatedBy: .equal, toItem: home, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
-        
-        carabinerLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: carabinerLabel, attribute: .leading, relatedBy: .equal, toItem: carabiner, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: carabinerLabel,  attribute: .bottom, relatedBy: .equal, toItem: carabiner, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
-        
-        beerLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: beerLabel, attribute: .leading, relatedBy: .equal, toItem: beer, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: beerLabel,  attribute: .bottom, relatedBy: .equal, toItem: beer, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
-        
-        whipLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: whipLabel, attribute: .leading, relatedBy: .equal, toItem: whippers, attribute: .trailing, multiplier: 1, constant: -5).isActive = true
-        NSLayoutConstraint(item: whipLabel,  attribute: .bottom, relatedBy: .equal, toItem: whippers, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
         
         editButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: editButton, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: editButton, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: editButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
-        NSLayoutConstraint(item: editButton, attribute: .height, relatedBy: .equal, toItem: home, attribute: .height, multiplier: 1.0, constant: 0).isActive = true
+        NSLayoutConstraint(item: editButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
+    }
+    
+}
+
+class InfoCell: UITableViewCell {
+    
+    var usernameLabel = UILabel()
+    let container = UIView()
+    var indent = CGFloat(100)
+    var profPic: TypeButton!
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        //        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup() {
+        self.backgroundColor = UIColor(named: "BluePrimary")
+        
+        
+        usernameLabel.textColor = .white
+        usernameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
+        
+        
+        container.backgroundColor = UIColor(named: "BluePrimaryDark")
+        container.layer.masksToBounds = true
+        container.layer.cornerRadius = 8
+        
+        profPic = TypeButton()
+        profPic.addBorder(width: 1)
+        profPic.layer.cornerRadius = 8
+        profPic.clipsToBounds = true
+        profPic.contentMode = .scaleAspectFit
+        
+        addSubview(container)
+        addSubview(usernameLabel)
+        addSubview(profPic)
+        
+        profPic.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: profPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: profPic, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 3 / 5, constant: 0).isActive = true
+        
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
+        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
+        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9/10).isActive = true
+        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 5/6).isActive = true
+        
+        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
+        usernameLabel.leftAnchor.constraint(equalTo: profPic.rightAnchor, constant: 25).isActive = true
+        usernameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+        usernameLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
+        usernameLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
     }
     
 }
