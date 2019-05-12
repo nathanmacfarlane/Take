@@ -108,6 +108,7 @@ class EditProfileVC: UIViewController {
     @objc
     func updateProf() {
         
+        guard let user = self.user else { return }
         guard let trG = numGradeDict[self.trStepper.value] else { return }
         guard let sportG = numGradeDict[self.sportStepper.value] else { return }
         guard let tradG = numGradeDict[self.tradStepper.value] else { return }
@@ -127,6 +128,13 @@ class EditProfileVC: UIViewController {
         self.user?.tradLetter = tradLet
         
         Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in updating profile", completion: nil)
+//        let userViewModel = UserViewModel(user: user)
+//        userViewModel.getProfilePhoto { image in
+//            DispatchQueue.main.async {
+//                self.profPic.setBackgroundImage(image, for: .normal)
+//            }
+//        }
+        self.backToProf()
     }
     
     @objc

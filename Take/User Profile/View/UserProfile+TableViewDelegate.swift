@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 
 extension UserProfileVC: UITableViewDelegate {
+    // Nate had this for
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let routeListVC = RouteListVC()

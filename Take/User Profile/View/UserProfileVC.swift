@@ -23,7 +23,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     let trGrade = UILabel()
     let sportGrade = UILabel()
     let boulderGrade = UILabel()
-    var infoTableView: UITableView!
     
     var tradLetter = ""
     var trLetter = ""
@@ -98,11 +97,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             }
         }
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 120
-    }
-    
     
     @objc
     func notiSelected() {

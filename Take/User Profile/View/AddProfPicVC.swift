@@ -9,6 +9,8 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
     var commentFieldBg: UILabel!
     var collectionView: UICollectionView!
     var keyboardConstraint: NSLayoutConstraint?
+    var imgWidth = 100
+    var imgHeight = 150
     
     var selected = Set<Int>()
     
@@ -66,10 +68,9 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 17)
         saveButton.addTarget(self, action: #selector(hitSave), for: .touchUpInside)
         
-        let blueprintLayout = HorizontalBlueprintLayout(
-            itemsPerRow: view.frame.width / 75,
-            itemsPerColumn: 1,
-            itemSize: CGSize(width: 75, height: 75),
+        let blueprintLayout = VerticalBlueprintLayout(
+            itemsPerRow: 4,
+            itemSize: CGSize(width: imgWidth, height: imgHeight),
             minimumInteritemSpacing: 10,
             minimumLineSpacing: 10,
             sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
@@ -99,9 +100,10 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: collectionView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 75).isActive = true
-        keyboardConstraint = NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -240)
-        keyboardConstraint?.isActive = true
+        NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: collectionView, attribute: .top, relatedBy: .equal, toItem: saveButton, attribute: .bottom, multiplier: 1, constant: 50).isActive = true
+//        keyboardConstraint = NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -240)
+//        keyboardConstraint?.isActive = true
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -116,7 +118,7 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 75, height: 75)
+        return CGSize(width: imgWidth, height: imgHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
