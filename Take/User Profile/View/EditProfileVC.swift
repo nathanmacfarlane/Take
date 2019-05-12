@@ -167,7 +167,7 @@ class EditProfileVC: UIViewController {
     }
     
     @objc
-    func findIndex(target : String, arr : Array<String>) -> Int {
+    func findIndex(target: String, arr: Array<String>) -> Int {
         var currentIndex = 0
         for i in arr {
             if i == target {
@@ -180,7 +180,7 @@ class EditProfileVC: UIViewController {
     
     @objc
     func hitAddPhotos() {
-        guard let userId = Auth.auth().currentUser?.uid else { return }
+        // guard let userId = Auth.auth().currentUser?.uid else { return }
         guard let user = self.user else { return }
         let addpic = AddProfPicVC()
         addpic.user = user
@@ -191,7 +191,7 @@ class EditProfileVC: UIViewController {
     
     func initViews() {
         
-        guard let user = self.user else { return}
+        guard let user = self.user else { return }
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton

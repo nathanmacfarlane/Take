@@ -159,9 +159,9 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
             image.saveProfPicToFb(user: user) { url in
                 u.profilePhotoUrl = url?.absoluteString
                 FirestoreService.shared.fs.save(object: u, to: "users", with: user.id, completion: nil)
+                self.user?.profilePhotoUrl = u.profilePhotoUrl
             }
         }
-        
         dismiss(animated: true, completion: nil)
     }
     

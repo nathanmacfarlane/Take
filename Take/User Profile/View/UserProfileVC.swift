@@ -45,11 +45,15 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         if let currentUser = Auth.auth().currentUser {
             getToDoLists(user: currentUser)
         }
+        guard let user = self.user else { return }
+        let userViewModel = UserViewModel(user: user)
+        userViewModel.getProfilePhoto { image in
+            DispatchQueue.main.async {
+                self.profPic.setBackgroundImage(image, for: .normal)
+            }
+        }
     }
     
-    func getLetters() {
-        
-    }
     func getToDoLists(user: Firebase.User) {
         let db = Firestore.firestore()
         db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
