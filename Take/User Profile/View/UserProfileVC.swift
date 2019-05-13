@@ -23,10 +23,15 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     let trGrade = UILabel()
     let sportGrade = UILabel()
     let boulderGrade = UILabel()
+    let locLabel = UILabel()
+    var infoTableView: UITableView!
+    var info = [String]()
     
     var tradLetter = ""
     var trLetter = ""
     var sportLetter = ""
+    var city = ""
+    var state = ""
     
     //let boulderGrade = UILabel()
     //let aidGrade = UILabel()
@@ -71,6 +76,15 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
                     self.profPic.setBackgroundImage(image, for: .normal)
                 }
             }
+            self.info = user.info
+            LocationService.shared.location?.cityAndState { city, state, error in
+                guard let c = city else { print("CITY NOT FOUND "); return }
+                guard let s = state else { return }
+                
+                self.info.insert("\(c), \(s)", at: 0)
+                self.infoTableView.reloadData()
+            }
+            
         }
     }
     
@@ -168,6 +182,25 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         present(nav, animated: true, completion: nil)
     }
     
+    var seg: UISegmentedControl = {
+        let sc = UISegmentedControl(items: ["Info", "PlanADay"])
+        let font = UIFont(name: "Avenir-Heavy", size: 18)
+        sc.setTitleTextAttributes([NSAttributedString.Key.font: font], for: .normal)
+        sc.tintColor = UISettings.shared.colorScheme.textSecondary
+        sc.selectedSegmentIndex = 0
+        sc.addTarget(self, action: #selector(handleSegmentChanges), for: .valueChanged)
+        return sc
+    }()
+    
+    @objc
+    func handleSegmentChanges() {
+        if seg.selectedSegmentIndex == 0 {
+        }
+        else if seg.selectedSegmentIndex == 1 {
+            
+        }
+    }
+    
     func initViews() {
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
@@ -183,6 +216,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         pmButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = pmButton
         
+        self.infoTableView = UITableView()
+        infoTableView.register(InfoCell.self, forCellReuseIdentifier: "InfoCell")
+        infoTableView.dataSource = self
+        infoTableView.delegate = self
+        infoTableView.separatorStyle = .none
+        infoTableView.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
+        
         userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         userNameLabel.textAlignment = .left
         userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
@@ -194,6 +234,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         userBio.lineBreakMode = .byWordWrapping
         userBio.layer.masksToBounds = true
         
+        locLabel.textColor = .white
+        locLabel.textAlignment = .center
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
@@ -257,7 +299,21 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(editButton)
         view.addSubview(boulderGrade)
         view.addSubview(boulderButton)
+//        view.addSubview(locLabel)
+        view.addSubview(infoTableView)
+        view.addSubview(seg)
         
+        seg.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: seg, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .top, relatedBy: .equal, toItem: editButton, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -30).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
+        
+        infoTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: userNameLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: -20).isActive = true
@@ -340,10 +396,10 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
 class InfoCell: UITableViewCell {
     
-    var usernameLabel = UILabel()
+    var infoLabel = UILabel()
     let container = UIView()
     var indent = CGFloat(100)
-    var profPic: TypeButton!
+    var infoPic = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -360,42 +416,40 @@ class InfoCell: UITableViewCell {
     func setup() {
         self.backgroundColor = UIColor(named: "BluePrimary")
         
+        infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
+        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 14)
+        infoLabel.textAlignment = .left
         
-        usernameLabel.textColor = .white
-        usernameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
         
-        
-        container.backgroundColor = UIColor(named: "BluePrimaryDark")
+        container.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 8
         
-        profPic = TypeButton()
-        profPic.addBorder(width: 1)
-        profPic.layer.cornerRadius = 8
-        profPic.clipsToBounds = true
-        profPic.contentMode = .scaleAspectFit
+        infoPic.contentMode = .scaleAspectFill
         
         addSubview(container)
-        addSubview(usernameLabel)
-        addSubview(profPic)
-        
-        profPic.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: profPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 15).isActive = true
-        NSLayoutConstraint(item: profPic, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: profPic, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 3 / 5, constant: 0).isActive = true
+        addSubview(infoLabel)
+        addSubview(infoPic)
         
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9/10).isActive = true
-        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 5/6).isActive = true
+        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -8).isActive = true
+        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 4/5, constant: 0).isActive = true
         
-        usernameLabel.translatesAutoresizingMaskIntoConstraints = false
-        usernameLabel.leftAnchor.constraint(equalTo: profPic.rightAnchor, constant: 25).isActive = true
-        usernameLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
-        usernameLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
-        usernameLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
+        
+        infoPic.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .width, relatedBy: .equal, toItem: container, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        
+        
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.leadingAnchor.constraint(equalTo: infoPic.trailingAnchor, constant: 10).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
+        infoLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
     }
     
 }

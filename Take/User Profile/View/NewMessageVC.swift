@@ -120,7 +120,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
     }
     
     func initViews() {
-        view.backgroundColor = UIColor(named: "BluePrimary")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         
         self.navigationItem.title = "New DM"
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
