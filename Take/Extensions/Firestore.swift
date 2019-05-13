@@ -43,7 +43,6 @@ extension Firestore {
                 completion(result)
             }
         }
-
     }
 
     /// Generic firebase save function for classes that conform to Encodable

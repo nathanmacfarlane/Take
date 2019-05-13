@@ -18,6 +18,10 @@ enum IntorString: Decodable {
         throw PitchesValue.missingValue
     }
 
+    init() {
+        self = .int(-1)
+    }
+
     enum PitchesValue: Error {
         case missingValue
     }
@@ -39,6 +43,10 @@ struct MPRoute: Decodable {
     var takeRating: (Int?, Int?) {
         guard let rating = rating else { return (nil, nil) }
         return MPService.shared.stringToRating(rating: rating)
+    }
+
+    var loc: CLLocation {
+        return CLLocation(latitude: latitude, longitude: longitude)
     }
 
     enum CodingKeys: String, CodingKey {

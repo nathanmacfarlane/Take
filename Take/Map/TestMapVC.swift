@@ -3,7 +3,6 @@ import FontAwesome_swift
 import Foundation
 import Geofirestore
 import GoogleMaps
-import MapKit
 import Presentr
 import UIKit
 
@@ -63,10 +62,11 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
     }
 
     func hitPreviewCheckItOut(allRoutes: [String], suggestedRoutes: [MPRoute]) {
-        let planTripVC = PlanTripVC()
+        let planTripVC = PlanTripVC2()
         planTripVC.allRoutes = allRoutes
         planTripVC.suggestedRoutes = suggestedRoutes
-        present(planTripVC, animated: true, completion: nil)
+        planTripVC.userClimbs = (10, 1)
+        navigationController?.pushViewController(planTripVC, animated: true)
     }
 
     @objc
@@ -264,6 +264,6 @@ extension GMSMapView {
     }
 }
 
-protocol PlanRouteDelegate {
+protocol PlanRouteDelegate: class {
     func hitPreviewCheckItOut(allRoutes: [String], suggestedRoutes: [MPRoute])
 }

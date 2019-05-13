@@ -25,6 +25,9 @@ private_outlet:
 type_body_length: 400
 
 disabled_rules:
+- sorted_first_last
+- lower_acl_than_parent
+- nesting
 - weak_delegate
 - identifier_name
 - force_try
