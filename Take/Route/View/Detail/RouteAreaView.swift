@@ -24,9 +24,7 @@ class RouteAreaView: UIView {
         titleButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         titleButton.addTarget(self, action: #selector(hitTitleButton), for: .touchUpInside)
 
-        cityStateLabel = UILabel()
-        cityStateLabel.textColor = UISettings.shared.colorScheme.backgroundLighter
-        cityStateLabel.font = UIFont(name: "Avenir-Black", size: 15)
+        cityStateLabel = LabelAvenir(size: 15, color: UISettings.shared.colorScheme.backgroundLighter)
 
         viewMapButton = UIButton()
         viewMapButton.backgroundColor = UIColor(hex: "#D9D9D9")

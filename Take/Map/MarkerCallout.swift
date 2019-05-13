@@ -46,14 +46,11 @@ class MarkerCallout: UIView {
         layer.cornerRadius = 10
         clipsToBounds = true
 
-        titleLabel = UILabel()
-        titleLabel.font = UIFont(name: "Avenir-Medium", size: 20)
+        titleLabel = LabelAvenir(size: 20, type: .Medium)
 
-        ratingLabel = UILabel()
-        ratingLabel.font = UIFont(name: "Avenir-Medium", size: 16)
+        ratingLabel = LabelAvenir(size: 16, type: .Medium)
 
-        typesLabel = UILabel()
-        typesLabel.font = UIFont(name: "Avenir-Medium", size: 16)
+        typesLabel = LabelAvenir(size: 16, type: .Medium)
 
         indicator = NVActivityIndicatorView(frame: frame, type: .ballBeat, color: UISettings.shared.colorScheme.accent, padding: 0)
         startLoading()

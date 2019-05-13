@@ -37,13 +37,9 @@ class MapAreaView: UIViewController {
     }
 
     func initViews() {
-        areaLabel = UILabel()
-        areaLabel.textColor = #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1)
-        areaLabel.font = UIFont(name: "Avenir-Black", size: 36)
+        areaLabel = LabelAvenir(size: 36, type: .Black, color: #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1))
 
-        routesLabel = UILabel()
-        routesLabel.textColor = #colorLiteral(red: 0.6784313725, green: 0.6784313725, blue: 0.6784313725, alpha: 1)
-        routesLabel.font = UIFont(name: "Avenir-Black", size: 23)
+        routesLabel = LabelAvenir(size: 23, type: .Black, color: #colorLiteral(red: 0.6784313725, green: 0.6784313725, blue: 0.6784313725, alpha: 1))
         routesLabel.text = "Loading Routes..."
 
         let tap = UITapGestureRecognizer(target: self, action: #selector(tappedAreaButton))

@@ -83,33 +83,19 @@ class RouteVCC: CardCell {
         layer.cornerRadius = 15
         clipsToBounds = true
 
-        routeName1 = UILabel()
-        routeName1.font = UIFont(name: "Avenir-Black", size: 25)
-
-        routeRating1 = UILabel()
-        routeRating1.font = UIFont(name: "Avenir-Next", size: 17)
-
+        routeName1 = LabelAvenir(size: 25, type: .Black, color: .black)
+        routeRating1 = LabelAvenir(size: 17, color: .black)
         routeStars1 = getCosmos()
 
-        routeName2 = UILabel()
-        routeName2.font = UIFont(name: "Avenir-Black", size: 25)
-
-        routeRating2 = UILabel()
-        routeRating2.font = UIFont(name: "Avenir-Next", size: 17)
-
+        routeName2 = LabelAvenir(size: 25, type: .Black, color: .black)
+        routeRating2 = LabelAvenir(size: 17, color: .black)
         routeStars2 = getCosmos()
 
-        routeName3 = UILabel()
-        routeName3.font = UIFont(name: "Avenir-Black", size: 25)
-
-        routeRating3 = UILabel()
-        routeRating3.font = UIFont(name: "Avenir-Next", size: 17)
-
+        routeName3 = LabelAvenir(size: 25, type: .Black, color: .black)
+        routeRating3 = LabelAvenir(size: 17, color: .black)
         routeStars3 = getCosmos()
 
-        distanceLabel = UILabel()
-        distanceLabel.font = UIFont(name: "Avenir-Black", size: 25)
-        distanceLabel.textAlignment = .right
+        distanceLabel = LabelAvenir(size: 25, type: .Black, color: .black, alignment: .right)
 
         mapView = GMSMapView()
         mapView.isMyLocationEnabled = true

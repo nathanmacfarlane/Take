@@ -57,11 +57,8 @@ class LoginVC: UIViewController {
         bgImageView.clipsToBounds = true
 
         // email label
-        let myEmailLabel = UILabel()
+        let myEmailLabel = LabelAvenir(size: 20, type: .Heavy, color: UIColor(named: "Placeholder"), alignment: .left)
         myEmailLabel.text = "email"
-        myEmailLabel.textAlignment = .left
-        myEmailLabel.textColor = UIColor(named: "Placeholder")
-        myEmailLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
         // email field
         let myEmailTF = UITextField()
@@ -74,11 +71,8 @@ class LoginVC: UIViewController {
         myEmailTF.becomeFirstResponder()
 
         // password label
-        let myPassLabel = UILabel()
+        let myPassLabel = LabelAvenir(size: 20, type: .Heavy, color: UIColor(named: "Placeholder"), alignment: .left)
         myPassLabel.text = "password"
-        myPassLabel.textAlignment = .left
-        myPassLabel.textColor = UIColor(named: "Placeholder")
-        myPassLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
         // password field
         let myPassTF = UITextField()

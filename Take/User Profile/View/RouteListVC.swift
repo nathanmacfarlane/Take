@@ -139,11 +139,8 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         inviteView.clipsToBounds = true
         view.addSubview(inviteView)
 
-        let inviteLabel = UILabel()
+        let inviteLabel = LabelAvenir(size: 20, type: .Black, color: .gray, alignment: .center)
         inviteLabel.text = "You've been invited by ..."
-        inviteLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        inviteLabel.textColor = .gray
-        inviteLabel.textAlignment = .center
 
         if let noti = self.notification {
             FirestoreService.shared.fs.query(collection: "users", by: "id", with: noti.fromUser, of: User.self) { user in
@@ -214,10 +211,8 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
             initInviteView()
         }
 
-        let contributorsLabel = UILabel()
+        let contributorsLabel = LabelAvenir(size: 20, type: .Black, color: .gray)
         contributorsLabel.text = "Contributors"
-        contributorsLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        contributorsLabel.textColor = .gray
 
         // contributors list
 //        let horizontalLayout = HorizontalBlueprintLayout(
@@ -235,20 +230,14 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
 
-        let descriptionLabel = UILabel()
+        let descriptionLabel = LabelAvenir(size: 20, type: .Black, color: .gray)
         descriptionLabel.text = "Description"
-        descriptionLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        descriptionLabel.textColor = .gray
 
-        descriptionValueLabel = UILabel()
+        descriptionValueLabel = LabelAvenir(size: 15, color: .white)
         descriptionValueLabel.numberOfLines = 0
-        descriptionValueLabel.font = UIFont(name: "Avenir", size: 15)
-        descriptionValueLabel.textColor = .white
 
-        let routesLabel = UILabel()
+        let routesLabel = LabelAvenir(size: 20, type: .Black, color: .gray)
         routesLabel.text = "Routes"
-        routesLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        routesLabel.textColor = .gray
 
         // todo lists
         tableView = UITableView()

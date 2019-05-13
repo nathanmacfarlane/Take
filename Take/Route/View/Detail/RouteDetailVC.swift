@@ -82,25 +82,16 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         // rating header
-        let ratingLabel = UILabel()
+        let ratingLabel = LabelAvenir(size: 14, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         ratingLabel.text = "RATING"
-        ratingLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        ratingLabel.textAlignment = .center
-        ratingLabel.font = UIFont(name: "Avenir", size: 14)
 
         // rating value
-        ratingValue = UILabel()
+        ratingValue = LabelAvenir(size: 24, alignment: .center)
         ratingValue.text = routeViewModel.rating
-        ratingValue.textColor = UISettings.shared.colorScheme.textPrimary
-        ratingValue.textAlignment = .center
-        ratingValue.font = UIFont(name: "Avenir", size: 24)
 
         // stars header
-        let starsLabel = UILabel()
+        let starsLabel = LabelAvenir(size: 14, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         starsLabel.text = "STARS"
-        starsLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        starsLabel.textAlignment = .center
-        starsLabel.font = UIFont(name: "Avenir", size: 14)
 
         cosmos = CosmosView()
         cosmos.rating = routeViewModel.averageStar ?? 0.0
@@ -120,18 +111,12 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         cosmos.addGestureRecognizer(starTap)
 
         // pitches header
-        let pitchesLabel = UILabel()
+        let pitchesLabel = LabelAvenir(size: 14, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         pitchesLabel.text = "PITCHES"
-        pitchesLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        pitchesLabel.textAlignment = .center
-        pitchesLabel.font = UIFont(name: "Avenir", size: 14)
 
         // pitches value
-        pitchesValue = UILabel()
+        pitchesValue = LabelAvenir(size: 24, color: UISettings.shared.colorScheme.textPrimary, alignment: .center)
         pitchesValue.text = routeViewModel.pitchesString
-        pitchesValue.textColor = UISettings.shared.colorScheme.textPrimary
-        pitchesValue.textAlignment = .center
-        pitchesValue.font = UIFont(name: "Avenir", size: 24)
 
         var typesLabels: [RouteTypeLabel] = []
         for type in routeViewModel.types {

@@ -118,10 +118,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         nameField.placeholder = "Name"
         nameField.text = route?.name
 
-        let difficultyLabel = UILabel()
+        let difficultyLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         difficultyLabel.text = "Difficulty"
-        difficultyLabel.textColor = .gray
-        difficultyLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         difficultyStepper = GMStepper()
         difficultyStepper.minimumValue = 0
@@ -148,10 +146,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         }
 //        bufferSeg.delegate = self
 
-        let pitchesLabel = UILabel()
+        let pitchesLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         pitchesLabel.text = "Pitches"
-        pitchesLabel.textColor = .gray
-        pitchesLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         pitchesStepper = GMStepper()
         pitchesStepper.minimumValue = 1
@@ -163,10 +159,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         pitchesStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
         pitchesStepper.labelBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
 
-        let typesLabel = UILabel()
+        let typesLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         typesLabel.text = "Types"
-        typesLabel.textColor = .gray
-        typesLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         typesField = WSTagsField()
         typesField.layer.cornerRadius = 20
@@ -212,10 +206,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
             }
         }
 
-        let cragLabel = UILabel()
+        let cragLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         cragLabel.text = "Crag"
-        cragLabel.textColor = .gray
-        cragLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         cragBg = UIView()
         cragBg.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#15171A") : UIColor(hex: "#C9C9C9")
@@ -225,21 +217,15 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         let tapMapRegion = UITapGestureRecognizer(target: self, action: #selector(tappedMapRegion))
         cragBg.addGestureRecognizer(tapMapRegion)
 
-        cragNameLabel = UILabel()
+        cragNameLabel = LabelAvenir(size: 20, type: .Heavy)
         cragNameLabel.text = ""
-        cragNameLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        cragNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
-        locationNameLabel = UILabel()
+        locationNameLabel = LabelAvenir(size: 15, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary)
         locationNameLabel.text = "Tap to Search"
-        locationNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        locationNameLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
         locationNameLabel.numberOfLines = 0
 
-        latLongLabel = UILabel()
+        latLongLabel = LabelAvenir(size: 9, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary)
         latLongLabel.text = ""
-        latLongLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        latLongLabel.font = UIFont(name: "Avenir-Heavy", size: 9)
 
         if let route = self.route, let areaId = route.area {
             FirestoreService.shared.fs.query(collection: "areas", by: "id", with: areaId, of: Area.self, and: 1) { area in

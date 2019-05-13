@@ -7,9 +7,7 @@ class PlanDetailRouteTVC: RouteTVC {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
 
-        numLabel = UILabel()
-        numLabel.textColor = nameLabel.textColor
-        numLabel.font = UIFont(name: "Avenir-Black", size: 35)
+        numLabel = LabelAvenir(size: 35, type: .Black, color: nameLabel.textColor)
 
         addSubview(numLabel)
 

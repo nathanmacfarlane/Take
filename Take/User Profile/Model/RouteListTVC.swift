@@ -20,18 +20,9 @@ class RouteListTVC: UITableViewCell {
         ownerPhoto.addBorder(color: .white, width: 1)
         ownerPhoto.clipsToBounds = true
 
-        nameLabel = UILabel()
-        nameLabel.textColor = .white
-        nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
-
-        difficultyLabel = UILabel()
-        difficultyLabel.textColor = .white
-        difficultyLabel.textAlignment = .right
-        difficultyLabel.font = UIFont(name: "Avenir", size: 17)
-
-        typesLabel = UILabel()
-        typesLabel.textColor = .white
-        typesLabel.font = UIFont(name: "Avenir", size: 17)
+        nameLabel = LabelAvenir(size: 20, type: .Black, color: .white)
+        difficultyLabel = LabelAvenir(size: 17, color: .white, alignment: .right)
+        typesLabel = LabelAvenir(size: 17, color: .white)
 
         self.addSubview(ownerPhoto)
         self.addSubview(nameLabel)
@@ -69,7 +60,5 @@ class RouteListTVC: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         ownerPhoto.layer.cornerRadius = ownerPhoto.frame.width / 2
-//        let margins = UIEdgeInsets(top: 2, left: 0, bottom: 2, right: 0)
-//        self.frame = frame.inset(by: margins)
     }
 }

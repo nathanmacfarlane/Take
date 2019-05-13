@@ -166,6 +166,7 @@
 		229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */; };
 		22A121982229F98400CA002B /* ARDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A121972229F98400CA002B /* ARDiagram.swift */; };
 		22A1EA042288DD4A00EA1758 /* DayPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1EA032288DD4A00EA1758 /* DayPlan.swift */; };
+		22A1EA062288FE1100EA1758 /* LabelAvenir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1EA052288FE1100EA1758 /* LabelAvenir.swift */; };
 		22B711BE227E5846002203E0 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711BD227E5846002203E0 /* Array.swift */; };
 		22B711C0227E7170002203E0 /* RouteVCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711BF227E7170002203E0 /* RouteVCC.swift */; };
 		22B711C2227E751C002203E0 /* PlanTripEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711C1227E751C002203E0 /* PlanTripEditVC.swift */; };
@@ -431,6 +432,7 @@
 		229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListPresenterVC.swift; sourceTree = "<group>"; };
 		22A121972229F98400CA002B /* ARDiagram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDiagram.swift; sourceTree = "<group>"; };
 		22A1EA032288DD4A00EA1758 /* DayPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPlan.swift; sourceTree = "<group>"; };
+		22A1EA052288FE1100EA1758 /* LabelAvenir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAvenir.swift; sourceTree = "<group>"; };
 		22B711BD227E5846002203E0 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		22B711BF227E7170002203E0 /* RouteVCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVCC.swift; sourceTree = "<group>"; };
 		22B711C1227E751C002203E0 /* PlanTripEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTripEditVC.swift; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 			isa = PBXGroup;
 			children = (
 				044061FD209D8A9D005C06C3 /* TypeButton.swift */,
+				22A1EA052288FE1100EA1758 /* LabelAvenir.swift */,
 			);
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
@@ -1500,6 +1503,7 @@
 				221B17ED2256E15100A92BDF /* GMUSimpleClusterAlgorithm.m in Sources */,
 				2249F0B421CA27DA0032D58C /* RouteList+TableViewDataSource.swift in Sources */,
 				22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */,
+				22A1EA062288FE1100EA1758 /* LabelAvenir.swift in Sources */,
 				22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */,
 				7184498722090C380029C023 /* DM.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,

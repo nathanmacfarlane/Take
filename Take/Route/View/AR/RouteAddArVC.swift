@@ -38,11 +38,8 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
         saveButton.addTarget(self, action: #selector(goSave), for: .touchUpInside)
         saveButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
 
-        rockLabel = UILabel()
+        rockLabel = LabelAvenir(size: 40, type: .Black, color: .black, alignment: .center)
         rockLabel.text = "ROCK"
-        rockLabel.textAlignment = .center
-        rockLabel.font = UIFont(name: "Avenir-Black", size: 40)
-        rockLabel.textColor = .black
 
         centerArButton = ArButton()
         centerArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
@@ -53,9 +50,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
         rightArButton = ArButton()
         rightArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
 
-        let promptLabel = UILabel()
-        promptLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        promptLabel.font = UIFont(name: "Avenir-Book", size: 18)
+        let promptLabel = LabelAvenir(size: 18, type: .Book, color: UISettings.shared.colorScheme.textSecondary)
         promptLabel.numberOfLines = 0
         let str = "If possible, please upload 3 photos from different positions around the rock (roughly 10 feet apart). This improves the accuracy for future climbers."
         if let font = UIFont(name: "Avenir-Book", size: 18), let start = str.index(of: "(") {

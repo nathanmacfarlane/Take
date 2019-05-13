@@ -66,27 +66,13 @@ class PlanTripPreviewVC: UIViewController {
     func initViews() {
         view.backgroundColor = .white
 
-        cityLabel = UILabel()
-        cityLabel.font = UIFont(name: "Avenir-Black", size: 25)
-        cityLabel.textColor = .black
-        cityLabel.textAlignment = .center
-
-        stateLabel = UILabel()
-        stateLabel.font = UIFont(name: "Avenir-Black", size: 18)
-        stateLabel.textColor = .gray
-        stateLabel.textAlignment = .center
-
-        totalCountLabel = UILabel()
-        totalCountLabel.font = UIFont(name: "Avenir-Black", size: 35)
-        totalCountLabel.textColor = .white
-        totalCountLabel.textAlignment = .center
+        cityLabel = LabelAvenir(size: 25, type: .Black, color: .black, alignment: .center)
+        stateLabel = LabelAvenir(size: 18, type: .Black, color: .gray, alignment: .center)
+        totalCountLabel = LabelAvenir(size: 35, type: .Black, color: .white, alignment: .center)
         totalCountLabel.backgroundColor = Dark().backgroundLighter
 
-        let totalLabel = UILabel()
+        let totalLabel = LabelAvenir(size: 20, type: .Black, color: Dark().backgroundLighter, alignment: .center)
         totalLabel.text = "Routes"
-        totalLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        totalLabel.textAlignment = .center
-        totalLabel.textColor = Dark().backgroundLighter
 
         forYouCountLabel = UILabel()
         forYouCountLabel.font = UIFont(name: "Avenir-Black", size: 35)
@@ -94,11 +80,8 @@ class PlanTripPreviewVC: UIViewController {
         forYouCountLabel.textAlignment = .center
         forYouCountLabel.backgroundColor = Dark().backgroundDarker
 
-        let forYouLabel = UILabel()
+        let forYouLabel = LabelAvenir(size: 20, type: .Black, color: Dark().backgroundDarker, alignment: .center)
         forYouLabel.text = "For You"
-        forYouLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        forYouLabel.textAlignment = .center
-        forYouLabel.textColor = Dark().backgroundDarker
 
         let checkItOutText = "View Plans \(String.fontAwesomeIcon(name: .chevronRight))"
 
@@ -107,8 +90,6 @@ class PlanTripPreviewVC: UIViewController {
         checkItOutButton.setTitle(checkItOutText, for: .normal)
         checkItOutButton.backgroundColor = UISettings.shared.colorScheme.accent
         checkItOutButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
-//        checkItOutButton.setTitleTextAttributes(attributes, for: .normal)
-//        checkItOutButton.setTitleTextAttributes(attributes, for: UIControl.State.selected)
         checkItOutButton.setTitleColor(.white, for: .normal)
 
         loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .ballScaleMultiple, color: .white, padding: 20)

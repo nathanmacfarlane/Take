@@ -32,15 +32,10 @@ class MapRoutePreview: MapPreviewView, UICollectionViewDelegate, UICollectionVie
     }
 
     func initRouteViews() {
-        difficultyLabel = UILabel()
-        difficultyLabel.textAlignment = .center
-        difficultyLabel.textColor = #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1)
-        difficultyLabel.font = UIFont(name: "Avenir-Black", size: 17)
+        difficultyLabel = LabelAvenir(size: 17, type: .Black, color: #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1), alignment: .center)
         difficultyLabel.backgroundColor = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9019607843, alpha: 1)
 
-        typeLabel = UILabel()
-        typeLabel.textColor = #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1)
-        typeLabel.font = UIFont(name: "Avenir-Black", size: 17)
+        typeLabel = LabelAvenir(size: 17, type: .Black, color: #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1))
 
         cosmos = CosmosView()
         cosmos.settings.starSize = 25
@@ -55,9 +50,7 @@ class MapRoutePreview: MapPreviewView, UICollectionViewDelegate, UICollectionVie
         cosmos.settings.emptyImage = UISettings.shared.mode == .dark ? UIImage(named: "icon_star") : UIImage(named: "icon_star_selected")
         cosmos.settings.fillMode = .precise
 
-        pitchesLabel = UILabel()
-        pitchesLabel.textColor = #colorLiteral(red: 0.6235294118, green: 0.6235294118, blue: 0.6235294118, alpha: 1)
-        pitchesLabel.font = UIFont(name: "Avenir-Black", size: 17)
+        pitchesLabel = LabelAvenir(size: 17, type: .Black, color: #colorLiteral(red: 0.6235294118, green: 0.6235294118, blue: 0.6235294118, alpha: 1))
 
 //        let blueprintLayout = HorizontalBlueprintLayout(
 //            itemsPerRow: 2,
