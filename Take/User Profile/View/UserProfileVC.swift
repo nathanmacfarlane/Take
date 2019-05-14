@@ -195,9 +195,10 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     @objc
     func handleSegmentChanges() {
         if seg.selectedSegmentIndex == 0 {
+            infoTableView.isHidden = false
         }
         else if seg.selectedSegmentIndex == 1 {
-            
+            infoTableView.isHidden = true
         }
     }
     
@@ -221,7 +222,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         infoTableView.dataSource = self
         infoTableView.delegate = self
         infoTableView.separatorStyle = .none
-        infoTableView.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
+        infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
+        infoTableView.isHidden = false
         
         userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         userNameLabel.textAlignment = .left
