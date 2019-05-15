@@ -1,4 +1,4 @@
-import Blueprints
+//import Blueprints
 import Photos
 import UIKit
 
@@ -68,24 +68,24 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 17)
         saveButton.addTarget(self, action: #selector(hitSave), for: .touchUpInside)
         
-        let blueprintLayout = VerticalBlueprintLayout(
-            itemsPerRow: 4,
-            itemSize: CGSize(width: imgWidth, height: imgHeight),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
-            stickyHeaders: true,
-            stickyFooters: true
-        )
-        
-        blueprintLayout.scrollDirection = .horizontal
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+//        let blueprintLayout = VerticalBlueprintLayout(
+//            itemsPerRow: 4,
+//            itemSize: CGSize(width: imgWidth, height: imgHeight),
+//            minimumInteritemSpacing: 10,
+//            minimumLineSpacing: 10,
+//            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
+//            stickyHeaders: true,
+//            stickyFooters: true
+//        )
+//
+//        blueprintLayout.scrollDirection = .horizontal
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.showsVerticalScrollIndicator = false
-        collectionView.showsHorizontalScrollIndicator = false
+        collectionView.showsHorizontalScrollIndicator = false 
         
         view.addSubview(saveButton)
         view.addSubview(collectionView)

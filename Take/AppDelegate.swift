@@ -3,6 +3,8 @@ import Firebase
 import FirebaseFirestore
 import FirebaseInstanceID
 import FirebaseMessaging
+import GoogleMaps
+import GooglePlaces
 import IQKeyboardManagerSwift
 import UIKit
 import UserNotifications
@@ -32,6 +34,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         // init so that other view controllers can access the location singleton
         _ = LocationService.shared
 
+        GMSServices.provideAPIKey("AIzaSyABwatGpHYZOMUgTQ469NFHg6CLSWDL2HQ")
+        GMSPlacesClient.provideAPIKey("AIzaSyABwatGpHYZOMUgTQ469NFHg6CLSWDL2HQ")
+
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = false
         FirestoreService.shared.fs.settings = settings
@@ -55,8 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     @objc
     func willResignActive() {
-//        print("app entering background... clearing cache")
-//        print("removed \(ImageCache.shared.cache.keys.count) images from cache")
+        print("app entering background... clearing cache")
         ImageCache.shared.clearCache()
     }
 

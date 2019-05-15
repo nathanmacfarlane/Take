@@ -1,5 +1,5 @@
 import ARKit
-import Blueprints
+//import Blueprints
 import SceneKit
 import UIKit
 
@@ -113,19 +113,20 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         backButton.setTitleColor(.black, for: .normal)
         backButton.addTarget(self, action: #selector(hitBack), for: .touchUpInside)
 
-        let blueprintLayout = HorizontalBlueprintLayout(
-            itemsPerRow: view.frame.width / 75,
-            itemsPerColumn: 1,
-            itemSize: CGSize(width: 75, height: 75),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
-            stickyHeaders: true,
-            stickyFooters: true
-        )
+//        let blueprintLayout = HorizontalBlueprintLayout(
+//            itemsPerRow: view.frame.width / 75,
+//            itemsPerColumn: 1,
+//            itemSize: CGSize(width: 75, height: 75),
+//            minimumInteritemSpacing: 10,
+//            minimumLineSpacing: 10,
+//            sectionInset: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
+//            stickyHeaders: true,
+//            stickyFooters: true
+//        )
 
-        blueprintLayout.scrollDirection = .horizontal
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+//        blueprintLayout.scrollDirection = .horizontal
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+        collectionView = UICollectionView()
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self

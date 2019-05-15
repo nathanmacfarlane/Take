@@ -166,6 +166,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         mapBG = UIView()
         mapBG.backgroundColor = UIColor(hex: "#2C416A")
         mapVC = MapVC()
+        mapVC.showSwitch = false
 
         loadingButton = UIButton()
         loadingButton.setTitle("Loading Routes", for: .normal)

@@ -183,8 +183,6 @@ class PartnerMatchVC: UIViewController {
         sendButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         sendButton.addTarget(self, action: #selector(openMatchResults), for: UIControl.Event.touchUpInside)
         
-        
-        
         trStepper = GMStepper()
         trStepper.minimumValue = 0
         trStepper.maximumValue = 15

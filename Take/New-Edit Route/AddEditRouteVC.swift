@@ -2,11 +2,11 @@ import FirebaseFirestore
 import GMStepper
 import MapKit
 import Presentr
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import UIKit
 import WSTagsField
 
-class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseLocationDelegate, MKMapViewDelegate {
+class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegate {
 
     var route: Route?
     var difficultyStepper: GMStepper!
@@ -96,17 +96,19 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
     }
 
     func initViews() {
-        view.backgroundColor = UIColor(named: "BluePrimaryDark")
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
         let closeButton = UIButton()
         closeButton.setTitle("Close", for: .normal)
         closeButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 24)
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
+        closeButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
 
         let saveButton = UIButton()
         saveButton.setTitle("Save", for: .normal)
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 24)
         saveButton.addTarget(self, action: #selector(saveRoute), for: .touchUpInside)
+        saveButton  .setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
 
         nameField = UITextField()
         nameField.backgroundColor = .white
@@ -127,23 +129,24 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
         difficultyStepper.stepValue = 1.0
         difficultyStepper.items = Array(0...15).map { "5.\($0)" }
         difficultyStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
-        difficultyStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
+        difficultyStepper.labelBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
         if let rating = route?.rating {
             difficultyStepper.value = Double(rating)
         }
 
-        let bufferSeg = TwicketSegmentedControl()
-        bufferSeg.setSegmentItems(["", "a", "b", "c", "d"])
-        bufferSeg.isSliderShadowHidden = true
-        bufferSeg.sliderBackgroundColor = UIColor(hex: "#888888")
-        bufferSeg.segmentsBackgroundColor = UIColor(hex: "#4B4D50")
-        bufferSeg.backgroundColor = .clear
-        bufferSeg.defaultTextColor = .white
-        bufferSeg.highlightTextColor = .white
+        let bufferSeg = UISegmentedControl(items: ["", "a", "b", "c", "d"])
+//        bufferSeg.setSegmentItems(["", "a", "b", "c", "d"])
+//        bufferSeg.isSliderShadowHidden = true
+//        bufferSeg.sliderBackgroundColor = UIColor(hex: "#888888")
+//        bufferSeg.segmentsBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
+//        bufferSeg.backgroundColor = .clear
+//        bufferSeg.defaultTextColor = .white
+//        bufferSeg.highlightTextColor = .white
         if let buffer = route?.buffer {
-            bufferSeg.move(to: buffer + 1)
+//            bufferSeg.move(to: buffer + 1)
+            bufferSeg.selectedSegmentIndex = buffer + 1
         }
-        bufferSeg.delegate = self
+//        bufferSeg.delegate = self
 
         let pitchesLabel = UILabel()
         pitchesLabel.text = "Pitches"
@@ -158,7 +161,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
             pitchesStepper.value = Double(route.pitches)
         }
         pitchesStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
-        pitchesStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
+        pitchesStepper.labelBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
 
         let typesLabel = UILabel()
         typesLabel.text = "Types"
@@ -174,14 +177,14 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
         typesField.spaceBetweenTags = 10.0
         typesField.numberOfLines = 1
         typesField.font = UIFont(name: "Avenir", size: 18)
-        typesField.backgroundColor = UIColor(hex: "#4B4D50")
-        typesField.tintColor = UIColor(hex: "#15171A")
+        typesField.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
+        typesField.tintColor = UISettings.shared.mode == .dark ? UIColor(hex: "#15171A") : UIColor(hex: "#888888")
         typesField.textColor = UIColor(hex: "#E5E5E5")
-        typesField.fieldTextColor = UIColor(hex: "#E5E5E5")
+        typesField.fieldTextColor = UISettings.shared.mode == .dark ? UIColor(hex: "#E5E5E5") : UIColor(hex: "#15171A")
         typesField.selectedColor = .black
         typesField.selectedTextColor = UIColor(named: "PinkAccent")
         typesField.isDelimiterVisible = false
-        typesField.placeholderColor = .white
+        typesField.placeholderColor = UISettings.shared.mode == .dark ? UIColor(hex: "#15171A") : UIColor(hex: "#888888")
         typesField.placeholderAlwaysVisible = true
         typesField.returnKeyType = .next
         typesField.acceptTagOption = .space
@@ -215,7 +218,7 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
         cragLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         cragBg = UIView()
-        cragBg.backgroundColor = UIColor(hex: "#15171A")
+        cragBg.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#15171A") : UIColor(hex: "#C9C9C9")
         cragBg.clipsToBounds = true
         cragBg.isUserInteractionEnabled = true
 
@@ -224,18 +227,18 @@ class AddEditRouteVC: UIViewController, TwicketSegmentedControlDelegate, ChooseL
 
         cragNameLabel = UILabel()
         cragNameLabel.text = ""
-        cragNameLabel.textColor = .white
+        cragNameLabel.textColor = UISettings.shared.colorScheme.textPrimary
         cragNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
         locationNameLabel = UILabel()
         locationNameLabel.text = "Tap to Search"
-        locationNameLabel.textColor = UIColor(hex: "#B9ABAB")
+        locationNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
         locationNameLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
         locationNameLabel.numberOfLines = 0
 
         latLongLabel = UILabel()
         latLongLabel.text = ""
-        latLongLabel.textColor = UIColor(hex: "#B9ABAB")
+        latLongLabel.textColor = UISettings.shared.colorScheme.textSecondary
         latLongLabel.font = UIFont(name: "Avenir-Heavy", size: 9)
 
         if let route = self.route, let areaId = route.area {

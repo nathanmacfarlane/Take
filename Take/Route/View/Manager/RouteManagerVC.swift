@@ -15,9 +15,6 @@ class RouteManagerVC: TabmanViewController, AddImagesDelegate {
     var edit: UIBarButtonItem {
         return UIBarButtonItem(image: UIImage(named: "icon_edit"), style: .plain, target: self, action: #selector(goEditRoute))
     }
-//    var ar: UIBarButtonItem {
-//        return UIBarButtonItem(image: UIImage(named: "icon_ar"), style: .plain, target: self, action: #selector(hitArButton))
-//    }
 
     var photos: RoutePhotosVC!
     var detail: RouteDetailVC!
