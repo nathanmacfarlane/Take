@@ -1,4 +1,3 @@
-import Blueprints
 import FirebaseFirestore
 import FirebaseAuth
 import Foundation
@@ -221,13 +220,14 @@ class RouteListVC: UIViewController, UICollectionViewDelegate, UICollectionViewD
         contributorsLabel.textColor = .gray
 
         // contributors list
-        let horizontalLayout = HorizontalBlueprintLayout(
-            itemsPerRow: view.frame.width / 100.0,
-            itemSize: CGSize(width: 80, height: 80),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: horizontalLayout)
+//        let horizontalLayout = HorizontalBlueprintLayout(
+//            itemsPerRow: view.frame.width / 100.0,
+//            itemSize: CGSize(width: 80, height: 80),
+//            minimumInteritemSpacing: 10,
+//            minimumLineSpacing: 10,
+//            sectionInset: EdgeInsets(top: 10, left: 10, bottom: 10, right: 10))
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: horizontalLayout)
+        collectionView = UICollectionView()
         collectionView.register(RouteListUserCVC.self, forCellWithReuseIdentifier: "RouteListUserCVC")
         collectionView.delegate = self
         collectionView.dataSource = self

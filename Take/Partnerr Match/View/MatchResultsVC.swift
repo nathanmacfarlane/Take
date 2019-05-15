@@ -15,6 +15,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     var dm: DM?
     var flag = false
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Results"
@@ -25,7 +26,8 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     
     func getMatches() {
         let db = Firestore.firestore()
-        let ref = db.collection("users") 
+        let ref = db.collection("users")
+        guard let mc = self.matchCrit else { return }
         guard let user = self.user else { return }
         let query = ref.whereField("age", isGreaterThan: self.matchCrit?.ageLow).whereField("age", isLessThan: self.matchCrit?.ageHigh)
         query.getDocuments { snapshot, err in
@@ -35,12 +37,21 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
                 print("Document data was empty.")
                 return
             }
+            print(mc)
             for d in data {
                 let decoder = FirebaseDecoder()
                 guard let result = try? decoder.decode(User.self, from: d.data() as Any) else { return }
                 if result.id != user.id {
-                    self.climbers.append(result)
-                    self.dmTableView.reloadData()
+                    if (result.trGrade >= mc.trGradeL) && (result.trGrade <= mc.trGradeH) {
+                        if (result.sportGrade >= mc.sportGradeL) && (result.sportGrade <= mc.sportGradeH) {
+                            if (result.tradGrade >= mc.tradGradeL) && (result.tradGrade <= mc.tradGradeH) {
+                                if (result.boulderGrade >= mc.boulderGradeL) && (result.boulderGrade <= mc.boulderGradeH) {
+                                    self.climbers.append(result)
+                                    self.dmTableView.reloadData()
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

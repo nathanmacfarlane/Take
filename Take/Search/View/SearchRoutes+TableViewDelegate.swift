@@ -38,6 +38,12 @@ extension SearchRoutesVC: UITableViewDelegate {
             routeManager.routeViewModel = RouteViewModel(route: theRoute)
             navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
             self.navigationController?.pushViewController(routeManager, animated: true)
+        case is Area:
+            guard let theArea = anyItem as? Area else { return }
+            let areaManager = AreaManagerVC()
+            areaManager.areaViewModel = AreaViewModel(area: theArea)
+            navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+            self.navigationController?.pushViewController(areaManager, animated: true)
         default:
             print("not accounted for")
         }

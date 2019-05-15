@@ -59,4 +59,38 @@ class Route: Codable, Hashable {
         self.arDiagrams = []
         self.stars = [:]
     }
+
+    init(mpRoute: MPRoute) {
+        self.name = mpRoute.name
+        self.id = "\(mpRoute.id)"
+        if case .int(let pitches) = mpRoute.pitches {
+            self.pitches = pitches
+        } else {
+            self.pitches = 1
+        }
+        self.types = (mpRoute.type ?? "").split(separator: ",").map(String.init)
+        self.comments = []
+        self.imageUrls = [:]
+        self.arDiagrams = []
+        self.stars = [:]
+        self.latitude = mpRoute.latitude
+        self.longitude = mpRoute.longitude
+
+        (self.rating, self.buffer) = mpRoute.takeRating
+
+//        if let rating = mpRoute.rating {
+//
+//            if self.types.contains("Boulder") {
+//                let splitUp = rating.split(separator: "V")
+//                if splitUp.count > 1 {
+//                    self.buffer = Int("\(splitUp[1])")
+//                }
+//            } else {
+//                let splitUp = rating.split(separator: ".")
+//                if splitUp.count > 1 {
+//                    self.rating = Int("\(splitUp[1])")
+//                }
+//            }
+//        }
+    }
 }

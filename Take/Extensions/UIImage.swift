@@ -36,6 +36,21 @@ extension UIImage {
 
         }
     }
+    
+    func saveProfPicToFb(user: User, completion: @escaping (_ url: URL?) -> Void) {
+        guard let data = self.jpegData(compressionQuality: 0.1) else { return }
+        let imageRef = Storage.storage().reference().child("users/\(user.id)")
+        let imageId = UUID().uuidString
+        _ = imageRef.child(imageId).putData(data, metadata: nil) { metadata, _ in
+            guard metadata != nil else {
+                return
+            }
+            imageRef.child(imageId).downloadURL { url, _ in
+                completion(url)
+            }
+            
+        }
+    }
 
     func imageWithInsets(insetDimen: CGFloat) -> UIImage? {
         return imageWithInset(insets: UIEdgeInsets(top: insetDimen, left: insetDimen, bottom: insetDimen, right: insetDimen))

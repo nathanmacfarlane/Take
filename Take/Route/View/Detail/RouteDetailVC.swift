@@ -2,13 +2,13 @@ import Cosmos
 import FirebaseAuth
 import FirebaseFirestore
 import Presentr
-import TwicketSegmentedControl
+//import TwicketSegmentedControl
 import UIKit
 
 class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
 
     var routeViewModel: RouteViewModel!
-    var infoLabel: UILabel!
+    var infoTextView: UITextView!
     var ratingValue: UILabel!
     var cosmos: CosmosView!
     var pitchesValue: UILabel!
@@ -33,7 +33,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         ratingValue.text = routeViewModel.rating
         cosmos.rating = routeViewModel.averageStar ?? 0.0
         pitchesValue.text = routeViewModel.pitchesString
-        infoLabel.text = routeViewModel.info
+        infoTextView.text = routeViewModel.info
 
     }
 
@@ -170,19 +170,20 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         }
 
         // segment control
-        let segControl = TwicketSegmentedControl()
-        segControl.setSegmentItems(["Description", "Protection"])
-        segControl.isSliderShadowHidden = true
-        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
-        segControl.backgroundColor = .clear
-        segControl.delegate = self
+        let segControl = UISegmentedControl(items: ["Description", "Protection"])
+//        segControl.setSegmentItems(["Description", "Protection"])
+//        segControl.isSliderShadowHidden = true
+//        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
+//        segControl.backgroundColor = .clear
+//        segControl.delegate = self
 
         // info label
-        infoLabel = UILabel()
-        infoLabel.text = routeViewModel.info
-        infoLabel.numberOfLines = 0
-        infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        infoLabel.font = UIFont(name: "Avenir-Oblique", size: 15)
+        infoTextView = UITextView()
+        infoTextView.text = routeViewModel.info
+        infoTextView.isEditable = false
+        infoTextView.backgroundColor = .clear
+        infoTextView.textColor = UISettings.shared.colorScheme.textPrimary
+        infoTextView.font = UIFont(name: "Avenir-Oblique", size: 15)
 
         // add to subview
         view.addSubview(ratingLabel)
@@ -192,7 +193,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         view.addSubview(pitchesLabel)
         view.addSubview(pitchesValue)
         view.addSubview(segControl)
-        view.addSubview(infoLabel)
+        view.addSubview(infoTextView)
 
         starsLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: starsLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -232,7 +233,7 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
 
         for (i, temp) in typesLabels.enumerated() {
             temp.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint(item: temp, attribute: .leading, relatedBy: .equal, toItem: i == 0 ? infoLabel : typesLabels[i - 1], attribute: i == 0 ? .leading : .trailing, multiplier: 1, constant: 10).isActive = true
+            NSLayoutConstraint(item: temp, attribute: .leading, relatedBy: .equal, toItem: i == 0 ? infoTextView : typesLabels[i - 1], attribute: i == 0 ? .leading : .trailing, multiplier: 1, constant: 10).isActive = true
             NSLayoutConstraint(item: temp, attribute: .top, relatedBy: .equal, toItem: ratingValue, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
             NSLayoutConstraint(item: temp, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         }
@@ -240,13 +241,14 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         segControl.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: segControl, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 40).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -40).isActive = true
-        NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: areaView ?? ratingValue, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
+        NSLayoutConstraint(item: segControl, attribute: .top, relatedBy: .equal, toItem: areaView ?? typesLabels.first ?? ratingValue, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: segControl, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
 
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: infoLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
-        NSLayoutConstraint(item: infoLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
-        NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        infoTextView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoTextView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: infoTextView, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: infoTextView, attribute: .top, relatedBy: .equal, toItem: segControl, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: infoTextView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -20).isActive = true
     }
 
 }

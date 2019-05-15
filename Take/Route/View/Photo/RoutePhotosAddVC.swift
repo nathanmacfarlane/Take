@@ -1,4 +1,3 @@
-import Blueprints
 import Photos
 import UIKit
 
@@ -77,19 +76,27 @@ class RoutePhotosAddVC: UIViewController, PHPhotoLibraryChangeObserver, UICollec
         commentFieldBg = UILabel()
         commentFieldBg.backgroundColor = commentField.backgroundColor
 
-        let blueprintLayout = HorizontalBlueprintLayout(
-            itemsPerRow: view.frame.width / 75,
-            itemsPerColumn: 1,
-            itemSize: CGSize(width: 75, height: 75),
-            minimumInteritemSpacing: 10,
-            minimumLineSpacing: 10,
-            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
-            stickyHeaders: true,
-            stickyFooters: true
-        )
+//        let blueprintLayout = HorizontalBlueprintLayout(
+//            itemsPerRow: view.frame.width / 75,
+//            itemsPerColumn: 1,
+//            itemSize: CGSize(width: 75, height: 75),
+//            minimumInteritemSpacing: 10,
+//            minimumLineSpacing: 10,
+//            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
+//            stickyHeaders: true,
+//            stickyFooters: true
+//        )
 
-        blueprintLayout.scrollDirection = .horizontal
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+//        blueprintLayout.scrollDirection = .horizontal
+//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        layout.scrollDirection = .horizontal
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
