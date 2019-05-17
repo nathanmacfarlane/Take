@@ -12,7 +12,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     let meters = 100.0
     var routeViewModels: [RouteViewModel] = []
-    var mapVC: MapVC!
+    var mapVC: TestMapVC!
     var mapBG: UIView!
 
     var totalCount = 0
@@ -37,7 +37,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         routesMap = [:]
         routeViewModels = []
         tableView.reloadData()
-        mapVC.mapView.removeAllAnnotations()
+        mapVC.mapView.removeMarkers()
 
         queryRoutes()
     }
@@ -79,12 +79,9 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         }
 
                         DispatchQueue.main.async {
-                            let anno = MKPointAnnotation()
-                            anno.coordinate = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-                            anno.title = rvm.name
-                            anno.subtitle = "\(rvm.rating) \(rvm.typesString)"
-                            self.mapVC.mapView.addAnnotation(anno)
-                            self.mapVC.mapView.showAnnotations(self.mapVC.mapView.annotations, animated: true)
+                            if let lat = route.latitude, let long = route.longitude {
+                                _ = self.mapVC.mapView.addMarker(lat: lat, long: long, title: rvm.name)
+                            }
                         }
 
                     }
@@ -165,8 +162,9 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func initViews() {
         mapBG = UIView()
         mapBG.backgroundColor = UIColor(hex: "#2C416A")
-        mapVC = MapVC()
-        mapVC.showSwitch = false
+        mapVC = TestMapVC()
+        mapVC.searchBarVisible = false
+        mapVC.showMarkers = false
 
         loadingButton = UIButton()
         loadingButton.setTitle("Loading Routes", for: .normal)

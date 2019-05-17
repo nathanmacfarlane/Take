@@ -78,6 +78,11 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
         self.customPresentViewController(presenter, viewController: addStarVC, animated: true)
     }
 
+    @objc
+    func infoSegChanged(_ seg: UISegmentedControl) {
+        infoTextView.text = seg.selectedSegmentIndex == 0 ? routeViewModel.info : routeViewModel.protection
+    }
+
     func initViews() {
         self.view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
@@ -156,11 +161,9 @@ class RouteDetailVC: UIViewController, RouteAreaViewDelegate, AddStarsDelegate {
 
         // segment control
         let segControl = UISegmentedControl(items: ["Description", "Protection"])
-//        segControl.setSegmentItems(["Description", "Protection"])
-//        segControl.isSliderShadowHidden = true
-//        segControl.sliderBackgroundColor = UISettings.shared.colorScheme.backgroundDarker
-//        segControl.backgroundColor = .clear
-//        segControl.delegate = self
+        segControl.tintColor = UISettings.shared.colorScheme.accent
+        segControl.selectedSegmentIndex = 0
+        segControl.addTarget(self, action: #selector(infoSegChanged), for: .valueChanged)
 
         // info label
         infoTextView = UITextView()

@@ -105,6 +105,7 @@
 		223E2942226EED4A00ABF419 /* CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223E2941226EED4A00ABF419 /* CLLocationCoordinate2D.swift */; };
 		223E317D2228E29800ABD6AE /* ARRefImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223E317C2228E29800ABD6AE /* ARRefImage.swift */; };
 		2242CDEE22835E180096BFE5 /* GMSMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2242CDED22835E180096BFE5 /* GMSMapView.swift */; };
+		22442949228F4B6D002CE069 /* TakeGoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */; };
 		2249F0A721C9E9CD0032D58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A621C9E9CD0032D58C /* User.swift */; };
 		2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A821C9F31D0032D58C /* RouteList.swift */; };
 		2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0AA21CA03F00032D58C /* RouteListTVC.swift */; };
@@ -371,6 +372,7 @@
 		223E2941226EED4A00ABF419 /* CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D.swift; sourceTree = "<group>"; };
 		223E317C2228E29800ABD6AE /* ARRefImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRefImage.swift; sourceTree = "<group>"; };
 		2242CDED22835E180096BFE5 /* GMSMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMSMapView.swift; sourceTree = "<group>"; };
+		22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeGoogleMapView.swift; sourceTree = "<group>"; };
 		2249F0A621C9E9CD0032D58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2249F0A821C9F31D0032D58C /* RouteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteList.swift; sourceTree = "<group>"; };
 		2249F0AA21CA03F00032D58C /* RouteListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListTVC.swift; sourceTree = "<group>"; };
@@ -644,6 +646,7 @@
 			children = (
 				044061FD209D8A9D005C06C3 /* TypeButton.swift */,
 				22A1EA052288FE1100EA1758 /* LabelAvenir.swift */,
+				22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */,
 			);
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
@@ -1540,6 +1543,7 @@
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				2211DF50224611C700FB169B /* MPToDoList.swift in Sources */,
 				22576B18222F07F100CB5C85 /* AreaTVC.swift in Sources */,
+				22442949228F4B6D002CE069 /* TakeGoogleMapView.swift in Sources */,
 				221B17FE2256E15100A92BDF /* GMUGeoJSONParser.m in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */,

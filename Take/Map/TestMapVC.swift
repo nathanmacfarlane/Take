@@ -21,12 +21,14 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
     // vars
     private var addedRouteItems: [RouteItem] = []
     private var selectedInfoWindow: MarkerCallout?
+    public var searchBarVisible = true
+    public var showMarkers = true
 
     // clustering
-    private var mapView: GMSMapView!
+    public var mapView: TakeGoogleMapView!
     private var clusterManager: GMUClusterManager!
 
-    private var searchBar: UISearchBar!
+    private var searchBar: UISearchBar?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,7 +52,7 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
 
         clusterManager.setDelegate(self, mapDelegate: self)
 
-        if let routesUrl = Bundle.main.url(forResource: "RoutesPersisted", withExtension: "plist"), let routes = NSDictionary(contentsOf: routesUrl) as? [String: AnyObject] {
+        if showMarkers, let routesUrl = Bundle.main.url(forResource: "RoutesPersisted", withExtension: "plist"), let routes = NSDictionary(contentsOf: routesUrl) as? [String: AnyObject] {
             for id in Array(routes.keys) {
                 guard let route = routes[id], let latitude = route["la"] as? Double, let longitude = route["lo"] as? Double else { continue }
                 let item = RouteItem(position: CLLocationCoordinate2D(latitude: latitude, longitude: longitude), routeKey: id)
@@ -142,7 +144,7 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
 
         if let user = LocationService.shared.location {
             let camera = GMSCameraPosition.camera(withTarget: user.coordinate, zoom: 15.0)
-            mapView = GMSMapView()
+            mapView = TakeGoogleMapView()
             mapView.camera = camera
             mapView.delegate = self
             mapView.isMyLocationEnabled = true
@@ -154,23 +156,25 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
             NSLayoutConstraint(item: mapView, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
             NSLayoutConstraint(item: mapView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         }
+        if searchBarVisible {
+            let sb = UISearchBar()
+            sb.delegate = self
+            sb.barStyle = .black
+            sb.barTintColor = UIColor.clear
+            sb.backgroundColor = UIColor.clear
+            sb.isTranslucent = true
+            sb.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
 
-        searchBar = UISearchBar()
-        searchBar.delegate = self
-        searchBar.barStyle = .black
-        searchBar.barTintColor = UIColor.clear
-        searchBar.backgroundColor = UIColor.clear
-        searchBar.isTranslucent = true
-        searchBar.setBackgroundImage(UIImage(), for: .any, barMetrics: .default)
+            view.addSubview(sb)
 
-        view.addSubview(searchBar)
+            sb.translatesAutoresizingMaskIntoConstraints = false
+            NSLayoutConstraint(item: sb, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: sb, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+            NSLayoutConstraint(item: sb, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
 
-        searchBar.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: searchBar, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: searchBar, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: searchBar, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 0).isActive = true
-
-        view.bringSubviewToFront(searchBar)
+            view.bringSubviewToFront(sb)
+            searchBar = sb
+        }
     }
 
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -182,15 +186,6 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
             self.mapView.animate(toZoom: 15)
         }
     }
-
-//    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-//        marker.zIndex = 2
-//        return false
-//    }
-//
-//    func mapView(_ mapView: GMSMapView, didCloseInfoWindowOf marker: GMSMarker) {
-//        marker.zIndex = 1
-//    }
 
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
         guard let infoWindow = selectedInfoWindow, let route = infoWindow.route else { return }
@@ -222,22 +217,7 @@ class TestMapVC: UIViewController, GMSMapViewDelegate, GMUClusterManagerDelegate
     }
 
     func mapView(_ mapView: GMSMapView, willMove gesture: Bool) {
-        searchBar.resignFirstResponder()
-    }
-
-    func mapView(_ mapView: GMSMapView, idleAt position: GMSCameraPosition) {
-//        let geoRoutes = FirestoreService.shared.fs.collection("route-geos")
-//        let geoFirestoreRoutes = GeoFirestore(collectionRef: geoRoutes)
-//        let circleQueryRoutes = geoFirestoreRoutes.query(inRegion: mapView.region)
-//        _ = circleQueryRoutes.observe(.documentEntered) { key, location in
-//            if !self.addedRoutes.contains("\(key as Any)"), let loc = location {
-//                self.addedRoutes.append("\(key as Any)")
-//                DispatchQueue.main.async {
-//                    let item = RouteItem(position: CLLocationCoordinate2D(latitude: loc.coordinate.latitude, longitude: loc.coordinate.longitude), routeKey: key)
-//                    self.clusterManager.add(item)
-//                }
-//            }
-//        }
+        searchBar?.resignFirstResponder()
     }
 }
 

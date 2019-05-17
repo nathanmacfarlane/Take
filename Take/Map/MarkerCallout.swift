@@ -86,6 +86,21 @@ class MarkerCallout: UIView {
     }
 
     func loadRoute(completion: @escaping (_ route: Route) -> Void) {
+        if let key = routeKey {
+            MPService.shared.getRoutes(ids: [key]) { routes in
+                guard let r = routes.first else { return }
+                let route = Route(mpRoute: r)
+                FirestoreService.shared.fs.query(collection: "routes", by: "name", with: route.name, of: Route.self) { routes in
+                    guard let fsr = routes.first else {
+                        self.route = route
+                        completion(route)
+                        return
+                    }
+                    self.route = fsr
+                    completion(fsr)
+                }
+            }
+        }
 //        if let key = routeKey {
 //            FirestoreService.shared.fs.query(collection: "routes", by: "id", with: key, of: Route.self) { routes in
 //                guard let route = routes.first else { return }
@@ -93,23 +108,23 @@ class MarkerCallout: UIView {
 //                completion(route)
 //            }
 //        }
-        if let key = routeKey {
-            if Int(key) != nil {
-                MPService.shared.getRoutes(ids: [key]) { routes in
-                    if let route = routes.first {
-                        let route = Route(mpRoute: route)
-                        self.route = route
-                        completion(route)
-                        return
-                    }
-                }
-            } else {
-                FirestoreService.shared.fs.query(collection: "routes", by: "id", with: key, of: Route.self) { routes in
-                    guard let route = routes.first else { return }
-                    self.route = route
-                    completion(route)
-                }
-            }
-        }
+//        if let key = routeKey {
+//            if Int(key) != nil {
+//                MPService.shared.getRoutes(ids: [key]) { routes in
+//                    if let route = routes.first {
+//                        let route = Route(mpRoute: route)
+//                        self.route = route
+//                        completion(route)
+//                        return
+//                    }
+//                }
+//            } else {
+//                FirestoreService.shared.fs.query(collection: "routes", by: "id", with: key, of: Route.self) { routes in
+//                    guard let route = routes.first else { return }
+//                    self.route = route
+//                    completion(route)
+//                }
+//            }
+//        }
     }
 }

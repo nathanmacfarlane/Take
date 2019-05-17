@@ -15,6 +15,14 @@ extension GMSMapView {
         return marker
     }
 
+    func addMarker(lat: Double, long: Double, title: String) -> GMSMarker {
+        let marker = GMSMarker()
+        marker.position = CLLocationCoordinate2D(latitude: lat, longitude: long)
+        marker.title = title
+        marker.map = self
+        return marker
+    }
+
     func drawPath(easy: MPRoute, medium: MPRoute, hard: MPRoute, completion: @escaping (_ plan: DayPlan) -> Void) {
 
         let l1 = easy.loc
