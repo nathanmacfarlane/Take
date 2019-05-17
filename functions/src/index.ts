@@ -22,11 +22,11 @@ exports.userNotification = functions.firestore.document('notifications/{id}').on
   return 0;
 });
 
-exports.newRoute = functions.firestore.document('routes/{id}').onCreate((snap, context) => {
-  const route = snap.data();
-  queryRoute(route);
-  return 0;
-});
+// exports.newRoute = functions.firestore.document('routes/{id}').onCreate((snap, context) => {
+//   const route = snap.data();
+//   queryRoute(route);
+//   return 0;
+// });
 
 function mergeRoutes(oldRoute, newRoute) {
   const r = oldRoute;
