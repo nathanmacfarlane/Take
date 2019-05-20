@@ -27,5 +27,7 @@ target 'Take' do
   pod 'GooglePlaces'
   pod 'NVActivityIndicatorView'
   pod 'FontAwesome.swift'
+  pod 'VerticalCardSwiper'
+  pod 'Alamofire', '~> 5.0.0-beta.5'
 
 end

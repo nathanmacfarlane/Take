@@ -58,9 +58,9 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         self.dismiss(animated: true, completion: nil)
     }
 
-    // twicket seg control
-    func didSelect(_ segmentIndex: Int) {
-        segmentIndex > 0 ? self.buffer = segmentIndex - 1 : nil
+    @objc
+    func segChanged(_ segControl: UISegmentedControl) {
+        self.buffer = segControl.selectedSegmentIndex > 0 ? segControl.selectedSegmentIndex - 1 : nil
     }
 
     func choseLocation(location: CLLocationCoordinate2D) {
@@ -108,7 +108,7 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         saveButton.setTitle("Save", for: .normal)
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 24)
         saveButton.addTarget(self, action: #selector(saveRoute), for: .touchUpInside)
-        saveButton  .setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
+        saveButton.setTitleColor(UISettings.shared.colorScheme.accent, for: .normal)
 
         nameField = UITextField()
         nameField.backgroundColor = .white
@@ -118,10 +118,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         nameField.placeholder = "Name"
         nameField.text = route?.name
 
-        let difficultyLabel = UILabel()
+        let difficultyLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         difficultyLabel.text = "Difficulty"
-        difficultyLabel.textColor = .gray
-        difficultyLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         difficultyStepper = GMStepper()
         difficultyStepper.minimumValue = 0
@@ -135,23 +133,14 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         }
 
         let bufferSeg = UISegmentedControl(items: ["", "a", "b", "c", "d"])
-//        bufferSeg.setSegmentItems(["", "a", "b", "c", "d"])
-//        bufferSeg.isSliderShadowHidden = true
-//        bufferSeg.sliderBackgroundColor = UIColor(hex: "#888888")
-//        bufferSeg.segmentsBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
-//        bufferSeg.backgroundColor = .clear
-//        bufferSeg.defaultTextColor = .white
-//        bufferSeg.highlightTextColor = .white
+        bufferSeg.tintColor = UISettings.shared.colorScheme.accent
+        bufferSeg.addTarget(self, action: #selector(segChanged), for: .valueChanged)
         if let buffer = route?.buffer {
-//            bufferSeg.move(to: buffer + 1)
             bufferSeg.selectedSegmentIndex = buffer + 1
         }
-//        bufferSeg.delegate = self
 
-        let pitchesLabel = UILabel()
+        let pitchesLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         pitchesLabel.text = "Pitches"
-        pitchesLabel.textColor = .gray
-        pitchesLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         pitchesStepper = GMStepper()
         pitchesStepper.minimumValue = 1
@@ -163,10 +152,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         pitchesStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
         pitchesStepper.labelBackgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#4B4D50") : UIColor(hex: "#C9C9C9")
 
-        let typesLabel = UILabel()
+        let typesLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         typesLabel.text = "Types"
-        typesLabel.textColor = .gray
-        typesLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         typesField = WSTagsField()
         typesField.layer.cornerRadius = 20
@@ -212,10 +199,8 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
             }
         }
 
-        let cragLabel = UILabel()
+        let cragLabel = LabelAvenir(size: 16, type: .Black, color: .gray)
         cragLabel.text = "Crag"
-        cragLabel.textColor = .gray
-        cragLabel.font = UIFont(name: "Avenir-Black", size: 16)
 
         cragBg = UIView()
         cragBg.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#15171A") : UIColor(hex: "#C9C9C9")
@@ -225,21 +210,15 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         let tapMapRegion = UITapGestureRecognizer(target: self, action: #selector(tappedMapRegion))
         cragBg.addGestureRecognizer(tapMapRegion)
 
-        cragNameLabel = UILabel()
+        cragNameLabel = LabelAvenir(size: 20, type: .Heavy)
         cragNameLabel.text = ""
-        cragNameLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        cragNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
 
-        locationNameLabel = UILabel()
+        locationNameLabel = LabelAvenir(size: 15, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary)
         locationNameLabel.text = "Tap to Search"
-        locationNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        locationNameLabel.font = UIFont(name: "Avenir-Heavy", size: 15)
         locationNameLabel.numberOfLines = 0
 
-        latLongLabel = UILabel()
+        latLongLabel = LabelAvenir(size: 9, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary)
         latLongLabel.text = ""
-        latLongLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        latLongLabel.font = UIFont(name: "Avenir-Heavy", size: 9)
 
         if let route = self.route, let areaId = route.area {
             FirestoreService.shared.fs.query(collection: "areas", by: "id", with: areaId, of: Area.self, and: 1) { area in
@@ -309,16 +288,16 @@ class AddEditRouteVC: UIViewController, ChooseLocationDelegate, MKMapViewDelegat
         NSLayoutConstraint(item: difficultyStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
 
         bufferSeg.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: bufferSeg, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 30).isActive = true
-        NSLayoutConstraint(item: bufferSeg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -30).isActive = true
-        NSLayoutConstraint(item: bufferSeg, attribute: .top, relatedBy: .equal, toItem: difficultyStepper, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: bufferSeg, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: bufferSeg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
+        NSLayoutConstraint(item: bufferSeg, attribute: .top, relatedBy: .equal, toItem: difficultyStepper, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: bufferSeg, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
 
         pitchesLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: pitchesLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: pitchesLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: pitchesLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: pitchesLabel, attribute: .top, relatedBy: .equal, toItem: bufferSeg, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: pitchesLabel, attribute: .top, relatedBy: .equal, toItem: bufferSeg, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
 
         pitchesStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: pitchesStepper, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true

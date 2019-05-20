@@ -83,7 +83,7 @@ class RouteViewModel {
 
     var types: [RouteType] {
         return route.types.map { type -> RouteType in
-            RouteType(rawValue: type) ?? .tr
+            RouteType(rawValue: type.trimmingCharacters(in: .whitespaces)) ?? .tr
         }
     }
 

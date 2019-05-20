@@ -15,18 +15,9 @@ class HypeTVC: UITableViewCell {
         bgView = UILabel()
         bgView.backgroundColor = UISettings.shared.mode == .dark ? UIColor(hex: "#17181A") : UIColor(hex: "#CCCED1")
 
-        nameLabel = UILabel()
-        nameLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        nameLabel.font = UIFont(name: "Avenir-Book", size: 18)
-
-        dateLabel = UILabel()
-        dateLabel.textAlignment = .right
-        dateLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        dateLabel.font = UIFont(name: "Avenir-Book", size: 18)
-
-        eventLabel = UILabel()
-        eventLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        eventLabel.font = UIFont(name: "Avenir-Book", size: 18)
+        nameLabel = LabelAvenir(size: 18, type: .Book)
+        dateLabel = LabelAvenir(size: 18, type: .Book, alignment: .right)
+        eventLabel = LabelAvenir(size: 18, type: .Book, color: UISettings.shared.colorScheme.textSecondary)
 
         self.addSubview(bgView)
         self.addSubview(nameLabel)

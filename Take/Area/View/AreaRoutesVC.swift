@@ -183,10 +183,8 @@ class TypesChart: UIView {
         NSLayoutConstraint(item: pieChartView, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: 0).isActive = true
 
         for (i, type) in uniqueTypes.enumerated() {
-            let typeLabel = UILabel()
-            typeLabel.font = UIFont(name: "Avenir-Black", size: 20)
+            let typeLabel = LabelAvenir(size: 20, type: .Black, color: UISettings.shared.colorScheme.textPrimary)
             typeLabel.text = type
-            typeLabel.textColor = UISettings.shared.colorScheme.textPrimary
 
             let colorCircle = UILabel()
             colorCircle.backgroundColor = colors[type]
@@ -339,9 +337,7 @@ class AreaChartTVC: UITableViewCell {
     }
 
     func initViews() {
-        nameLabel = UILabel()
-        nameLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        nameLabel.font = UIFont(name: "Avenir-Medium", size: 25)
+        nameLabel = LabelAvenir(size: 25, type: .Medium, color: UISettings.shared.colorScheme.textSecondary)
 
         difficultyChart = DifficultyChart()
         typesChart = TypesChart()

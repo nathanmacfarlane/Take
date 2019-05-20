@@ -111,20 +111,13 @@ class RouteArEditVC: UIViewController, PHPhotoLibraryChangeObserver, UICollectio
 
     func initViews() {
 
-//        let blueprintLayout = HorizontalBlueprintLayout(
-//            itemsPerRow: view.frame.width / 75,
-//            itemsPerColumn: 1,
-//            itemSize: CGSize(width: 75, height: 75),
-//            minimumInteritemSpacing: 10,
-//            minimumLineSpacing: 10,
-//            sectionInset: EdgeInsets(top: 0, left: 0, bottom: 0, right: 0),
-//            stickyHeaders: true,
-//            stickyFooters: true
-//        )
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        layout.scrollDirection = .horizontal
 
-//        blueprintLayout.scrollDirection = .horizontal
-//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
-        collectionView = UICollectionView()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self

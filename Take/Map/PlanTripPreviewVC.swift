@@ -1,3 +1,5 @@
+import FontAwesome_swift
+import NVActivityIndicatorView
 import UIKit
 
 class PlanTripPreviewVC: UIViewController {
@@ -13,6 +15,8 @@ class PlanTripPreviewVC: UIViewController {
     var stateLabel: UILabel!
     var totalCountLabel: UILabel!
     var forYouCountLabel: UILabel!
+    var loadingIndicator: NVActivityIndicatorView!
+    var checkItOutButton: UIButton!
     // delegate
     var delegate: PlanRouteDelegate?
 
@@ -28,13 +32,14 @@ class PlanTripPreviewVC: UIViewController {
             let avg = MPService.shared.stringToRating(rating: ticks.average)
             guard let avgGrade = avg.0 else { return }
 
-            MPService.shared.getRoutes(ids: self.routes) { mpRoutes in
+            MPService.shared.getRoutes(ids: self.routes.first(count: 200)) { mpRoutes in
                 self.suggestedRoutes = mpRoutes.filter {
                     let rating = MPService.shared.stringToRating(rating: ($0.rating ?? ""))
                     guard let grade = rating.0 else { return false }
                     return abs(avgGrade - grade) <= 1
                 }
                 DispatchQueue.main.async {
+                    self.loadingIndicator.stopAnimating()
                     self.forYouCountLabel.text = "\(self.suggestedRoutes.count)"
                 }
             }
@@ -61,27 +66,13 @@ class PlanTripPreviewVC: UIViewController {
     func initViews() {
         view.backgroundColor = .white
 
-        cityLabel = UILabel()
-        cityLabel.font = UIFont(name: "Avenir-Black", size: 25)
-        cityLabel.textColor = .black
-        cityLabel.textAlignment = .center
-
-        stateLabel = UILabel()
-        stateLabel.font = UIFont(name: "Avenir-Black", size: 18)
-        stateLabel.textColor = .gray
-        stateLabel.textAlignment = .center
-
-        totalCountLabel = UILabel()
-        totalCountLabel.font = UIFont(name: "Avenir-Black", size: 35)
-        totalCountLabel.textColor = .white
-        totalCountLabel.textAlignment = .center
+        cityLabel = LabelAvenir(size: 25, type: .Black, color: .black, alignment: .center)
+        stateLabel = LabelAvenir(size: 18, type: .Black, color: .gray, alignment: .center)
+        totalCountLabel = LabelAvenir(size: 35, type: .Black, color: .white, alignment: .center)
         totalCountLabel.backgroundColor = Dark().backgroundLighter
 
-        let totalLabel = UILabel()
+        let totalLabel = LabelAvenir(size: 20, type: .Black, color: Dark().backgroundLighter, alignment: .center)
         totalLabel.text = "Routes"
-        totalLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        totalLabel.textAlignment = .center
-        totalLabel.textColor = Dark().backgroundLighter
 
         forYouCountLabel = UILabel()
         forYouCountLabel.font = UIFont(name: "Avenir-Black", size: 35)
@@ -89,17 +80,20 @@ class PlanTripPreviewVC: UIViewController {
         forYouCountLabel.textAlignment = .center
         forYouCountLabel.backgroundColor = Dark().backgroundDarker
 
-        let forYouLabel = UILabel()
+        let forYouLabel = LabelAvenir(size: 20, type: .Black, color: Dark().backgroundDarker, alignment: .center)
         forYouLabel.text = "For You"
-        forYouLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        forYouLabel.textAlignment = .center
-        forYouLabel.textColor = Dark().backgroundDarker
 
-        let checkItOutButton = UIButton()
+        let checkItOutText = "View Plans \(String.fontAwesomeIcon(name: .chevronRight))"
+
+        checkItOutButton = UIButton()
         checkItOutButton.addTarget(self, action: #selector(hitCheckItOut), for: .touchUpInside)
-        checkItOutButton.setTitle("Check it Out", for: .normal)
-        checkItOutButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 30)
-        checkItOutButton.setTitleColor(.black, for: .normal)
+        checkItOutButton.setTitle(checkItOutText, for: .normal)
+        checkItOutButton.backgroundColor = UISettings.shared.colorScheme.accent
+        checkItOutButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
+        checkItOutButton.setTitleColor(.white, for: .normal)
+
+        loadingIndicator = NVActivityIndicatorView(frame: .zero, type: .ballScaleMultiple, color: .white, padding: 20)
+        loadingIndicator.startAnimating()
 
         view.addSubview(cityLabel)
         view.addSubview(stateLabel)
@@ -108,6 +102,7 @@ class PlanTripPreviewVC: UIViewController {
         view.addSubview(forYouCountLabel)
         view.addSubview(forYouLabel)
         view.addSubview(checkItOutButton)
+        view.addSubview(loadingIndicator)
 
         cityLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: cityLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
@@ -120,6 +115,12 @@ class PlanTripPreviewVC: UIViewController {
         NSLayoutConstraint(item: stateLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: stateLabel, attribute: .top, relatedBy: .equal, toItem: cityLabel, attribute: .bottom, multiplier: 1, constant: 5  ).isActive = true
         NSLayoutConstraint(item: stateLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
+
+        loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: loadingIndicator, attribute: .centerX, relatedBy: .equal, toItem: forYouCountLabel, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: loadingIndicator, attribute: .centerY, relatedBy: .equal, toItem: forYouCountLabel, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: loadingIndicator, attribute: .top, relatedBy: .equal, toItem: forYouCountLabel, attribute: .top, multiplier: 1, constant: 0  ).isActive = true
+        NSLayoutConstraint(item: loadingIndicator, attribute: .bottom, relatedBy: .equal, toItem: forYouCountLabel, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
         totalCountLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: totalCountLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1 / 3, constant: -10).isActive = true
@@ -149,7 +150,7 @@ class PlanTripPreviewVC: UIViewController {
         NSLayoutConstraint(item: checkItOutButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: checkItOutButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
         NSLayoutConstraint(item: checkItOutButton, attribute: .top, relatedBy: .equal, toItem: forYouLabel, attribute: .bottom, multiplier: 1, constant: 20  ).isActive = true
-        NSLayoutConstraint(item: checkItOutButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: checkItOutButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
     }
 
     override func viewDidLayoutSubviews() {
@@ -157,6 +158,8 @@ class PlanTripPreviewVC: UIViewController {
         forYouCountLabel.clipsToBounds = true
         totalCountLabel.layer.cornerRadius = totalCountLabel.frame.width / 2
         totalCountLabel.clipsToBounds = true
+        checkItOutButton.layer.cornerRadius = 10
+        checkItOutButton.clipsToBounds = true
     }
 
 }

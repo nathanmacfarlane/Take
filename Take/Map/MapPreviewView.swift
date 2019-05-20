@@ -27,9 +27,7 @@ class MapPreviewView: UIView {
         let drag = UIPanGestureRecognizer(target: self, action: #selector(drugLine))
         lineBg.addGestureRecognizer(drag)
 
-        nameLabel = UILabel()
-        nameLabel.textColor = #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1)
-        nameLabel.font = UIFont(name: "Avenir-Black", size: 25)
+        nameLabel = LabelAvenir(size: 25, type: .Black, color: #colorLiteral(red: 0.2470588235, green: 0.2470588235, blue: 0.2509803922, alpha: 1))
 
         addSubview(line)
         addSubview(lineBg)

@@ -62,20 +62,11 @@ class RouteNowVC: UIViewController {
 
         weatherIconImageView = UIImageView()
 
-        cityLabel = UILabel()
-        cityLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        cityLabel.font = UIFont(name: "Avenir-Black", size: 24)
-        cityLabel.textAlignment = .center
+        cityLabel = LabelAvenir(size: 24, type: .Black, alignment: .center)
+        stateLabel = LabelAvenir(size: 12, type: .Black, alignment: .center)
 
-        stateLabel = UILabel()
-        stateLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        stateLabel.font = UIFont(name: "Avenir-Black", size: 12)
-        stateLabel.textAlignment = .center
-
-        latAndLongLabel = UILabel()
-        latAndLongLabel.textColor = UISettings.shared.mode == .dark ? UIColor(hex: "#202226") : UIColor(hex: "#727479")
-        latAndLongLabel.font = UIFont(name: "Avenir-Black", size: 18)
-        latAndLongLabel.textAlignment = .center
+        let txtColor = UISettings.shared.mode == .dark ? UIColor(hex: "#202226") : UIColor(hex: "#727479")
+        latAndLongLabel = LabelAvenir(size: 18, type: .Black, color: txtColor, alignment: .center)
 
         let windIconImageView = UIImageView()
         windIconImageView.image = UIImage(named: "icon_wind\(UISettings.shared.mode == .dark ? "" : "_blue")")
@@ -86,35 +77,15 @@ class RouteNowVC: UIViewController {
         let sunsetIconImageView = UIImageView()
         sunsetIconImageView.image = UIImage(named: "icon_sunset\(UISettings.shared.mode == .dark ? "" : "_blue")")
 
-        windValueLabel = UILabel()
-        windValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
-        windValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
-        windValueLabel.textAlignment = .center
+        let txtValCol = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
+        windValueLabel = LabelAvenir(size: 42, type: .Black, color: txtValCol, alignment: .center)
+        tempValueLabel = LabelAvenir(size: 42, type: .Black, color: txtValCol, alignment: .center)
+        sunsetValueLabel = LabelAvenir(size: 42, type: .Black, color: txtValCol, alignment: .center)
 
-        tempValueLabel = UILabel()
-        tempValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
-        tempValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
-        tempValueLabel.textAlignment = .center
-
-        sunsetValueLabel = UILabel()
-        sunsetValueLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundPrimary : UIColor(hex: "#424446")
-        sunsetValueLabel.font = UIFont(name: "Avenir-Black", size: 42)
-        sunsetValueLabel.textAlignment = .center
-
-        windTypeLabel = UILabel()
-        windTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
-        windTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        windTypeLabel.textAlignment = .center
-
-        tempTypeLabel = UILabel()
-        tempTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
-        tempTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        tempTypeLabel.textAlignment = .center
-
-        sunsetTypeLabel = UILabel()
-        sunsetTypeLabel.textColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
-        sunsetTypeLabel.font = UIFont(name: "Avenir-Black", size: 20)
-        sunsetTypeLabel.textAlignment = .center
+        let txtTypeCol = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.textPrimary : UISettings.shared.colorScheme.accent
+        windTypeLabel = LabelAvenir(size: 20, type: .Black, color: txtTypeCol, alignment: .center)
+        tempTypeLabel = LabelAvenir(size: 20, type: .Black, color: txtTypeCol, alignment: .center)
+        sunsetTypeLabel = LabelAvenir(size: 20, type: .Black, color: txtTypeCol, alignment: .center)
 
         view.addSubview(weatherViewBG)
         view.addSubview(imageBg)

@@ -14,14 +14,8 @@ class ARLoadingTVC: UITableViewCell {
 
         self.backgroundColor = .clear
 
-        nameLabel = UILabel()
-        nameLabel.textColor = UIColor(hex: "#202226")
-        nameLabel.font = UIFont(name: "Avenir-Medium", size: 17)
-
-        numberDiagramsLabel = UILabel()
-        numberDiagramsLabel.textColor = UIColor(hex: "#202226")
-        numberDiagramsLabel.font = UIFont(name: "Avenir-Medium", size: 17)
-        numberDiagramsLabel.textAlignment = .right
+        nameLabel = LabelAvenir(size: 17, type: .Medium, color: #colorLiteral(red: 0.1254901961, green: 0.1333333333, blue: 0.1490196078, alpha: 1))
+        numberDiagramsLabel = LabelAvenir(size: 17, type: .Medium, color: #colorLiteral(red: 0.1254901961, green: 0.1333333333, blue: 0.1490196078, alpha: 1), alignment: .right)
 
         progressBar = UIProgressView(progressViewStyle: .bar)
         progressBar.setProgress(0.0, animated: true)

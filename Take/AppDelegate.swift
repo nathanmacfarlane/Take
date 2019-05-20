@@ -10,6 +10,7 @@ import UIKit
 import UserNotifications
 
 @UIApplicationMain
+
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate {
 
     var window: UIWindow?
@@ -43,6 +44,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         self.window = UIWindow(frame: UIScreen.main.bounds)
         let mainView = InitialVC()
+//        let mainView = PlanTripVC2()
+//
+//        let camel = MPRoute(id: 123, name: "Camel", type: "TR, Sport", rating: "5.10c", stars: 3.4, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 35.302186, longitude: -120.694003)
+//        let sixtySeconds = MPRoute(id: 456, name: "60 Seconds", type: "TR, Trad", rating: "5.9", stars: 2.4, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 35.302104, longitude: -120.693959)
+//
+//        let westernAirlines = MPRoute(id: 789, name: "Western Airlines", type: "TR, Sport", rating: "5.11a", stars: 3.1, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 12345.0, longitude: 12345.0)
+//        let civilizedEvil = MPRoute(id: 01233423, name: "Civilized Evil", type: "TR, Sport, Trad", rating: "5.11b", stars: 2.9, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 12345.0, longitude: 12345.0)
+//        let llama = MPRoute(id: 456, name: "Llama", type: "TR", rating: "5.10b-c", stars: 2.8, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 12345.0, longitude: 12345.0)
+//        let humps = MPRoute(id: 789, name: "Humps", type: "Sport", rating: "5.11c", stars: 3.4, starVotes: IntorString(), pitches: IntorString(), location: [], url: "", latitude: 12345.0, longitude: 12345.0)
+//
+//        mainView.suggestedRoutes = [camel, sixtySeconds, westernAirlines, civilizedEvil, llama, humps]
+//        mainView.userClimbs = (10, 1)
+
         self.window?.rootViewController = mainView
         self.window?.makeKeyAndVisible()
 

@@ -84,6 +84,7 @@
 		221B18032256E15100A92BDF /* GQTPointQuadTreeChild.m in Sources */ = {isa = PBXBuildFile; fileRef = 221B17E52256E15100A92BDF /* GQTPointQuadTreeChild.m */; };
 		221B18062257CB5E00A92BDF /* MarkerCallout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221B18052257CB5E00A92BDF /* MarkerCallout.swift */; };
 		221B18082257E7D400A92BDF /* RouteCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221B18072257E7D300A92BDF /* RouteCache.swift */; };
+		221D8FD5227CCD3D00C48F62 /* PlanTripDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D8FD4227CCD3D00C48F62 /* PlanTripDetailVC.swift */; };
 		22207DFE21CB4255004475AF /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22207DFD21CB4255004475AF /* Notification.swift */; };
 		22207E0021CB4A55004475AF /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22207DFF21CB4A55004475AF /* GoogleService-Info.plist */; };
 		2220E71020C8E32400F525EC /* MKMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2220E70F20C8E32400F525EC /* MKMapView.swift */; };
@@ -101,7 +102,10 @@
 		223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B538E21A92C06006E1824 /* RoutePhotosVC.swift */; };
 		223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223B539021A92EED006E1824 /* RouteNowVC.swift */; };
 		223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223BB23021A7E93600130070 /* RouteManagerVC.swift */; };
+		223E2942226EED4A00ABF419 /* CLLocationCoordinate2D.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223E2941226EED4A00ABF419 /* CLLocationCoordinate2D.swift */; };
 		223E317D2228E29800ABD6AE /* ARRefImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 223E317C2228E29800ABD6AE /* ARRefImage.swift */; };
+		2242CDEE22835E180096BFE5 /* GMSMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2242CDED22835E180096BFE5 /* GMSMapView.swift */; };
+		22442949228F4B6D002CE069 /* TakeGoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */; };
 		2249F0A721C9E9CD0032D58C /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A621C9E9CD0032D58C /* User.swift */; };
 		2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0A821C9F31D0032D58C /* RouteList.swift */; };
 		2249F0AB21CA03F00032D58C /* RouteListTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2249F0AA21CA03F00032D58C /* RouteListTVC.swift */; };
@@ -162,9 +166,16 @@
 		229DBF69221FACED0065CD6C /* ARMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229DBF68221FACED0065CD6C /* ARMenu.swift */; };
 		229E180D21CAD929003BDE13 /* RouteListPresenterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */; };
 		22A121982229F98400CA002B /* ARDiagram.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A121972229F98400CA002B /* ARDiagram.swift */; };
+		22A1EA042288DD4A00EA1758 /* DayPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1EA032288DD4A00EA1758 /* DayPlan.swift */; };
+		22A1EA062288FE1100EA1758 /* LabelAvenir.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22A1EA052288FE1100EA1758 /* LabelAvenir.swift */; };
+		22B711BE227E5846002203E0 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711BD227E5846002203E0 /* Array.swift */; };
+		22B711C0227E7170002203E0 /* RouteVCC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711BF227E7170002203E0 /* RouteVCC.swift */; };
+		22B711C2227E751C002203E0 /* PlanTripEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711C1227E751C002203E0 /* PlanTripEditVC.swift */; };
+		22B711C4227E8D08002203E0 /* PlanEditRouteTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B711C3227E8D08002203E0 /* PlanEditRouteTVC.swift */; };
 		22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */; };
 		22BA2A26222A35EE0054BC1D /* HypeArTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */; };
 		22BA2A28222A465A0054BC1D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BA2A27222A465A0054BC1D /* ImageCache.swift */; };
+		22BD0B07226E7AA4002E335C /* PlanTripVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD0B06226E7AA4002E335C /* PlanTripVC2.swift */; };
 		22BD6D4521BF53160047FF8A /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4421BF53160047FF8A /* Weather.swift */; };
 		22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4621BF53F80047FF8A /* Forecast.swift */; };
 		22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */; };
@@ -181,6 +192,7 @@
 		22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */; };
 		22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */; };
 		22C8D16C226D6B6200B84A6A /* PlanTripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22C8D16B226D6B6100B84A6A /* PlanTripVC.swift */; };
+		22CB87A62282A85D00D1967B /* PlanDetailRouteTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CB87A52282A85D00D1967B /* PlanDetailRouteTVC.swift */; };
 		22CFAA082216A6B700801B37 /* ArColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA072216A6B700801B37 /* ArColorButton.swift */; };
 		22CFAA0A2216B55300801B37 /* ArActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA092216B55300801B37 /* ArActionButton.swift */; };
 		22CFAA0C221891A600801B37 /* RouteArEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22CFAA0B221891A600801B37 /* RouteArEditVC.swift */; };
@@ -339,6 +351,7 @@
 		221B18042256E17B00A92BDF /* Bridger.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Bridger.h; sourceTree = "<group>"; };
 		221B18052257CB5E00A92BDF /* MarkerCallout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkerCallout.swift; sourceTree = "<group>"; };
 		221B18072257E7D300A92BDF /* RouteCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteCache.swift; sourceTree = "<group>"; };
+		221D8FD4227CCD3D00C48F62 /* PlanTripDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTripDetailVC.swift; sourceTree = "<group>"; };
 		22207DFB21CB2F49004475AF /* Take.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Take.entitlements; sourceTree = "<group>"; };
 		22207DFD21CB4255004475AF /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		22207DFF21CB4A55004475AF /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -357,7 +370,10 @@
 		223B538E21A92C06006E1824 /* RoutePhotosVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePhotosVC.swift; sourceTree = "<group>"; };
 		223B539021A92EED006E1824 /* RouteNowVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteNowVC.swift; sourceTree = "<group>"; };
 		223BB23021A7E93600130070 /* RouteManagerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteManagerVC.swift; sourceTree = "<group>"; };
+		223E2941226EED4A00ABF419 /* CLLocationCoordinate2D.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CLLocationCoordinate2D.swift; sourceTree = "<group>"; };
 		223E317C2228E29800ABD6AE /* ARRefImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARRefImage.swift; sourceTree = "<group>"; };
+		2242CDED22835E180096BFE5 /* GMSMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GMSMapView.swift; sourceTree = "<group>"; };
+		22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TakeGoogleMapView.swift; sourceTree = "<group>"; };
 		2249F0A621C9E9CD0032D58C /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2249F0A821C9F31D0032D58C /* RouteList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteList.swift; sourceTree = "<group>"; };
 		2249F0AA21CA03F00032D58C /* RouteListTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListTVC.swift; sourceTree = "<group>"; };
@@ -418,9 +434,16 @@
 		229DBF68221FACED0065CD6C /* ARMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARMenu.swift; sourceTree = "<group>"; };
 		229E180C21CAD929003BDE13 /* RouteListPresenterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteListPresenterVC.swift; sourceTree = "<group>"; };
 		22A121972229F98400CA002B /* ARDiagram.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ARDiagram.swift; sourceTree = "<group>"; };
+		22A1EA032288DD4A00EA1758 /* DayPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayPlan.swift; sourceTree = "<group>"; };
+		22A1EA052288FE1100EA1758 /* LabelAvenir.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelAvenir.swift; sourceTree = "<group>"; };
+		22B711BD227E5846002203E0 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		22B711BF227E7170002203E0 /* RouteVCC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteVCC.swift; sourceTree = "<group>"; };
+		22B711C1227E751C002203E0 /* PlanTripEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTripEditVC.swift; sourceTree = "<group>"; };
+		22B711C3227E8D08002203E0 /* PlanEditRouteTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanEditRouteTVC.swift; sourceTree = "<group>"; };
 		22BA2A22222A34D10054BC1D /* ARDiagramViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ARDiagramViewModel.swift; sourceTree = "<group>"; };
 		22BA2A25222A35EE0054BC1D /* HypeArTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HypeArTVC.swift; sourceTree = "<group>"; };
 		22BA2A27222A465A0054BC1D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		22BD0B06226E7AA4002E335C /* PlanTripVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTripVC2.swift; sourceTree = "<group>"; };
 		22BD6D4421BF53160047FF8A /* Weather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weather.swift; sourceTree = "<group>"; };
 		22BD6D4621BF53F80047FF8A /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		22BD6D4821BF5E8C0047FF8A /* WeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewModel.swift; sourceTree = "<group>"; };
@@ -437,6 +460,7 @@
 		22BDB75421BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDelegate.swift"; sourceTree = "<group>"; };
 		22BDB75621BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RoutePhotos+CollectionViewDataSource.swift"; sourceTree = "<group>"; };
 		22C8D16B226D6B6100B84A6A /* PlanTripVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanTripVC.swift; sourceTree = "<group>"; };
+		22CB87A52282A85D00D1967B /* PlanDetailRouteTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanDetailRouteTVC.swift; sourceTree = "<group>"; };
 		22CFAA072216A6B700801B37 /* ArColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArColorButton.swift; sourceTree = "<group>"; };
 		22CFAA092216B55300801B37 /* ArActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArActionButton.swift; sourceTree = "<group>"; };
 		22CFAA0B221891A600801B37 /* RouteArEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RouteArEditVC.swift; sourceTree = "<group>"; };
@@ -502,6 +526,9 @@
 				22595D6321FD5F2A00DD84F1 /* CLLocation.swift */,
 				22CFAA0F221947FA00801B37 /* String.swift */,
 				22DD2296225DB043004C2773 /* UINavigationController.swift */,
+				223E2941226EED4A00ABF419 /* CLLocationCoordinate2D.swift */,
+				22B711BD227E5846002203E0 /* Array.swift */,
+				2242CDED22835E180096BFE5 /* GMSMapView.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -620,6 +647,8 @@
 			isa = PBXGroup;
 			children = (
 				044061FD209D8A9D005C06C3 /* TypeButton.swift */,
+				22A1EA052288FE1100EA1758 /* LabelAvenir.swift */,
+				22442948228F4B6D002CE069 /* TakeGoogleMapView.swift */,
 			);
 			path = "Custom IBOutlets";
 			sourceTree = "<group>";
@@ -997,6 +1026,13 @@
 				221B18052257CB5E00A92BDF /* MarkerCallout.swift */,
 				229A82AD226AFC1800783767 /* PlanTripPreviewVC.swift */,
 				22C8D16B226D6B6100B84A6A /* PlanTripVC.swift */,
+				22BD0B06226E7AA4002E335C /* PlanTripVC2.swift */,
+				221D8FD4227CCD3D00C48F62 /* PlanTripDetailVC.swift */,
+				22B711BF227E7170002203E0 /* RouteVCC.swift */,
+				22B711C1227E751C002203E0 /* PlanTripEditVC.swift */,
+				22B711C3227E8D08002203E0 /* PlanEditRouteTVC.swift */,
+				22CB87A52282A85D00D1967B /* PlanDetailRouteTVC.swift */,
+				22A1EA032288DD4A00EA1758 /* DayPlan.swift */,
 			);
 			path = Map;
 			sourceTree = "<group>";
@@ -1375,6 +1411,7 @@
 			);
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-Take/Pods-Take-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AutoInsetter/AutoInsetter.framework",
 				"${BUILT_PRODUCTS_DIR}/AvailableHapticFeedback/AvailableHapticFeedback.framework",
 				"${BUILT_PRODUCTS_DIR}/BoringSSL/openssl.framework",
@@ -1396,6 +1433,7 @@
 				"${BUILT_PRODUCTS_DIR}/SwiftyDraw/SwiftyDraw.framework",
 				"${BUILT_PRODUCTS_DIR}/Tabman/Tabman.framework",
 				"${BUILT_PRODUCTS_DIR}/UIImageColors/UIImageColors.framework",
+				"${BUILT_PRODUCTS_DIR}/VerticalCardSwiper/VerticalCardSwiper.framework",
 				"${BUILT_PRODUCTS_DIR}/WSTagsField/WSTagsField.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-C++/grpcpp.framework",
 				"${BUILT_PRODUCTS_DIR}/gRPC-Core/grpc.framework",
@@ -1404,6 +1442,7 @@
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AutoInsetter.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AvailableHapticFeedback.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/openssl.framework",
@@ -1425,6 +1464,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyDraw.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabman.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/UIImageColors.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/VerticalCardSwiper.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/WSTagsField.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpcpp.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/grpc.framework",
@@ -1463,28 +1503,34 @@
 				221B17FA2256E15100A92BDF /* GMUStyle.m in Sources */,
 				718449902209581F0029C023 /* DmTVC.swift in Sources */,
 				223B538F21A92C06006E1824 /* RoutePhotosVC.swift in Sources */,
+				22BD0B07226E7AA4002E335C /* PlanTripVC2.swift in Sources */,
 				229499E321AD1005002C60C6 /* Comment.swift in Sources */,
 				22BD6D4721BF53F80047FF8A /* Forecast.swift in Sources */,
 				71DBB9342281235E0063F9C7 /* AddProfPicVC.swift in Sources */,
 				221B17ED2256E15100A92BDF /* GMUSimpleClusterAlgorithm.m in Sources */,
 				2249F0B421CA27DA0032D58C /* RouteList+TableViewDataSource.swift in Sources */,
 				22BDB75721BE5EED0064E7C1 /* RoutePhotos+CollectionViewDataSource.swift in Sources */,
+				22A1EA062288FE1100EA1758 /* LabelAvenir.swift in Sources */,
 				22BDB74921BE5AD90064E7C1 /* SearchRoutes+TableViewDelegate.swift in Sources */,
 				7184498722090C380029C023 /* DM.swift in Sources */,
 				046ED55B20C133E50055B35A /* GoogleFunctions.swift in Sources */,
 				223E317D2228E29800ABD6AE /* ARRefImage.swift in Sources */,
 				2293C4C2220BCDD100D5DB4A /* RouteAreaView.swift in Sources */,
 				221B17F52256E15100A92BDF /* GMUPlacemark.m in Sources */,
+				22B711C2227E751C002203E0 /* PlanTripEditVC.swift in Sources */,
 				22F5D857221F731E006824C0 /* PaddingLabel.swift in Sources */,
+				223E2942226EED4A00ABF419 /* CLLocationCoordinate2D.swift in Sources */,
 				22CFAA0E221943D400801B37 /* RouteArViewVC.swift in Sources */,
 				221B18012256E15100A92BDF /* GMUHeatmapTileLayer.m in Sources */,
 				221B17F22256E15100A92BDF /* GMUKMLParser.m in Sources */,
 				229DBF67221F9BDA0065CD6C /* ARViewVC.swift in Sources */,
+				22B711C4227E8D08002203E0 /* PlanEditRouteTVC.swift in Sources */,
 				2254180C2171D99E000F575A /* RouteTVC.swift in Sources */,
 				2249F0B821CAC1D70032D58C /* UserProfileVC.swift in Sources */,
 				22BDB75321BE5DED0064E7C1 /* RouteManager+PageBoy.swift in Sources */,
 				2234F5942213564E00D2B8D9 /* RouteAddArVC.swift in Sources */,
 				227F7AC4223F759800D4E232 /* MapRoutePreview.swift in Sources */,
+				221D8FD5227CCD3D00C48F62 /* PlanTripDetailVC.swift in Sources */,
 				045255752091B9B900A4A384 /* Route.swift in Sources */,
 				2281EA64223105A000236325 /* PieChartView.swift in Sources */,
 				22383AE721D0A8C20010E6CC /* NotificationPresenterVC.swift in Sources */,
@@ -1501,6 +1547,7 @@
 				227C7F9221F105DD00115906 /* UITextField.swift in Sources */,
 				2211DF50224611C700FB169B /* MPToDoList.swift in Sources */,
 				22576B18222F07F100CB5C85 /* AreaTVC.swift in Sources */,
+				22442949228F4B6D002CE069 /* TakeGoogleMapView.swift in Sources */,
 				221B17FE2256E15100A92BDF /* GMUGeoJSONParser.m in Sources */,
 				22F5DE1121308320001ECC73 /* Firestore.swift in Sources */,
 				222F7F9D22279368002E30C2 /* ARLoadingTVC.swift in Sources */,
@@ -1520,6 +1567,7 @@
 				719BC918221F339900D167F0 /* MsgLogContainerVC.swift in Sources */,
 				2211DF482245FB0300FB169B /* MPRoute.swift in Sources */,
 				22576B16222F05DA00CB5C85 /* AreaManagerVC.swift in Sources */,
+				2242CDEE22835E180096BFE5 /* GMSMapView.swift in Sources */,
 				2203ADB2220D3BF3004EDBF2 /* StarViewModel.swift in Sources */,
 				2249F0A921C9F31D0032D58C /* RouteList.swift in Sources */,
 				22BDB75521BE5E980064E7C1 /* RoutePhotos+CollectionViewDelegate.swift in Sources */,
@@ -1549,9 +1597,11 @@
 				221B18002256E15100A92BDF /* GMUGradient.m in Sources */,
 				223BB23121A7E93600130070 /* RouteManagerVC.swift in Sources */,
 				71624CEA221CF207009D0E5B /* DmViewModel.swift in Sources */,
+				22A1EA042288DD4A00EA1758 /* DayPlan.swift in Sources */,
 				715D5AE3225D088A006CA5E6 /* MatchTVC.swift in Sources */,
 				22F5D853221F3733006824C0 /* PhotoViewerVC.swift in Sources */,
 				221B18062257CB5E00A92BDF /* MarkerCallout.swift in Sources */,
+				22B711BE227E5846002203E0 /* Array.swift in Sources */,
 				221B17FB2256E15100A92BDF /* GMUPoint.m in Sources */,
 				2234F599221540A100D2B8D9 /* RouteArEdit+Swifty.swift in Sources */,
 				2249F0A721C9E9CD0032D58C /* User.swift in Sources */,
@@ -1566,6 +1616,7 @@
 				229A82AE226AFC1800783767 /* PlanTripPreviewVC.swift in Sources */,
 				7171B542221E55FA00740796 /* Message.swift in Sources */,
 				043F788920AEA4220043C08A /* UIView.swift in Sources */,
+				22B711C0227E7170002203E0 /* RouteVCC.swift in Sources */,
 				22CFAA10221947FA00801B37 /* String.swift in Sources */,
 				22207DFE21CB4255004475AF /* Notification.swift in Sources */,
 				221B17F32256E15100A92BDF /* GMUGeometryRenderer.m in Sources */,
@@ -1596,6 +1647,7 @@
 				22BA2A23222A34D10054BC1D /* ARDiagramViewModel.swift in Sources */,
 				22D4D018222BAFD300429AF7 /* ChooseLocationVC.swift in Sources */,
 				223B539121A92EED006E1824 /* RouteNowVC.swift in Sources */,
+				22CB87A62282A85D00D1967B /* PlanDetailRouteTVC.swift in Sources */,
 				047866C62099930900DF4439 /* UIColor.swift in Sources */,
 				71D0586E222A3F200024114A /* FlexibleTextView.swift in Sources */,
 				22BD6D4921BF5E8C0047FF8A /* WeatherViewModel.swift in Sources */,

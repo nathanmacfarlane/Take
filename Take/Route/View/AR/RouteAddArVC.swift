@@ -26,116 +26,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
 
         view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
 
-        cancelButton = UIButton()
-        cancelButton.setTitle("Cancel", for: .normal)
-        cancelButton.titleLabel?.font = UIFont(name: "Avenir-Book", size: 20)
-        cancelButton.addTarget(self, action: #selector(goCancel), for: .touchUpInside)
-        cancelButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
-
-        saveButton = UIButton()
-        saveButton.setTitle("Save", for: .normal)
-        saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
-        saveButton.addTarget(self, action: #selector(goSave), for: .touchUpInside)
-        saveButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
-
-        rockLabel = UILabel()
-        rockLabel.text = "ROCK"
-        rockLabel.textAlignment = .center
-        rockLabel.font = UIFont(name: "Avenir-Black", size: 40)
-        rockLabel.textColor = .black
-
-        centerArButton = ArButton()
-        centerArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
-
-        leftArButton = ArButton()
-        leftArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
-
-        rightArButton = ArButton()
-        rightArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
-
-        let promptLabel = UILabel()
-        promptLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        promptLabel.font = UIFont(name: "Avenir-Book", size: 18)
-        promptLabel.numberOfLines = 0
-        let str = "If possible, please upload 3 photos from different positions around the rock (roughly 10 feet apart). This improves the accuracy for future climbers."
-        if let font = UIFont(name: "Avenir-Book", size: 18), let start = str.index(of: "(") {
-            let myMutableString = NSMutableAttributedString(string: str, attributes: [.font: font])
-            myMutableString.addAttribute(.foregroundColor, value: UISettings.shared.colorScheme.accent, range: NSRange(location: start.encodedOffset, length: "(roughly 10 feet apart)".count))
-            promptLabel.attributedText = myMutableString
-        }
-
-        commentBg = UILabel()
-        commentBg.backgroundColor = .white
-
-        commentField = UITextView()
-        commentField.textColor = .black
-        commentField.backgroundColor = .clear
-        commentField.font = UIFont(name: "Avenir-Book", size: 14)
-        commentField.delegate = self
-        commentField.returnKeyType = .done
-
-        view.addSubview(saveButton)
-        view.addSubview(cancelButton)
-        view.addSubview(rockLabel)
-        view.addSubview(centerArButton)
-        view.addSubview(leftArButton)
-        view.addSubview(rightArButton)
-        view.addSubview(promptLabel)
-        view.addSubview(commentBg)
-        view.addSubview(commentField)
-
-        cancelButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: cancelButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: cancelButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: cancelButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-
-        saveButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: saveButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: saveButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: saveButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-
-        rockLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: rockLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: rockLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: rockLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: rockLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-
-        centerArButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: centerArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: centerArButton, attribute: .bottom, relatedBy: .equal, toItem: promptLabel, attribute: .top, multiplier: 1, constant: -30).isActive = true
-        NSLayoutConstraint(item: centerArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
-        NSLayoutConstraint(item: centerArButton, attribute: .width, relatedBy: .equal, toItem: centerArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
-
-        leftArButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: leftArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 0.45, constant: 0).isActive = true
-        NSLayoutConstraint(item: leftArButton, attribute: .centerY, relatedBy: .equal, toItem: centerArButton, attribute: .centerY, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: leftArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
-        NSLayoutConstraint(item: leftArButton, attribute: .width, relatedBy: .equal, toItem: leftArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
-
-        rightArButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: rightArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.5, constant: 0).isActive = true
-        NSLayoutConstraint(item: rightArButton, attribute: .centerY, relatedBy: .equal, toItem: centerArButton, attribute: .centerY, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: rightArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
-        NSLayoutConstraint(item: rightArButton, attribute: .width, relatedBy: .equal, toItem: rightArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
-
-        commentBg.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: commentBg, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
-        NSLayoutConstraint(item: commentBg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
-        NSLayoutConstraint(item: commentBg, attribute: .bottom, relatedBy: .equal, toItem: rockLabel, attribute: .top, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: commentBg, attribute: .top, relatedBy: .equal, toItem: cancelButton, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
-
-        commentField.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: commentField, attribute: .leading, relatedBy: .equal, toItem: commentBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: commentField, attribute: .trailing, relatedBy: .equal, toItem: commentBg, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: commentField, attribute: .bottom, relatedBy: .equal, toItem: commentBg, attribute: .bottom, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: commentField, attribute: .top, relatedBy: .equal, toItem: commentBg, attribute: .top, multiplier: 1, constant: 10).isActive = true
-
-        promptLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: promptLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
-        NSLayoutConstraint(item: promptLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
-        NSLayoutConstraint(item: promptLabel, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -25).isActive = true
+        initViews()
     }
 
     func finishedEditingAr(image: UIImage?, diagram: UIImage?) {
@@ -252,6 +143,113 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
         view.bringSubviewToFront(commentField)
     }
 
+    func initViews() {
+        cancelButton = UIButton()
+        cancelButton.setTitle("Cancel", for: .normal)
+        cancelButton.titleLabel?.font = UIFont(name: "Avenir-Book", size: 20)
+        cancelButton.addTarget(self, action: #selector(goCancel), for: .touchUpInside)
+        cancelButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
+
+        saveButton = UIButton()
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
+        saveButton.addTarget(self, action: #selector(goSave), for: .touchUpInside)
+        saveButton.setTitleColor(UISettings.shared.colorScheme.textPrimary, for: .normal)
+
+        rockLabel = LabelAvenir(size: 40, type: .Black, color: .black, alignment: .center)
+        rockLabel.text = "ROCK"
+
+        centerArButton = ArButton()
+        centerArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
+
+        leftArButton = ArButton()
+        leftArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
+
+        rightArButton = ArButton()
+        rightArButton.addTarget(self, action: #selector(selectImage(sender:)), for: .touchUpInside)
+
+        let promptLabel = LabelAvenir(size: 18, type: .Book, color: UISettings.shared.colorScheme.textSecondary)
+        promptLabel.numberOfLines = 0
+        let str = "If possible, please upload 3 photos from different positions around the rock (roughly 10 feet apart). This improves the accuracy for future climbers."
+        if let font = UIFont(name: "Avenir-Book", size: 18), let start = str.index(of: "(") {
+            let myMutableString = NSMutableAttributedString(string: str, attributes: [.font: font])
+            myMutableString.addAttribute(.foregroundColor, value: UISettings.shared.colorScheme.accent, range: NSRange(location: start.encodedOffset, length: "(roughly 10 feet apart)".count))
+            promptLabel.attributedText = myMutableString
+        }
+
+        commentBg = UILabel()
+        commentBg.backgroundColor = .white
+
+        commentField = UITextView()
+        commentField.textColor = .black
+        commentField.backgroundColor = .clear
+        commentField.font = UIFont(name: "Avenir-Book", size: 14)
+        commentField.delegate = self
+        commentField.returnKeyType = .done
+
+        view.addSubview(saveButton)
+        view.addSubview(cancelButton)
+        view.addSubview(rockLabel)
+        view.addSubview(centerArButton)
+        view.addSubview(leftArButton)
+        view.addSubview(rightArButton)
+        view.addSubview(promptLabel)
+        view.addSubview(commentBg)
+        view.addSubview(commentField)
+
+        cancelButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cancelButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cancelButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cancelButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: cancelButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: saveButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: saveButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: saveButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: saveButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+
+        rockLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: rockLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: rockLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: rockLabel, attribute: .centerY, relatedBy: .equal, toItem: view, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: rockLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+
+        centerArButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: centerArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: centerArButton, attribute: .bottom, relatedBy: .equal, toItem: promptLabel, attribute: .top, multiplier: 1, constant: -30).isActive = true
+        NSLayoutConstraint(item: centerArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
+        NSLayoutConstraint(item: centerArButton, attribute: .width, relatedBy: .equal, toItem: centerArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
+
+        leftArButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: leftArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 0.45, constant: 0).isActive = true
+        NSLayoutConstraint(item: leftArButton, attribute: .centerY, relatedBy: .equal, toItem: centerArButton, attribute: .centerY, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: leftArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
+        NSLayoutConstraint(item: leftArButton, attribute: .width, relatedBy: .equal, toItem: leftArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
+
+        rightArButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: rightArButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1.5, constant: 0).isActive = true
+        NSLayoutConstraint(item: rightArButton, attribute: .centerY, relatedBy: .equal, toItem: centerArButton, attribute: .centerY, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: rightArButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 35).isActive = true
+        NSLayoutConstraint(item: rightArButton, attribute: .width, relatedBy: .equal, toItem: rightArButton, attribute: .height, multiplier: 1, constant: 0).isActive = true
+
+        commentBg.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: commentBg, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .bottom, relatedBy: .equal, toItem: rockLabel, attribute: .top, multiplier: 1, constant: -20).isActive = true
+        NSLayoutConstraint(item: commentBg, attribute: .top, relatedBy: .equal, toItem: cancelButton, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+
+        commentField.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: commentField, attribute: .leading, relatedBy: .equal, toItem: commentBg, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .trailing, relatedBy: .equal, toItem: commentBg, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .bottom, relatedBy: .equal, toItem: commentBg, attribute: .bottom, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: commentField, attribute: .top, relatedBy: .equal, toItem: commentBg, attribute: .top, multiplier: 1, constant: 10).isActive = true
+
+        promptLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: promptLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: promptLabel, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -25).isActive = true
+        NSLayoutConstraint(item: promptLabel, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -25).isActive = true
+    }
 }
 
 class LineView: UIView {

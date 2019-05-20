@@ -13,17 +13,9 @@ class AreaTVC: UITableViewCell {
 
         backgroundColor = .clear
 
-        nameLabel = UILabel()
-        nameLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        nameLabel.font = UIFont(name: "Avenir-Black", size: 20)
-
-        difficultyLabel = UILabel()
-        difficultyLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        difficultyLabel.font = UIFont(name: "Avenir", size: 17)
-
-        typesLabel = UILabel()
-        typesLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        typesLabel.font = UIFont(name: "Avenir", size: 17)
+        nameLabel = LabelAvenir(size: 20, type: .Black, color: UISettings.shared.colorScheme.textPrimary)
+        difficultyLabel = LabelAvenir(size: 17, color: UISettings.shared.colorScheme.textPrimary)
+        typesLabel = LabelAvenir(size: 17, color: UISettings.shared.colorScheme.textPrimary)
 
         indicator = UIActivityIndicatorView(style: .white)
         indicator.startAnimating()

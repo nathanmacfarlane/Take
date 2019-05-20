@@ -45,11 +45,7 @@ class AreaDetailVC: UIViewController {
     }
 
     func initViews() {
-        cityStateLabel = UILabel()
-        cityStateLabel.backgroundColor = .clear
-        cityStateLabel.textAlignment = .center
-        cityStateLabel.font = UIFont(name: "Avenir-Medium", size: 20)
-        cityStateLabel.textColor = UISettings.shared.colorScheme.textPrimary
+        cityStateLabel = LabelAvenir(size: 20, type: .Medium, color: UISettings.shared.colorScheme.textPrimary, alignment: .center)
 
         mapBG = UIView()
         mapBG.backgroundColor = UISettings.shared.mode == .dark ? UISettings.shared.colorScheme.backgroundDarker : UIColor(hex: "#C9C9C9")
