@@ -13,17 +13,16 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var boulderButton: TypeButton!
     var tradButton: TypeButton!
     var profPic: TypeButton!
-    var partnerMatch =  UIButton()
-    var editButton =  UIButton()
-    var climberSearch =  UIButton()
+    var partnerMatch = UIButton()
+    var editButton = UIButton()
+    var climberSearch = UIButton()
     var profImage = UIImage()
-    let userNameLabel = UILabel()
-    let userBio = UILabel()
-    let tradGrade = UILabel()
-    let trGrade = UILabel()
-    let sportGrade = UILabel()
-    let boulderGrade = UILabel()
-    let locLabel = UILabel()
+    var userNameLabel = UILabel()
+    var userBio = UILabel()
+    var tradGrade = UILabel()
+    var trGrade = UILabel()
+    var sportGrade = UILabel()
+    var boulderGrade = UILabel()
     var infoTableView: UITableView!
     var info = [String]()
     
@@ -32,9 +31,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     var sportLetter = ""
     var city = ""
     var state = ""
-    
-    //let boulderGrade = UILabel()
-    //let aidGrade = UILabel()
     var tableView: UITableView!
     
     override func viewDidLoad() {
@@ -50,19 +46,12 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         if let currentUser = Auth.auth().currentUser {
             getToDoLists(user: currentUser)
         }
-        guard let user = self.user else { return }
-        let userViewModel = UserViewModel(user: user)
-        userViewModel.getProfilePhoto { image in
-            DispatchQueue.main.async {
-                self.profPic.setBackgroundImage(image, for: .normal)
-            }
-        }
     }
     
     func getToDoLists(user: Firebase.User) {
         let db = Firestore.firestore()
         db.query(collection: "users", by: "id", with: user.uid, of: User.self) { user in
-            guard let user = user.first else { return }
+            guard var user = user.first else { return }
             self.user = user
             self.userNameLabel.text = user.name
             self.userBio.text = user.bio
@@ -73,13 +62,19 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
             let userViewModel = UserViewModel(user: user)
             userViewModel.getProfilePhoto { image in
                 DispatchQueue.main.async {
-                    self.profPic.setBackgroundImage(image, for: .normal)
+                    self.profPic.setImage(image, for: .normal)
+                    self.profPic.imageView?.contentMode = .scaleAspectFill
                 }
             }
             self.info = user.info
-            LocationService.shared.location?.cityAndState { city, state, error in
+            LocationService.shared.location?.cityAndState { city, state, _ in
                 guard let c = city else { print("CITY NOT FOUND "); return }
                 guard let s = state else { return }
+                user.location[0] = LocationService.shared.location?.coordinate.latitude ?? 0
+                user.location[1] = LocationService.shared.location?.coordinate.longitude ?? 0
+                
+                Firestore.firestore().save(object: user, to: "users", with: self.user?.id ?? "error in updating profile", completion: nil)
+                
                 
                 self.info.insert("\(c), \(s)", at: 0)
                 self.infoTableView.reloadData()
@@ -225,19 +220,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         infoTableView.isHidden = false
         
-        userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        userNameLabel.textAlignment = .left
-        userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
+        userNameLabel = LabelAvenir(size: 22, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
         
-        userBio.textColor = UISettings.shared.colorScheme.textSecondary
-        userBio.textAlignment = .left
-        userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
+        userBio = LabelAvenir(size: 16, type: .Medium, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
         userBio.numberOfLines = 0
         userBio.lineBreakMode = .byWordWrapping
         userBio.layer.masksToBounds = true
         
-        locLabel.textColor = .white
-        locLabel.textAlignment = .center
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
@@ -265,21 +254,13 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
         
-        tradGrade.font = UIFont(name: "Avenir", size: 16)
-        tradGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        tradGrade.textAlignment = .center
+        tradGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        trGrade.font = UIFont(name: "Avenir", size: 16)
-        trGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        trGrade.textAlignment = .center
+        trGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        sportGrade.font = UIFont(name: "Avenir", size: 16)
-        sportGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        sportGrade.textAlignment = .center
+        sportGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        boulderGrade.font = UIFont(name: "Avenir", size: 16)
-        boulderGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        boulderGrade.textAlignment = .center
+        boulderGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
         
         editButton = UIButton()
@@ -301,7 +282,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         view.addSubview(editButton)
         view.addSubview(boulderGrade)
         view.addSubview(boulderButton)
-//        view.addSubview(locLabel)
         view.addSubview(infoTableView)
         view.addSubview(seg)
         

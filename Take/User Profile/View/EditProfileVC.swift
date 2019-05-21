@@ -8,6 +8,7 @@ import Presentr
 
 class EditProfileVC: UIViewController {
     var user: User?
+    var toggler: UISwitch!
     var trStepper: GMStepper!
     var tradStepper: GMStepper!
     var sportStepper: GMStepper!
@@ -97,6 +98,18 @@ class EditProfileVC: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
+    @objc
+    func toggledEdit() {
+        if UISettings.shared.mode == .light {
+            //UISettings.shared.mode = UISettings.shared.dark
+            fatalError()
+        }
+        else {
+            //UISettings.shared.mode = UISettings.shared.light
+            fatalError()
+        }
+    }
+    
     var seg: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Top Rope", "Sport", "Trad", "Boulder"])
         sc.tintColor = UISettings.shared.colorScheme.textSecondary
@@ -108,7 +121,7 @@ class EditProfileVC: UIViewController {
     @objc
     func updateProf() {
         
-        guard let user = self.user else { return }
+        // guard let user = self.user else { return }
         guard let trG = numGradeDict[self.trStepper.value] else { return }
         guard let sportG = numGradeDict[self.sportStepper.value] else { return }
         guard let tradG = numGradeDict[self.tradStepper.value] else { return }
@@ -187,11 +200,16 @@ class EditProfileVC: UIViewController {
         addpic.userId = self.user?.id
         let presenter = Presentr(presentationType: .fullScreen)
         self.customPresentViewController(presenter, viewController: addpic, animated: true)
+        
     }
     
     func initViews() {
         
         guard let user = self.user else { return }
+        
+        toggler = UISwitch()
+        toggler.addTarget(self, action: #selector(toggledEdit), for: .valueChanged)
+        toggler.onTintColor = UISettings.shared.colorScheme.accent
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
@@ -272,6 +290,7 @@ class EditProfileVC: UIViewController {
         view.addSubview(sportStepper)
         view.addSubview(tradStepper)
         view.addSubview(bStepper)
+         view.addSubview(toggler)
         
         gradeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: gradeLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -321,6 +340,12 @@ class EditProfileVC: UIViewController {
         NSLayoutConstraint(item: picButton, attribute: .top, relatedBy: .equal, toItem: tradStepper, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+        
+        toggler.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: toggler, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
     
     }
     

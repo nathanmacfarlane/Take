@@ -20,6 +20,6 @@ struct User: Codable {
     var tradLetter: String
     var sportLetter: String
     var bio: String
-    var location: String
+    var location: [Double]
     var info: [String]
 }
