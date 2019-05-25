@@ -126,7 +126,13 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
 //        blueprintLayout.scrollDirection = .horizontal
 //        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
-        collectionView = UICollectionView()
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+        layout.itemSize = CGSize(width: 60, height: 60)
+        layout.scrollDirection = .horizontal
+
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self

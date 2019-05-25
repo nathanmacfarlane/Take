@@ -1,5 +1,6 @@
 import CoreLocation
 import FirebaseFirestore
+import InstantSearchClient
 import UIKit
 
 class SearchRoutesVC: UIViewController {
@@ -21,6 +22,7 @@ class SearchRoutesVC: UIViewController {
     // MARK: - Variables
     var results: SearchResults = SearchResults()
     var resultsMashed: [Any] = []
+    let client = Client(appID: Constants.algoliaAppId, apiKey: Constants.algoliaApiKey)
 
     var firstComments: [Route: Comment] = [:]
 

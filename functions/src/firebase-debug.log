@@ -1,0 +1,86 @@
+[debug] [2019-05-22T18:58:20.836Z] ----------------------------------------------------------------------
+[debug] [2019-05-22T18:58:20.839Z] Command:       /usr/local/Cellar/node/11.6.0/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2019-05-22T18:58:20.839Z] CLI Version:   6.3.0
+[debug] [2019-05-22T18:58:20.839Z] Platform:      darwin
+[debug] [2019-05-22T18:58:20.839Z] Node Version:  v11.6.0
+[debug] [2019-05-22T18:58:20.846Z] Time:          Wed May 22 2019 11:58:20 GMT-0700 (Pacific Daylight Time)
+[debug] [2019-05-22T18:58:20.846Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-05-22T18:58:20.870Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-05-22T18:58:20.870Z] > authorizing via signed-in user
+[debug] [2019-05-22T18:58:20.870Z] [iam] checking project take-93197 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2019-05-22T18:58:20.872Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-05-22T18:58:20.872Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-05-22T18:58:21.048Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:21.065Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/take-93197:testIamPermissions  
+
+[debug] [2019-05-22T18:58:21.498Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'take-93197'...
+[info] 
+[info] i  deploying functions
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] ✔  functions: Finished running predeploy script.
+[debug] [2019-05-22T18:58:27.317Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "tslint --project tsconfig.json",
+    "build": "tsc",
+    "serve": "npm run build && firebase serve --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "algoliasearch": "^3.33.0",
+    "firebase-admin": "~6.0.0",
+    "firebase-functions": "^2.1.0"
+  },
+  "devDependencies": {
+    "tslint": "~5.8.0",
+    "typescript": "~2.8.3"
+  },
+  "private": true
+}
+[info] i  functions: ensuring necessary APIs are enabled...
+[debug] [2019-05-22T18:58:27.319Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/cloudfunctions.googleapis.com/projectSettings/take-93197?view=CONSUMER_VIEW  
+ 
+[debug] [2019-05-22T18:58:27.319Z] >>> HTTP REQUEST GET https://servicemanagement.googleapis.com/v1/services/runtimeconfig.googleapis.com/projectSettings/take-93197?view=CONSUMER_VIEW  
+ 
+[debug] [2019-05-22T18:58:28.233Z] <<< HTTP RESPONSE 200
+[info] ✔  functions: all necessary APIs are enabled
+[debug] [2019-05-22T18:58:28.236Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:28.236Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/take-93197  
+ 
+[debug] [2019-05-22T18:58:28.599Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:28.600Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/849981425959:getServerAppConfig  
+ 
+[debug] [2019-05-22T18:58:28.823Z] <<< HTTP RESPONSE 200
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2019-05-22T18:58:28.826Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/take-93197/configs  
+ 
+[debug] [2019-05-22T18:58:29.083Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:29.083Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/take-93197/configs/algolia/variables  
+ 
+[debug] [2019-05-22T18:58:29.254Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:29.255Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/take-93197/configs/algolia/variables/apikey  
+ 
+[debug] [2019-05-22T18:58:29.255Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/take-93197/configs/algolia/variables/appid  
+ 
+[debug] [2019-05-22T18:58:29.429Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:29.431Z] <<< HTTP RESPONSE 200
+[info] i  functions: packaged functions (52.46 KB) for uploading
+[debug] [2019-05-22T18:58:29.717Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/take-93197/locations/us-central1/functions:generateUploadUrl  
+ 
+[debug] [2019-05-22T18:58:30.341Z] <<< HTTP RESPONSE 200
+[debug] [2019-05-22T18:58:30.342Z] >>> HTTP REQUEST PUT https://storage.googleapis.com/gcf-upload-us-central1-1739fdb3-11f1-4002-8833-0c5c2d5dd82b/936873d9-f372-4dc0-8c26-07102b1390d8.zip?GoogleAccessId=service-849981425959@gcf-admin-robot.iam.gserviceaccount.com&Expires=1558553312&Signature=wOXvQfPRb8yw1T%2Fuzw2ZzW9FUxpTcK6f7LejxbxinxFR6zx%2BmC4VjzJEuDgsi5jF2q0oDY7o8RtYphaz2f18c4PoZjbZYnfUh5A3FR%2Fq2TzTEjpwsubbMQF6tSWxgmKC6ewtIPK4eKTGZUfALmfNulUyvYIsnWaTT6XOky%2BkI91HxHMZybT6ldTPVTwI4iW5sUAporazFCidcgLkFoXHGBlUDVMEPgX%2F%2BvrNc69N5FHN5fAVil0M2easXRjeLnZubQz8arJ%2F7AJnbJ6NZkyXd0pT8aUiNYq%2BxVksz9c%2Bxp734X5xgyHU0VmqzpvnXdop%2Flkhfb7WzQoazn1gAKEBIg%3D%3D  
+
+[warn] ⚠  functions: Upload Error: Server Error. read ECONNRESET
+[debug] [2019-05-22T18:58:30.507Z] Error: read ECONNRESET
+    at TLSWrap.onStreamRead (internal/stream_base_commons.js:162:27)
+[error] 
+[error] Error: Server Error. read ECONNRESET

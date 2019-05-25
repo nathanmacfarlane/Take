@@ -1,6 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
+import * as algoliasearch from 'algoliasearch';
+
+const client = algoliasearch("9XJAPDF104", "a50ec3d30a67484b0f9e6aed65fe4e91");
+const index = client.initIndex('route_search');
 
 exports.userNotification = functions.firestore.document('notifications/{id}').onCreate((snap, context) => {
 
@@ -21,6 +25,29 @@ exports.userNotification = functions.firestore.document('notifications/{id}').on
 
   return 0;
 });
+
+// Algolia
+exports.indexAnimal = functions.firestore
+  .document('routes/{routeId}')
+  .onCreate((snap, context) => {
+        const data = snap.data();
+        const objectID = snap.id;
+
+    // Add the data to the algolia index
+    return index.addObject({
+      objectID,
+      ...data
+    });
+  });
+
+exports.unindexAnimal = functions.firestore
+  .document('routes/{routeId}')
+  .onDelete((snap, context) => {
+        const objectId = snap.id;
+
+    // Delete an ID from the index
+    return index.deleteObject(objectId);
+  });
 
 // exports.newRoute = functions.firestore.document('routes/{id}').onCreate((snap, context) => {
 //   const route = snap.data();
