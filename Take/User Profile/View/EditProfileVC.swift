@@ -3,12 +3,13 @@ import Firebase
 import FirebaseAuth
 import FirebaseFirestore
 import GMStepper
+import MultiSlider
 import UIKit
 import Presentr
 
 class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var user: User?
-    let ageSlider = UISlider()
+    let ageSlider = MultiSlider()
     var toggler: UISwitch!
     var trStepper: GMStepper!
     var tradStepper: GMStepper!
@@ -145,7 +146,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     @objc
     func updateProf() {
         
-        // guard let user = self.user else { return }
         guard let trG = numGradeDict[self.trStepper.value] else { return }
         guard let sportG = numGradeDict[self.sportStepper.value] else { return }
         guard let tradG = numGradeDict[self.tradStepper.value] else { return }
@@ -163,6 +163,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.user?.trLetter = trLet
         self.user?.sportLetter = sportLet
         self.user?.tradLetter = tradLet
+        self.user?.age = Int(self.ageSlider.value[0])
         
         Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in updating profile", completion: nil)
 //        let userViewModel = UserViewModel(user: user)
@@ -295,7 +296,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         let gradeLabel = UILabel()
         gradeLabel.text = "Edit Grades"
-        gradeLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
+        gradeLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
         gradeLabel.textAlignment = .center
         gradeLabel.textColor = UISettings.shared.colorScheme.textSecondary
         
@@ -314,6 +315,31 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         infoTableView.isHidden = false
         
+//        ageSlider.minimumTrackTintColor = .green
+//        ageSlider.maximumTrackTintColor = .red
+//        ageSlider.thumbTintColor = .black
+//        ageSlider.minimumValue = 18
+//        ageSlider.maximumValue = 55
+//        ageSlider.setValue(Float(user.age), animated: false)
+//        ageSlider.isContinuous = false
+        
+        ageSlider.minimumValue = 18
+        ageSlider.maximumValue = 55
+        ageSlider.trackWidth = 5
+        ageSlider.tintColor = UIColor(named: "PinkAccent")
+        ageSlider.value = [CGFloat(user.age)]
+        ageSlider.orientation = .horizontal
+        ageSlider.outerTrackColor = UISettings.shared.colorScheme.textPrimary
+        ageSlider.valueLabelPosition = .top
+        ageSlider.valueLabels[0].textColor = UISettings.shared.colorScheme.complimentary
+        ageSlider.valueLabels[0].font = UIFont(name: "Avenir", size: 16)
+        ageSlider.thumbCount = 1
+        ageSlider.snapStepSize = 1
+        
+        
+        
+//        ageSlider.lab
+        
         view.addSubview(updateButton)
         view.addSubview(picButton)
         view.addSubview(seg)
@@ -324,6 +350,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.addSubview(bStepper)
 //        view.addSubview(toggler)
         view.addSubview(infoTableView)
+        view.addSubview(ageSlider)
         
         gradeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: gradeLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -335,29 +362,29 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         NSLayoutConstraint(item: seg, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: seg, attribute: .top, relatedBy: .equal, toItem: gradeLabel, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: seg, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: seg, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
+        NSLayoutConstraint(item: seg, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
         
         trStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: trStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: trStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: trStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
         NSLayoutConstraint(item: trStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
         sportStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sportStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: sportStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: sportStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: sportStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
         NSLayoutConstraint(item: sportStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
         tradStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: tradStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: tradStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: tradStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: tradStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
         NSLayoutConstraint(item: tradStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
         bStepper.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: bStepper, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: bStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: bStepper, attribute: .top, relatedBy: .equal, toItem: seg, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: bStepper, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
         NSLayoutConstraint(item: bStepper, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
@@ -365,14 +392,20 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         updateButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: updateButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: updateButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: updateButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: updateButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: updateButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
         picButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: picButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: picButton, attribute: .top, relatedBy: .equal, toItem: tradStepper, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: picButton, attribute: .top, relatedBy: .equal, toItem: tradStepper, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+        
+        ageSlider.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: ageSlider, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: ageSlider, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 45).isActive = true
+        NSLayoutConstraint(item: ageSlider, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 2/3, constant: 0).isActive = true
+        NSLayoutConstraint(item: ageSlider, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 15).isActive = true
         
 //        toggler.translatesAutoresizingMaskIntoConstraints = false
 //        NSLayoutConstraint(item: toggler, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -382,7 +415,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         infoTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: ageSlider, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: infoTableView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: infoTableView, attribute: .bottom, relatedBy: .equal, toItem: updateButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
         
@@ -426,34 +459,21 @@ class InfoEditCell: UITableViewCell {
         
         infoPic.contentMode = .scaleAspectFill
         
-        let deleteButton = TypeButton()
-        deleteButton.setTitle("-", for: .normal)
-        deleteButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        deleteButton.backgroundColor = .red
-        
         addSubview(container)
         addSubview(infoLabel)
         addSubview(infoPic)
-        addSubview(deleteButton)
         
         container.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: -15).isActive = true
+        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -8).isActive = true
-        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 4/5, constant: 0).isActive = true
+        NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
+        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 8/9, constant: 0).isActive = true
         
         infoPic.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: infoPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: infoPic, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: infoPic, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: infoPic, attribute: .width, relatedBy: .equal, toItem: container, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        
-        deleteButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: deleteButton, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .trailing, multiplier: 1, constant: 5).isActive = true
-        NSLayoutConstraint(item: deleteButton, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: deleteButton, attribute: .width, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
-        NSLayoutConstraint(item: deleteButton, attribute: .height, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
-        
         
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
         infoLabel.leadingAnchor.constraint(equalTo: infoPic.trailingAnchor, constant: 10).isActive = true
