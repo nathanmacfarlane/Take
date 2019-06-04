@@ -30,6 +30,7 @@ class NewMessageVC: UIViewController, UITableViewDelegate, UITableViewDataSource
         guard let cell: SearchDMCell = self.friendTableView.dequeueReusableCell(withIdentifier: "SearchDMCell") as? SearchDMCell else { print("error")
             return SearchDMCell() }
         cell.usernameLabel.text = self.friends[indexPath.row].username
+        cell.selectionStyle = .none
         
         let userViewModel = UserViewModel(user: self.friends[indexPath.row])
         userViewModel.getProfilePhoto { image in

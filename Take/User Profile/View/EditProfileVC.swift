@@ -6,13 +6,16 @@ import GMStepper
 import UIKit
 import Presentr
 
-class EditProfileVC: UIViewController {
+class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     var user: User?
+    let ageSlider = UISlider()
     var toggler: UISwitch!
     var trStepper: GMStepper!
     var tradStepper: GMStepper!
     var sportStepper: GMStepper!
     var bStepper: GMStepper!
+    var info = [String]()
+    var infoTableView: UITableView!
     var numGradeDict: [Double: Int] = [0: 0,
                                1: 1,
                                2: 2,
@@ -88,6 +91,11 @@ class EditProfileVC: UIViewController {
         initViews()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        self.infoTableView.reloadData()
+    }
+    
     @objc
     private func goLogout(sender: UIButton!) {
         try? Auth.auth().signOut()
@@ -108,6 +116,22 @@ class EditProfileVC: UIViewController {
             //UISettings.shared.mode = UISettings.shared.light
             fatalError()
         }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.info.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: InfoEditCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoEditCell") as? InfoEditCell else { print("yooooooo"); return InfoEditCell() }
+        
+        cell.infoLabel.text = self.info[indexPath.row]
+        
+        return cell
     }
     
     var seg: UISegmentedControl = {
@@ -282,6 +306,14 @@ class EditProfileVC: UIViewController {
         picButton.backgroundColor = UISettings.shared.colorScheme.complimentary
         picButton.layer.cornerRadius = 8
         
+        self.infoTableView = UITableView()
+        infoTableView.register(InfoEditCell.self, forCellReuseIdentifier: "InfoEditCell")
+        infoTableView.dataSource = self
+        infoTableView.delegate = self
+        infoTableView.separatorStyle = .none
+        infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
+        infoTableView.isHidden = false
+        
         view.addSubview(updateButton)
         view.addSubview(picButton)
         view.addSubview(seg)
@@ -290,7 +322,8 @@ class EditProfileVC: UIViewController {
         view.addSubview(sportStepper)
         view.addSubview(tradStepper)
         view.addSubview(bStepper)
-         view.addSubview(toggler)
+//        view.addSubview(toggler)
+        view.addSubview(infoTableView)
         
         gradeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: gradeLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -341,12 +374,92 @@ class EditProfileVC: UIViewController {
         NSLayoutConstraint(item: picButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
-        toggler.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: toggler, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: toggler, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
-        NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+//        toggler.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint(item: toggler, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+//        NSLayoutConstraint(item: toggler, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
+//        NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
+//        NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+        
+        infoTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .bottom, relatedBy: .equal, toItem: updateButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
+        
+        
     
+    }
+    
+}
+
+
+class InfoEditCell: UITableViewCell {
+    
+    var infoLabel = UILabel()
+    let container = UIView()
+    var indent = CGFloat(100)
+    var infoPic = UIImageView()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        //        self.layer.cornerRadius = 10
+        self.layer.masksToBounds = true
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup() {
+        self.backgroundColor = UIColor(named: "BluePrimaryDark")
+        
+        infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
+        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
+        infoLabel.textAlignment = .left
+        
+        
+        container.backgroundColor = UISettings.shared.colorScheme.backgroundCell
+        container.layer.masksToBounds = true
+        container.layer.cornerRadius = 8
+        
+        infoPic.contentMode = .scaleAspectFill
+        
+        let deleteButton = TypeButton()
+        deleteButton.setTitle("-", for: .normal)
+        deleteButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
+        deleteButton.backgroundColor = .red
+        
+        addSubview(container)
+        addSubview(infoLabel)
+        addSubview(infoPic)
+        addSubview(deleteButton)
+        
+        container.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: -15).isActive = true
+        NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 8).isActive = true
+        NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -8).isActive = true
+        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 4/5, constant: 0).isActive = true
+        
+        infoPic.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoPic, attribute: .width, relatedBy: .equal, toItem: container, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: deleteButton, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .trailing, multiplier: 1, constant: 5).isActive = true
+        NSLayoutConstraint(item: deleteButton, attribute: .centerY, relatedBy: .equal, toItem: container, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: deleteButton, attribute: .width, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
+        NSLayoutConstraint(item: deleteButton, attribute: .height, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
+        
+        
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.leadingAnchor.constraint(equalTo: infoPic.trailingAnchor, constant: 10).isActive = true
+        infoLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
+        infoLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
+        infoLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
     }
     
 }

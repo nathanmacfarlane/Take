@@ -47,6 +47,20 @@ class LoginVC: UIViewController {
         alertController.addAction(okAction)
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    @objc
+    func openCreateAccount() {
+        let create = CreateAccountVC()
+        let nav = UINavigationController(rootViewController: create)
+        nav.navigationBar.barTintColor =  UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor =  UISettings.shared.colorScheme.accent
+        nav.navigationBar.isTranslucent = false
+        nav.navigationBar.titleTextAttributes = [
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
+            .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
+        ]
+        present(nav, animated: true, completion: nil)
+    }
 
     private func initViews() {
 
@@ -68,7 +82,7 @@ class LoginVC: UIViewController {
         myEmailTF.keyboardType = .emailAddress
         myEmailTF.autocapitalizationType = .none
         myEmailTF.addTarget(self, action: #selector(emailFieldChanged(_:)), for: .editingChanged)
-        myEmailTF.becomeFirstResponder()
+        //myEmailTF.becomeFirstResponder()
 
         // password label
         let myPassLabel = LabelAvenir(size: 20, type: .Heavy, color: UIColor(named: "Placeholder"), alignment: .left)
@@ -92,6 +106,21 @@ class LoginVC: UIViewController {
         myLoginButton.layer.cornerRadius = 10
         myLoginButton.clipsToBounds = true
         myLoginButton.addTarget(self, action: #selector(goLogin), for: .touchUpInside)
+        
+        // login button
+        let mySignUpButton = UIButton()
+        mySignUpButton.setTitle("Create Account", for: .normal)
+        mySignUpButton.setTitleColor(.white, for: .normal)
+        mySignUpButton.backgroundColor = .clear
+        mySignUpButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 18)
+        mySignUpButton.layer.cornerRadius = 10
+        mySignUpButton.clipsToBounds = true
+        mySignUpButton.addBorder(color: .white, width: 1.0)
+        mySignUpButton.addTarget(self, action: #selector(openCreateAccount), for: .touchUpInside)
+        
+        var signUpLabel = UILabel()
+        signUpLabel = LabelAvenir(size: 16, type: .Black, color: .white, alignment: .center)
+        signUpLabel.text = "Don't have an account?"
 
         // add to subview
         view.addSubview(bgImageView)
@@ -100,7 +129,22 @@ class LoginVC: UIViewController {
         view.addSubview(myPassLabel)
         view.addSubview(myPassTF)
         view.addSubview(myLoginButton)
+        view.addSubview(signUpLabel)
+        view.addSubview(mySignUpButton)
 
+        
+        mySignUpButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: mySignUpButton, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: mySignUpButton, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: -15).isActive = true
+        NSLayoutConstraint(item: mySignUpButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/2, constant: 0).isActive = true
+        NSLayoutConstraint(item: mySignUpButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
+        
+        signUpLabel.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: signUpLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: signUpLabel, attribute: .bottom, relatedBy: .equal, toItem: mySignUpButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
+        NSLayoutConstraint(item: signUpLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/2, constant: 0).isActive = true
+        NSLayoutConstraint(item: signUpLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 20).isActive = true
+        
         myEmailLabel.translatesAutoresizingMaskIntoConstraints = false
         let emailLabelTopConst = NSLayoutConstraint(item: myEmailLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 100)
         let emailLabelLeadingConst = NSLayoutConstraint(item: myEmailLabel, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20)

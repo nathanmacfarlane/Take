@@ -166,6 +166,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
     func openEditProfile() {
         let ep = EditProfileVC()
         ep.user = self.user
+        ep.info = self.info
         let nav = UINavigationController(rootViewController: ep)
         nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
@@ -232,19 +233,23 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         sportButton.setTitle("S", for: .normal)
         sportButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         sportButton.backgroundColor = UIColor(hex: "#0E4343")
+        sportButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
         boulderButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         boulderButton.backgroundColor = UIColor(hex: "#0E4343")
+        boulderButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
         trButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
+        trButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         trButton.backgroundColor = UIColor(hex: "#0E4343")
         
         tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
+        tradButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
         tradButton.backgroundColor = UIColor(hex: "#0E4343")
         
@@ -268,6 +273,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         editButton.setTitle("Edit Profile", for: .normal)
         editButton.setTitleColor( .black, for: .normal)
         editButton.backgroundColor = UIColor(named: "Placeholder")
+        editButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         editButton.layer.cornerRadius = 8
         
         view.addSubview(userNameLabel)
@@ -371,7 +377,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: editButton, attribute: .leading, relatedBy: .equal, toItem: trButton, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: editButton, attribute: .top, relatedBy: .equal, toItem: trGrade, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: editButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 3, constant: 0).isActive = true
-        NSLayoutConstraint(item: editButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 50).isActive = true
+        NSLayoutConstraint(item: editButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
     }
     
 }
