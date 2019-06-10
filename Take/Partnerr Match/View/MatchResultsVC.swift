@@ -24,6 +24,18 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         initViews()
     }
     
+    func getDistance(match: User) -> Double{
+        guard let user = self.user else { return 0}
+        let x1 = user.location[0]
+        let x2 = match.location[0]
+        
+        let y1 = user.location[1]
+        let y2 = match.location[1]
+        
+        let dist = sqrt(pow((x1 - x2), 2) + pow((y1 - y2), 2))
+        return dist
+    }
+    
     func getMatches() {
         let db = Firestore.firestore()
         let ref = db.collection("users")
@@ -41,13 +53,15 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
             for d in data {
                 let decoder = FirebaseDecoder()
                 guard let result = try? decoder.decode(User.self, from: d.data() as Any) else { return }
-                if result.id != user.id {
-                    if (result.trGrade >= mc.trGradeL) && (result.trGrade <= mc.trGradeH) {
-                        if (result.sportGrade >= mc.sportGradeL) && (result.sportGrade <= mc.sportGradeH) {
-                            if (result.tradGrade >= mc.tradGradeL) && (result.tradGrade <= mc.tradGradeH) {
-                                if (result.boulderGrade >= mc.boulderGradeL) && (result.boulderGrade <= mc.boulderGradeH) {
-                                    self.climbers.append(result)
-                                    self.dmTableView.reloadData()
+                if abs(self.getDistance(match: result)) < 0.5 {
+                    if result.id != user.id {
+                        if (result.trGrade >= mc.trGradeL) && (result.trGrade <= mc.trGradeH) {
+                            if (result.sportGrade >= mc.sportGradeL) && (result.sportGrade <= mc.sportGradeH) {
+                                if (result.tradGrade >= mc.tradGradeL) && (result.tradGrade <= mc.tradGradeH) {
+                                    if (result.boulderGrade >= mc.boulderGradeL) && (result.boulderGrade <= mc.boulderGradeH) {
+                                        self.climbers.append(result)
+                                        self.dmTableView.reloadData()
+                                    }
                                 }
                             }
                         }

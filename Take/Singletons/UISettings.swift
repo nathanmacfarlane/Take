@@ -3,8 +3,8 @@ import UIKit
 
 class UISettings {
     static let shared = UISettings()
-    private let light = Light()
-    private let dark = Dark()
+    let light = Light()
+    let dark = Dark()
     var colorScheme: ColorScheme {
         return mode == .light ? light : dark
     }
