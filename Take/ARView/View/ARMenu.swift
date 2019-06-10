@@ -75,7 +75,7 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         self.routesMap[route.id] = self.routeViewModels.count - 1
 
                         for diagram in diagrams {
-                            self.addImage(route: route, dgUrl: diagram.dgImageUrl, bgUrl: diagram.bgImageUrl)
+                            self.addImage(route: route, dgUrl: diagram.dgImageUrl, bgUrl: diagram.bgImageUrl, latitude: diagram.latitude, longitude: diagram.longitude)
                         }
 
                         DispatchQueue.main.async {
@@ -101,25 +101,25 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
         }
     }
 
-    func addImage(route: Route, dgUrl: String, bgUrl: String) {
+    func addImage(route: Route, dgUrl: String, bgUrl: String, latitude: Double?, longitude: Double?) {
         var dgImage: UIImage?
         var bgImage: UIImage?
         ImageCache.shared.getImage(for: bgUrl) { image in
             bgImage = image
-            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage)
+            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage, latitude: latitude, longitude: longitude)
         }
         ImageCache.shared.getImage(for: dgUrl) { image in
             dgImage = image
-            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage)
+            self.handleImages(route: route, dgImage: dgImage, bgImage: bgImage, latitude: latitude, longitude: longitude)
         }
     }
 
-    func handleImages(route: Route, dgImage: UIImage?, bgImage: UIImage?) {
+    func handleImages(route: Route, dgImage: UIImage?, bgImage: UIImage?, latitude: Double?, longitude: Double?) {
         if dgImage != nil && bgImage != nil {
             if self.diagrams[route] != nil {
-                self.diagrams[route]?.append(ArImage(dgImage: dgImage, bgImage: bgImage))
+                self.diagrams[route]?.append(ArImage(dgImage: dgImage, bgImage: bgImage, latitude: latitude, longitude: longitude))
             } else {
-                self.diagrams[route] = [ArImage(dgImage: dgImage, bgImage: bgImage)]
+                self.diagrams[route] = [ArImage(dgImage: dgImage, bgImage: bgImage, latitude: latitude, longitude: longitude)]
             }
             DispatchQueue.main.async {
                 if let index = self.routesMap[route.id], let cell = self.tableView.cellForRow(at: IndexPath(row: index, section: 0)) as? ARLoadingTVC, let total = cell.totalCount {

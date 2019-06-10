@@ -8,4 +8,6 @@ struct ARDiagram: Codable, HypeType {
     var dgImageUrl: String
     var bgImageUrl: String
     var routeId: String
+    var latitude: Double?
+    var longitude: Double?
 }
