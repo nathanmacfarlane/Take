@@ -22,8 +22,12 @@ extension UserProfileVC: UITableViewDataSource {
 //    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: InfoCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoCell") as? InfoCell else { print("yooooooo"); return InfoCell() }
-        cell.infoLabel.text = self.info[indexPath.row]
+        guard let cell: InfoCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoCell") as? InfoCell else { return InfoCell() }
+        if seg.selectedSegmentIndex == 0 {
+            cell.infoLabel.text = self.info[indexPath.row]
+        } else {
+            cell.infoLabel.text = self.plans[indexPath.row].title
+        }
         cell.infoLabel.textColor = .white
         cell.infoLabel.font = UIFont(name: "Avenir", size: 18)
         cell.backgroundColor = .clear
@@ -32,6 +36,10 @@ extension UserProfileVC: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.info.count
+        if seg.selectedSegmentIndex == 0 {
+            return self.info.count
+        } else {
+            return self.plans.count
+        }
     }
 }

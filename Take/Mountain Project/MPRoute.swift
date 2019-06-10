@@ -49,6 +49,21 @@ struct MPRoute: Decodable {
         return CLLocation(latitude: latitude, longitude: longitude)
     }
 
+    init(route: Route) {
+        let rvm = RouteViewModel(route: route)
+        self.id = Int(route.id) ?? 0
+        self.name = rvm.name
+        self.type = rvm.typesString
+        self.rating = rvm.rating
+        self.stars = rvm.averageStar
+        self.location = [String(rvm.location.coordinate.latitude), String(rvm.location.coordinate.longitude)]
+        self.url = ""
+        self.latitude = rvm.location.coordinate.latitude
+        self.longitude = rvm.location.coordinate.longitude
+        self.starVotes = IntorString()
+        self.pitches = IntorString()
+    }
+
     enum CodingKeys: String, CodingKey {
         case name
         case id
