@@ -23,7 +23,7 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
         super.viewDidLoad()
         
         let allPhotosOptions = PHFetchOptions()
-        allPhotosOptions.fetchLimit = 20
+        allPhotosOptions.fetchLimit = 100
         allPhotosOptions.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
         allPhotos = PHAsset.fetchAssets(with: allPhotosOptions)
         
@@ -68,18 +68,11 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
         saveButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 17)
         saveButton.addTarget(self, action: #selector(hitSave), for: .touchUpInside)
         
-//        let blueprintLayout = VerticalBlueprintLayout(
-//            itemsPerRow: 4,
-//            itemSize: CGSize(width: imgWidth, height: imgHeight),
-//            minimumInteritemSpacing: 10,
-//            minimumLineSpacing: 10,
-//            sectionInset: EdgeInsets(top: 0, left: 20, bottom: 0, right: 0),
-//            stickyHeaders: true,
-//            stickyFooters: true
-//        )
-//
-//        blueprintLayout.scrollDirection = .horizontal
-//        collectionView = UICollectionView(frame: .zero, collectionViewLayout: blueprintLayout)
+        let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        layout.scrollDirection = .vertical
+        
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.register(RoutePhotosCVC.self, forCellWithReuseIdentifier: "RoutePhotoCVCell")
         collectionView.backgroundColor = .clear
         collectionView.delegate = self
@@ -118,7 +111,9 @@ class AddProfPicVC: UIViewController, PHPhotoLibraryChangeObserver, UICollection
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: imgWidth, height: imgHeight)
+        let width = self.view.frame.size.width
+        let height = self.view.frame.size.height
+        return CGSize(width: width/3.5, height: height/3.5)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -20,6 +20,28 @@ struct User: Codable {
     var tradLetter: String
     var sportLetter: String
     var bio: String
-    var location: String
+    var location: [Double]
     var info: [String]
+    
+    init(id: String, name: String, username: String) {
+        self.id = id
+        self.name = name
+        //var profilePhotoUrl: String?
+        self.username = username
+        self.toDo = []
+        self.friends = []
+        self.types = []
+        self.messageIds = []
+        self.tradGrade = 0
+        self.trGrade = 0
+        self.sportGrade = 0
+        self.boulderGrade = 0
+        self.age = 0
+        self.trLetter = ""
+        self.tradLetter = ""
+        self.sportLetter = ""
+        self.bio = ""
+        self.location = [0,0]
+        self.info = []
+    }
 }
