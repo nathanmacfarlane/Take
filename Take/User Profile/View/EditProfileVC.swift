@@ -89,8 +89,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
-        
-        
         initViews()
     }
     
@@ -130,9 +128,11 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell: InfoEditCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoEditCell") as? InfoEditCell else { print("yooooooo"); return InfoEditCell() }
+        guard let cell: InfoCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoCell") as? InfoCell else { print("yooooooo"); return InfoCell() }
         
         cell.infoLabel.text = self.info[indexPath.row]
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
         
         return cell
     }
@@ -243,7 +243,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let updateButton = UIButton()
         updateButton.addTarget(self, action: #selector(updateProf), for: UIControl.Event.allTouchEvents)
         updateButton.setTitle("Update", for: .normal)
-        updateButton.setTitleColor( UISettings.shared.colorScheme.backgroundCell, for: .normal)
+        updateButton.setTitleColor(.white, for: .normal)
         updateButton.backgroundColor = UISettings.shared.colorScheme.accent
         updateButton.layer.cornerRadius = 8
         updateButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
@@ -306,7 +306,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         picButton.layer.cornerRadius = 8
         
         self.infoTableView = UITableView()
-        infoTableView.register(InfoEditCell.self, forCellReuseIdentifier: "InfoEditCell")
+        infoTableView.register(InfoCell.self, forCellReuseIdentifier: "InfoCell")
         infoTableView.dataSource = self
         infoTableView.delegate = self
         infoTableView.separatorStyle = .none
@@ -326,10 +326,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         ageSlider.valueLabels[0].font = UIFont(name: "Avenir", size: 16)
         ageSlider.thumbCount = 1
         ageSlider.snapStepSize = 1
-        
-        
-        
-//        ageSlider.lab
         
         view.addSubview(updateButton)
         view.addSubview(picButton)
@@ -412,65 +408,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         
     
-    }
-    
-}
-
-
-class InfoEditCell: UITableViewCell {
-    
-    var infoLabel = UILabel()
-    let container = UIView()
-    var indent = CGFloat(100)
-    var infoPic = UIImageView()
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        //        self.layer.cornerRadius = 10
-        self.layer.masksToBounds = true
-        setup()
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setup() {
-        self.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
-        
-        infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
-        infoLabel.textAlignment = .left
-        
-        
-        container.backgroundColor = UISettings.shared.colorScheme.backgroundCell
-        container.layer.masksToBounds = true
-        container.layer.cornerRadius = 8
-        
-        infoPic.contentMode = .scaleAspectFill
-        
-        addSubview(container)
-        addSubview(infoLabel)
-        addSubview(infoPic)
-        
-        container.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 8).isActive = true
-        NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -5).isActive = true
-        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 8/9, constant: 0).isActive = true
-        
-        infoPic.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: infoPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .width, relatedBy: .equal, toItem: container, attribute: .height, multiplier: 1, constant: 0).isActive = true
-        
-        infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.leadingAnchor.constraint(equalTo: infoPic.trailingAnchor, constant: 10).isActive = true
-        infoLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
-        infoLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
-        infoLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1/3).isActive = true
     }
     
 }

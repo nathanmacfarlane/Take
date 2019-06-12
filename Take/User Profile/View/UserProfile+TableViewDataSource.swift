@@ -24,10 +24,9 @@ extension UserProfileVC: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: InfoCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoCell") as? InfoCell else { print("yooooooo"); return InfoCell() }
         cell.infoLabel.text = self.info[indexPath.row]
-        cell.infoLabel.textColor = .white
-        cell.infoLabel.font = UIFont(name: "Avenir", size: 18)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
+        cell.infoLabel.isUserInteractionEnabled = false
         return cell
     }
     

@@ -37,7 +37,7 @@ struct Dark: ColorScheme {
     let backgroundCell = #colorLiteral(red: 0.1715052911, green: 0.1874919698, blue: 0.2258787701, alpha: 1)
     let textPrimary = #colorLiteral(red: 0.6784313725, green: 0.6784313725, blue: 0.6784313725, alpha: 1)
     let textSecondary  = #colorLiteral(red: 0.6392156863, green: 0.6392156863, blue: 0.6392156863, alpha: 1)
-    let accent = #colorLiteral(red: 0.9690396317, green: 0.773853778, blue: 0.869082567, alpha: 1)
+    let accent = #colorLiteral(red: 0.9019607843, green: 0.5629953748, blue: 0.6269861983, alpha: 1)
     let complimentary = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9019607843, alpha: 1)
     let gradeBubble = #colorLiteral(red: 0.1848252595, green: 0.3804076532, blue: 0.2946595092, alpha: 1)
     let outlineButton = #colorLiteral(red: 0.9019607843, green: 0.9019607843, blue: 0.9019607843, alpha: 1)

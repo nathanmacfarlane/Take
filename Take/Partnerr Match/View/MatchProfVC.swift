@@ -3,7 +3,7 @@ import FirebaseAuth
 import Foundation
 import Presentr
 import UIKit
-class MatchProfVC: UIViewController {
+class MatchProfVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var user: User?
     var match: User?
@@ -30,7 +30,7 @@ class MatchProfVC: UIViewController {
     var tradLetter = ""
     var trLetter = ""
     var sportLetter = ""
-    var tableView: UITableView!
+    var infoTableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -125,6 +125,24 @@ class MatchProfVC: UIViewController {
         self.present(nav, animated: true, completion: nil)
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 70
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell: InfoCell = self.infoTableView.dequeueReusableCell(withIdentifier: "InfoCell") as? InfoCell else { print("yooooooo"); return InfoCell() }
+//        guard let match = self.match else { return cell}
+        cell.infoLabel.text = self.match?.info[indexPath.row]
+        cell.backgroundColor = .clear
+        cell.selectionStyle = .none
+        cell.infoLabel.isUserInteractionEnabled = false
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.match!.info.count
+    }
+    
     @objc func backToMatches() {
         self.dismiss(animated: true, completion: nil)
     }
@@ -134,6 +152,14 @@ class MatchProfVC: UIViewController {
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.leftBarButtonItem?.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.title = self.match?.username
+        
+        self.infoTableView = UITableView()
+        infoTableView.register(InfoCell.self, forCellReuseIdentifier: "InfoCell")
+        infoTableView.dataSource = self
+        infoTableView.delegate = self
+        infoTableView.separatorStyle = .none
+        infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
+        infoTableView.isHidden = false
    
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
@@ -202,7 +228,14 @@ class MatchProfVC: UIViewController {
         view.addSubview(editButton)
         view.addSubview(boulderButton)
         view.addSubview(boulderGrade)
+        view.addSubview(infoTableView)
         
+        
+        infoTableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: editButton, attribute: .bottom, multiplier: 1, constant: 30).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoTableView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
         
         
         userNameLabel.translatesAutoresizingMaskIntoConstraints = false

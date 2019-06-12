@@ -55,8 +55,6 @@ class CreateAccountVC: UIViewController {
                     self.showAlert(title: "Whipper!", message: "Something went wrong when creating your account...")
                     return
                 }
-                print("\(user.email!) created")
-                print("\(user.uid) UID")
                 self.backToLogin()
                 self.user = User(id: user.uid, name: self.name, username: self.username)
                 Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new user", completion: nil)
@@ -151,15 +149,15 @@ class CreateAccountVC: UIViewController {
         view.addSubview(sendButton)
         
         myEmailLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myEmailLabel, attribute: .leading , relatedBy: .equal, toItem: myEmailTF, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myEmailLabel, attribute: .leading, relatedBy: .equal, toItem: myEmailTF, attribute: .leading, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: myEmailLabel, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 20).isActive = true
         NSLayoutConstraint(item: myEmailLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 2/3, constant: 0).isActive = true
         NSLayoutConstraint(item: myEmailLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 20).isActive = true
         
         myEmailTF.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myEmailTF, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myEmailTF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myEmailTF, attribute: .top, relatedBy: .equal, toItem: myEmailLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: myEmailTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: myEmailTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
         NSLayoutConstraint(item: myEmailTF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
         
         myPassLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -169,9 +167,9 @@ class CreateAccountVC: UIViewController {
         NSLayoutConstraint(item: myPassLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 20).isActive = true
         
         myPassTF.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myPassTF, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myPassTF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myPassTF, attribute: .top, relatedBy: .equal, toItem: myPassLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: myPassTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: myPassTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
         NSLayoutConstraint(item: myPassTF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
         
         myNameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -181,9 +179,9 @@ class CreateAccountVC: UIViewController {
         NSLayoutConstraint(item: myNameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 20).isActive = true
         
         myNameTF.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myNameTF, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myNameTF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myNameTF, attribute: .top, relatedBy: .equal, toItem: myNameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: myNameTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: myNameTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
         NSLayoutConstraint(item: myNameTF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
         
         myUsernameLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -193,9 +191,9 @@ class CreateAccountVC: UIViewController {
         NSLayoutConstraint(item: myUsernameLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 20).isActive = true
         
         myUsernameTF.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: myUsernameTF, attribute: .leading , relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: myUsernameTF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: myUsernameTF, attribute: .top, relatedBy: .equal, toItem: myUsernameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: myUsernameTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 3/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: myUsernameTF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
         NSLayoutConstraint(item: myUsernameTF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 40).isActive = true
         
         sendButton.translatesAutoresizingMaskIntoConstraints = false

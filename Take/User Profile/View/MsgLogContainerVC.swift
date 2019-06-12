@@ -43,7 +43,7 @@ class MsgLogContainerVC: UIViewController, UITableViewDelegate, UITableViewDataS
         textField.textColor = .white
         textField.font = UIFont(name: "Avenir", size: 18)
         textField.backgroundColor = UIColor(named: "BluePrimaryDark")
-        textField.placeholder = "enter text here yo.... lol sheeit"
+        textField.placeholder = "enter msg here..."
         return textField
     }()
     
