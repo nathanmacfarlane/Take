@@ -156,7 +156,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
@@ -172,7 +172,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
@@ -212,6 +212,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         pmButton.image = pmIcon
         pmButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = pmButton
+        seg.tintColor = UISettings.shared.colorScheme.segmentColor
         
         self.infoTableView = UITableView()
         infoTableView.register(InfoCell.self, forCellReuseIdentifier: "InfoCell")
@@ -231,30 +232,30 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
-        sportButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        sportButton.backgroundColor = UIColor(hex: "#0E4343")
+        sportButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        sportButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         sportButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
-        boulderButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        boulderButton.backgroundColor = UIColor(hex: "#0E4343")
+        boulderButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        boulderButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         boulderButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
-        trButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
+        trButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
         trButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
-        trButton.backgroundColor = UIColor(hex: "#0E4343")
+        trButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         
         tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
         tradButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
-        tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        tradButton.backgroundColor = UIColor(hex: "#0E4343")
+        tradButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        tradButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         
         profPic = TypeButton()
-        profPic.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 2.5)
+        profPic.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 2.5)
         profPic.clipsToBounds = true
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
@@ -271,8 +272,8 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         editButton = UIButton()
         editButton.addTarget(self, action: #selector(openEditProfile), for: UIControl.Event.touchUpInside)
         editButton.setTitle("Edit Profile", for: .normal)
-        editButton.setTitleColor( .black, for: .normal)
-        editButton.backgroundColor = UIColor(named: "Placeholder")
+        editButton.setTitleColor( UISettings.shared.colorScheme.textSecondary, for: .normal)
+        editButton.backgroundColor = UISettings.shared.colorScheme.segmentColor
         editButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         editButton.layer.cornerRadius = 8
         

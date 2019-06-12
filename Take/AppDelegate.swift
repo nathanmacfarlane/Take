@@ -18,6 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         IQKeyboardManager.shared.enable = true
+        if let colorScheme = UserDefaults.standard.string(forKey: "colorScheme") {
+            if colorScheme == "dark" {
+                UISettings.shared.mode = .dark
+            } else {
+                UISettings.shared.mode = .light
+            }
+        }
 //
 //        if #available(iOS 10.0, *) {
 //            UNUserNotificationCenter.current().delegate = self

@@ -34,7 +34,7 @@ class MatchTVC: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = UIColor(named: "BluePrimary")
+        self.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         
         
         usernameLabel.textColor = .white

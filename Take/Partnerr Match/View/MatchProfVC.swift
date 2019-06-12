@@ -19,12 +19,12 @@ class MatchProfVC: UIViewController {
     var editButton = UIButton()
     var climberSearch = UIButton()
     var profImage = UIImage()
-    let userNameLabel = UILabel()
-    let userBio = UILabel()
-    let tradGrade = UILabel()
-    let trGrade = UILabel()
-    let sportGrade = UILabel()
-    let boulderGrade = UILabel()
+    var userNameLabel = UILabel()
+    var userBio = UILabel()
+    var tradGrade = UILabel()
+    var trGrade = UILabel()
+    var sportGrade = UILabel()
+    var boulderGrade = UILabel()
     var flag = false
     
     var tradLetter = ""
@@ -119,7 +119,7 @@ class MatchProfVC: UIViewController {
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         self.present(nav, animated: true, completion: nil)
@@ -137,63 +137,57 @@ class MatchProfVC: UIViewController {
    
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         
-        userNameLabel.textColor = UISettings.shared.colorScheme.textSecondary
-        userNameLabel.textAlignment = .left
-        userNameLabel.font = UIFont(name: "Avenir-Heavy", size: 22)
+        userNameLabel = LabelAvenir(size: 22, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
         
-        userBio.textColor = UISettings.shared.colorScheme.textSecondary
-        userBio.textAlignment = .left
-        userBio.font = UIFont(name: "Avenir-Oblique", size: 16)
+        userBio = LabelAvenir(size: 16, type: .Medium, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
+        userBio.numberOfLines = 0
+        userBio.lineBreakMode = .byWordWrapping
+        userBio.layer.masksToBounds = true
         
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
-        sportButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        sportButton.backgroundColor = UIColor(hex: "#0E4343")
-        
-        trButton = TypeButton()
-        trButton.setTitle("TR", for: .normal)
-        trButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        trButton.backgroundColor = UIColor(hex: "#0E4343")
-        
-        tradButton = TypeButton()
-        tradButton.setTitle("T", for: .normal)
-        tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        tradButton.backgroundColor = UIColor(hex: "#0E4343")
+        sportButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        sportButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
+        sportButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
-        boulderButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        boulderButton.backgroundColor = UIColor(hex: "#0E4343")
+        boulderButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        boulderButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
+        boulderButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
+        
+        trButton = TypeButton()
+        trButton.setTitle("TR", for: .normal)
+        trButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        trButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
+        trButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
+        
+        tradButton = TypeButton()
+        tradButton.setTitle("T", for: .normal)
+        tradButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
+        tradButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        tradButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         
         profPic = TypeButton()
-        profPic.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 2.5)
+        profPic.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 2.5)
         profPic.clipsToBounds = true
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
         
-        tradGrade.font = UIFont(name: "Avenir", size: 16)
-        tradGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        tradGrade.textAlignment = .center
+        tradGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        trGrade.font = UIFont(name: "Avenir", size: 16)
-        trGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        trGrade.textAlignment = .center
+        trGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        sportGrade.font = UIFont(name: "Avenir", size: 16)
-        sportGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        sportGrade.textAlignment = .center
+        sportGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
-        boulderGrade.font = UIFont(name: "Avenir", size: 16)
-        boulderGrade.textColor = UISettings.shared.colorScheme.textSecondary
-        boulderGrade.textAlignment = .center
-        
+        boulderGrade = LabelAvenir(size: 16, type: .Book, color: UISettings.shared.colorScheme.textSecondary, alignment: .center)
         
         editButton = UIButton()
         editButton.setTitle("Message", for: .normal)
         editButton.setTitleColor( .black, for: .normal)
         editButton.addTarget(self, action: #selector(openDM), for: UIControl.Event.touchUpInside)
-        editButton.backgroundColor = UIColor(named: "Placeholder")
+        editButton.backgroundColor = UISettings.shared.colorScheme.segmentColor
         editButton.layer.cornerRadius = 8
         
         view.addSubview(userNameLabel)

@@ -34,11 +34,11 @@ class CreateAccountVC: UIViewController {
     }
     @objc
     func usernameFieldChanged(_ textField: UITextField) {
-        self.name = textField.text ?? ""
+        self.username = textField.text ?? ""
     }
     @objc
     func nameFieldChanged(_ textField: UITextField) {
-        self.username = textField.text ?? ""
+        self.name = textField.text ?? ""
     }
     
     @objc

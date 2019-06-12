@@ -31,7 +31,7 @@ class PartnerMatchVC: UIViewController {
     
     var seg: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Top Rope", "Sport", "Trad", "Boulder"])
-        sc.tintColor = UISettings.shared.colorScheme.textSecondary
+        sc.tintColor = UISettings.shared.colorScheme.segmentColor
         sc.selectedSegmentIndex = 0
         sc.addTarget(self, action: #selector(handleSegmentChanges), for: .valueChanged)
         return sc
@@ -119,11 +119,11 @@ class PartnerMatchVC: UIViewController {
                                      boulderGradeH: self.bGradeU, boulderGradeL: self.bGradeL,
                                      sportLetter: "", trLetter: "", tradLetter: "")
         let nav = UINavigationController(rootViewController: mr)
-        nav.navigationBar.barTintColor = UIColor(named: "BluePrimaryDark")
-        nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
+        nav.navigationBar.barTintColor = UISettings.shared.colorScheme.backgroundPrimary
+        nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
@@ -133,6 +133,7 @@ class PartnerMatchVC: UIViewController {
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
         self.navigationItem.title = "Partner Match"
+        seg.tintColor = UISettings.shared.colorScheme.segmentColor
         
         guard let user = self.user else { return }
         
@@ -145,7 +146,7 @@ class PartnerMatchVC: UIViewController {
         ageSlider.minimumValue = 18
         ageSlider.maximumValue = 40
         ageSlider.trackWidth = 5
-        ageSlider.tintColor = UIColor(named: "PinkAccent")
+        ageSlider.tintColor = UISettings.shared.colorScheme.accent
         ageSlider.value = [lower, CGFloat(user.age + 3)]
         ageSlider.orientation = .horizontal
         ageSlider.outerTrackColor = UIColor(named: "Placeholder")
@@ -178,7 +179,7 @@ class PartnerMatchVC: UIViewController {
         let sendButton = UIButton()
         sendButton.setTitle("Send It!", for: .normal)
         sendButton.setTitleColor(.white, for: .normal)
-        sendButton.backgroundColor = UIColor(named: "PinkAccent")
+        sendButton.backgroundColor = UISettings.shared.colorScheme.accent
         sendButton.layer.cornerRadius = 8
         sendButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         sendButton.addTarget(self, action: #selector(openMatchResults), for: UIControl.Event.touchUpInside)
@@ -193,7 +194,7 @@ class PartnerMatchVC: UIViewController {
             trStepper.value = Double(user.trGrade - 1)
         }
         trStepper.items = Array(0...15).map { "5.\($0)" }
-        trStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        trStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         trStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         
         sportStepper = GMStepper()
@@ -206,7 +207,7 @@ class PartnerMatchVC: UIViewController {
             sportStepper.value = Double(user.sportGrade - 1)
         }
         sportStepper.items = Array(0...15).map { "5.\($0)" }
-        sportStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        sportStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         sportStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         sportStepper.isHidden = true
         
@@ -220,7 +221,7 @@ class PartnerMatchVC: UIViewController {
             tradStepper.value = Double(user.tradGrade - 1)
         }
         tradStepper.items = Array(0...15).map { "5.\($0)" }
-        tradStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        tradStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         tradStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         tradStepper.isHidden = true
         
@@ -234,7 +235,7 @@ class PartnerMatchVC: UIViewController {
             bStepper.value = Double(user.boulderGrade - 1)
         }
         bStepper.items = Array(0...15).map { "V\($0)" }
-        bStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        bStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         bStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         bStepper.isHidden = true
         
@@ -248,7 +249,7 @@ class PartnerMatchVC: UIViewController {
             trStepperL.value = Double(user.trGrade + 1)
         }
         trStepperL.items = Array(0...15).map { "5.\($0)" }
-        trStepperL.buttonsBackgroundColor = UIColor(hex: "#888888")
+        trStepperL.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         trStepperL.labelBackgroundColor = UIColor(hex: "#4B4D50")
         
         sportStepperL = GMStepper()
@@ -261,7 +262,7 @@ class PartnerMatchVC: UIViewController {
             sportStepperL.value = Double(user.sportGrade + 1)
         }
         sportStepperL.items = Array(0...15).map { "5.\($0)" }
-        sportStepperL.buttonsBackgroundColor = UIColor(hex: "#888888")
+        sportStepperL.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         sportStepperL.labelBackgroundColor = UIColor(hex: "#4B4D50")
         sportStepperL.isHidden = true
         
@@ -275,7 +276,7 @@ class PartnerMatchVC: UIViewController {
             tradStepperL.value = Double(user.tradGrade + 1)
         }
         tradStepperL.items = Array(0...15).map { "5.\($0)" }
-        tradStepperL.buttonsBackgroundColor = UIColor(hex: "#888888")
+        tradStepperL.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         tradStepperL.labelBackgroundColor = UIColor(hex: "#4B4D50")
         tradStepperL.isHidden = true
         
@@ -290,7 +291,7 @@ class PartnerMatchVC: UIViewController {
             bStepperL.value = Double(user.boulderGrade + 1)
         }
         bStepperL.items = Array(0...15).map { "V\($0)" }
-        bStepperL.buttonsBackgroundColor = UIColor(hex: "#888888")
+        bStepperL.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         bStepperL.labelBackgroundColor = UIColor(hex: "#4B4D50")
         bStepperL.isHidden = true
         

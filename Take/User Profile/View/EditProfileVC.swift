@@ -87,8 +87,10 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
                                        33: "d"]
     
     override func viewDidLoad() {
-        view.backgroundColor = UIColor(named: "BluePrimaryDark")
         super.viewDidLoad()
+        view.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
+        
+        
         initViews()
     }
     
@@ -103,18 +105,18 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.present(LoginVC(), animated: true, completion: nil)
     }
     
-    @objc func backToProf() {
+    @objc
+    func backToProf() {
         self.dismiss(animated: true, completion: nil)
     }
     
     @objc
     func toggledEdit() {
         if UISettings.shared.mode == .light {
-            //UISettings.shared.mode = UISettings.shared.dark
+            UserDefaults.standard.set("dark", forKey: "colorScheme")
             fatalError()
-        }
-        else {
-            //UISettings.shared.mode = UISettings.shared.light
+        } else {
+            UserDefaults.standard.set("light", forKey: "colorScheme")
             fatalError()
         }
     }
@@ -137,7 +139,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     var seg: UISegmentedControl = {
         let sc = UISegmentedControl(items: ["Top Rope", "Sport", "Trad", "Boulder"])
-        sc.tintColor = UISettings.shared.colorScheme.textSecondary
+        sc.tintColor = UISettings.shared.colorScheme.segmentColor
         sc.selectedSegmentIndex = 0
         sc.addTarget(self, action: #selector(handleSegmentChanges), for: .valueChanged)
         return sc
@@ -166,12 +168,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.user?.age = Int(self.ageSlider.value[0])
         
         Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in updating profile", completion: nil)
-//        let userViewModel = UserViewModel(user: user)
-//        userViewModel.getProfilePhoto { image in
-//            DispatchQueue.main.async {
-//                self.profPic.setBackgroundImage(image, for: .normal)
-//            }
-//        }
         self.backToProf()
     }
     
@@ -234,7 +230,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
         toggler = UISwitch()
         toggler.addTarget(self, action: #selector(toggledEdit), for: .valueChanged)
-        toggler.onTintColor = UISettings.shared.colorScheme.accent
+        toggler.tintColor = UISettings.shared.colorScheme.segmentColor
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
@@ -247,9 +243,10 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let updateButton = UIButton()
         updateButton.addTarget(self, action: #selector(updateProf), for: UIControl.Event.allTouchEvents)
         updateButton.setTitle("Update", for: .normal)
-        updateButton.setTitleColor( .black, for: .normal)
+        updateButton.setTitleColor( UISettings.shared.colorScheme.backgroundCell, for: .normal)
         updateButton.backgroundColor = UISettings.shared.colorScheme.accent
         updateButton.layer.cornerRadius = 8
+        updateButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         
         let gArray = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10a", "10b", "10c", "10d", "11a", "11b",
                       "11c", "11d", "12a", "12b", "12c", "12d", "13a", "13b", "13c", "13d", "14a", "14b",
@@ -260,7 +257,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         trStepper.maximumValue = 33
         trStepper.stepValue = 1.0
         trStepper.items = gArray.map { "5.\($0)" }
-        trStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        trStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         trStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         trStepper.value = Double(findIndex(target: "\(user.trGrade)" + user.trLetter, arr: gArray))
         
@@ -269,7 +266,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         sportStepper.maximumValue = 33
         sportStepper.stepValue = 1.0
         sportStepper.items = gArray.map { "5.\($0)" }
-        sportStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        sportStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         sportStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         sportStepper.value = Double(findIndex(target: "\(user.sportGrade)" + user.sportLetter, arr: gArray))
         sportStepper.isHidden = true
@@ -279,7 +276,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         tradStepper.maximumValue = 33
         tradStepper.stepValue = 1.0
         tradStepper.items = gArray.map { "5.\($0)" }
-        tradStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        tradStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         tradStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         tradStepper.value = Double(findIndex(target: "\(user.tradGrade)" + user.tradLetter, arr: gArray))
         tradStepper.isHidden = true
@@ -289,7 +286,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         bStepper.maximumValue = 15
         bStepper.stepValue = 1.0
         bStepper.items = Array(0...15).map { "V\($0)" }
-        bStepper.buttonsBackgroundColor = UIColor(hex: "#888888")
+        bStepper.buttonsBackgroundColor = UISettings.shared.colorScheme.segmentColor
         bStepper.labelBackgroundColor = UIColor(hex: "#4B4D50")
         bStepper.value = Double(user.boulderGrade)
         bStepper.isHidden = true
@@ -303,8 +300,9 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         let picButton = UIButton()
         picButton.addTarget(self, action: #selector(hitAddPhotos), for: UIControl.Event.allTouchEvents)
         picButton.setTitle("Upload Photo", for: .normal)
+        picButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         picButton.setTitleColor( UISettings.shared.colorScheme.backgroundCell, for: .normal)
-        picButton.backgroundColor = UISettings.shared.colorScheme.complimentary
+        picButton.backgroundColor = UISettings.shared.colorScheme.segmentColor
         picButton.layer.cornerRadius = 8
         
         self.infoTableView = UITableView()
@@ -315,18 +313,11 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         infoTableView.isHidden = false
         
-//        ageSlider.minimumTrackTintColor = .green
-//        ageSlider.maximumTrackTintColor = .red
-//        ageSlider.thumbTintColor = .black
-//        ageSlider.minimumValue = 18
-//        ageSlider.maximumValue = 55
-//        ageSlider.setValue(Float(user.age), animated: false)
-//        ageSlider.isContinuous = false
         
         ageSlider.minimumValue = 18
         ageSlider.maximumValue = 55
         ageSlider.trackWidth = 5
-        ageSlider.tintColor = UIColor(named: "PinkAccent")
+        ageSlider.tintColor = UISettings.shared.colorScheme.accent
         ageSlider.value = [CGFloat(user.age)]
         ageSlider.orientation = .horizontal
         ageSlider.outerTrackColor = UISettings.shared.colorScheme.textPrimary
@@ -348,7 +339,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.addSubview(sportStepper)
         view.addSubview(tradStepper)
         view.addSubview(bStepper)
-//        view.addSubview(toggler)
+        view.addSubview(toggler)
         view.addSubview(infoTableView)
         view.addSubview(ageSlider)
         
@@ -396,7 +387,7 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         NSLayoutConstraint(item: updateButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
         
         picButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: picButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: picButton, attribute: .leading, relatedBy: .equal, toItem: tradStepper, attribute: .leading, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .top, relatedBy: .equal, toItem: tradStepper, attribute: .bottom, multiplier: 1, constant: 25).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/3, constant: 0).isActive = true
         NSLayoutConstraint(item: picButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
@@ -407,11 +398,11 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         NSLayoutConstraint(item: ageSlider, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 2/3, constant: 0).isActive = true
         NSLayoutConstraint(item: ageSlider, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 15).isActive = true
         
-//        toggler.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint(item: toggler, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: toggler, attribute: .top, relatedBy: .equal, toItem: picButton, attribute: .bottom, multiplier: 1, constant: 40).isActive = true
-//        NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
-//        NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
+        toggler.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: toggler, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 25).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .centerY, relatedBy: .equal, toItem: picButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
+        NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
         
         infoTableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -446,7 +437,7 @@ class InfoEditCell: UITableViewCell {
     }
     
     func setup() {
-        self.backgroundColor = UIColor(named: "BluePrimaryDark")
+        self.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         
         infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
         infoLabel.font = UIFont(name: "Avenir-Heavy", size: 18)
