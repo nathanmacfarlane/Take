@@ -12,10 +12,12 @@ class SearchRoutesVC: UIViewController {
     struct SearchResults {
         var routes: [Route] = []
         var areas: [Area] = []
+        var users: [User] = []
 
         mutating func clear() {
             routes.removeAll()
             areas.removeAll()
+            users.removeAll()
         }
     }
 
@@ -101,6 +103,7 @@ class SearchRoutesVC: UIViewController {
         self.myTableView = UITableView()
         myTableView.register(RouteTVC.self, forCellReuseIdentifier: "RouteTVC")
         myTableView.register(AreaTVC.self, forCellReuseIdentifier: "AreaTVC")
+        myTableView.register(MatchTVC.self, forCellReuseIdentifier: "MatchTVC")
         myTableView.backgroundColor = .clear
         myTableView.separatorStyle = .none
         myTableView.dataSource = self

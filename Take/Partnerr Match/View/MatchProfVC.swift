@@ -31,6 +31,8 @@ class MatchProfVC: UIViewController {
     var trLetter = ""
     var sportLetter = ""
     var tableView: UITableView!
+
+    var presented = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -130,10 +132,12 @@ class MatchProfVC: UIViewController {
     }
     
     func initViews() {
-        let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToMatches))
-        self.navigationItem.leftBarButtonItem = backButton
-        self.navigationItem.leftBarButtonItem?.tintColor = UISettings.shared.colorScheme.accent
-        self.navigationItem.title = self.match?.username
+        if presented {
+            let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToMatches))
+            self.navigationItem.leftBarButtonItem = backButton
+            self.navigationItem.leftBarButtonItem?.tintColor = UISettings.shared.colorScheme.accent
+            self.navigationItem.title = self.match?.username
+        }
    
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         

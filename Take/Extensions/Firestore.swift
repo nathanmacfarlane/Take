@@ -58,6 +58,10 @@ extension Firestore {
             let client = Client(appID: Constants.algoliaAppId, apiKey: Constants.algoliaApiKey)
             let index = client.index(withName: "route_search")
             index.saveObject(["name": route.name, "objectID": route.id])
+        } else if let user = object as? User {
+            let client = Client(appID: Constants.algoliaAppId, apiKey: Constants.algoliaApiKey)
+            let index = client.index(withName: "user_search")
+            index.saveObject(["name": user.name, "objectID": user.id])
         }
         FirestoreService.shared.fs.collection(collection).document(title).setData(objectData) { _ in
             completion?()
