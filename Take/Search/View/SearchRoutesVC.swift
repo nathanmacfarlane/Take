@@ -86,10 +86,10 @@ class SearchRoutesVC: UIViewController {
         myNavAddNewButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.rightBarButtonItem = myNavAddNewButton
 
-        // just for testing
-        let testButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNewAr))
-        testButton.tintColor = UISettings.shared.colorScheme.accent
-        self.navigationItem.leftBarButtonItem = testButton
+//        // just for testing
+//        let testButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(showNewAr))
+//        testButton.tintColor = UISettings.shared.colorScheme.accent
+//        self.navigationItem.leftBarButtonItem = testButton
 
         // search bars
         self.mySearchBar = UISearchBar()

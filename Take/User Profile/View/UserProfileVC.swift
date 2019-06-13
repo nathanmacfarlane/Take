@@ -57,6 +57,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         if let currentUser = Auth.auth().currentUser {
             getToDoLists(user: currentUser)
         }
+
     }
     
     func getToDoLists(user: Firebase.User) {
@@ -66,6 +67,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
             FirestoreService.shared.fs.query(collection: "plans", by: "userId", with: user.id, of: UserPlanFB.self) { plans in
                 self.plans = plans
+                if self.seg.selectedSegmentIndex == 1 {
+                    self.infoTableView.reloadData()
+                }
             }
 
             self.user = user

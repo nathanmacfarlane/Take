@@ -4,12 +4,16 @@ import Presentr
 import SceneKit
 import UIKit
 
+class SelectedArButton: UIButton {
+    var route: Route?
+}
+
 class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollectionViewDelegate, UICollectionViewDataSource, CLLocationManagerDelegate {
 
     var sceneView: ARSCNView!
     var collectionView: UICollectionView!
 //    var compassView: UIImageView!
-//    var compassLabel: UILabel!
+    var selectedRouteButton: SelectedArButton!
 
     var route: Route?
     var diagrams: [Route: [ArImage]] = [:]
@@ -107,16 +111,6 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         return radiansToDegrees(radians: radiansBearing)
     }
 
-    @objc
-    func hitBack() {
-        dismiss(animated: true, completion: nil)
-    }
-
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        sceneView.session.pause()
-    }
-
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return activeImages.keys.count
     }
@@ -132,13 +126,18 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let node = nodes[indexPath.row]
-        for n in nodes where n != node {
-            n.isHidden = true
-        }
+        for n in nodes where n != node { n.isHidden = true }
         node.isHidden = false
         guard let arAndRef = activeImages[node] else { return }
         add(arAndRef: arAndRef, to: node, imageIndex: indexPath.row)
         visibleArRefImage = arAndRef
+        selectedRouteButton.setTitle(String(arAndRef.refImage.route?.name ?? ""), for: .normal)
+        if selectedRouteButton.alpha == 0 {
+            UIView.animate(withDuration: 0.5) {
+                self.selectedRouteButton.alpha = 1.0
+            }
+        }
+        selectedRouteButton.route = arAndRef.refImage.route
     }
 
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -187,6 +186,14 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         self.customPresentViewController(presenter, viewController: mapVC, animated: true)
     }
 
+    @objc
+    func hitSelectedRoute() {
+        guard let route = selectedRouteButton.route else { return }
+        let routeManager = RouteManagerVC()
+        routeManager.routeViewModel = RouteViewModel(route: route)
+        navigationController?.pushViewController(routeManager, animated: true)
+    }
+
     func initViews() {
 
         sceneView = ARSCNView()
@@ -197,17 +204,11 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         configuration.detectionImages = Set(refImages)
         self.sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 
-        let backButton = UIButton()
-        backButton.setTitle("Close", for: .normal)
-        backButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 18)
-        backButton.setTitleColor(.black, for: .normal)
-        backButton.addTarget(self, action: #selector(hitBack), for: .touchUpInside)
-
-        let mapButton = UIButton()
-        mapButton.setTitle(String.fontAwesomeIcon(name: .mapPin), for: .normal)
-        mapButton.titleLabel?.font = UIFont.fontAwesome(ofSize: 20, style: .solid)
-        mapButton.setTitleColor(.black, for: .normal)
-        mapButton.addTarget(self, action: #selector(hitMap), for: .touchUpInside)
+        let attributes = [NSAttributedString.Key.font: UIFont.fontAwesome(ofSize: 20, style: .solid)]
+        let mapButton = UIBarButtonItem(title: String.fontAwesomeIcon(name: .mapPin), style: .plain, target: self, action: #selector(hitMap))
+        mapButton.setTitleTextAttributes(attributes, for: .normal)
+        mapButton.setTitleTextAttributes(attributes, for: .selected)
+        navigationItem.setRightBarButton(mapButton, animated: true)
 
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
@@ -225,28 +226,21 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
 //        compassView = UIImageView()
 //        compassView.image = UIImage(named: "compass")
-//
-//        compassLabel = LabelAvenir(size: 20, type: .Heavy, color: .black)
-//        compassLabel.text = "Distance: "
+
+        selectedRouteButton = SelectedArButton()
+        selectedRouteButton.setTitle("", for: .normal)
+        selectedRouteButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 20)
+        selectedRouteButton.setTitleColor(.black, for: .normal)
+        selectedRouteButton.addTarget(self, action: #selector(hitSelectedRoute), for: .touchUpInside)
+        selectedRouteButton.backgroundColor = .white
+        selectedRouteButton.layer.cornerRadius = 15
+        selectedRouteButton.clipsToBounds = true
+        selectedRouteButton.alpha = 0
 
         view.addSubview(sceneView)
         view.addSubview(collectionView)
 //        view.addSubview(compassView)
-//        view.addSubview(compassLabel)
-        view.addSubview(backButton)
-        view.addSubview(mapButton)
-
-        backButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: backButton, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: backButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: backButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: backButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
-
-        mapButton.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: mapButton, attribute: .trailing, relatedBy: .equal, toItem: view, attribute: .trailing, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: mapButton, attribute: .top, relatedBy: .equal, toItem: view, attribute: .top, multiplier: 1, constant: 20).isActive = true
-        NSLayoutConstraint(item: mapButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: mapButton, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 60).isActive = true
+        view.addSubview(selectedRouteButton)
 
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: collectionView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
@@ -259,12 +253,12 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 //        NSLayoutConstraint(item: compassView, attribute: .bottom, relatedBy: .equal, toItem: collectionView, attribute: .top, multiplier: 1, constant: -20).isActive = true
 //        NSLayoutConstraint(item: compassView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
 //        NSLayoutConstraint(item: compassView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
-//
-//        compassLabel.translatesAutoresizingMaskIntoConstraints = false
-//        NSLayoutConstraint(item: compassLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-//        NSLayoutConstraint(item: compassLabel, attribute: .bottom, relatedBy: .equal, toItem: compassView, attribute: .top, multiplier: 1, constant: -20).isActive = true
-//        NSLayoutConstraint(item: compassLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-//        NSLayoutConstraint(item: compassLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+
+        selectedRouteButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: selectedRouteButton, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: selectedRouteButton, attribute: .bottom, relatedBy: .equal, toItem: collectionView, attribute: .top, multiplier: 1, constant: -20).isActive = true
+        NSLayoutConstraint(item: selectedRouteButton, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+        NSLayoutConstraint(item: selectedRouteButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: -20).isActive = true
 
         sceneView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sceneView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
