@@ -1,7 +1,7 @@
 import CodableFirebase
 import FirebaseAuth
-import Foundation
 import FirebaseFirestore
+import Foundation
 import Presentr
 
 class PlanTripDetailVC: UIViewController, UITableViewDelegate, UITableViewDataSource {

@@ -30,7 +30,11 @@ class MatchProfVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
     var tradLetter = ""
     var trLetter = ""
     var sportLetter = ""
+  
     var infoTableView: UITableView!
+    var tableView: UITableView!
+
+    var presented = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -160,6 +164,13 @@ class MatchProfVC: UIViewController, UITableViewDelegate, UITableViewDataSource 
         infoTableView.separatorStyle = .none
         infoTableView.backgroundColor = UISettings.shared.colorScheme.backgroundPrimary
         infoTableView.isHidden = false
+
+        if presented {
+            let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToMatches))
+            self.navigationItem.leftBarButtonItem = backButton
+            self.navigationItem.leftBarButtonItem?.tintColor = UISettings.shared.colorScheme.accent
+            self.navigationItem.title = self.match?.username
+        }
    
         view.backgroundColor =  UISettings.shared.colorScheme.backgroundPrimary
         

@@ -2,6 +2,7 @@ import CodableFirebase
 import Firebase
 import FirebaseFirestore
 import Foundation
+import InstantSearchClient
 
 extension Firestore {
     /// Generic firebase query for classes that conform to Decodable
@@ -53,6 +54,15 @@ extension Firestore {
     ///   - completion: Optional. Use for notification upon completion of save
     func save<T>(object: T, to collection: String, with title: String, completion: (() -> Void)? ) where T: Encodable {
         guard let data = try? FirebaseEncoder().encode(object) as? [String: Any], let objectData = data else { return }
+        if let route = object as? Route {
+            let client = Client(appID: Constants.algoliaAppId, apiKey: Constants.algoliaApiKey)
+            let index = client.index(withName: "route_search")
+            index.saveObject(["name": route.name, "objectID": route.id])
+        } else if let user = object as? User {
+            let client = Client(appID: Constants.algoliaAppId, apiKey: Constants.algoliaApiKey)
+            let index = client.index(withName: "user_search")
+            index.saveObject(["name": user.name, "objectID": user.id])
+        }
         FirestoreService.shared.fs.collection(collection).document(title).setData(objectData) { _ in
             completion?()
         }

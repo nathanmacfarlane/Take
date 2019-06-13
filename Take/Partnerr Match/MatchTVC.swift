@@ -19,7 +19,12 @@ class MatchTVC: UITableViewCell {
     var tradLabel = UILabel()
     var sportLabel = UILabel()
     var boulderLabel = UILabel()
-    
+
+    var widthConstraint: NSLayoutConstraint!
+    var heightConstraint: NSLayoutConstraint!
+
+//    var bgColor = UISettings.shared.colorScheme.backgroundPrimary
+
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -28,7 +33,12 @@ class MatchTVC: UITableViewCell {
         self.layer.masksToBounds = true
         setup()
     }
-    
+
+//    convenience init(style: UITableViewCell.CellStyle, bgColor: UIColor, reuseIdentifier: String?) {
+//        self.init(style: style, reuseIdentifier: reuseIdentifier)
+//        self.bgColor = bgColor
+//    }
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -127,11 +137,13 @@ class MatchTVC: UITableViewCell {
         NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 3 / 5, constant: 0).isActive = true
         
         container.translatesAutoresizingMaskIntoConstraints = false
-        container.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        container.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
-        container.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 9 / 10).isActive = true
-        container.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 5 / 6).isActive = true
-        
+        NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: container, attribute: .centerY, relatedBy: .equal, toItem: self, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
+        heightConstraint = NSLayoutConstraint(item: container, attribute: .height, relatedBy: .equal, toItem: self, attribute: .height, multiplier: 1, constant: -18)
+        widthConstraint = NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 1, constant: -18)
+        heightConstraint.isActive = true
+        widthConstraint.isActive = true
+
         usernameLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: usernameLabel, attribute: .leading, relatedBy: .equal, toItem: profPic, attribute: .trailing, multiplier: 1, constant: 10).isActive = true
         NSLayoutConstraint(item: usernameLabel, attribute: .bottom, relatedBy: .equal, toItem: trButton, attribute: .top, multiplier: 1, constant: -10).isActive = true

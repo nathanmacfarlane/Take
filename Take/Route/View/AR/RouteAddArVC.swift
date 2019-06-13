@@ -85,13 +85,15 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
         var bgUrl: String = ""
         var dgUrl: String = ""
 
+        let location = LocationService.shared.location?.coordinate
+
         _ = imageRef.child("\(imageId)-bgImage.png").putData(bgData as Data, metadata: nil) { metadata, _ in
             guard metadata != nil else { return }
             imageRef.child("\(imageId)-bgImage.png").downloadURL { url, _ in
                 guard let downloadURL = url else { return }
                 bgUrl = "\(downloadURL)"
                 if !dgUrl.isEmpty {
-                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id)
+                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id, latitude: location?.latitude, longitude: location?.longitude)
                     FirestoreService.shared.fs.save(object: arDiagram, to: "arDiagrams", with: arDiagram.id) {
                         route.arDiagrams.append(arDiagram.id)
                         FirestoreService.shared.fs.collection("routes").document(route.id).setData([ "arDiagrams": route.arDiagrams ], merge: true)
@@ -106,7 +108,7 @@ class RouteAddArVC: UIViewController, RouteArEditProtocol, UITextViewDelegate {
                 guard let downloadURL = url else { return }
                 dgUrl = "\(downloadURL)"
                 if !bgUrl.isEmpty {
-                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id)
+                    let arDiagram = ARDiagram(id: UUID().uuidString, userId: userId, dateString: "\(Date().timeIntervalSince1970)", message: self.commentField.text, dgImageUrl: dgUrl, bgImageUrl: bgUrl, routeId: route.id, latitude: location?.latitude, longitude: location?.longitude)
                     FirestoreService.shared.fs.save(object: arDiagram, to: "arDiagrams", with: arDiagram.id) {
                         route.arDiagrams.append(arDiagram.id)
                         FirestoreService.shared.fs.collection("routes").document(route.id).setData([ "arDiagrams": route.arDiagrams ], merge: true)
