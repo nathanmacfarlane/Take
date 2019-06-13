@@ -139,7 +139,8 @@ class ARMenu: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func goToAr() {
         let arView = ARViewVC()
         arView.diagrams = diagrams
-        present(arView, animated: true, completion: nil)
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: .plain, target: nil, action: nil)
+        navigationController?.pushViewController(arView, animated: true)
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
