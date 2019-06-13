@@ -25,27 +25,29 @@ class RoutePhotosVC: UIViewController {
 
         self.initViews()
 
-        DispatchQueue.global(qos: .background).async {
-
+//        DispatchQueue.global(qos: .background).async {
+//
             FirestoreService.shared.fs.listen(collection: "arDiagrams", by: "routeId", with: self.routeViewModel.id, of: ARDiagram.self) { arDiagram in
                 let image = ARImageUrls(dgImage: arDiagram.dgImageUrl, bgImage: arDiagram.bgImageUrl)
                 let arImageContent = ARImageComment(image: image, comment: arDiagram.message)
                 DispatchQueue.main.async {
                     self.images.insert(arImageContent, at: 0)
-                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
+                    self.myImagesCV.reloadData()
+//                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
                 }
             }
-
+//
             FirestoreService.shared.fs.listen(collection: "comments", by: "routeId", with: self.routeViewModel.id, of: Comment.self) { comment in
                 guard let imgUrl = CommentViewModel(comment: comment).imageUrl else { return }
                 let image = ARImageUrls(bgImage: imgUrl)
                 let arImageContent = ARImageComment(image: image, comment: comment.message)
                 DispatchQueue.main.async {
                     self.images.insert(arImageContent, at: 0)
-                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
+                    self.myImagesCV.reloadData()
+//                    self.myImagesCV.insertItems(at: [IndexPath(row: 0, section: 0)])
                 }
             }
-        }
+//        }
 
     }
 

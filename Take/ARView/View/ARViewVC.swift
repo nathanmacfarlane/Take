@@ -8,8 +8,8 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
     var sceneView: ARSCNView!
     var collectionView: UICollectionView!
-    var compassView: UIImageView!
-    var compassLabel: UILabel!
+//    var compassView: UIImageView!
+//    var compassLabel: UILabel!
 
     var route: Route?
     var diagrams: [Route: [ArImage]] = [:]
@@ -48,7 +48,7 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
         // Start location services to get the true heading.
         locationManager.distanceFilter = 1000
-        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.startUpdatingLocation()
 
         //Start heading updating.
@@ -64,17 +64,17 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         }
     }
 
-    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
-        guard let loc = self.userLocation, let selectedLat = visibleArRefImage?.arImage.latitude, let selectedLong = visibleArRefImage?.arImage.longitude else {
-            return
-        }
-        let visibleLocation = CLLocation(latitude: selectedLat, longitude: selectedLong)
-        let heading = doComputeAngleBetweenMapPoints(fromHeading: newHeading.magneticHeading, CLLocationCoordinate2D(location: loc), CLLocationCoordinate2D(location: visibleLocation))
-        compassLabel.text = "Distance: \(loc.distance(from: visibleLocation))"
-        UIView.animate(withDuration: 0.2) {
-            self.compassView.transform = CGAffineTransform(rotationAngle: CGFloat(self.degreesToRadians(degrees: heading)))
-        }
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateHeading newHeading: CLHeading) {
+//        guard let loc = self.userLocation, let selectedLat = visibleArRefImage?.arImage.latitude, let selectedLong = visibleArRefImage?.arImage.longitude else {
+//            return
+//        }
+//        let visibleLocation = CLLocation(latitude: selectedLat, longitude: selectedLong)
+//        let heading = doComputeAngleBetweenMapPoints(fromHeading: newHeading.magneticHeading, CLLocationCoordinate2D(location: loc), CLLocationCoordinate2D(location: visibleLocation))
+//        compassLabel.text = "Distance: \(loc.distance(from: visibleLocation))"
+//        UIView.animate(withDuration: 0.2) {
+//            self.compassView.transform = CGAffineTransform(rotationAngle: CGFloat(self.degreesToRadians(degrees: heading)))
+//        }
+//    }
 
     private func doComputeAngleBetweenMapPoints(
         fromHeading: CLLocationDirection,
@@ -169,7 +169,7 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
 
     @objc
     func hitMap() {
-        let presenter = Presentr(presentationType: .alert)
+        let presenter = Presentr(presentationType: .bottomHalf)
         presenter.cornerRadius = 15
         presenter.backgroundColor = .black
         presenter.backgroundOpacity = 0.5
@@ -223,16 +223,16 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         collectionView.showsVerticalScrollIndicator = false
         collectionView.showsHorizontalScrollIndicator = false
 
-        compassView = UIImageView()
-        compassView.image = UIImage(named: "compass")
-
-        compassLabel = LabelAvenir(size: 20, type: .Heavy, color: .black)
-        compassLabel.text = "Distance: "
+//        compassView = UIImageView()
+//        compassView.image = UIImage(named: "compass")
+//
+//        compassLabel = LabelAvenir(size: 20, type: .Heavy, color: .black)
+//        compassLabel.text = "Distance: "
 
         view.addSubview(sceneView)
         view.addSubview(collectionView)
-        view.addSubview(compassView)
-        view.addSubview(compassLabel)
+//        view.addSubview(compassView)
+//        view.addSubview(compassLabel)
         view.addSubview(backButton)
         view.addSubview(mapButton)
 
@@ -254,17 +254,17 @@ class ARViewVC: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UICollec
         NSLayoutConstraint(item: collectionView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 75).isActive = true
         NSLayoutConstraint(item: collectionView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
 
-        compassView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: compassView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: compassView, attribute: .bottom, relatedBy: .equal, toItem: collectionView, attribute: .top, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: compassView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
-        NSLayoutConstraint(item: compassView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
-
-        compassLabel.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: compassLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: compassLabel, attribute: .bottom, relatedBy: .equal, toItem: compassView, attribute: .top, multiplier: 1, constant: -20).isActive = true
-        NSLayoutConstraint(item: compassLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
-        NSLayoutConstraint(item: compassLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
+//        compassView.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint(item: compassView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+//        NSLayoutConstraint(item: compassView, attribute: .bottom, relatedBy: .equal, toItem: collectionView, attribute: .top, multiplier: 1, constant: -20).isActive = true
+//        NSLayoutConstraint(item: compassView, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
+//        NSLayoutConstraint(item: compassView, attribute: .width, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 80).isActive = true
+//
+//        compassLabel.translatesAutoresizingMaskIntoConstraints = false
+//        NSLayoutConstraint(item: compassLabel, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+//        NSLayoutConstraint(item: compassLabel, attribute: .bottom, relatedBy: .equal, toItem: compassView, attribute: .top, multiplier: 1, constant: -20).isActive = true
+//        NSLayoutConstraint(item: compassLabel, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 40).isActive = true
+//        NSLayoutConstraint(item: compassLabel, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
 
         sceneView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: sceneView, attribute: .leading, relatedBy: .equal, toItem: view, attribute: .leading, multiplier: 1, constant: 0).isActive = true
