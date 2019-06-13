@@ -119,10 +119,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
-    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.info.count
     }
@@ -147,7 +143,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
     
     @objc
     func updateProf() {
-        
         guard let trG = numGradeDict[self.trStepper.value] else { return }
         guard let sportG = numGradeDict[self.sportStepper.value] else { return }
         guard let tradG = numGradeDict[self.tradStepper.value] else { return }
@@ -161,6 +156,11 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         self.user?.sportGrade = sportG
         self.user?.tradGrade = tradG
         self.user?.boulderGrade = bG
+        if self.info.count == 4 {
+            print(self.info.remove(at:0))
+        }
+        
+        self.user?.info = self.info
         
         self.user?.trLetter = trLet
         self.user?.sportLetter = sportLet
@@ -224,6 +224,21 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         
     }
     
+    @objc
+    func cell1FieldChanged(_ textField: UITextField) {
+        self.info[1] = textField.text ?? ""
+    }
+    
+    @objc
+    func cell2FieldChanged(_ textField: UITextField) {
+        self.info[2] = textField.text ?? ""
+    }
+    
+    @objc
+    func cell3FieldChanged(_ textField: UITextField) {
+        self.info[3] = textField.text ?? ""
+    }
+    
     func initViews() {
         
         guard let user = self.user else { return }
@@ -231,6 +246,38 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         toggler = UISwitch()
         toggler.addTarget(self, action: #selector(toggledEdit), for: .valueChanged)
         toggler.tintColor = UISettings.shared.colorScheme.segmentColor
+        
+        print(self.info)
+        
+        let cell1TF = UITextField()
+        cell1TF.placeholder = self.info[1]
+        cell1TF.textColor = UISettings.shared.colorScheme.textPrimary
+        cell1TF.borderStyle = .roundedRect
+        cell1TF.textAlignment = .center
+        cell1TF.backgroundColor = UISettings.shared.colorScheme.backgroundCell
+        cell1TF.autocapitalizationType = .none
+        cell1TF.addTarget(self, action: #selector(cell1FieldChanged(_:)), for: .editingChanged)
+        cell1TF.layer.cornerRadius = 8
+        
+        let cell2TF = UITextField()
+        cell2TF.placeholder = self.info[2]
+        cell2TF.textColor = UISettings.shared.colorScheme.textPrimary
+        cell2TF.borderStyle = .roundedRect
+        cell2TF.textAlignment = .center
+        cell2TF.backgroundColor = UISettings.shared.colorScheme.backgroundCell
+        cell2TF.autocapitalizationType = .none
+        cell2TF.addTarget(self, action: #selector(cell2FieldChanged(_:)), for: .editingChanged)
+        cell2TF.layer.cornerRadius = 8
+        
+        let cell3TF = UITextField()
+        cell3TF.placeholder = self.info[3]
+        cell3TF.textColor = UISettings.shared.colorScheme.textPrimary
+        cell3TF.layer.cornerRadius = 8
+        cell3TF.textAlignment = .center
+        cell3TF.backgroundColor = UISettings.shared.colorScheme.backgroundCell
+        cell3TF.autocapitalizationType = .none
+        cell3TF.addTarget(self, action: #selector(cell3FieldChanged(_:)), for: .editingChanged)
+        
         
         let backButton = UIBarButtonItem(title: "Back", style: .done, target: self, action: #selector(backToProf))
         self.navigationItem.leftBarButtonItem = backButton
@@ -336,8 +383,29 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         view.addSubview(tradStepper)
         view.addSubview(bStepper)
         view.addSubview(toggler)
-        view.addSubview(infoTableView)
         view.addSubview(ageSlider)
+        view.addSubview(cell1TF)
+        view.addSubview(cell2TF)
+        view.addSubview(cell3TF)
+        
+        cell1TF.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cell1TF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell1TF, attribute: .top, relatedBy: .equal, toItem: ageSlider, attribute: .bottom, multiplier: 1, constant: 20).isActive = true
+        NSLayoutConstraint(item: cell1TF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell1TF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60).isActive = true
+        
+        cell2TF.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cell2TF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell2TF, attribute: .top, relatedBy: .equal, toItem: cell1TF, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: cell2TF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell2TF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60).isActive = true
+        
+        cell3TF.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint(item: cell3TF, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell3TF, attribute: .top, relatedBy: .equal, toItem: cell2TF, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: cell3TF, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 5/6, constant: 0).isActive = true
+        NSLayoutConstraint(item: cell3TF, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1.0, constant: 60).isActive = true
+        
         
         gradeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: gradeLabel, attribute: .centerX , relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -399,14 +467,6 @@ class EditProfileVC: UIViewController, UITableViewDelegate, UITableViewDataSourc
         NSLayoutConstraint(item: toggler, attribute: .centerY, relatedBy: .equal, toItem: picButton, attribute: .centerY, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: toggler, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1/4, constant: 0).isActive = true
         NSLayoutConstraint(item: toggler, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 30).isActive = true
-        
-        infoTableView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: infoTableView, attribute: .centerX, relatedBy: .equal, toItem: view, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoTableView, attribute: .top, relatedBy: .equal, toItem: ageSlider, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: infoTableView, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoTableView, attribute: .bottom, relatedBy: .equal, toItem: updateButton, attribute: .top, multiplier: 1, constant: -10).isActive = true
-        
-        
     
     }
     
