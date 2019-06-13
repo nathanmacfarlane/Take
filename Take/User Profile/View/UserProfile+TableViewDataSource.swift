@@ -28,8 +28,7 @@ extension UserProfileVC: UITableViewDataSource {
         } else {
             cell.infoLabel.text = self.plans[indexPath.row].title
         }
-        cell.infoLabel.textColor = .white
-        cell.infoLabel.font = UIFont(name: "Avenir", size: 18)
+        cell.infoLabel.font = UIFont(name: "Avenir-Heavy", size: 16)
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         cell.infoLabel.isUserInteractionEnabled = false
