@@ -133,7 +133,7 @@ class CreateAccountVC: UIViewController {
         let sendButton = UIButton()
         sendButton.setTitle("Send It!", for: .normal)
         sendButton.setTitleColor(.white, for: .normal)
-        sendButton.backgroundColor = UIColor(named: "PinkAccent")
+        sendButton.backgroundColor = UISettings.shared.colorScheme.accent
         sendButton.layer.cornerRadius = 8
         sendButton.titleLabel?.font = UIFont(name: "Avenir-Black", size: 20)
         sendButton.addTarget(self, action: #selector(createUser), for: UIControl.Event.touchUpInside)
