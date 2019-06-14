@@ -1,37 +1,9 @@
 # Take
-**To Do:**
+## Senior Project Spring 2019 for Cal Poly, SLO
+### Nathan Macfarlane and Raquel Bonilla
 
-- [ ] Download routes/areas to device
-- [ ] Change AR images to display on a single UIImage View
-- [ ] Combine AR and regular image VC's to a single VC
-- [ ] Save AR images
-- [ ] Add Profile page *(rocki)*
-- [ ] Add friend's feed *(rocki)*
-- [ ] Add find a gym buddy and outdoor buddy VC *(rocki)*
-- [ ] Add direct message to other users functinoality *(rocki)*
-- [ ] Figure out workflow for map view and areas
-- [ ] Make list of routes only load images for current page
-- [ ] Optimize for all iphone sizeds with autolayout
-- [ ] Add pan to images
-- [ ] Replace "Be the first to add an image" title with "images loading" title when needed
-- [ ] Add thumbnail functionality to backend and use them for initial image renders and list views
-- [ ] Replace "N/A" text with blank fields
-- [ ] Look into syncing updates on Mountain Project on a regular basis
-- [ ] Pull user profile (ticks and todos) from Mountain Project
-- [ ] Add functionality to comments on routes
-- [ ] Consider making route detail view scrollable
-- [ ] Add voting to images
-- [ ] Add description to images
-- [ ] Add user to images
-- [ ] Make most popular image the thumbnail photo
-- [ ] Add point value to user for contributing to routes (like MP)
-- [ ] Add edit history to routes so users can approve and deny edits and revert to old edits
-- [ ] Add an animated scroll to top after changing pages on list view
-- [ ] Add confirmation screen/alert to edit route
-- [ ] Add tick/todo icon on list view
-- [ ] Add support for Alpine and Aid routes
-- [ ] Consider adding functionality to drag and drop stickers onto AR images
-- [ ] Change blurred background image on image slideshow when user swipes through (smooth fade)
-- [ ] Remove pitches from boulder routes
-- [ ] Disable all other options in edit view when Boulder is route type
-- [ ] Add other route types (alpine, aid, others?)
+There are a very small number of resources for finding detailed information of outdoor rock climbing routes. Most climbers turn to one of only a few apps for mobile devices that aim to solve this problem - Mountain Project. While this app and others have very valuable crowd sourced information, they fail to present it in a way that is meaningful to their users. Another means of finding information on routes is through means of a guidebook. Since most guidebooks have been around for at least a decade with very little revisions and no crowd sourced data, this medium not only fails to deliver information in a meaningful way, it also lacks information about newly discovered and recently updated routes. 
+
+Knowing that the competition is lacking and the desire for a modern solution is very present, we developed an iOS app to solve the problem through augmented reality. 
+
+We also chose to add a few other features to our app that rivaled what the competitors are doing so that we can present a complete package that convinces potential users that we have the one stop app for all outdoor rock climbing related information. These features include a social platform for users to meet and communicate, a means to fully integrate account settings and climbing history from Mountain Project, and an adaptive “Plan your Day” feature that recommends several routes to a user based on their climbing history.
