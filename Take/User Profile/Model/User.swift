@@ -42,6 +42,6 @@ struct User: Codable {
         self.sportLetter = ""
         self.bio = ""
         self.location = [0,0]
-        self.info = []
+        self.info = ["eat", "sleep", "climb"]
     }
 }

@@ -98,49 +98,11 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.match = self.climbers[indexPath.row]
         self.linkToMatchProf()
-        
-//        self.flag = false
-//        var count = 0
-//
-//        for msgId in user.messageIds {
-//            count += 1
-//            if match.messageIds.contains(msgId) {
-//                self.flag = true
-//                let db = Firestore.firestore()
-//                db.query(collection: "messages", by: "messageId", with: msgId, of: DM.self) { dm in
-//                    guard let mess = dm.first else { print("error finding dm"); return }
-//                    self.dm = mess
-//                    self.linkToMsg()
-//                }
-//                break
-//            }
-//            if(!self.flag && count == user.messageIds.count) {
-//                self.newDM()
-//                self.flag = true
-//            }
-//        }
-//        if !self.flag {
-//            self.newDM()
-//        }
     }
     
-//    @objc func newDM() {
-//        guard let user = self.user else { return }
-//        guard let match = self.match else { return }
-//
-//        let tc = ThreadContent(message: "", sender: user.id)
-//        self.dm = DM(messageId: UUID().uuidString, userIds: [user.id, match.id], thread: [tc])
-//        if let messId = self.dm?.messageId { // append message id onto users
-//            self.match?.messageIds.append(messId)
-//            self.user?.messageIds.append(messId)
-//        }
-//        Firestore.firestore().save(object: self.dm, to: "messages", with: self.dm?.messageId ?? "error in creating new msg", completion: nil)
-//        Firestore.firestore().save(object: self.user, to: "users", with: self.user?.id ?? "error in creating new msg", completion: nil)
-//       Firestore.firestore().save(object: self.match, to: "users", with: self.match?.id ?? "error in creating new msg", completion: nil)
-//        self.linkToMatchProf()
-//    }
     
-    @objc func linkToMess() {
+    @objc
+    func linkToMess() {
         let msgLogContainer = MsgLogContainerVC()
         msgLogContainer.user = self.user
         msgLogContainer.friend = self.match
@@ -151,13 +113,14 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         self.present(nav, animated: true, completion: nil)
     }
     
-    @objc func linkToMatchProf() {
+    @objc
+    func linkToMatchProf() {
         let matchProf = MatchProfVC()
         matchProf.user = self.user
         matchProf.match = self.match
@@ -167,7 +130,7 @@ class MatchResultsVC: UIViewController, UITableViewDelegate, UITableViewDataSour
         nav.navigationBar.tintColor = UIColor(named: "PinkAccent")
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         self.present(nav, animated: true, completion: nil)

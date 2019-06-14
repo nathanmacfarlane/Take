@@ -74,7 +74,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
             self.user = user
             self.userNameLabel.text = user.name
-            self.userBio.text = user.bio
             self.trGrade.text = "5.\(user.trGrade)" + user.trLetter
             self.tradGrade.text = "5.\(user.tradGrade)" + user.tradLetter
             self.sportGrade.text = "5.\(user.sportGrade)" + user.sportLetter
@@ -175,7 +174,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
@@ -191,7 +190,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         nav.navigationBar.tintColor = UISettings.shared.colorScheme.accent
         nav.navigationBar.isTranslucent = false
         nav.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(named: "Placeholder") ?? .white,
+            .foregroundColor: UISettings.shared.colorScheme.textPrimary,
             .font: UIFont(name: "Avenir-Black", size: 26) ?? .systemFont(ofSize: 26)
         ]
         present(nav, animated: true, completion: nil)
@@ -216,6 +215,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         pmButton.image = pmIcon
         pmButton.tintColor = UISettings.shared.colorScheme.accent
         self.navigationItem.leftBarButtonItem = pmButton
+        seg.tintColor = UISettings.shared.colorScheme.segmentColor
         
         self.infoTableView = UITableView()
         infoTableView.register(InfoCell.self, forCellReuseIdentifier: "InfoCell")
@@ -226,39 +226,33 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         infoTableView.isHidden = false
         
         userNameLabel = LabelAvenir(size: 22, type: .Heavy, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
-        
-        userBio = LabelAvenir(size: 16, type: .Medium, color: UISettings.shared.colorScheme.textSecondary, alignment: .left)
-        userBio.numberOfLines = 0
-        userBio.lineBreakMode = .byWordWrapping
-        userBio.layer.masksToBounds = true
-        
         // type buttons
         sportButton = TypeButton()
         sportButton.setTitle("S", for: .normal)
-        sportButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        sportButton.backgroundColor = UIColor(hex: "#0E4343")
+        sportButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        sportButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         sportButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         boulderButton = TypeButton()
         boulderButton.setTitle("B", for: .normal)
-        boulderButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        boulderButton.backgroundColor = UIColor(hex: "#0E4343")
+        boulderButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        boulderButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         boulderButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         
         trButton = TypeButton()
         trButton.setTitle("TR", for: .normal)
-        trButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
+        trButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
         trButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
-        trButton.backgroundColor = UIColor(hex: "#0E4343")
+        trButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         
         tradButton = TypeButton()
         tradButton.setTitle("T", for: .normal)
         tradButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
-        tradButton.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 1)
-        tradButton.backgroundColor = UIColor(hex: "#0E4343")
+        tradButton.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 1)
+        tradButton.backgroundColor = UISettings.shared.colorScheme.gradeBubble
         
         profPic = TypeButton()
-        profPic.addBorder(color: UISettings.shared.colorScheme.textSecondary, width: 2.5)
+        profPic.addBorder(color: UISettings.shared.colorScheme.outlineButton, width: 2.5)
         profPic.clipsToBounds = true
         profPic.layer.cornerRadius = 8
         profPic.contentMode = .scaleAspectFit
@@ -274,13 +268,12 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         editButton = UIButton()
         editButton.addTarget(self, action: #selector(openEditProfile), for: UIControl.Event.touchUpInside)
         editButton.setTitle("Edit Profile", for: .normal)
-        editButton.setTitleColor( .black, for: .normal)
-        editButton.backgroundColor = UIColor(named: "Placeholder")
+        editButton.setTitleColor( UISettings.shared.colorScheme.outlineButton, for: .normal)
+        editButton.backgroundColor = UISettings.shared.colorScheme.segmentColor
         editButton.titleLabel?.font = UIFont(name: "Avenir-Heavy", size: 16)
         editButton.layer.cornerRadius = 8
         
         view.addSubview(userNameLabel)
-        view.addSubview(userBio)
         view.addSubview(sportButton)
         view.addSubview(trButton)
         view.addSubview(tradButton)
@@ -318,11 +311,6 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         NSLayoutConstraint(item: profPic, attribute: .width, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 3, constant: 0).isActive = true
         NSLayoutConstraint(item: profPic, attribute: .height, relatedBy: .equal, toItem: trButton, attribute: .width, multiplier: 3, constant: 0).isActive = true
         
-        userBio.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: userBio, attribute: .leading, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: userBio, attribute: .trailing, relatedBy: .equal, toItem: userNameLabel, attribute: .trailing, multiplier: 1, constant: -10).isActive = true
-        NSLayoutConstraint(item: userBio, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: userBio, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .notAnAttribute, multiplier: 1, constant: 25).isActive = true
         
         trGrade.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: trGrade, attribute: .centerX, relatedBy: .equal, toItem: trButton, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
@@ -345,7 +333,7 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
         trButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: trButton, attribute: .trailing, relatedBy: .equal, toItem: sportButton, attribute: .leading, multiplier: 1, constant: -8).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .leading, relatedBy: .equal, toItem: userNameLabel, attribute: .leading, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: trButton, attribute: .top, relatedBy: .equal, toItem: userBio, attribute: .bottom, multiplier: 1, constant: 10).isActive = true
+        NSLayoutConstraint(item: trButton, attribute: .top, relatedBy: .equal, toItem: userNameLabel, attribute: .bottom, multiplier: 1, constant: 15).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .width, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
         NSLayoutConstraint(item: trButton, attribute: .height, relatedBy: .equal, toItem: view, attribute: .width, multiplier: 1 / 10, constant: 0).isActive = true
         
@@ -387,10 +375,9 @@ class UserProfileVC: UIViewController, NotificationPresenterVCDelegate {
 
 class InfoCell: UITableViewCell {
     
-    var infoLabel = UILabel()
+    var infoLabel = UITextField()
     let container = UIView()
     var indent = CGFloat(100)
-    var infoPic = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -406,36 +393,33 @@ class InfoCell: UITableViewCell {
         self.backgroundColor = UIColor(named: "BluePrimary")
         
         infoLabel.textColor = UISettings.shared.colorScheme.textPrimary
-        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 14)
-        infoLabel.textAlignment = .left
 
+        infoLabel.font = UIFont(name: "Avenir-Heavy", size: 16)
+        infoLabel.textAlignment = .center
+        
+        
+      
         container.backgroundColor = UISettings.shared.colorScheme.backgroundCell
         container.layer.masksToBounds = true
         container.layer.cornerRadius = 8
         
-        infoPic.contentMode = .scaleAspectFill
         
         addSubview(container)
         addSubview(infoLabel)
-        addSubview(infoPic)
         
         container.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint(item: container, attribute: .centerX, relatedBy: .equal, toItem: self, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
         NSLayoutConstraint(item: container, attribute: .top, relatedBy: .equal, toItem: self, attribute: .top, multiplier: 1, constant: 8).isActive = true
         NSLayoutConstraint(item: container, attribute: .bottom, relatedBy: .equal, toItem: self, attribute: .bottom, multiplier: 1, constant: -8).isActive = true
-        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 8 / 9, constant: 0).isActive = true
-
-        infoPic.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint(item: infoPic, attribute: .leading, relatedBy: .equal, toItem: container, attribute: .leading, multiplier: 1, constant: 10).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
-        NSLayoutConstraint(item: infoPic, attribute: .width, relatedBy: .equal, toItem: container, attribute: .height, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: container, attribute: .width, relatedBy: .equal, toItem: self, attribute: .width, multiplier: 8/9, constant: 0).isActive = true
+        
         
         infoLabel.translatesAutoresizingMaskIntoConstraints = false
-        infoLabel.leadingAnchor.constraint(equalTo: infoPic.trailingAnchor, constant: 10).isActive = true
-        infoLabel.centerYAnchor.constraint(equalTo: container.centerYAnchor).isActive = true
-        infoLabel.widthAnchor.constraint(equalTo: container.widthAnchor, multiplier: 1).isActive = true
-        infoLabel.heightAnchor.constraint(equalTo: container.heightAnchor, multiplier: 1 / 3).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .centerX, relatedBy: .equal, toItem: container, attribute: .centerX, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .top, relatedBy: .equal, toItem: container, attribute: .top, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .bottom, relatedBy: .equal, toItem: container, attribute: .bottom, multiplier: 1, constant: 0).isActive = true
+        NSLayoutConstraint(item: infoLabel, attribute: .width, relatedBy: .equal, toItem: container, attribute: .width, multiplier: 6/7, constant: 0).isActive = true
+
     }
     
 }
